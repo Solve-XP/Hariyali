@@ -6,3 +6,5 @@ passlib
 bcrypt
 pydantic-settings
 python-multipart
+boto3
+python-dotenv

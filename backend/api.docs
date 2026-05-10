@@ -1,3 +1,6 @@
+# Repository only talks to DB.
+# Business logic goes here.
+
 1. Authentication Service
 
 The backend uses a centralized JWT-based authentication system with role-based authorization.
@@ -57,3 +60,59 @@ Example Success Response
 Authorization Header Example
 
 Authorization: Bearer <access_token>
+
+
+
+----------------------------------------------------------------------------------
+
+# Farm Service | Farm API
+
+The Farm Service manages farmer-owned farm records and farm image storage.
+
+Only users with the `farmer` role can access farm APIs.
+
+Farm images are uploaded to AWS S3.
+
+The farm module supports:
+- Create Farm
+- Get All Farms
+- Search Farms
+- Get Farm By ID
+- Update Farm
+- Delete Farm
+
+Search currently uses MongoDB regex search with:
+- case-insensitive matching
+- partial keyword matching
+
+Protected APIs require a valid JWT token in the Authorization header.
+
+Authorization Header Example
+
+Authorization: Bearer <access_token>
+
+
+Example Create Farm Request
+
+POST /api/v1/farms
+
+Content-Type: multipart/form-data
+
+farm_name = Balraje Farm
+acres = 2
+location = Goradwadi
+soil_type = Black
+farm_photo = image.jpg
+
+
+Example Search Farms Request
+
+GET /api/v1/farms?search=bal
+
+
+Example Success Response
+
+{
+  "message": "Farm created successfully",
+  "farm_id": "6819e7c2c8f24f6c0c4f1234"
+}
