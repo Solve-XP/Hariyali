@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from app.api.v1.router import api_router
 
 from app.lifespan import lifespan
-
+from fastapi.middleware.cors import CORSMiddleware
 from app.middleware.logging_middleware import (
     LoggingMiddleware
 )
@@ -25,6 +25,14 @@ app.add_middleware(
     LoggingMiddleware
 )
 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # REGISTER GLOBAL EXCEPTION HANDLER
 

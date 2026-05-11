@@ -1,66 +1,167 @@
-import "./Login.css";
 import { useState } from "react";
+
 import { useTranslation } from "react-i18next";
-import { useNavigate, Link } from "react-router-dom";
-import AuthShell from "../components/AuthShell";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import { AuthAPI } from "../services/api";
-import { useAuth } from "../context/AuthContext";
-import { useApp } from "../context/AppContext";
 
-export default function Login() {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { saveAuth } = useAuth();
-  const { pushToast } = useApp();
-  const [phone, setPhone]       = useState("");
+import { loginUser } from "../services/authService";
+
+
+function Login() {
+
+  const { t, i18n } = useTranslation();
+
+  const [phone, setPhone] = useState("");
+
   const [password, setPassword] = useState("");
-  const [error, setError]       = useState("");
-  const [loading, setLoading]   = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    if (!phone || !password) { setError(t("messages.VALIDATION_ERROR")); return; }
-    setLoading(true);
+
+  const changeLanguage = (lang) => {
+
+    i18n.changeLanguage(lang);
+
+    localStorage.setItem(
+      "solvexp_lang",
+      lang
+    );
+  };
+
+
+  const handleLogin = async () => {
+
     try {
-      const res = await AuthAPI.login({ phone, password });
-      saveAuth(res.access_token, res.user);
-      pushToast(t("messages.AUTH_LOGIN_SUCCESS"));
-      navigate("/dashboard", { replace: true });
-    } catch (err) {
-      const code = err.message || "GENERIC_ERROR";
-      setError(t(`messages.${code}`, { defaultValue: t("messages.GENERIC_ERROR") }));
-    } finally {
-      setLoading(false);
+
+      const response = await loginUser({
+        phone,
+        password,
+      });
+
+      localStorage.setItem(
+        "token",
+        response.access_token
+      );
+
+      alert(
+        t("messages.AUTH_LOGIN_SUCCESS")
+      );
+
+      console.log(response);
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert(
+        t("messages.AUTH_INVALID_CREDENTIALS")
+      );
     }
   };
 
-  const footer = (
-    <>
-      {t("auth.no_account")}{" "}
-      <Link to="/signup">{t("auth.signup_link")}</Link>
-      {" · "}
-      <Link to="/admin-login">{t("auth.admin_login_title")}</Link>
-    </>
-  );
 
   return (
-    <AuthShell title={t("auth.login_title")} subtitle={t("auth.login_subtitle")} footer={footer}>
-      <form onSubmit={handleSubmit} className="auth-form">
-        {error && <div className="auth-error">{error}</div>}
-        <Input label={t("auth.phone")} type="tel" inputMode="tel" placeholder={t("auth.phone_placeholder")}
-          value={phone} onChange={(e) => setPhone(e.target.value)} required />
-        <Input label={t("auth.password")} type="password" placeholder={t("auth.password_placeholder")}
-          value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <Button type="submit" variant="primary" block disabled={loading}>
-          {loading ? t("common.loading") : t("auth.login_button")}
-        </Button>
-        <div className="login__demo-hint">
-          {t("auth.farmer_demo")}: <code>9876543210</code> / <code>farmer123</code>
-        </div>
-      </form>
-    </AuthShell>
+
+    <div
+      style={{
+        maxWidth: "400px",
+        margin: "50px auto",
+        padding: "20px",
+        border: "1px solid #ddd",
+        borderRadius: "10px",
+      }}
+    >
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: "10px",
+          marginBottom: "20px",
+        }}
+      >
+
+        <button
+          onClick={() => changeLanguage("en")}
+        >
+          EN
+        </button>
+
+        <button
+          onClick={() => changeLanguage("mr")}
+        >
+          मराठी
+        </button>
+
+      </div>
+
+
+      <h1>
+        {t("auth.login_title")}
+      </h1>
+
+      <p>
+        {t("auth.login_subtitle")}
+      </p>
+
+
+      <div
+        style={{
+          marginTop: "20px",
+        }}
+      >
+
+        <label>
+          {t("auth.phone")}
+        </label>
+
+        <input
+          type="text"
+          placeholder={t("auth.phone_placeholder")}
+          value={phone}
+          onChange={(e) =>
+            setPhone(e.target.value)
+          }
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginTop: "5px",
+            marginBottom: "15px",
+          }}
+        />
+
+
+        <label>
+          {t("auth.password")}
+        </label>
+
+        <input
+          type="password"
+          placeholder={t("auth.password_placeholder")}
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginTop: "5px",
+            marginBottom: "20px",
+          }}
+        />
+
+
+        <button
+          onClick={handleLogin}
+          style={{
+            width: "100%",
+            padding: "12px",
+            cursor: "pointer",
+          }}
+        >
+          {t("auth.login_button")}
+        </button>
+
+      </div>
+
+    </div>
   );
 }
+
+export default Login;
