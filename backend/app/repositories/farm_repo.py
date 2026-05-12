@@ -2,6 +2,10 @@ from bson import ObjectId
 
 from datetime import datetime
 
+from app.utils.search import (
+    build_search_query
+)
+
 
 class FarmRepository:
 
@@ -30,12 +34,12 @@ class FarmRepository:
             "is_deleted": False
         }
 
-        if search:
+        search_query = build_search_query(
+            "farm_name",
+            search
+        )
 
-            query["farm_name"] = {
-                "$regex": search,
-                "$options": "i"
-            }
+        query.update(search_query)
 
         farms = await self.collection.find(
             query

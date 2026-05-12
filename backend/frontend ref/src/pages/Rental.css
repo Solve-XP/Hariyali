@@ -1,0 +1,29 @@
+/* Rental page — equipment card styles */
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+.equipment-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex; flex-direction: column; gap: var(--space-3);
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow .2s, border-color .2s, transform .15s;
+}
+.equipment-card:hover { box-shadow: var(--shadow-md); border-color: var(--color-border-strong); transform: translateY(-2px); }
+
+.equipment-card__head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-3); }
+.equipment-card__name  { font-size: var(--fs-md); font-weight: 600; }
+.equipment-card__price { font-size: var(--fs-lg); font-weight: 700; color: var(--color-primary); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.equipment-card__price small { font-size: var(--fs-xs); color: var(--color-text-muted); font-weight: 500; }
+
+.equipment-card__meta { display: flex; flex-direction: column; gap: 6px; font-size: var(--fs-sm); color: var(--color-text-muted); }
+.equipment-card__row  { display: flex; align-items: center; gap: 6px; }
+
+.equipment-card__actions {
+  display: flex; gap: var(--space-2); margin-top: auto;
+  padding-top: var(--space-2); border-top: 1px solid var(--color-divider);
+}

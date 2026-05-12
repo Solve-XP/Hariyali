@@ -7,13 +7,9 @@ from fastapi import (
 
 from app.integrations.s3 import upload_file_to_s3
 
-
-ALLOWED_IMAGE_TYPES = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/webp"
-]
+from app.utils.validators import (
+    validate_image_type
+)
 
 
 class FarmService:
@@ -28,7 +24,9 @@ class FarmService:
         farm_photo: UploadFile
     ):
 
-        if farm_photo.content_type not in ALLOWED_IMAGE_TYPES:
+        if not validate_image_type(
+            farm_photo.content_type
+        ):
 
             raise HTTPException(
                 status_code=400,
@@ -129,7 +127,9 @@ class FarmService:
 
         if farm_photo:
 
-            if farm_photo.content_type not in ALLOWED_IMAGE_TYPES:
+            if not validate_image_type(
+                farm_photo.content_type
+            ):
 
                 raise HTTPException(
                     status_code=400,
@@ -142,6 +142,8 @@ class FarmService:
             )
 
             update_data["farm_photo"] = image_url
+
+        update_data["updated_at"] = datetime.utcnow()
 
         updated = await self.repo.update_farm(
             farm_id,

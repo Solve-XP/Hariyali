@@ -13,3 +13,4 @@ database = client[
 
 users_collection = database["users"]
 farms_collection = database["farms"]
+crop_collection = database["crops"]
