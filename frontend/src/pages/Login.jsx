@@ -1,167 +1,273 @@
+import "./Login.css";
+
 import { useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
+import {
+  useNavigate,
+  Link,
+} from "react-router-dom";
+
+import AuthShell from "../components/AuthShell";
+import Input from "../components/Input";
+import Button from "../components/Button";
+
 import { loginUser } from "../services/authService";
 
+import { useAuth } from "../context/AuthContext";
+import { useApp } from "../context/AppContext";
 
-function Login() {
+export default function Login() {
 
   const { t, i18n } = useTranslation();
 
+  const navigate = useNavigate();
+
+  const { saveAuth } = useAuth();
+
+  const { pushToast } = useApp();
+
   const [phone, setPhone] = useState("");
 
-  const [password, setPassword] = useState("");
+  const [password, setPassword] =
+    useState("");
 
+  const [error, setError] =
+    useState("");
 
-  const changeLanguage = (lang) => {
+  const [loading, setLoading] =
+    useState(false);
 
-    i18n.changeLanguage(lang);
+  // Language Switch
+  const switchLanguage = () => {
 
-    localStorage.setItem(
-      "solvexp_lang",
-      lang
+    i18n.changeLanguage(
+      i18n.language === "en"
+        ? "mr"
+        : "en"
     );
   };
 
+  // Login Submit
+  const handleSubmit = async (e) => {
 
-  const handleLogin = async () => {
+    e.preventDefault();
+
+    setError("");
+
+    // Validation
+    if (!phone || !password) {
+
+      setError(
+        t("messages.VALIDATION_ERROR")
+      );
+
+      return;
+    }
+
+    setLoading(true);
 
     try {
 
-      const response = await loginUser({
+      // API Call
+      const res = await loginUser({
         phone,
         password,
       });
 
-      localStorage.setItem(
-        "token",
-        response.access_token
+      console.log(res);
+
+      // Save Token + User
+      saveAuth(
+        res.access_token,
+        res.user
       );
 
-      alert(
-        t("messages.AUTH_LOGIN_SUCCESS")
+      // Success Toast
+      pushToast(
+        t("messages.AUTH_LOGIN_SUCCESS"),
+        "success"
       );
 
-      console.log(response);
+      // Role Based Redirect
+      switch (res.user.role) {
 
-    } catch (error) {
+        case "admin":
 
-      console.log(error);
+          navigate(
+            "/admin/dashboard",
+            {
+              replace: true,
+            }
+          );
 
-      alert(
-        t("messages.AUTH_INVALID_CREDENTIALS")
+          break;
+
+        case "farmer":
+
+          navigate(
+            "/farmer/dashboard",
+            {
+              replace: true,
+            }
+          );
+
+          break;
+
+        case "merchant":
+
+          navigate(
+            "/merchant/dashboard",
+            {
+              replace: true,
+            }
+          );
+
+          break;
+
+        default:
+
+          navigate("/login", {
+            replace: true,
+          });
+      }
+
+    } catch (err) {
+
+      console.log(err);
+
+      const code =
+        err?.response?.data?.message ||
+        err?.message ||
+        "GENERIC_ERROR";
+
+      setError(
+
+        t(`messages.${code}`, {
+
+          defaultValue: t(
+            "messages.GENERIC_ERROR"
+          ),
+
+        })
       );
+
+      pushToast(
+        t("messages.GENERIC_ERROR"),
+        "error"
+      );
+
+    } finally {
+
+      setLoading(false);
     }
   };
 
+  const footer = (
+
+    <div className="auth-footer">
+
+      {t("auth.no_account")}{" "}
+
+      <Link to="/signup">
+
+        {t("auth.signup_link")}
+
+      </Link>
+
+    </div>
+  );
 
   return (
 
-    <div
-      style={{
-        maxWidth: "400px",
-        margin: "50px auto",
-        padding: "20px",
-        border: "1px solid #ddd",
-        borderRadius: "10px",
-      }}
+    <AuthShell
+      title={t("auth.login_title")}
+      subtitle={t(
+        "auth.login_subtitle"
+      )}
+      footer={footer}
     >
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          gap: "10px",
-          marginBottom: "20px",
-        }}
+      <form
+        onSubmit={handleSubmit}
+        className="auth-form"
       >
 
-        <button
-          onClick={() => changeLanguage("en")}
-        >
-          EN
-        </button>
+        {error && (
 
-        <button
-          onClick={() => changeLanguage("mr")}
-        >
-          मराठी
-        </button>
+          <div className="auth-error">
 
-      </div>
+            {error}
 
+          </div>
+        )}
 
-      <h1>
-        {t("auth.login_title")}
-      </h1>
+        {/* Phone */}
 
-      <p>
-        {t("auth.login_subtitle")}
-      </p>
-
-
-      <div
-        style={{
-          marginTop: "20px",
-        }}
-      >
-
-        <label>
-          {t("auth.phone")}
-        </label>
-
-        <input
-          type="text"
-          placeholder={t("auth.phone_placeholder")}
+        <Input
+          label={t("auth.phone")}
+          type="tel"
+          inputMode="tel"
+          placeholder={t(
+            "auth.phone_placeholder"
+          )}
           value={phone}
           onChange={(e) =>
             setPhone(e.target.value)
           }
-          style={{
-            width: "100%",
-            padding: "10px",
-            marginTop: "5px",
-            marginBottom: "15px",
-          }}
+          required
         />
 
+        {/* Password */}
 
-        <label>
-          {t("auth.password")}
-        </label>
-
-        <input
+        <Input
+          label={t("auth.password")}
           type="password"
-          placeholder={t("auth.password_placeholder")}
+          placeholder={t(
+            "auth.password_placeholder"
+          )}
           value={password}
           onChange={(e) =>
             setPassword(e.target.value)
           }
-          style={{
-            width: "100%",
-            padding: "10px",
-            marginTop: "5px",
-            marginBottom: "20px",
-          }}
+          required
         />
 
+        {/* Login Button */}
 
-        <button
-          onClick={handleLogin}
-          style={{
-            width: "100%",
-            padding: "12px",
-            cursor: "pointer",
-          }}
+        <Button
+          type="submit"
+          variant="primary"
+          block
+          disabled={loading}
         >
-          {t("auth.login_button")}
-        </button>
 
-      </div>
+          {loading
+            ? t("common.loading")
+            : t(
+                "auth.login_button"
+              )}
 
-    </div>
+        </Button>
+
+        {/* Language Switch */}
+
+        <Button
+          type="button"
+          variant="secondary"
+          block
+          onClick={switchLanguage}
+        >
+
+          {i18n.language === "en"
+            ? "मराठी"
+            : "English"}
+
+        </Button>
+
+      </form>
+
+    </AuthShell>
   );
 }
-
-export default Login;

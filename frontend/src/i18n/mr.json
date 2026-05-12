@@ -51,8 +51,32 @@
     "admin_id": "प्रशासक आयडी",
     "admin_id_placeholder": "प्रशासक आयडी टाका",
     "admin_demo": "डेमो प्रशासक",
-    "farmer_demo": "डेमो शेतकरी"
+    "farmer_demo": "डेमो शेतकरी",
+    "role":"भूमिका"
   },
+   
+  "signup": {
+    "title": "तुमचे खाते तयार करा",
+    "subtitle": "तुमच्या शेत व्यवस्थापनासाठी SolveXP मध्ये सामील व्हा",
+
+    "full_name": "पूर्ण नाव",
+    "full_name_placeholder": "तुमचे पूर्ण नाव टाका",
+
+    "phone": "फोन नंबर",
+    "phone_placeholder": "१० अंकी फोन नंबर टाका",
+
+    "password": "पासवर्ड",
+    "password_placeholder": "पासवर्ड टाका",
+
+    "confirm_password": "पासवर्ड पुष्टी करा",
+    "confirm_password_placeholder": "पासवर्ड पुन्हा टाका",
+
+    "signup_button": "साइन अप करा",
+
+    "already_account": "आधीपासून खाते आहे?",
+    "signin": "साइन इन"
+  },
+
   "common": {
     "add": "जोडा",
     "save": "जतन करा",

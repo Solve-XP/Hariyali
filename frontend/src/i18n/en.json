@@ -51,8 +51,34 @@
     "admin_id": "Admin ID",
     "admin_id_placeholder": "Enter admin ID",
     "admin_demo": "Demo admin",
-    "farmer_demo": "Demo farmer"
+    "farmer_demo": "Demo farmer",
+    "role":"Role"
   },
+  
+   "signup": {
+    "title": "Create your account",
+    "subtitle": "Join SolveXP to manage your farm",
+
+    "full_name": "Full Name",
+    "full_name_placeholder": "Enter your full name",
+
+    "phone": "Phone Number",
+    "phone_placeholder": "Enter 10-digit phone number",
+
+    "password": "Password",
+    "password_placeholder": "Enter password",
+
+    "confirm_password": "Confirm Password",
+    "confirm_password_placeholder": "Enter password",
+
+    "signup_button": "Sign Up",
+
+    "already_account": "Already have an account?",
+    "signin": "Sign In"
+  },
+
+
+
   "common": {
     "add": "Add",
     "save": "Save",
