@@ -46,6 +46,7 @@ async def create_fertilizer(
 async def get_all_fertilizers(
     farm_id: Optional[str] = Query(None),
     crop_id: Optional[str] = Query(None),
+    financial_year: Optional[str] = Query(None),
     search: Optional[str] = Query(None),
     current_user=Depends(
         get_current_user
@@ -56,6 +57,7 @@ async def get_all_fertilizers(
         str(current_user["_id"]),
         farm_id,
         crop_id,
+        financial_year,
         search
     )
 
@@ -74,7 +76,7 @@ async def get_fertilizer_by_id(
     )
 
 
-@router.put("/{fertilizer_id}")
+@router.patch("/{fertilizer_id}")
 async def update_fertilizer(
     fertilizer_id: str,
     data: FertilizerUpdate,
@@ -101,4 +103,4 @@ async def delete_fertilizer(
     return await fertilizer_service.delete_fertilizer(
         fertilizer_id,
         str(current_user["_id"])
-    )   
+    )

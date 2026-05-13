@@ -31,6 +31,7 @@ class FertilizerRepository:
         user_id: str,
         farm_id: str = None,
         crop_id: str = None,
+        financial_year: str = None,
         search: str = None
     ):
 
@@ -46,6 +47,10 @@ class FertilizerRepository:
         if crop_id:
 
             query["crop_id"] = crop_id
+
+        if financial_year:
+
+            query["financial_year"] = financial_year
 
         search_query = build_search_query(
             "fertilizer_name",

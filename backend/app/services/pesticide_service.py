@@ -15,6 +15,10 @@ from app.repositories.pesticide_repo import (
     PesticideRepository
 )
 
+from app.utils.financial_year import (
+    get_financial_year_from_date
+)
+
 
 class PesticideService:
 
@@ -73,6 +77,10 @@ class PesticideService:
                 detail="Crop not found"
             )
 
+        financial_year = get_financial_year_from_date(
+            data.application_date.date()
+        )
+
         pesticide_data = {
 
             "user_id": user_id,
@@ -80,6 +88,8 @@ class PesticideService:
             "farm_id": data.farm_id,
 
             "crop_id": data.crop_id,
+
+            "financial_year": financial_year,
 
             "pesticide_name": data.pesticide_name,
 
@@ -114,6 +124,7 @@ class PesticideService:
         user_id: str,
         farm_id: str = None,
         crop_id: str = None,
+        financial_year: str = None,
         search: str = None
     ):
 
@@ -121,6 +132,7 @@ class PesticideService:
             user_id=user_id,
             farm_id=farm_id,
             crop_id=crop_id,
+            financial_year=financial_year,
             search=search
         )
 
@@ -186,6 +198,14 @@ class PesticideService:
                     status_code=status.HTTP_400_BAD_REQUEST,
                     detail="Cost cannot be negative"
                 )
+
+        if "application_date" in update_data:
+
+            update_data["financial_year"] = (
+                get_financial_year_from_date(
+                    update_data["application_date"].date()
+                )
+            )
 
         modified_count = await self.pesticide_repo.update_pesticide(
             pesticide_id,
