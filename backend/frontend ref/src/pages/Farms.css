@@ -1,4 +1,0 @@
-/* Farms page — page-level overrides and additions */
-/* Most layout is handled by global utilities (.form-grid, .page, etc.) */
-
-.farms-table-wrap { margin-top: var(--space-2); }
