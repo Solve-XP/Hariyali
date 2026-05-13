@@ -393,3 +393,129 @@ Frontend Notes
 
 
 ----------------------------------------------------------------------------------
+
+# Income Service | Income API
+
+The Income Service manages crop harvest income records and farming revenue tracking.
+
+Only users with the `farmer` role can access income APIs.
+
+The income module is designed for:
+
+* crop harvest income tracking
+* yearly farming revenue analysis
+* crop-wise income tracking
+* farm profitability analysis
+* financial analytics
+
+The income module tracks income generated ONLY from crops.
+
+The income module supports:
+
+* Create Income
+* Get All Incomes
+* Search Incomes
+* Filter Incomes
+* Get Income By ID
+* Update Income
+* Delete Income
+
+Financial year is automatically generated from the income date.
+
+Income listing supports filtering by:
+
+* farm
+* crop
+* financial year
+* search keyword
+
+Search currently uses MongoDB regex search with:
+
+* case-insensitive matching
+* partial keyword matching
+
+Duplicate income records with the same:
+
+* farm
+* crop
+* harvest quantity
+* amount
+* income date (same day)
+
+are restricted for the same user.
+
+Protected APIs require a valid JWT token in the Authorization header.
+
+Authorization Header Example
+
+```txt
+Authorization: Bearer <access_token>
+```
+
+Example Create Income Request
+
+POST /api/v1/incomes
+
+```json
+{
+  "farm_id": "6a04d02f80c35afc502e850b",
+  "crop_id": "6a04d514fb8c129225013400",
+  "harvest_quantity": 100,
+  "unit": "Quintal",
+  "amount": 250000,
+  "income_date": "2026-11-10T10:00:00.000Z",
+  "notes": "Cotton harvest sale"
+}
+```
+
+Example Get All Incomes Request
+
+```txt
+GET /api/v1/incomes
+```
+
+Example Search Incomes Request
+
+```txt
+GET /api/v1/incomes?search=quintal
+```
+
+Example Filter Incomes Request
+
+```txt
+GET /api/v1/incomes?financial_year=2026-2027
+```
+
+Example Success Response
+
+```json
+[
+  {
+    "id": "6a05a92df2d7e786956b9f91",
+    "farm_id": "6a04d02f80c35afc502e850b",
+    "crop_id": "6a04d514fb8c129225013400",
+    "financial_year": "2026-2027",
+    "harvest_quantity": 100,
+    "unit": "Quintal",
+    "amount": 250000,
+    "income_date": "2026-11-10T10:00:00.000Z",
+    "notes": "Cotton harvest sale"
+  }
+]
+```
+
+Frontend Notes
+
+* Frontend should call GET /api/v1/farms to populate farm dropdown while creating incomes.
+* Frontend should call GET /api/v1/crops to populate crop dropdown after farm selection.
+* `farm_id` is mandatory for all income records.
+* `crop_id` is mandatory because income is generated only from crops.
+* Frontend should NOT ask users for financial_year. Backend automatically generates it from income_date.
+* `harvest_quantity` represents harvested or sold crop quantity.
+* Update Income API supports partial updates using PATCH request.
+* Frontend should prevent duplicate submissions by disabling submit button during API request.
+* Search currently uses MongoDB regex search with:
+
+  * case-insensitive matching
+  * partial keyword matching
+
