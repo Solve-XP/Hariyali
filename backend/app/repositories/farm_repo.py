@@ -1,4 +1,5 @@
 from bson import ObjectId
+from bson.errors import InvalidId
 
 from datetime import datetime
 
@@ -23,6 +24,50 @@ class FarmRepository:
 
         return str(result.inserted_id)
 
+    async def check_duplicate_farm(
+        self,
+        user_id: str,
+        farm_name: str,
+        location: str
+    ):
+
+        farm = await self.collection.find_one({
+            "user_id": user_id,
+            "farm_name": farm_name,
+            "location": location,
+            "is_deleted": False
+        })
+
+        return farm
+
+    async def check_duplicate_farm_for_update(
+        self,
+        farm_id: str,
+        user_id: str,
+        farm_name: str,
+        location: str
+    ):
+
+        try:
+
+            object_id = ObjectId(farm_id)
+
+        except InvalidId:
+
+            return None
+
+        farm = await self.collection.find_one({
+            "_id": {
+                "$ne": object_id
+            },
+            "user_id": user_id,
+            "farm_name": farm_name,
+            "location": location,
+            "is_deleted": False
+        })
+
+        return farm
+
     async def get_all_farms(
         self,
         user_id: str,
@@ -43,6 +88,9 @@ class FarmRepository:
 
         farms = await self.collection.find(
             query
+        ).sort(
+            "created_at",
+            -1
         ).to_list(length=None)
 
         return farms
@@ -53,8 +101,16 @@ class FarmRepository:
         user_id: str
     ):
 
+        try:
+
+            object_id = ObjectId(farm_id)
+
+        except InvalidId:
+
+            return None
+
         farm = await self.collection.find_one({
-            "_id": ObjectId(farm_id),
+            "_id": object_id,
             "user_id": user_id,
             "is_deleted": False
         })
@@ -68,11 +124,19 @@ class FarmRepository:
         update_data: dict
     ):
 
+        try:
+
+            object_id = ObjectId(farm_id)
+
+        except InvalidId:
+
+            return 0
+
         update_data["updated_at"] = datetime.utcnow()
 
         result = await self.collection.update_one(
             {
-                "_id": ObjectId(farm_id),
+                "_id": object_id,
                 "user_id": user_id,
                 "is_deleted": False
             },
@@ -89,10 +153,19 @@ class FarmRepository:
         user_id: str
     ):
 
+        try:
+
+            object_id = ObjectId(farm_id)
+
+        except InvalidId:
+
+            return 0
+
         result = await self.collection.update_one(
             {
-                "_id": ObjectId(farm_id),
-                "user_id": user_id
+                "_id": object_id,
+                "user_id": user_id,
+                "is_deleted": False
             },
             {
                 "$set": {

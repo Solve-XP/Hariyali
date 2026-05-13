@@ -22,15 +22,11 @@ class PesticideRepository:
             pesticide_data
         )
 
-        return str(
-            result.inserted_id
-        )
+        return str(result.inserted_id)
 
     async def get_all_pesticides(
         self,
         user_id: str,
-        farm_id: str = None,
-        crop_id: str = None,
         financial_year: str = None,
         search: str = None
     ):
@@ -39,14 +35,6 @@ class PesticideRepository:
             "user_id": user_id,
             "is_deleted": False
         }
-
-        if farm_id:
-
-            query["farm_id"] = farm_id
-
-        if crop_id:
-
-            query["crop_id"] = crop_id
 
         if financial_year:
 
@@ -57,9 +45,7 @@ class PesticideRepository:
             search
         )
 
-        query.update(
-            search_query
-        )
+        query.update(search_query)
 
         pesticides = await self.collection.find(
             query

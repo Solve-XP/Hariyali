@@ -11,6 +11,10 @@ from app.utils.validators import (
     validate_image_type
 )
 
+from app.utils.normalize import (
+    normalize_text
+)
+
 
 class FarmService:
 
@@ -23,6 +27,27 @@ class FarmService:
         payload,
         farm_photo: UploadFile
     ):
+
+        normalized_farm_name = normalize_text(
+            payload.farm_name
+        )
+
+        normalized_location = normalize_text(
+            payload.location
+        )
+
+        existing_farm = await self.repo.check_duplicate_farm(
+            user_id=user_id,
+            farm_name=normalized_farm_name,
+            location=normalized_location
+        )
+
+        if existing_farm:
+
+            raise HTTPException(
+                status_code=409,
+                detail="Farm already exists"
+            )
 
         if not validate_image_type(
             farm_photo.content_type
@@ -40,9 +65,9 @@ class FarmService:
 
         farm_data = {
             "user_id": user_id,
-            "farm_name": payload.farm_name,
+            "farm_name": normalized_farm_name,
             "acres": payload.acres,
-            "location": payload.location,
+            "location": normalized_location,
             "soil_type": payload.soil_type,
             "farm_photo": image_url,
             "created_at": datetime.utcnow(),
@@ -80,7 +105,8 @@ class FarmService:
                 "acres": farm["acres"],
                 "location": farm["location"],
                 "soil_type": farm["soil_type"],
-                "farm_photo": farm.get("farm_photo")
+                "farm_photo": farm.get("farm_photo"),
+                "created_at": farm.get("created_at")
             })
 
         return formatted_farms
@@ -109,7 +135,9 @@ class FarmService:
             "acres": farm["acres"],
             "location": farm["location"],
             "soil_type": farm["soil_type"],
-            "farm_photo": farm.get("farm_photo")
+            "farm_photo": farm.get("farm_photo"),
+            "created_at": farm.get("created_at"),
+            "updated_at": farm.get("updated_at")
         }
 
     async def update_farm(
@@ -120,10 +148,53 @@ class FarmService:
         farm_photo: UploadFile = None
     ):
 
+        existing_farm = await self.repo.get_farm_by_id(
+            farm_id,
+            user_id
+        )
+
+        if not existing_farm:
+
+            raise HTTPException(
+                status_code=404,
+                detail="Farm not found"
+            )
+
         update_data = payload.dict(
             exclude_unset=True,
             exclude_none=True
         )
+
+        final_farm_name = normalize_text(
+            update_data.get(
+                "farm_name",
+                existing_farm["farm_name"]
+            )
+        )
+
+        final_location = normalize_text(
+            update_data.get(
+                "location",
+                existing_farm["location"]
+            )
+        )
+
+        update_data["farm_name"] = final_farm_name
+        update_data["location"] = final_location
+
+        duplicate_farm = await self.repo.check_duplicate_farm_for_update(
+            farm_id=farm_id,
+            user_id=user_id,
+            farm_name=final_farm_name,
+            location=final_location
+        )
+
+        if duplicate_farm:
+
+            raise HTTPException(
+                status_code=409,
+                detail="Farm already exists"
+            )
 
         if farm_photo:
 

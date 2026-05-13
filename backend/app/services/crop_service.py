@@ -6,6 +6,10 @@ from app.utils.financial_year import (
     get_financial_year_from_date
 )
 
+from app.utils.normalize import (
+    normalize_text
+)
+
 
 class CropService:
 
@@ -31,29 +35,58 @@ class CropService:
                 detail="Invalid harvest date"
             )
 
-        financial_year = (
+        financial_year = normalize_text(
             get_financial_year_from_date(
                 payload.sowing_date
             )
         )
 
+        normalized_crop_name = normalize_text(
+            payload.crop_name
+        )
+
+        normalized_season = normalize_text(
+            payload.season
+        )
+
+        normalized_sowing_date = datetime.combine(
+            payload.sowing_date,
+            datetime.min.time()
+        )
+
+        existing_crop = await self.repo.check_duplicate_crop(
+            user_id=user_id,
+            farm_id=payload.farm_id,
+            financial_year=financial_year,
+            crop_name=normalized_crop_name,
+            season=normalized_season,
+            sowing_date=normalized_sowing_date
+        )
+
+        if existing_crop:
+
+            raise HTTPException(
+                status_code=409,
+                detail="Crop already exists"
+            )
+
         crop_data = {
             "user_id": user_id,
-            "farm_id": payload.farm_id,
+
+            "farm_id":
+                payload.farm_id,
 
             "financial_year":
                 financial_year,
 
             "crop_name":
-                payload.crop_name,
+                normalized_crop_name,
 
             "season":
-                payload.season,
+                normalized_season,
 
-            "sowing_date": datetime.combine(
-                payload.sowing_date,
-                datetime.min.time()
-            ),
+            "sowing_date":
+                normalized_sowing_date,
 
             "expected_harvest_date": (
                 datetime.combine(
@@ -180,38 +213,163 @@ class CropService:
         payload
     ):
 
+        existing_crop = await self.repo.get_crop_by_id(
+            crop_id,
+            user_id
+        )
+
+        if not existing_crop:
+
+            raise HTTPException(
+                status_code=404,
+                detail="Crop not found"
+            )
+
         update_data = payload.dict(
             exclude_unset=True,
             exclude_none=True
         )
 
-        if (
-            "sowing_date"
+        sowing_date_changed = (
+            "sowing_date" in update_data
+        )
+
+        harvest_date_changed = (
+            "expected_harvest_date"
             in update_data
+        )
+
+        sowing_date = update_data.get(
+            "sowing_date",
+            existing_crop["sowing_date"]
+        )
+
+        expected_harvest_date = update_data.get(
+            "expected_harvest_date",
+            existing_crop.get(
+                "expected_harvest_date"
+            )
+        )
+
+        if not isinstance(
+            sowing_date,
+            datetime
         ):
 
-            update_data[
-                "financial_year"
-            ] = (
-                get_financial_year_from_date(
-                    update_data[
-                        "sowing_date"
-                    ]
-                )
-            )
-
-            update_data[
-                "sowing_date"
-            ] = datetime.combine(
-                update_data[
-                    "sowing_date"
-                ],
+            sowing_date = datetime.combine(
+                sowing_date,
                 datetime.min.time()
             )
 
         if (
-            "expected_harvest_date"
-            in update_data
+            expected_harvest_date
+            and
+            not isinstance(
+                expected_harvest_date,
+                datetime
+            )
+        ):
+
+            expected_harvest_date = datetime.combine(
+                expected_harvest_date,
+                datetime.min.time()
+            )
+
+        if (
+            expected_harvest_date
+            and
+            sowing_date > expected_harvest_date
+        ):
+
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid harvest date"
+            )
+
+        financial_year = normalize_text(
+            get_financial_year_from_date(
+                sowing_date
+            )
+        )
+
+        final_crop_name = normalize_text(
+            update_data.get(
+                "crop_name",
+                existing_crop["crop_name"]
+            )
+        )
+
+        final_season = normalize_text(
+            update_data.get(
+                "season",
+                existing_crop["season"]
+            )
+        )
+
+        final_sowing_date = update_data.get(
+            "sowing_date",
+            existing_crop["sowing_date"]
+        )
+
+        if not isinstance(
+            final_sowing_date,
+            datetime
+        ):
+
+            final_sowing_date = datetime.combine(
+                final_sowing_date,
+                datetime.min.time()
+            )
+
+        requires_duplicate_check = any([
+            "farm_id" in update_data,
+            "crop_name" in update_data,
+            "season" in update_data,
+            "sowing_date" in update_data
+        ])
+
+        if requires_duplicate_check:
+
+            duplicate_crop = await self.repo.check_duplicate_crop_for_update(
+                crop_id=crop_id,
+                user_id=user_id,
+                farm_id=update_data.get(
+                    "farm_id",
+                    existing_crop["farm_id"]
+                ),
+                financial_year=financial_year,
+                crop_name=final_crop_name,
+                season=final_season,
+                sowing_date=final_sowing_date
+            )
+
+            if duplicate_crop:
+
+                raise HTTPException(
+                    status_code=409,
+                    detail="Crop already exists"
+                )
+
+        update_data["financial_year"] = (
+            financial_year
+        )
+
+        update_data["crop_name"] = (
+            final_crop_name
+        )
+
+        update_data["season"] = (
+            final_season
+        )
+
+        if sowing_date_changed:
+
+            update_data[
+                "sowing_date"
+            ] = final_sowing_date
+
+        if (
+            harvest_date_changed
             and
             update_data[
                 "expected_harvest_date"

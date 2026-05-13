@@ -194,18 +194,35 @@ Frontend Notes
 
   * case-insensitive matching
   * partial keyword matching
+ 
 
+---
 
 # Fertilizer Service | Fertilizer API
 
-The Fertilizer Service manages fertilizer records associated with farmer-owned crops and farms.
+The Fertilizer Service manages fertilizer usage history records for farmers.
 
 Only users with the `farmer` role can access fertilizer APIs.
 
+The fertilizer module is designed for:
+
+* fertilizer usage tracking
+* yearly fertilizer usage history
+* future fertilizer planning
+* fertilizer consumption analytics
+
+The fertilizer module does NOT handle:
+
+* expense tracking
+* financial calculations
+* purchase accounting
+
+Financial data is managed separately through the Expense module.
+
 The fertilizer module supports:
 
-* Create Fertilizer
-* Get All Fertilizers
+* Create Fertilizer Record
+* Get All Fertilizer Records
 * Search Fertilizers
 * Filter Fertilizers
 * Get Fertilizer By ID
@@ -216,8 +233,6 @@ Financial year is automatically generated from the fertilizer application date.
 
 Fertilizer listing supports filtering by:
 
-* farm
-* crop
 * financial year
 * search keyword
 
@@ -226,72 +241,78 @@ Search currently uses MongoDB regex search with:
 * case-insensitive matching
 * partial keyword matching
 
+Duplicate fertilizer records with the same:
+
+* fertilizer_name
+* quantity
+* application_date
+* financial_year
+
+are restricted for the same user.
+
 Protected APIs require a valid JWT token in the Authorization header.
 
 Authorization Header Example
 
+```txt id="doc1"
 Authorization: Bearer <access_token>
+```
 
 Example Create Fertilizer Request
 
 POST /api/v1/fertilizers
 
-```json id="q8r9ny"
+```json id="doc2"
 {
-  "farm_id": "6819e7c2c8f24f6c0c4f1234",
-  "crop_id": "6820e7c2c8f24f6c0c4f5678",
   "fertilizer_name": "Urea",
   "quantity": 10,
-  "unit": "bag",
-  "cost": 1000,
+  "unit": "Bags",
   "application_date": "2026-05-13T10:05:38.301Z",
-  "notes": "Applied before irrigation"
+  "notes": "Future storing"
 }
 ```
 
 Example Get All Fertilizers Request
 
+```txt id="doc3"
 GET /api/v1/fertilizers
+```
 
 Example Search Fertilizers Request
 
+```txt id="doc4"
 GET /api/v1/fertilizers?search=urea
+```
 
 Example Filter Fertilizers Request
 
-GET /api/v1/fertilizers?farm_id=6819e7c2c8f24f6c0c4f1234
-
-GET /api/v1/fertilizers?crop_id=6820e7c2c8f24f6c0c4f5678
-
+```txt id="doc5"
 GET /api/v1/fertilizers?financial_year=2026-2027
+```
 
 Example Success Response
 
-```json id="bfbdyv"
+```json id="doc6"
 [
   {
-    "id": "6a044f24418234e51c4ecca5",
-    "farm_id": "6819e7c2c8f24f6c0c4f1234",
-    "crop_id": "6820e7c2c8f24f6c0c4f5678",
+    "id": "6a04c83a20831aea477397fb",
     "financial_year": "2026-2027",
     "fertilizer_name": "Urea",
     "quantity": 10,
-    "unit": "bag",
-    "cost": 1000,
+    "unit": "Bags",
     "application_date": "2026-05-13T10:05:38.301Z",
-    "notes": "Applied before irrigation"
+    "notes": "Future storing"
   }
 ]
 ```
 
 Frontend Notes
 
-* Frontend should call GET /api/v1/farms to populate the farm dropdown while creating fertilizers.
-* Frontend should call GET /api/v1/crops?farm_id=<farm_id> to populate crop dropdown based on selected farm.
-* Farmers should not manually enter farm_id or crop_id. Frontend should automatically send selected IDs.
-* Fertilizer list currently returns farm_id and crop_id. Frontend should map IDs with farm_name and crop_name using farms and crops API responses.
-* Financial year is automatically generated from application_date.
+* Frontend should NOT ask users for financial_year. Backend automatically generates it from application_date.
 * Update Fertilizer API supports partial updates using PATCH request.
+* Frontend should prevent duplicate submissions by disabling submit button during API request.
+* Fertilizer module tracks only fertilizer usage history.
+* Expense-related fertilizer spending is handled separately in the Expense module.
 * Search currently uses MongoDB regex search with:
 
   * case-insensitive matching
@@ -301,14 +322,29 @@ Frontend Notes
 
 # Pesticide Service | Pesticide API
 
-The Pesticide Service manages pesticide records associated with farmer-owned crops and farms.
+The Pesticide Service manages pesticide usage history records for farmers.
 
 Only users with the `farmer` role can access pesticide APIs.
 
+The pesticide module is designed for:
+
+* pesticide usage tracking
+* yearly pesticide usage history
+* future pesticide planning
+* pesticide consumption analytics
+
+The pesticide module does NOT handle:
+
+* expense tracking
+* financial calculations
+* purchase accounting
+
+Financial data is managed separately through the Expense module.
+
 The pesticide module supports:
 
-* Create Pesticide
-* Get All Pesticides
+* Create Pesticide Record
+* Get All Pesticide Records
 * Search Pesticides
 * Filter Pesticides
 * Get Pesticide By ID
@@ -319,8 +355,6 @@ Financial year is automatically generated from the pesticide application date.
 
 Pesticide listing supports filtering by:
 
-* farm
-* crop
 * financial year
 * search keyword
 
@@ -329,24 +363,32 @@ Search currently uses MongoDB regex search with:
 * case-insensitive matching
 * partial keyword matching
 
+Duplicate pesticide records with the same:
+
+* pesticide_name
+* quantity
+* application_date
+* financial_year
+
+are restricted for the same user.
+
 Protected APIs require a valid JWT token in the Authorization header.
 
 Authorization Header Example
 
+```txt id="doc7"
 Authorization: Bearer <access_token>
+```
 
 Example Create Pesticide Request
 
 POST /api/v1/pesticides
 
-```json id="4rf6gh"
+```json id="doc8"
 {
-  "farm_id": "6819e7c2c8f24f6c0c4f1234",
-  "crop_id": "6820e7c2c8f24f6c0c4f5678",
   "pesticide_name": "Insecticide X",
   "quantity": 5,
-  "unit": "liter",
-  "cost": 2500,
+  "unit": "Liter",
   "application_date": "2026-05-13T10:05:38.301Z",
   "notes": "Applied after pest detection"
 }
@@ -354,33 +396,32 @@ POST /api/v1/pesticides
 
 Example Get All Pesticides Request
 
+```txt id="doc9"
 GET /api/v1/pesticides
+```
 
 Example Search Pesticides Request
 
+```txt id="doc10"
 GET /api/v1/pesticides?search=insect
+```
 
 Example Filter Pesticides Request
 
-GET /api/v1/pesticides?farm_id=6819e7c2c8f24f6c0c4f1234
-
-GET /api/v1/pesticides?crop_id=6820e7c2c8f24f6c0c4f5678
-
+```txt id="doc11"
 GET /api/v1/pesticides?financial_year=2026-2027
+```
 
 Example Success Response
 
-```json id="9t2yt5"
+```json id="doc12"
 [
   {
-    "id": "6a044f24418234e51c4ecca5",
-    "farm_id": "6819e7c2c8f24f6c0c4f1234",
-    "crop_id": "6820e7c2c8f24f6c0c4f5678",
+    "id": "6a04c83a20831aea477397fb",
     "financial_year": "2026-2027",
     "pesticide_name": "Insecticide X",
     "quantity": 5,
-    "unit": "liter",
-    "cost": 2500,
+    "unit": "Liter",
     "application_date": "2026-05-13T10:05:38.301Z",
     "notes": "Applied after pest detection"
   }
@@ -389,12 +430,11 @@ Example Success Response
 
 Frontend Notes
 
-* Frontend should call GET /api/v1/farms to populate the farm dropdown while creating pesticides.
-* Frontend should call GET /api/v1/crops?farm_id=<farm_id> to populate crop dropdown based on selected farm.
-* Farmers should not manually enter farm_id or crop_id. Frontend should automatically send selected IDs.
-* Pesticide list currently returns farm_id and crop_id. Frontend should map IDs with farm_name and crop_name using farms and crops API responses.
-* Financial year is automatically generated from application_date.
+* Frontend should NOT ask users for financial_year. Backend automatically generates it from application_date.
 * Update Pesticide API supports partial updates using PATCH request.
+* Frontend should prevent duplicate submissions by disabling submit button during API request.
+* Pesticide module tracks only pesticide usage history.
+* Expense-related pesticide spending is handled separately in the Expense module.
 * Search currently uses MongoDB regex search with:
 
   * case-insensitive matching

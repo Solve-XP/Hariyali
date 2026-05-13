@@ -1,4 +1,5 @@
 from bson import ObjectId
+from bson.errors import InvalidId
 
 from datetime import datetime
 
@@ -24,6 +25,62 @@ class CropRepository:
 
         return str(result.inserted_id)
 
+    async def check_duplicate_crop(
+        self,
+        user_id: str,
+        farm_id: str,
+        financial_year: str,
+        crop_name: str,
+        season: str,
+        sowing_date: datetime
+    ):
+
+        crop = await self.collection.find_one({
+            "user_id": user_id,
+            "farm_id": farm_id,
+            "financial_year": financial_year,
+            "crop_name": crop_name,
+            "season": season,
+            "sowing_date": sowing_date,
+            "is_deleted": False
+        })
+
+        return crop
+
+    async def check_duplicate_crop_for_update(
+        self,
+        crop_id: str,
+        user_id: str,
+        farm_id: str,
+        financial_year: str,
+        crop_name: str,
+        season: str,
+        sowing_date: datetime
+    ):
+
+        try:
+
+            object_id = ObjectId(crop_id)
+
+        except InvalidId:
+
+            return None
+
+        crop = await self.collection.find_one({
+            "_id": {
+                "$ne": object_id
+            },
+            "user_id": user_id,
+            "farm_id": farm_id,
+            "financial_year": financial_year,
+            "crop_name": crop_name,
+            "season": season,
+            "sowing_date": sowing_date,
+            "is_deleted": False
+        })
+
+        return crop
+
     async def get_all_crops(
         self,
         user_id: str,
@@ -46,18 +103,24 @@ class CropRepository:
         query.update(search_query)
 
         if farm_id:
+
             query["farm_id"] = farm_id
 
         if season:
+
             query["season"] = season
 
         if financial_year:
+
             query["financial_year"] = (
                 financial_year
             )
 
         crops = await self.collection.find(
             query
+        ).sort(
+            "created_at",
+            -1
         ).to_list(length=None)
 
         return crops
@@ -68,8 +131,16 @@ class CropRepository:
         user_id: str
     ):
 
+        try:
+
+            object_id = ObjectId(crop_id)
+
+        except InvalidId:
+
+            return None
+
         crop = await self.collection.find_one({
-            "_id": ObjectId(crop_id),
+            "_id": object_id,
             "user_id": user_id,
             "is_deleted": False
         })
@@ -83,13 +154,21 @@ class CropRepository:
         update_data: dict
     ):
 
+        try:
+
+            object_id = ObjectId(crop_id)
+
+        except InvalidId:
+
+            return 0
+
         update_data["updated_at"] = (
             datetime.utcnow()
         )
 
         result = await self.collection.update_one(
             {
-                "_id": ObjectId(crop_id),
+                "_id": object_id,
                 "user_id": user_id,
                 "is_deleted": False
             },
@@ -106,10 +185,19 @@ class CropRepository:
         user_id: str
     ):
 
+        try:
+
+            object_id = ObjectId(crop_id)
+
+        except InvalidId:
+
+            return 0
+
         result = await self.collection.update_one(
             {
-                "_id": ObjectId(crop_id),
-                "user_id": user_id
+                "_id": object_id,
+                "user_id": user_id,
+                "is_deleted": False
             },
             {
                 "$set": {

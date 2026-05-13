@@ -7,6 +7,7 @@ from app.api.v1.endpoints import fertilizers
 from app.api.v1.endpoints import pesticides
 
 
+
 api_router = APIRouter()
 
 api_router.include_router(auth.router)

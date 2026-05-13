@@ -6,9 +6,7 @@ from fastapi import HTTPException
 from fastapi import status
 
 from app.db.database import (
-    fertilizers_collection,
-    farms_collection,
-    crop_collection
+    fertilizers_collection
 )
 
 from app.repositories.fertilizer_repo import (
@@ -43,51 +41,35 @@ class FertilizerService:
                 detail="Quantity must be greater than 0"
             )
 
-        if data.cost < 0:
-
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Cost cannot be negative"
-            )
-
-        farm = await farms_collection.find_one({
-            "_id": ObjectId(data.farm_id),
-            "user_id": user_id,
-            "is_deleted": False
-        })
-
-        if not farm:
-
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Farm not found"
-            )
-
-        crop = await crop_collection.find_one({
-            "_id": ObjectId(data.crop_id),
-            "farm_id": data.farm_id,
-            "user_id": user_id,
-            "is_deleted": False
-        })
-
-        if not crop:
-
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Crop not found"
-            )
-
         financial_year = get_financial_year_from_date(
             data.application_date.date()
         )
 
-        fertilizer_data = {
+        existing_fertilizer = await fertilizers_collection.find_one({
 
             "user_id": user_id,
 
-            "farm_id": data.farm_id,
+            "financial_year": financial_year,
 
-            "crop_id": data.crop_id,
+            "fertilizer_name": data.fertilizer_name,
+
+            "quantity": data.quantity,
+
+            "application_date": data.application_date,
+
+            "is_deleted": False
+        })
+
+        if existing_fertilizer:
+
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Similar fertilizer record already exists"
+            )
+
+        fertilizer_data = {
+
+            "user_id": user_id,
 
             "financial_year": financial_year,
 
@@ -96,8 +78,6 @@ class FertilizerService:
             "quantity": data.quantity,
 
             "unit": data.unit,
-
-            "cost": data.cost,
 
             "application_date": data.application_date,
 
@@ -122,21 +102,15 @@ class FertilizerService:
     async def get_all_fertilizers(
         self,
         user_id: str,
-        farm_id: str = None,
-        crop_id: str = None,
         financial_year: str = None,
         search: str = None
     ):
 
-        fertilizers = await self.fertilizer_repo.get_all_fertilizers(
+        return await self.fertilizer_repo.get_all_fertilizers(
             user_id=user_id,
-            farm_id=farm_id,
-            crop_id=crop_id,
             financial_year=financial_year,
             search=search
         )
-
-        return fertilizers
 
     async def get_fertilizer_by_id(
         self,
@@ -190,14 +164,50 @@ class FertilizerService:
                     detail="Quantity must be greater than 0"
                 )
 
-        if "cost" in update_data:
+        final_application_date = update_data.get(
+            "application_date",
+            fertilizer["application_date"]
+        )
 
-            if update_data["cost"] < 0:
+        final_financial_year = get_financial_year_from_date(
+            final_application_date.date()
+        )
 
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail="Cost cannot be negative"
-                )
+        final_fertilizer_name = update_data.get(
+            "fertilizer_name",
+            fertilizer["fertilizer_name"]
+        )
+
+        final_quantity = update_data.get(
+            "quantity",
+            fertilizer["quantity"]
+        )
+
+        existing_fertilizer = await fertilizers_collection.find_one({
+
+            "_id": {
+                "$ne": ObjectId(fertilizer_id)
+            },
+
+            "user_id": user_id,
+
+            "financial_year": final_financial_year,
+
+            "fertilizer_name": final_fertilizer_name,
+
+            "quantity": final_quantity,
+
+            "application_date": final_application_date,
+
+            "is_deleted": False
+        })
+
+        if existing_fertilizer:
+
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Similar fertilizer record already exists"
+            )
 
         if "application_date" in update_data:
 

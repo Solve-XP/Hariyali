@@ -6,9 +6,7 @@ from fastapi import HTTPException
 from fastapi import status
 
 from app.db.database import (
-    pesticides_collection,
-    farms_collection,
-    crop_collection
+    pesticides_collection
 )
 
 from app.repositories.pesticide_repo import (
@@ -43,51 +41,35 @@ class PesticideService:
                 detail="Quantity must be greater than 0"
             )
 
-        if data.cost < 0:
-
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Cost cannot be negative"
-            )
-
-        farm = await farms_collection.find_one({
-            "_id": ObjectId(data.farm_id),
-            "user_id": user_id,
-            "is_deleted": False
-        })
-
-        if not farm:
-
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Farm not found"
-            )
-
-        crop = await crop_collection.find_one({
-            "_id": ObjectId(data.crop_id),
-            "farm_id": data.farm_id,
-            "user_id": user_id,
-            "is_deleted": False
-        })
-
-        if not crop:
-
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Crop not found"
-            )
-
         financial_year = get_financial_year_from_date(
             data.application_date.date()
         )
 
-        pesticide_data = {
+        existing_pesticide = await pesticides_collection.find_one({
 
             "user_id": user_id,
 
-            "farm_id": data.farm_id,
+            "financial_year": financial_year,
 
-            "crop_id": data.crop_id,
+            "pesticide_name": data.pesticide_name,
+
+            "quantity": data.quantity,
+
+            "application_date": data.application_date,
+
+            "is_deleted": False
+        })
+
+        if existing_pesticide:
+
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Similar pesticide record already exists"
+            )
+
+        pesticide_data = {
+
+            "user_id": user_id,
 
             "financial_year": financial_year,
 
@@ -96,8 +78,6 @@ class PesticideService:
             "quantity": data.quantity,
 
             "unit": data.unit,
-
-            "cost": data.cost,
 
             "application_date": data.application_date,
 
@@ -122,21 +102,15 @@ class PesticideService:
     async def get_all_pesticides(
         self,
         user_id: str,
-        farm_id: str = None,
-        crop_id: str = None,
         financial_year: str = None,
         search: str = None
     ):
 
-        pesticides = await self.pesticide_repo.get_all_pesticides(
+        return await self.pesticide_repo.get_all_pesticides(
             user_id=user_id,
-            farm_id=farm_id,
-            crop_id=crop_id,
             financial_year=financial_year,
             search=search
         )
-
-        return pesticides
 
     async def get_pesticide_by_id(
         self,
@@ -190,14 +164,50 @@ class PesticideService:
                     detail="Quantity must be greater than 0"
                 )
 
-        if "cost" in update_data:
+        final_application_date = update_data.get(
+            "application_date",
+            pesticide["application_date"]
+        )
 
-            if update_data["cost"] < 0:
+        final_financial_year = get_financial_year_from_date(
+            final_application_date.date()
+        )
 
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail="Cost cannot be negative"
-                )
+        final_pesticide_name = update_data.get(
+            "pesticide_name",
+            pesticide["pesticide_name"]
+        )
+
+        final_quantity = update_data.get(
+            "quantity",
+            pesticide["quantity"]
+        )
+
+        existing_pesticide = await pesticides_collection.find_one({
+
+            "_id": {
+                "$ne": ObjectId(pesticide_id)
+            },
+
+            "user_id": user_id,
+
+            "financial_year": final_financial_year,
+
+            "pesticide_name": final_pesticide_name,
+
+            "quantity": final_quantity,
+
+            "application_date": final_application_date,
+
+            "is_deleted": False
+        })
+
+        if existing_pesticide:
+
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Similar pesticide record already exists"
+            )
 
         if "application_date" in update_data:
 

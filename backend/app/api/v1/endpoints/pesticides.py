@@ -44,8 +44,6 @@ async def create_pesticide(
 
 @router.get("")
 async def get_all_pesticides(
-    farm_id: Optional[str] = Query(None),
-    crop_id: Optional[str] = Query(None),
     financial_year: Optional[str] = Query(None),
     search: Optional[str] = Query(None),
     current_user=Depends(
@@ -55,8 +53,6 @@ async def get_all_pesticides(
 
     return await pesticide_service.get_all_pesticides(
         str(current_user["_id"]),
-        farm_id,
-        crop_id,
         financial_year,
         search
     )
