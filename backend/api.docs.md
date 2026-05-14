@@ -598,3 +598,165 @@ Frontend Notes
 
   * case-insensitive matching
   * partial keyword matching
+
+
+# Rental Marketplace Service | Rental Marketplace API
+
+The Rental Marketplace Service manages farm equipment rental listings shared by farmers.
+
+Only authenticated users can create, update, and delete rental listings.
+
+The rental marketplace module is designed for:
+
+* equipment rental listing
+* farmer-to-farmer equipment sharing
+* equipment discovery
+* local rental marketplace browsing
+
+The rental marketplace is a listing-based system.
+
+The backend currently supports:
+
+* equipment listing creation
+* equipment browsing
+* search functionality
+* equipment availability management
+
+The module does NOT currently support:
+
+* online booking
+* payment gateway
+* live availability calendar
+* chat system
+* rental contracts
+
+The rental marketplace module supports:
+
+* Create Equipment Listing
+* Get All Listings
+* Search Listings
+* Filter Listings
+* Get Listing By ID
+* Update Listing
+* Delete Listing
+
+Financial year is automatically generated while creating the listing.
+
+Equipment photos are uploaded and stored in AWS S3.
+
+Rental listing supports filtering by:
+
+* financial year
+* search keyword
+
+Search currently uses MongoDB regex search with:
+
+* case-insensitive matching
+* partial keyword matching
+
+Duplicate listings with the same:
+
+* equipment name
+* location
+* same user
+* same day
+
+are restricted.
+
+Protected APIs require a valid JWT token in the Authorization header.
+
+Authorization Header Example
+
+```txt
+Authorization: Bearer <access_token>
+```
+
+Rental Pricing Logic
+
+At least one pricing field is required:
+
+* price_per_hour
+* price_per_day
+
+Both can also be provided.
+
+Example Create Rental Listing Request
+
+POST /api/v1/rentals
+
+Content-Type: multipart/form-data
+
+```txt
+equipment_name = Tractor
+
+price_per_hour = 500
+
+price_per_day = 3500
+
+location = Kolhapur
+
+owner_name = Balraje
+
+phone = 9766863091
+
+description = Heavy duty tractor available for farming work
+
+equipment_photo = tractor.jpg
+```
+
+Example Get All Rental Listings Request
+
+```txt
+GET /api/v1/rentals
+```
+
+Example Search Rental Listings Request
+
+```txt
+GET /api/v1/rentals?search=tractor
+```
+
+Example Filter Rental Listings Request
+
+```txt
+GET /api/v1/rentals?financial_year=2026-2027
+```
+
+Example Success Response
+
+```json
+[
+  {
+    "id": "6a05a2cb3186e144bf1d5867",
+    "financial_year": "2026-2027",
+    "equipment_name": "Tractor",
+    "price_per_hour": 500,
+    "price_per_day": 3500,
+    "location": "Kolhapur",
+    "owner_name": "Balraje",
+    "phone": "9766863091",
+    "equipment_photo": "https://bucket-name.s3.region.amazonaws.com/rentals/image.jpg",
+    "description": "Heavy duty tractor available",
+    "is_available": true
+  }
+]
+```
+
+Frontend Notes
+
+* Equipment photo upload is mandatory while creating listing.
+* Equipment photo upload is optional while updating listing.
+* Frontend should use multipart/form-data for create and update APIs.
+* Frontend should allow user to provide either:
+
+  * hourly pricing
+  * daily pricing
+  * or both
+* Frontend should show equipment image preview before upload.
+* Frontend should prevent duplicate submissions by disabling submit button during API request.
+* Update Listing API supports partial updates using PATCH request.
+* Backend ignores fields not provided during update requests.
+* Search currently uses MongoDB regex search with:
+
+  * case-insensitive matching
+  * partial keyword matching
