@@ -2,22 +2,18 @@ import "./SignUp.css";
 
 import { useState } from "react";
 
-import { useTranslation }
-from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 import {
   useNavigate,
   Link,
 } from "react-router-dom";
 
-import AuthShell
-from "../components/AuthShell";
+import AuthShell from "../components/AuthShell";
 
-import Input
-from "../components/Input";
+import Input from "../components/Input";
 
-import Button
-from "../components/Button";
+import Button from "../components/Button";
 
 import {
   signupUser,
@@ -33,31 +29,21 @@ import {
 
 export default function SignUp() {
 
-  const { t } =
-    useTranslation();
+  const { t } = useTranslation();
 
-  const navigate =
-    useNavigate();
+  const navigate = useNavigate();
 
-  const { saveAuth } =
-    useAuth();
+  const { saveAuth } = useAuth();
 
-  const { pushToast } =
-    useApp();
+  const { pushToast } = useApp();
 
-  const [form, setForm] =
-    useState({
-
-      name: "",
-
-      phone: "",
-
-      password: "",
-
-      confirm: "",
-
-      role: "farmer",
-    });
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    password: "",
+    confirm: "",
+    role: "farmer",
+  });
 
   const [error, setError] =
     useState("");
@@ -70,12 +56,8 @@ export default function SignUp() {
     (field) => (e) => {
 
       setForm((prev) => ({
-
         ...prev,
-
-        [field]:
-          e.target.value,
-
+        [field]: e.target.value,
       }));
     };
 
@@ -95,7 +77,7 @@ export default function SignUp() {
         role,
       } = form;
 
-      // Validation
+      // Empty Validation
       if (
         !name ||
         !phone ||
@@ -104,35 +86,43 @@ export default function SignUp() {
       ) {
 
         setError(
-          t(
-            "messages.VALIDATION_ERROR"
-          )
+          "All fields are required"
         );
 
         return;
       }
 
+      // Phone Validation
       if (
-        password.length < 6
+        !/^[0-9]{10}$/.test(phone)
       ) {
 
         setError(
-          t(
-            "auth.password_too_short"
-          )
+          "Phone number must be exactly 10 digits"
         );
 
         return;
       }
 
+      // Password Length
+      if (
+        password.length < 8
+      ) {
+
+        setError(
+          "Password must be at least 8 characters"
+        );
+
+        return;
+      }
+
+      // Confirm Password
       if (
         password !== confirm
       ) {
 
         setError(
-          t(
-            "auth.password_mismatch"
-          )
+          "Passwords do not match"
         );
 
         return;
@@ -145,18 +135,16 @@ export default function SignUp() {
         // API Call
         const res =
           await signupUser({
-
-            name,
-
-            phone,
-
+            name: name.trim(),
+            phone: phone.trim(),
             password,
-
-            role,
-
+            role: role.toLowerCase(),
           });
 
-        console.log(res);
+        console.log(
+          "SIGNUP RESPONSE:",
+          res
+        );
 
         // Save Auth
         saveAuth(
@@ -166,13 +154,11 @@ export default function SignUp() {
 
         // Success Toast
         pushToast(
-          t(
-            "messages.AUTH_SIGNUP_SUCCESS"
-          ),
+          "Signup successful",
           "success"
         );
 
-        // Role Redirect
+        // Redirect
         switch (
           res.user.role
         ) {
@@ -222,37 +208,64 @@ export default function SignUp() {
 
       } catch (err) {
 
-        console.log(err);
-
-        const code =
-
-          err?.response?.data
-            ?.message ||
-
-          err?.message ||
-
-          "GENERIC_ERROR";
-
-        setError(
-
-          t(
-            `messages.${code}`,
-
-            {
-
-              defaultValue:
-                t(
-                  "messages.GENERIC_ERROR"
-                ),
-
-            }
-          )
+        console.log(
+          "FULL ERROR:",
+          err
         );
 
+        console.log(
+          "ERROR RESPONSE:",
+          err.response
+        );
+
+        console.log(
+          "ERROR DATA:",
+          err.response?.data
+        );
+
+        // Backend Error Handling
+        if (
+          err?.response?.data?.detail
+        ) {
+
+          const detail =
+            err.response.data.detail;
+
+          if (
+            Array.isArray(detail)
+          ) {
+
+            setError(
+              detail
+                .map(
+                  (item) =>
+                    item.msg
+                )
+                .join(", ")
+            );
+
+          } else {
+
+            setError(detail);
+          }
+
+        } else if (
+          err?.response?.data?.message
+        ) {
+
+          setError(
+            err.response.data.message
+          );
+
+        } else {
+
+          setError(
+            "Something went wrong"
+          );
+        }
+
         pushToast(
-          t(
-            "messages.GENERIC_ERROR"
-          ),
+          "Signup failed",
           "error"
         );
 
@@ -266,16 +279,10 @@ export default function SignUp() {
 
     <div className="auth-footer">
 
-      {t(
-        "auth.have_account"
-      )}{" "}
+      Already have an account?{" "}
 
       <Link to="/login">
-
-        {t(
-          "auth.login_link"
-        )}
-
+        Sign In
       </Link>
 
     </div>
@@ -284,15 +291,8 @@ export default function SignUp() {
   return (
 
     <AuthShell
-
-      title={t(
-        "auth.signup_title"
-      )}
-
-      subtitle={t(
-        "auth.signup_subtitle"
-      )}
-
+      title="Create your account"
+      subtitle="Join SolveXP to manage your farm"
       footer={footer}
     >
 
@@ -309,55 +309,37 @@ export default function SignUp() {
         {error && (
 
           <div className="auth-error">
-
             {error}
-
           </div>
         )}
 
         {/* Name */}
 
         <Input
-          label={t(
-            "auth.name"
-          )}
+          label="Full Name"
           type="text"
-          placeholder={t(
-            "auth.name_placeholder"
-          )}
           value={form.name}
-          onChange={set(
-            "name"
-          )}
+          onChange={set("name")}
           required
         />
 
         {/* Phone */}
 
         <Input
-          label={t(
-            "auth.phone"
-          )}
+          label="Phone Number"
           type="tel"
-          inputMode="tel"
-          placeholder={t(
-            "auth.phone_placeholder"
-          )}
+          inputMode="numeric"
           value={form.phone}
-          onChange={set(
-            "phone"
-          )}
+          onChange={set("phone")}
           required
         />
 
-        {/* Role Radio */}
+        {/* Role */}
 
         <div className="role-group">
 
           <label className="role-group__label">
-
-            {t("auth.role")}
-
+            Role
           </label>
 
           <div className="role-options">
@@ -408,20 +390,15 @@ export default function SignUp() {
 
         </div>
 
-        {/* Passwords */}
+        {/* Password Row */}
 
         <div className="
           signup-form__password-row
         ">
 
           <Input
-            label={t(
-              "auth.password"
-            )}
+            label="Password"
             type="password"
-            placeholder={t(
-              "auth.password_placeholder"
-            )}
             value={form.password}
             onChange={set(
               "password"
@@ -430,13 +407,8 @@ export default function SignUp() {
           />
 
           <Input
-            label={t(
-              "auth.confirm_password"
-            )}
+            label="Confirm Password"
             type="password"
-            placeholder={t(
-              "auth.password_placeholder"
-            )}
             value={form.confirm}
             onChange={set(
               "confirm"
@@ -446,7 +418,7 @@ export default function SignUp() {
 
         </div>
 
-        {/* Signup Button */}
+        {/* Button */}
 
         <Button
           type="submit"
@@ -456,14 +428,8 @@ export default function SignUp() {
         >
 
           {loading
-
-            ? t(
-                "common.loading"
-              )
-
-            : t(
-                "auth.signup_button"
-              )}
+            ? "Loading..."
+            : "Sign Up"}
 
         </Button>
 
