@@ -133,12 +133,32 @@
     "acres": "Acres",
     "location": "Location",
     "soil_type": "Soil Type",
+    "farm_photo": "Farm Photo",
+    "cancel": "Cancel",
+    "create_farm": "Create Farm",
+    "update_farm": "Update Farm",
     "add_title": "Add New Farm",
     "name_placeholder": "Enter farm name",
     "acres_placeholder": "Enter acres",
+    "search_placeholder": "शेती शोधा...",
     "location_placeholder": "Enter location",
     "soil_placeholder": "Enter soil type",
-    "empty": "No farms added yet. Add your first farm to get started."
+    "empty": "No farms added yet. Add your first farm to get started.",
+    
+
+     "stats": {
+      "total_farms": "Total Farms",
+      "farms_added": "Farms added",
+
+      "total_acres": "Total Acres",
+      "acres_land": "Acres of land",
+
+      "soil_types": "Soil Types",
+      "different_soil_types": "Different soil types",
+
+      "locations": "Locations",
+      "unique_locations": "Unique locations"
+    }
   },
   "crops": {
     "title": "Crops",

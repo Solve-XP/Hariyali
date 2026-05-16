@@ -131,12 +131,31 @@
     "acres": "एकर",
     "location": "स्थान",
     "soil_type": "मातीचा प्रकार",
+    "farm_photo": "शेतीचा फोटो",
+    "cancel": "रद्द करा",
+    "create_farm": "शेती तयार करा",
+    "update_farm": "शेती अद्ययावत करा",
     "add_title": "नवीन शेत जोडा",
     "name_placeholder": "शेताचे नाव टाका",
     "acres_placeholder": "एकर टाका",
     "location_placeholder": "स्थान टाका",
     "soil_placeholder": "मातीचा प्रकार टाका",
-    "empty": "अद्याप कोणतीही शेती जोडलेली नाही. सुरुवात करण्यासाठी पहिले शेत जोडा."
+    "search_placeholder": "शेती शोधा...",
+    "empty": "अद्याप कोणतीही शेती जोडलेली नाही. सुरुवात करण्यासाठी पहिले शेत जोडा.",
+
+    "stats": {
+      "total_farms": "एकूण शेती",
+     "farms_added": "जोडलेल्या शेती",
+
+      "total_acres": "एकूण एकर",
+      "acres_land": "जमिनीचे एकर",
+
+      "soil_types": "मातीचे प्रकार",
+      "different_soil_types": "वेगवेगळे मातीचे प्रकार",
+
+      "locations": "स्थाने",
+      "unique_locations": "वेगवेगळी स्थाने"
+    }
   },
   "crops": {
     "title": "पिके",

@@ -8,7 +8,17 @@ export const IconDashboard = ({ size = 18, ...r }) => (
   <svg {...bp(size, r)}><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
 );
 export const IconFarm = ({ size = 18, ...r }) => (
-  <svg {...bp(size, r)}><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
+  <svg {...bp(size, r)} viewBox="0 0 24 24" fill="none">
+    {/* Sun */}
+    <circle cx="18" cy="6" r="2" />
+
+    {/* Mountains / background */}
+    <path d="M3 14l4-4 3 3 4-5 7 8" />
+
+    {/* Farm land rows */}
+    <path d="M3 18c2-1 4-1 6 0s4 1 6 0 4-1 6 0" />
+    <path d="M3 21c2-1 4-1 6 0s4 1 6 0 4-1 6 0" />
+  </svg>
 );
 export const IconCrop = ({ size = 18, ...r }) => (
   <svg {...bp(size, r)}><path d="M12 22V8"/><path d="M12 8c-2 0-4-2-4-4 2 0 4 2 4 4z"/><path d="M12 8c2 0 4-2 4-4-2 0-4 2-4 4z"/><path d="M12 14c-2 0-5-1-5-4 2 0 5 1 5 4z"/><path d="M12 14c2 0 5-1 5-4-2 0-5 1-5 4z"/></svg>
@@ -51,4 +61,47 @@ export const IconEye = ({ size = 16, ...r }) => (
 );
 export const IconEyeOff = ({ size = 16, ...r }) => (
   <svg {...bp(size, r)}><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+);
+
+export const IconEdit = ({ size = 16, ...r }) => (
+  <svg {...bp(size, r)}>
+    <path d="M12 20h9"/>
+    <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+  </svg>
+);
+
+export const IconSearch = ({ size = 16, ...r }) => (
+  <svg {...bp(size, r)}>
+    <circle cx="11" cy="11" r="8"/>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </svg>
+);
+
+export const IconField = ({ size = 18, ...r }) => (
+  <svg {...bp(size, r)}>
+    <path d="M3 20h18"/>
+    <path d="M5 16h14"/>
+    <path d="M7 12h10"/>
+    <path d="M9 8h6"/>
+  </svg>
+);
+
+export const IconPlant = ({ size = 18, ...r }) => (
+  <svg {...bp(size, r)}>
+    <path d="M12 22V11"/>
+    <path d="M8 7c0-2 2-4 4-4"/>
+    <path d="M16 7c0-2-2-4-4-4"/>
+    <path d="M7 13c0-2 2-4 5-4"/>
+    <path d="M17 13c0-2-2-4-5-4"/>
+  </svg>
+);
+
+export const IconSoil = ({ size = 18, ...r }) => (
+  <svg {...bp(size, r)}>
+    <path d="M4 20c2-2 4-2 6 0s4 2 6 0 4-2 4-2"/>
+    <path d="M7 14c1.5-1.5 3-1.5 4.5 0S14.5 15.5 16 14"/>
+    <path d="M12 11V4"/>
+    <path d="M9 7c0-2 1.5-3 3-3"/>
+    <path d="M15 7c0-2-1.5-3-3-3"/>
+  </svg>
 );
