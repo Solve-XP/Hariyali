@@ -2,31 +2,45 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+
+    gap: var(--space-4);
+
+    flex-wrap: wrap;
 }
 
 .page-title {
-    font-size: 2rem;
+    margin: 0 0 var(--space-1);
+
+    font-size: var(--fs-3xl);
     font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 0.2rem;
     line-height: 1.1;
+    letter-spacing: -0.02em;
+
+    color: var(--color-text);
 }
 
 .page-subtitle {
-    color: #64748b;
-    font-size: 0.9rem;
+    margin: 0;
+
+    font-size: var(--fs-base);
+    line-height: 1.5;
+
+    color: var(--color-text-muted);
 }
 
 @media (max-width: 768px) {
-
     .page-header {
         flex-direction: column;
         align-items: flex-start;
+
+        gap: var(--space-3);
     }
 
     .page-title {
-        font-size: 1.8rem;
+        font-size: var(--fs-2xl);
     }
 
+    .page-subtitle {
+        font-size: var(--fs-sm);
+    }
 }

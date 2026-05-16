@@ -140,7 +140,7 @@
     "add_title": "Add New Farm",
     "name_placeholder": "Enter farm name",
     "acres_placeholder": "Enter acres",
-    "search_placeholder": "शेती शोधा...",
+    "search_placeholder": "Search farms...",
     "location_placeholder": "Enter location",
     "soil_placeholder": "Enter soil type",
     "delete_title": "Delete Farm",
