@@ -141,6 +141,8 @@
     "location_placeholder": "स्थान टाका",
     "soil_placeholder": "मातीचा प्रकार टाका",
     "search_placeholder": "शेती शोधा...",
+     "delete_title": "शेत हटवा",
+    "delete_message": "हे शेत हटवायचे आहे का?", 
     "empty": "अद्याप कोणतीही शेती जोडलेली नाही. सुरुवात करण्यासाठी पहिले शेत जोडा.",
 
     "stats": {
@@ -239,6 +241,8 @@
   },
   "messages": {
     "FARM_ADDED_SUCCESS": "शेत यशस्वीरित्या जोडले",
+    "FARM_UPDATED_SUCCESS": "शेत यशस्वीरित्या अपडेट केले",
+    "FARM_DELETED_SUCCESS": "शेत यशस्वीरित्या हटवले",
     "CROP_ADDED_SUCCESS": "पीक यशस्वीरित्या जोडले",
     "EXPENSE_ADDED_SUCCESS": "खर्च यशस्वीरित्या नोंदवला",
     "EQUIPMENT_ADDED_SUCCESS": "उपकरण यशस्वीरित्या सूचीबद्ध केले",

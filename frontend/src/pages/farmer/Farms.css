@@ -1,39 +1,22 @@
 /* src/pages/farmer/Farms.css */
 
+/* NO MAJOR CHANGES REQUIRED */
+/* Existing styling already works with reusable components */
+
+/* ONLY KEEP PAGE-SPECIFIC STYLES HERE */
+
 .farms-page {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
     padding-bottom: 1.5rem;
 }
-
-/* =========================
-   HEADER
-========================= */
-
 .farms-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
 }
-
-.farms-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 0.2rem;
-    line-height: 1.1;
-}
-
-.farms-subtitle {
-    color: #64748b;
-    font-size: 0.9rem;
-}
-
-/* =========================
-   STATS
-========================= */
 
 .farms-stats {
     display: grid;
@@ -113,10 +96,6 @@
     color: #94a3b8;
 }
 
-/* =========================
-   SEARCH
-========================= */
-
 .farms-toolbar {
     display: flex;
     justify-content: space-between;
@@ -124,52 +103,11 @@
     gap: 1rem;
 }
 
-.farms-search {
-    width: 340px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-
-    padding: 0 0.9rem;
-
-    background: #ffffff;
-
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-
-    transition: 0.2s ease;
-}
-
-.farms-search:focus-within {
-    border-color: #16a34a;
-    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.08);
-}
-
-.farms-search input {
-    width: 100%;
-
-    border: none;
-    outline: none;
-    background: transparent;
-
-    font-size: 0.88rem;
-}
-
-/* =========================
-   FARM LIST
-========================= */
-
 .farms-list {
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
 }
-
-/* =========================
-   FARM ROW
-========================= */
 
 .farm-row {
     width: 100%;
@@ -197,10 +135,6 @@
     box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
 }
 
-/* =========================
-   IMAGE
-========================= */
-
 .farm-row__image-wrap {
     position: relative;
 
@@ -212,8 +146,6 @@
     overflow: hidden;
 
     cursor: pointer;
-
-    flex-shrink: 0;
 }
 
 .farm-row__image {
@@ -258,13 +190,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-size: 0.82rem;
 }
-
-/* =========================
-   CONTENT
-========================= */
 
 .farm-row__content {
     min-width: 0;
@@ -321,92 +247,10 @@
     text-overflow: ellipsis;
 }
 
-/* =========================
-   ACTIONS
-========================= */
-
 .farm-row__actions {
     display: flex;
     align-items: center;
     gap: 0.45rem;
-}
-
-/* =========================
-   IMAGE PREVIEW
-========================= */
-
-.image-preview-overlay {
-    position: fixed;
-    inset: 0;
-
-    background: rgba(15, 23, 42, 0.82);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    z-index: 1200;
-}
-
-.image-preview-modal {
-    width: 90%;
-    max-width: 950px;
-}
-
-.image-preview {
-    width: 100%;
-    max-height: 88vh;
-
-    object-fit: contain;
-
-    border-radius: 18px;
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.farm-modal-overlay {
-    position: fixed;
-    inset: 0;
-
-    background: rgba(15, 23, 42, 0.55);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    z-index: 1000;
-
-    padding: 1rem;
-}
-
-.farm-modal {
-    width: 100%;
-    max-width: 680px;
-
-    background: #ffffff;
-
-    border-radius: 20px;
-
-    padding: 1.2rem;
-}
-
-.farm-modal__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-bottom: 1rem;
-}
-
-.farm-modal__close {
-    border: none;
-    background: transparent;
-
-    font-size: 1.8rem;
-
-    cursor: pointer;
 }
 
 .farm-upload {
@@ -441,10 +285,6 @@
     gap: 0.75rem;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-
 @media (max-width: 992px) {
 
     .farms-stats {
@@ -459,21 +299,7 @@
         gap: 1rem;
     }
 
-    .farms-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.8rem;
-    }
-
-    .farms-title {
-        font-size: 1.8rem;
-    }
-
     .farms-toolbar {
-        width: 100%;
-    }
-
-    .farms-search {
         width: 100%;
     }
 
@@ -481,16 +307,6 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 0.7rem;
     }
-
-    .stats-card {
-        padding: 0.8rem;
-    }
-
-    .stats-card__value {
-        font-size: 1.2rem;
-    }
-
-    /* KEEP ROW STYLE ON MOBILE */
 
     .farm-row {
         display: grid;
@@ -508,8 +324,6 @@
     .farm-row__image-wrap {
         width: 95px;
         height: 78px;
-
-        border-radius: 10px;
     }
 
     .farm-row__content {
@@ -523,10 +337,6 @@
         gap: 0.45rem;
 
         align-items: flex-start;
-    }
-
-    .farm-info-item {
-        gap: 0.02rem;
     }
 
     .farm-info-label {
@@ -552,13 +362,6 @@
         height: 38px;
 
         padding: 0;
-    }
-
-    /* MODAL */
-
-    .farm-modal {
-        padding: 1rem;
-        border-radius: 18px;
     }
 
     .farm-preview-upload {

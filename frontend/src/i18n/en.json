@@ -143,6 +143,9 @@
     "search_placeholder": "शेती शोधा...",
     "location_placeholder": "Enter location",
     "soil_placeholder": "Enter soil type",
+    "delete_title": "Delete Farm",
+    "delete_message": "Are you sure you want to delete this farm?",
+    
     "empty": "No farms added yet. Add your first farm to get started.",
     
 
@@ -242,6 +245,8 @@
   },
   "messages": {
     "FARM_ADDED_SUCCESS": "Farm added successfully",
+    "FARM_UPDATED_SUCCESS": "Farm updated successfully",
+    "FARM_DELETED_SUCCESS": "Farm deleted successfully",
     "CROP_ADDED_SUCCESS": "Crop added successfully",
     "EXPENSE_ADDED_SUCCESS": "Expense recorded successfully",
     "EQUIPMENT_ADDED_SUCCESS": "Equipment listed successfully",

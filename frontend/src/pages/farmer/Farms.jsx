@@ -9,12 +9,16 @@ import Button from "../../components/Button";
 import EmptyState from "../../components/EmptyState";
 import Input from "../../components/Input";
 
+import Modal from "../../components/Modal";
+import SearchInput from "../../components/SearchInput";
+import ImageViewer from "../../components/ImageViewer";
+import ConfirmDialog from "../../components/ConfirmDialog";
+
 import {
   IconFarm,
   IconPlus,
   IconTrash,
   IconEdit,
-  IconSearch,
   IconLocation,
   IconSoil,
   IconField,
@@ -26,6 +30,8 @@ import { useApp } from "../../context/AppContext";
 
 import { getErrorMessage } from "../../utils/errorHandler";
 
+import { validateRequired } from "../../utils/validators";
+
 const EMPTY_FORM = {
   farm_name: "",
   acres: "",
@@ -35,7 +41,9 @@ const EMPTY_FORM = {
 };
 
 export default function Farms() {
+
   const { t } = useTranslation();
+
   const { pushToast } = useApp();
 
   const [farms, setFarms] = useState([]);
@@ -48,13 +56,20 @@ export default function Farms() {
 
   const [editingFarm, setEditingFarm] = useState(null);
 
-  // FULL SCREEN IMAGE VIEWER
   const [imageViewer, setImageViewer] = useState("");
 
-  // FORM IMAGE PREVIEW
   const [uploadPreview, setUploadPreview] = useState("");
 
   const [form, setForm] = useState(EMPTY_FORM);
+
+  const [showDeleteDialog, setShowDeleteDialog] =
+    useState(false);
+
+  const [selectedFarmId, setSelectedFarmId] =
+    useState(null);
+
+  const [deleteLoading, setDeleteLoading] =
+    useState(false);
 
   const loadFarms = async (searchText = "") => {
 
@@ -62,13 +77,17 @@ export default function Farms() {
 
       setLoading(true);
 
-      const response = await FarmsService.getAll(searchText);
+      const response =
+        await FarmsService.getAll(searchText);
 
       setFarms(response || []);
 
     } catch (error) {
 
-      pushToast(getErrorMessage(error), "error");
+      pushToast(
+        getErrorMessage(error),
+        "error"
+      );
 
     } finally {
 
@@ -95,7 +114,8 @@ export default function Farms() {
     const totalFarms = farms.length;
 
     const totalAcres = farms.reduce(
-      (sum, farm) => sum + Number(farm.acres || 0),
+      (sum, farm) =>
+        sum + Number(farm.acres || 0),
       0
     );
 
@@ -174,7 +194,9 @@ export default function Farms() {
       farm_photo: file,
     }));
 
-    setUploadPreview(URL.createObjectURL(file));
+    setUploadPreview(
+      URL.createObjectURL(file)
+    );
   };
 
   const handleSubmit = async (e) => {
@@ -182,13 +204,18 @@ export default function Farms() {
     e.preventDefault();
 
     if (
-      !form.farm_name ||
-      !form.acres ||
-      !form.location ||
-      !form.soil_type
+      !validateRequired(form, [
+        "farm_name",
+        "acres",
+        "location",
+        "soil_type",
+      ])
     ) {
 
-      pushToast("Fill all required fields", "error");
+      pushToast(
+        t("messages.VALIDATION_ERROR"),
+        "error"
+      );
 
       return;
     }
@@ -204,20 +231,27 @@ export default function Farms() {
           form
         );
 
-        pushToast("Farm updated successfully");
+        pushToast(
+          t("messages.FARM_UPDATED_SUCCESS")
+        );
 
       } else {
 
         if (!form.farm_photo) {
 
-          pushToast("Farm image required", "error");
+          pushToast(
+            t("farms.photo_required"),
+            "error"
+          );
 
           return;
         }
 
         await FarmsService.create(form);
 
-        pushToast("Farm created successfully");
+        pushToast(
+          t("messages.FARM_ADDED_SUCCESS")
+        );
       }
 
       closeModal();
@@ -226,7 +260,10 @@ export default function Farms() {
 
     } catch (error) {
 
-      pushToast(getErrorMessage(error), "error");
+      pushToast(
+        getErrorMessage(error),
+        "error"
+      );
 
     } finally {
 
@@ -236,23 +273,41 @@ export default function Farms() {
 
   const handleDelete = async (farmId) => {
 
-    const confirmDelete = window.confirm(
-      "Delete this farm?"
-    );
+    setSelectedFarmId(farmId);
 
-    if (!confirmDelete) return;
+    setShowDeleteDialog(true);
+  };
+
+  const confirmDelete = async () => {
 
     try {
 
-      await FarmsService.delete(farmId);
+      setDeleteLoading(true);
 
-      pushToast("Farm deleted");
+      await FarmsService.delete(
+        selectedFarmId
+      );
+
+      pushToast(
+        t("messages.FARM_DELETED_SUCCESS")
+      );
+
+      setShowDeleteDialog(false);
+
+      setSelectedFarmId(null);
 
       loadFarms(search);
 
     } catch (error) {
 
-      pushToast(getErrorMessage(error), "error");
+      pushToast(
+        getErrorMessage(error),
+        "error"
+      );
+
+    } finally {
+
+      setDeleteLoading(false);
     }
   };
 
@@ -265,7 +320,7 @@ export default function Farms() {
         <div>
 
           <h1 className="farms-title">
-           {t("farms.title")}
+            {t("farms.title")}
           </h1>
 
           <p className="farms-subtitle">
@@ -279,12 +334,12 @@ export default function Farms() {
           onClick={openAddModal}
         >
           <IconPlus />
-          {t("farms.add_title")}
+          {t("farms.create_farm")}
         </Button>
 
       </div>
 
-      <div className="farms-stats">
+            <div className="farms-stats">
 
         <Card className="stats-card">
 
@@ -384,20 +439,17 @@ export default function Farms() {
 
       </div>
 
+
+
       <div className="farms-toolbar">
 
-        <div className="farms-search">
-
-          <IconSearch />
-
-          <input
-            type="text"
-            placeholder={t("farms.search_placeholder")}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-
-        </div>
+        <SearchInput
+          value={search}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
+          placeholder={t("farms.search_placeholder")}
+        />
 
       </div>
 
@@ -421,14 +473,14 @@ export default function Farms() {
 
               <div
                 className="farm-row__image-wrap"
-                onClick={() => setImageViewer(farm.farm_photo)}
+                onClick={() =>
+                  setImageViewer(
+                    farm.farm_photo
+                  )
+                }
               >
 
-                <img
-                  src={farm.farm_photo}
-                  alt={farm.farm_name}
-                  className="farm-row__image"
-                />
+                <img src={farm.farm_photo} alt={farm.farm_name} className="farm-row__image" loading="lazy" decoding="async"/>
 
                 <div className="farm-row__overlay">
 
@@ -500,14 +552,18 @@ export default function Farms() {
 
                 <Button
                   variant="secondary"
-                  onClick={() => openEditModal(farm)}
+                  onClick={() =>
+                    openEditModal(farm)
+                  }
                 >
                   <IconEdit />
                 </Button>
 
                 <Button
                   variant="danger"
-                  onClick={() => handleDelete(farm.id)}
+                  onClick={() =>
+                    handleDelete(farm.id)
+                  }
                 >
                   <IconTrash />
                 </Button>
@@ -522,138 +578,127 @@ export default function Farms() {
 
       )}
 
-      {/* MODAL */}
+      <Modal
+        open={showModal}
+        title={
+          editingFarm
+            ? t("farms.edit_farm")
+            : t("farms.create_farm")
+        }
+        onClose={closeModal}
+      >
 
-      {showModal && (
+        <form onSubmit={handleSubmit}>
 
-        <div className="farm-modal-overlay">
+          <div className="form-grid">
 
-          <div className="farm-modal">
+            <Input
+              label={t("farms.name")}
+              value={form.farm_name}
+              onChange={updateField(
+                "farm_name"
+              )}
+            />
 
-            <div className="farm-modal__header">
+            <Input
+              label={t("farms.acres")}
+              type="number"
+              value={form.acres}
+              onChange={updateField("acres")}
+            />
 
-              <h2>
-                {editingFarm
-                  ? "Edit Farm"
-                  : "Add New Farm"}
-              </h2>
+            <Input
+              label={t("farms.location")}
+              value={form.location}
+              onChange={updateField(
+                "location"
+              )}
+            />
 
-              <button
-                className="farm-modal__close"
-                onClick={closeModal}
-              >
-                ×
-              </button>
-
-            </div>
-
-            <form onSubmit={handleSubmit}>
-
-              <div className="form-grid">
-
-                <Input
-                  label={t("farms.name")}
-                  value={form.farm_name}
-                  onChange={updateField("farm_name")}
-                />
-
-                <Input
-                  label={t("farms.acres")}
-                  type="number"
-                  value={form.acres}
-                  onChange={updateField("acres")}
-                />
-
-                <Input
-                  label={t("farms.location")}
-                  value={form.location}
-                  onChange={updateField("location")}
-                />
-
-                <Input
-                  label={t("farms.soil_type")}
-                  value={form.soil_type}
-                  onChange={updateField("soil_type")}
-                />
-
-              </div>
-
-              <div className="farm-upload">
-
-                <label>
-                  {t("farms.farm_photo")}
-                </label>
-
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImage}
-                />
-
-                {uploadPreview && (
-
-                  <img
-                    src={uploadPreview}
-                    alt="preview"
-                    className="farm-preview-upload"
-                  />
-
-                )}
-
-              </div>
-
-              <div className="farm-modal__actions">
-
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={closeModal}
-                >
-                  {t("farms.cancel")}
-                </Button>
-
-                <Button
-                  type="submit"
-                  variant="primary"
-                  disabled={loading}
-                >
-                  {editingFarm
-                    ? t("farms.update_farm")
-                    : t("farms.create_farm")}
-                </Button>
-
-              </div>
-
-            </form>
-
-          </div>
-
-        </div>
-
-      )}
-
-      {/* FULLSCREEN IMAGE VIEWER */}
-
-      {imageViewer && (
-
-        <div
-          className="image-preview-overlay"
-          onClick={() => setImageViewer("")}
-        >
-
-          <div className="image-preview-modal">
-
-            <img
-              src={imageViewer}
-              alt="Farm Preview"
-              className="image-preview"
+            <Input
+              label={t("farms.soil_type")}
+              value={form.soil_type}
+              onChange={updateField(
+                "soil_type"
+              )}
             />
 
           </div>
 
-        </div>
+          <div className="farm-upload">
 
-      )}
+            <label>
+              {t("farms.farm_photo")}
+            </label>
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImage}
+            />
+
+            {uploadPreview && (
+
+              <img
+                src={uploadPreview}
+                alt="preview"
+                className="farm-preview-upload"
+              />
+
+            )}
+
+          </div>
+
+          <div className="farm-modal__actions">
+
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={closeModal}
+            >
+              {t("farms.cancel")}
+            </Button>
+
+            <Button
+              type="submit"
+              variant="primary"
+              disabled={loading}
+            >
+              {loading
+                ? t("common.loading")
+                : editingFarm
+                ? t("farms.update_farm")
+                : t("farms.create_farm")}
+            </Button>
+
+          </div>
+
+        </form>
+
+      </Modal>
+
+      <ImageViewer
+        image={imageViewer}
+        onClose={() =>
+          setImageViewer("")
+        }
+      />
+
+      <ConfirmDialog
+        open={showDeleteDialog}
+        title={t("farms.delete_title")}
+        message={t("farms.delete_message")}
+        confirmText={t("common.delete")}
+        cancelText={t("common.cancel")}
+        onConfirm={confirmDelete}
+        onCancel={() => {
+
+          setShowDeleteDialog(false);
+
+          setSelectedFarmId(null);
+        }}
+        loading={deleteLoading}
+      />
 
     </div>
   );
