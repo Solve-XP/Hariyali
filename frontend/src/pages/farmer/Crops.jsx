@@ -56,18 +56,21 @@ export default function Crops() {
 
   const [deleteCrop, setDeleteCrop] = useState(null);
 
+  const [selectedFY, setSelectedFY] = useState("all");
+
   const [form, setForm] = useState(EMPTY_FORM);
 
   const [filters, setFilters] = useState({
     search: "",
     farm_id: "all",
     season: "all",
-    financial_year: "all",
   });
 
   const [debouncedFilters, setDebouncedFilters] = useState(filters);
 
-  /*  DEBOUNCE SEARCH */
+  /* =========================================================
+     DEBOUNCE SEARCH
+  ========================================================= */
 
   useEffect(() => {
 
@@ -81,7 +84,9 @@ export default function Crops() {
 
   }, [filters]);
 
-  /* INITIAL LOAD */
+  /* =========================================================
+     INITIAL LOAD
+  ========================================================= */
 
   useEffect(() => {
 
@@ -89,7 +94,9 @@ export default function Crops() {
 
   }, []);
 
-  /* FILTER CHANGE LOAD */
+  /* =========================================================
+     FILTER CHANGE LOAD
+  ========================================================= */
 
   useEffect(() => {
 
@@ -154,7 +161,7 @@ export default function Crops() {
   };
 
   /* =========================================================
-     FARM MAP (O(1) LOOKUP)
+     FARM MAP
   ========================================================= */
 
   const farmsMap = useMemo(() => {
@@ -309,20 +316,58 @@ export default function Crops() {
     [...new Set(crops.map(c => c.financial_year).filter(Boolean))]
   ), [crops]);
 
-  const sortedFinancialYears = [...financialYears].sort();
+  /* =========================================================
+     FILTERED STATS DATA
+  ========================================================= */
+
+  const statsData = useMemo(() => {
+
+    if (selectedFY === "all") {
+
+      return crops;
+
+    }
+
+    return crops.filter(
+      (crop) => crop.financial_year === selectedFY
+    );
+
+  }, [crops, selectedFY]);
+
+  /* =========================================================
+     FILTERED TABLE DATA
+  ========================================================= */
+
+  const filteredCrops = useMemo(() => {
+
+    if (selectedFY === "all") {
+
+      return crops;
+
+    }
+
+    return crops.filter(
+      (crop) => crop.financial_year === selectedFY
+    );
+
+  }, [crops, selectedFY]);
 
   /* =========================================================
      STATS
   ========================================================= */
 
   const stats = {
-    total: crops.length,
-    farms: new Set(crops.map((c) => c.farm_id)).size,
-    seasons: seasons.length,
-    latestFY:
-      sortedFinancialYears[
-        sortedFinancialYears.length - 1
-      ] || "—"
+
+    total: statsData.length,
+
+    farms: new Set(
+      statsData.map((c) => c.farm_id)
+    ).size,
+
+    seasons: new Set(
+      statsData.map((c) => c.season).filter(Boolean)
+    ).size,
+
   };
 
   /* =========================================================
@@ -336,11 +381,7 @@ export default function Crops() {
       header: t("crops.crop"),
       render: (row) => (
         <div className="crop-name-cell">
-
-          <strong>
-            {row.crop_name}
-          </strong>
-
+          <strong>{row.crop_name}</strong>
         </div>
       ),
     },
@@ -443,6 +484,45 @@ export default function Crops() {
       <div className="grid grid--4">
 
         <StatsCard
+          icon={<IconFarmYear size={22} className="stats-card__icon-filter" />}
+          title={t("crops.financial_year")}
+          value={
+
+            <Select
+              value={selectedFY}
+              onChange={(e) =>
+                setSelectedFY(e.target.value)
+              }
+              className="stats-fy-select"
+            >
+
+              <option value="all">
+                {t("crops.all_financial_years")}
+              </option>
+
+              {financialYears.map((fy) => (
+
+                <option
+                  key={fy}
+                  value={fy}
+                >
+                  {fy}
+                </option>
+
+              ))}
+
+            </Select>
+
+          }
+          subtitle={
+            selectedFY === "all"
+              ? t("crops.all_financial_years")
+              : selectedFY
+          }
+          colorClass="stat-card__icon--info"
+        />
+
+        <StatsCard
           icon={<IconCrop size={22} />}
           title={t("crops.total_crops")}
           value={stats.total}
@@ -464,14 +544,6 @@ export default function Crops() {
           value={stats.seasons}
           subtitle={t("crops.season_categories")}
           colorClass="stat-card__icon--purple"
-        />
-
-        <StatsCard
-          icon={<IconFarmYear size={22} />}
-          title={t("crops.financial_year")}
-          value={stats.latestFY}
-          subtitle={t("crops.latest_fy")}
-          colorClass="stat-card__icon--info"
         />
 
       </div>
@@ -545,33 +617,6 @@ export default function Crops() {
 
           </Select>
 
-          <Select
-            value={filters.financial_year}
-            onChange={(e) =>
-              setFilters((prev) => ({
-                ...prev,
-                financial_year: e.target.value,
-              }))
-            }
-          >
-
-            <option value="all">
-              {t("crops.all_financial_years")}
-            </option>
-
-            {financialYears.map((fy) => (
-
-              <option
-                key={fy}
-                value={fy}
-              >
-                {fy}
-              </option>
-
-            ))}
-
-          </Select>
-
         </div>
 
       </Card>
@@ -595,7 +640,7 @@ export default function Crops() {
 
           </Card>
 
-        ) : crops.length === 0 ? (
+        ) : filteredCrops.length === 0 ? (
 
           <EmptyState
             icon={<IconCrop />}
@@ -610,7 +655,7 @@ export default function Crops() {
 
               <Table
                 columns={columns}
-                rows={crops}
+                rows={filteredCrops}
                 rowKey={(row) => row.id}
                 emptyMessage={t("crops.no_crops_found")}
               />
@@ -619,7 +664,7 @@ export default function Crops() {
 
             <div className="crops-mobile-list">
 
-              {crops.map((crop) => (
+              {filteredCrops.map((crop) => (
 
                 <Card
                   key={crop.id}
@@ -628,9 +673,7 @@ export default function Crops() {
 
                   <div className="crop-mobile-card__header">
 
-                    <h3>
-                      {crop.crop_name}
-                    </h3>
+                    <h3>{crop.crop_name}</h3>
 
                     <span className="season-badge">
                       {crop.season || "—"}
@@ -668,52 +711,6 @@ export default function Crops() {
 
                     </div>
 
-                    <div className="crop-mobile-grid">
-
-                      <div className="crop-mobile-item">
-
-                        <div className="crop-mobile-label">
-                          {t("crops.sowing_date")}
-                        </div>
-
-                        <div className="crop-mobile-value">
-                          {crop.sowing_date?.split("T")[0] || "—"}
-                        </div>
-
-                      </div>
-
-                      <div className="crop-mobile-item">
-
-                        <div className="crop-mobile-label">
-                          {t("crops.harvest_date")}
-                        </div>
-
-                        <div className="crop-mobile-value">
-                          {crop.expected_harvest_date?.split("T")[0] || "—"}
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                  <div className="crop-mobile-card__actions">
-
-                    <button
-                      className="icon-btn"
-                      onClick={() => openEditModal(crop)}
-                    >
-                      <IconEdit size={16} />
-                    </button>
-
-                    <button
-                      className="icon-btn icon-btn--danger"
-                      onClick={() => setDeleteCrop(crop)}
-                    >
-                      <IconTrash size={16} />
-                    </button>
-
                   </div>
 
                 </Card>
@@ -727,110 +724,6 @@ export default function Crops() {
         )}
 
       </div>
-
-      <Modal
-        open={modalOpen}
-        onClose={closeModal}
-        title={
-          editingCrop
-            ? t("crops.edit_crop")
-            : t("crops.add_crop")
-        }
-      >
-
-        <form onSubmit={handleSubmit}>
-
-          <div className="form-grid">
-
-            <Select
-              label={t("crops.farm")}
-              value={form.farm_id}
-              onChange={handleChange("farm_id")}
-            >
-
-              <option value="">
-                {t("crops.select_farm")}
-              </option>
-
-              {farms.map((farm) => (
-
-                <option
-                  key={farm.id}
-                  value={farm.id}
-                >
-                  {farm.farm_name}
-                </option>
-
-              ))}
-
-            </Select>
-
-            <Input
-              label={t("crops.name")}
-              value={form.crop_name}
-              onChange={handleChange("crop_name")}
-              placeholder={t("crops.enter_crop_name")}
-            />
-
-            <Input
-              label={t("crops.season")}
-              value={form.season}
-              onChange={handleChange("season")}
-              placeholder={t("crops.kharif_rabi")}
-            />
-
-            <Input
-              type="date"
-              label={t("crops.sowing_date")}
-              value={form.sowing_date}
-              onChange={handleChange("sowing_date")}
-            />
-
-            <Input
-              type="date"
-              label={t("crops.expected_harvest")}
-              value={form.expected_harvest_date}
-              onChange={handleChange("expected_harvest_date")}
-            />
-
-          </div>
-
-          <div className="form-actions">
-
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={closeModal}
-            >
-              {t("crops.cancel")}
-            </Button>
-
-            <Button
-              type="submit"
-              variant="primary"
-              disabled={loading}
-            >
-              {editingCrop
-                ? t("crops.update_crop")
-                : t("crops.create_crop")}
-            </Button>
-
-          </div>
-
-        </form>
-
-      </Modal>
-
-      <ConfirmDialog
-        open={!!deleteCrop}
-        title={t("crops.delete_crop")}
-        message={`${t("crops.delete_confirm")} "${deleteCrop?.crop_name}"?`}
-        confirmText={t("crops.delete_crop")}
-        cancelText={t("crops.cancel")}
-        onConfirm={handleDelete}
-        onCancel={() => setDeleteCrop(null)}
-        loading={loading}
-      />
 
     </div>
   );
