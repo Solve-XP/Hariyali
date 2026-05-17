@@ -249,7 +249,7 @@
 }
 
 .farm-info-label {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
 
     color: var(--color-text-faint);
@@ -275,7 +275,7 @@
 .farm-info-value {
     overflow: hidden;
 
-    font-size: var(--fs-sm);
+    font-size: var(--fs-md);
     font-weight: 600;
 
     line-height: 1.2;

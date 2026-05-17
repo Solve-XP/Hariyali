@@ -1,0 +1,396 @@
+/* =========================================================
+   FILTERS
+========================================================= */
+
+.filters-bar {
+    display: grid;
+
+    grid-template-columns:
+        minmax(240px, 1.4fr) repeat(3, minmax(180px, 1fr));
+
+    gap: var(--space-4);
+
+    align-items: end;
+}
+
+/* =========================================================
+   TABLE CELLS
+========================================================= */
+
+.crop-name-cell {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.crop-name-cell strong {
+    overflow: hidden;
+
+    font-size: var(--fs-sm);
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    color: var(--color-text);
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.farm-name {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+
+    line-height: 1.4;
+
+    color: var(--color-text);
+}
+
+.financial-year,
+.date-cell {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+
+    color: var(--color-text-muted);
+
+    white-space: nowrap;
+}
+
+/* =========================================================
+   SEASON BADGE
+========================================================= */
+
+.season-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+
+    padding: 6px 12px;
+
+    border-radius: var(--radius-pill);
+
+    background: var(--color-primary-50);
+
+    color: var(--color-primary);
+
+    font-size: var(--fs-xs);
+    font-weight: 600;
+
+    border: 1px solid var(--color-primary-100);
+
+    white-space: nowrap;
+}
+
+/* =========================================================
+   TABLE ACTIONS
+========================================================= */
+
+.table-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--space-2);
+}
+
+.icon-btn {
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: var(--radius-md);
+
+    border: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+
+    color: var(--color-text-muted);
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.icon-btn:hover {
+    transform: translateY(-1px);
+
+    background: var(--color-surface-2);
+
+    border-color: var(--color-border-strong);
+
+    color: var(--color-text);
+}
+
+.icon-btn:active {
+    transform: scale(0.96);
+}
+
+.icon-btn--danger:hover,
+.icon-btn--danger:active {
+    background: var(--color-error-bg);
+
+    border-color: #fecaca;
+
+    color: var(--color-error);
+}
+
+/* =========================================================
+   MOBILE / DESKTOP SWITCH
+========================================================= */
+
+.crops-mobile-list {
+    display: none;
+}
+
+.crops-desktop-table {
+    display: block;
+}
+
+/* =========================================================
+   MOBILE CARD
+========================================================= */
+
+.crop-mobile-card {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-4);
+
+    padding: var(--space-4);
+
+    border-radius: var(--radius-xl);
+
+    border: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+
+    box-shadow: var(--shadow-xs);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.crop-mobile-card:hover {
+    transform: translateY(-1px);
+
+    border-color: var(--color-border-strong);
+
+    box-shadow: var(--shadow-md);
+}
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.crop-mobile-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--space-3);
+}
+
+.crop-mobile-card__header h3 {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    color: var(--color-text);
+}
+
+/* =========================================================
+   CARD BODY
+========================================================= */
+
+.crop-mobile-card__body {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-4);
+}
+
+/* =========================================================
+   MOBILE GRID
+========================================================= */
+
+.crop-mobile-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: var(--space-4);
+}
+
+/* =========================================================
+   INFO ITEM
+========================================================= */
+
+.crop-mobile-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.crop-mobile-label {
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.04em;
+
+    color: var(--color-text-faint);
+}
+
+.crop-mobile-value {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    color: var(--color-text);
+}
+
+/* =========================================================
+   MOBILE ACTIONS
+========================================================= */
+
+.crop-mobile-card__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: var(--space-2);
+
+    margin-top: var(--space-1);
+}
+
+.crop-mobile-card__actions .icon-btn {
+    width: 32px;
+    height: 32px;
+
+    min-width: 32px;
+
+    border-radius: var(--radius-sm);
+}
+
+.crop-mobile-card__actions .icon-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1024px) {
+
+    .filters-bar {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: var(--space-3);
+    }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    /* STATS */
+
+    .grid.grid--4 {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: var(--space-3);
+    }
+
+    /* FILTERS */
+
+    .filters-bar {
+        grid-template-columns: 1fr;
+
+        gap: var(--space-3);
+    }
+
+    /* TABLE HIDE */
+
+    .crops-desktop-table {
+        display: none;
+    }
+
+    /* MOBILE LIST */
+
+    .crops-mobile-list {
+        display: flex;
+        flex-direction: column;
+
+        gap: var(--space-3);
+    }
+
+    /* CARD */
+
+    .crop-mobile-card {
+        padding: var(--space-4);
+
+        border-radius: var(--radius-lg);
+    }
+
+    .crop-mobile-card__header h3 {
+        font-size: var(--fs-md);
+    }
+
+    .crop-mobile-value {
+        font-size: var(--fs-sm);
+    }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+
+    .grid.grid--4 {
+        gap: var(--space-2);
+    }
+
+    .filters-bar {
+        gap: var(--space-2);
+    }
+
+    .crop-mobile-grid {
+        gap: var(--space-3);
+    }
+
+    .crop-mobile-card {
+        gap: var(--space-3);
+    }
+
+    .crop-mobile-card__body {
+        gap: var(--space-3);
+    }
+}

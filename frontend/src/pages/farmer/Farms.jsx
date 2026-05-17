@@ -13,6 +13,7 @@ import Modal from "../../components/Modal";
 import SearchInput from "../../components/SearchInput";
 import ImageViewer from "../../components/ImageViewer";
 import ConfirmDialog from "../../components/ConfirmDialog";
+import PageHeader from "../../components/PageHeader";
 
 import {
   IconFarm,
@@ -315,29 +316,19 @@ export default function Farms() {
 
     <div className="farms-page">
 
-      <div className="farms-header">
-
-        <div>
-
-          <h1 className="farms-title">
-            {t("farms.title")}
-          </h1>
-
-          <p className="farms-subtitle">
-            {t("farms.subtitle")}
-          </p>
-
-        </div>
-
-        <Button
-          variant="primary"
-          onClick={openAddModal}
-        >
-          <IconPlus />
-          {t("farms.create_farm")}
-        </Button>
-
-      </div>
+      <PageHeader
+        title={t("farms.title")}
+        subtitle={t("farms.subtitle")}
+        action={
+          <Button
+            variant="primary"
+            onClick={openAddModal}
+          >
+            <IconPlus />
+            {t("farms.create_farm")}
+          </Button>
+        }
+      />
 
             <div className="farms-stats">
 
