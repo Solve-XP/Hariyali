@@ -279,10 +279,10 @@ export default function SignUp() {
 
     <div className="auth-footer">
 
-      Already have an account?{" "}
+      {t("auth.have_account")} {" "}
 
       <Link to="/login">
-        Sign In
+        {t("auth.login_button")}
       </Link>
 
     </div>
@@ -291,8 +291,8 @@ export default function SignUp() {
   return (
 
     <AuthShell
-      title="Create your account"
-      subtitle="Join SolveXP to manage your farm"
+       title={t("signup.title")}
+  subtitle={t("signup.subtitle")}
       footer={footer}
     >
 
@@ -316,7 +316,7 @@ export default function SignUp() {
         {/* Name */}
 
         <Input
-          label="Full Name"
+          label={t("signup.full_name")}
           type="text"
           value={form.name}
           onChange={set("name")}
@@ -326,7 +326,7 @@ export default function SignUp() {
         {/* Phone */}
 
         <Input
-          label="Phone Number"
+          label={t("signup.phone")}
           type="tel"
           inputMode="numeric"
           value={form.phone}
@@ -339,7 +339,7 @@ export default function SignUp() {
         <div className="role-group">
 
           <label className="role-group__label">
-            Role
+            {t("signup.role")}
           </label>
 
           <div className="role-options">
@@ -360,7 +360,7 @@ export default function SignUp() {
               />
 
               <span>
-                Farmer
+                {t("signup.farmer")}
               </span>
 
             </label>
@@ -381,7 +381,7 @@ export default function SignUp() {
               />
 
               <span>
-                Merchant
+                {t("signup.merchant")}
               </span>
 
             </label>
@@ -397,7 +397,7 @@ export default function SignUp() {
         ">
 
           <Input
-            label="Password"
+            label={t("signup.password")}
             type="password"
             value={form.password}
             onChange={set(
@@ -407,7 +407,7 @@ export default function SignUp() {
           />
 
           <Input
-            label="Confirm Password"
+            label={t("signup.confirm_password")}
             type="password"
             value={form.confirm}
             onChange={set(
@@ -429,7 +429,7 @@ export default function SignUp() {
 
           {loading
             ? "Loading..."
-            : "Sign Up"}
+            : t("signup.signup_button")}
 
         </Button>
 

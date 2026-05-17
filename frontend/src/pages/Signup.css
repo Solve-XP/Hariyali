@@ -26,6 +26,8 @@
   flex-direction: column;
 
   gap: 10px;
+
+
 }
 
 .role-group__label {
@@ -40,8 +42,10 @@
 .role-options {
 
   display: flex;
+  flex-direction: row;
 
   gap: 20px;
+
 }
 
 .role-option {
@@ -65,15 +69,17 @@
 @media (max-width: 480px) {
 
   .signup-form__password-row {
-
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
   }
 
   .role-options {
 
-    flex-direction: column;
+    display: flex;
 
-    gap: 12px;
+    flex-direction: row !important;
+
+    gap: 20px;
   }
+
 }
+

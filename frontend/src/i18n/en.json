@@ -65,6 +65,12 @@
     "phone": "Phone Number",
     "phone_placeholder": "Enter 10-digit phone number",
 
+    "role": "Role",
+
+    "farmer": "Farmer",
+    
+    "merchant": "Merchant",
+
     "password": "Password",
     "password_placeholder": "Enter password",
 
@@ -77,6 +83,15 @@
     "signin": "Sign In"
   },
 
+  "hero": {
+  "title": "Smart Farming, Better Tomorrow",
+  "subtitle": "Manage your farm, crops, labor, irrigation and expenses in one simple platform.",
+
+  "crop": "Crop Management",
+  "labor": "Labor Tracking",
+  "irrigation": "Irrigation Control",
+  "analytics": "Reports & Analytics"
+},
 
 
   "common": {

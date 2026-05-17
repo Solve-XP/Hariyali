@@ -253,7 +253,7 @@ export default function Login() {
 
         {/* Language Switch */}
 
-        <Button
+       { /*<Button
           type="button"
           variant="secondary"
           block
@@ -264,7 +264,7 @@ export default function Login() {
             ? "मराठी"
             : "English"}
 
-        </Button>
+        </Button>*/}
 
       </form>
 
