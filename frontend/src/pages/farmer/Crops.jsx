@@ -711,6 +711,24 @@ export default function Crops() {
 
                     </div>
 
+                    <div className="crop-mobile-card__actions">
+
+                      <button
+                        className="icon-btn"
+                        onClick={() => openEditModal(crop)}
+                      >
+                        <IconEdit size={16} />
+                      </button>
+
+                      <button
+                        className="icon-btn icon-btn--danger"
+                        onClick={() => setDeleteCrop(crop)}
+                      >
+                        <IconTrash size={16} />
+                      </button>
+
+                    </div>
+
                   </div>
 
                 </Card>
@@ -724,6 +742,110 @@ export default function Crops() {
         )}
 
       </div>
+
+      <Modal
+        open={modalOpen}
+        onClose={closeModal}
+        title={
+          editingCrop
+            ? t("crops.edit_crop")
+            : t("crops.add_crop")
+        }
+      >
+
+        <form onSubmit={handleSubmit}>
+
+          <div className="form-grid">
+
+            <Select
+              label={t("crops.farm")}
+              value={form.farm_id}
+              onChange={handleChange("farm_id")}
+            >
+
+              <option value="">
+                {t("crops.select_farm")}
+              </option>
+
+              {farms.map((farm) => (
+
+                <option
+                  key={farm.id}
+                  value={farm.id}
+                >
+                  {farm.farm_name}
+                </option>
+
+              ))}
+
+            </Select>
+
+            <Input
+              label={t("crops.name")}
+              value={form.crop_name}
+              onChange={handleChange("crop_name")}
+              placeholder={t("crops.enter_crop_name")}
+            />
+
+            <Input
+              label={t("crops.season")}
+              value={form.season}
+              onChange={handleChange("season")}
+              placeholder={t("crops.kharif_rabi")}
+            />
+
+            <Input
+              type="date"
+              label={t("crops.sowing_date")}
+              value={form.sowing_date}
+              onChange={handleChange("sowing_date")}
+            />
+
+            <Input
+              type="date"
+              label={t("crops.expected_harvest")}
+              value={form.expected_harvest_date}
+              onChange={handleChange("expected_harvest_date")}
+            />
+
+          </div>
+
+          <div className="form-actions">
+
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={closeModal}
+            >
+              {t("crops.cancel")}
+            </Button>
+
+            <Button
+              type="submit"
+              variant="primary"
+              disabled={loading}
+            >
+              {editingCrop
+                ? t("crops.update_crop")
+                : t("crops.create_crop")}
+            </Button>
+
+          </div>
+
+        </form>
+
+      </Modal>
+
+      <ConfirmDialog
+        open={!!deleteCrop}
+        title={t("crops.delete_crop")}
+        message={`${t("crops.delete_confirm")} "${deleteCrop?.crop_name}"?`}
+        confirmText={t("crops.delete_crop")}
+        cancelText={t("crops.cancel")}
+        onConfirm={handleDelete}
+        onCancel={() => setDeleteCrop(null)}
+        loading={loading}
+      />
 
     </div>
   );
