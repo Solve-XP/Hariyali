@@ -15,7 +15,8 @@
     "admin_farms": "Farms",
     "admin_crops": "Crops",
     "admin_expenses": "Expenses",
-    "admin_equipment": "Equipment"
+    "admin_equipment": "Equipment",
+    "fertilizers": "Fertilizers"
   },
   "topbar": {
     "welcome": "Welcome",

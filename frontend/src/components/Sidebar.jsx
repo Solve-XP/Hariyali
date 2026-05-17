@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { useApp } from "../context/AppContext";
 import {
   IconDashboard, IconFarm, IconCrop, IconExpense,
-  IconRental, IconUsers, IconAdmin, IconLogout,
+  IconRental, IconUsers, IconAdmin, IconLogout,IconFertilizer,
 } from "./Icons";
 
 const userItems = [
@@ -26,7 +26,11 @@ const userItems = [
     labelKey: "nav.crops",
     icon: <IconCrop className="sidebar__icon" />
   },
-
+  {
+    to: "/farmer/fertilizers",
+    labelKey: "nav.fertilizers",
+    icon: <IconFertilizer className="sidebar__icon" />
+  },
   {
     to: "/farmer/expenses",
     labelKey: "nav.expenses",
