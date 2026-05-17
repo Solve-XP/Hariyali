@@ -148,13 +148,37 @@
     "acres": "Acres",
     "location": "Location",
     "soil_type": "Soil Type",
+    "farm_photo": "Farm Photo",
+    "cancel": "Cancel",
+    "create_farm": "Create Farm",
+    "update_farm": "Update Farm",
     "add_title": "Add New Farm",
     "name_placeholder": "Enter farm name",
     "acres_placeholder": "Enter acres",
+    "search_placeholder": "Search farms...",
     "location_placeholder": "Enter location",
     "soil_placeholder": "Enter soil type",
-    "empty": "No farms added yet. Add your first farm to get started."
+    "delete_title": "Delete Farm",
+    "delete_message": "Are you sure you want to delete this farm?",
+    
+    "empty": "No farms added yet. Add your first farm to get started.",
+    
+
+     "stats": {
+      "total_farms": "Total Farms",
+      "farms_added": "Farms added",
+
+      "total_acres": "Total Acres",
+      "acres_land": "Acres of land",
+
+      "soil_types": "Soil Types",
+      "different_soil_types": "Different soil types",
+
+      "locations": "Locations",
+      "unique_locations": "Unique locations"
+    }
   },
+
   "crops": {
     "title": "Crops",
     "subtitle": "Track crops across your farms",
@@ -170,8 +194,38 @@
     "name_placeholder": "e.g. Wheat, Rice, Cotton",
     "season_placeholder": "e.g. Kharif, Rabi",
     "empty": "No crops registered. Add a crop to begin tracking.",
-    "no_farm_selected": "Please select a farm to view crops."
+    "no_farm_selected": "Please select a farm to view crops.",
+
+    "add_crop": "Add Crop",
+    "edit_crop": "Edit Crop",
+    "update_crop": "Update Crop",
+    "create_crop": "Create Crop",
+    "crop": "Crop",
+    "financial_year": "Financial Year",
+    "all_seasons": "All Seasons",
+    "all_financial_years": "All Financial Years",
+    "search_placeholder": "Search crop, season, financial year...",
+    "harvest_date": "Expected Harvest Date",
+    "connected_farms": "Connected Farms",
+    "farm_coverage": "Farm coverage",
+    "seasons_count": "Seasons",
+    "season_categories": "Season categories",
+    "latest_fy": "Latest FY",
+    "registered_crops": "Registered crops",
+    "total_crops": "Total Crops",
+    "loading": "Loading crops...",
+    "no_crops_found": "No crops found",
+    "cancel": "Cancel",
+    "actions": "Actions",
+    "delete_crop": "Delete Crop",
+    "delete_confirm": "Are you sure you want to delete this crop?",
+    "crop_added": "Crop added successfully",
+    "crop_updated": "Crop updated successfully",
+    "crop_deleted": "Crop deleted successfully",
+    "enter_crop_name": "Enter crop name",
+    "kharif_rabi": "Kharif / Rabi"
   },
+
   "expenses": {
     "title": "Expenses",
     "subtitle": "Track every rupee spent on your crops",
@@ -237,6 +291,8 @@
   },
   "messages": {
     "FARM_ADDED_SUCCESS": "Farm added successfully",
+    "FARM_UPDATED_SUCCESS": "Farm updated successfully",
+    "FARM_DELETED_SUCCESS": "Farm deleted successfully",
     "CROP_ADDED_SUCCESS": "Crop added successfully",
     "EXPENSE_ADDED_SUCCESS": "Expense recorded successfully",
     "EQUIPMENT_ADDED_SUCCESS": "Equipment listed successfully",

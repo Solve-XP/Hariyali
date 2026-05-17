@@ -16,6 +16,8 @@
 }
 .stat-card--accent::after { background: radial-gradient(circle at center, var(--color-accent-50), transparent 70%); }
 .stat-card--info::after   { background: radial-gradient(circle at center, var(--color-info-bg),   transparent 70%); }
+.stat-card--green::after { background: radial-gradient(circle at center, var(--color-green-soft-bg), transparent 70%); }
+.stat-card--purple::after { background: radial-gradient(circle at center, var(--color-purple-bg),transparent 70%); }
 
 .stat-card__body { display: flex; flex-direction: column; gap: 6px; position: relative; z-index: 1; }
 .stat-card__label { color: var(--color-text-muted); font-size: var(--fs-sm); font-weight: 500; }
@@ -34,5 +36,7 @@
 }
 .stat-card__icon--accent { background: var(--color-accent-50); color: var(--color-accent-600); border-color: #fde68a; }
 .stat-card__icon--info   { background: var(--color-info-bg);   color: var(--color-info);       border-color: #bfdbfe; }
+.stat-card__icon--green { background: var(--color-success-bg); color: var(--color-success); border-color: #8afda5;}
+.stat-card__icon--purple { background: var(--color-purple-bg); color: var(--color-purple); border-color: #d8b4fe;}
 
 @media(max-width:480px){ .stat-card__value { font-size: var(--fs-2xl); } }

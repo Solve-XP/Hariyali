@@ -33,8 +33,8 @@ class FarmRepository:
 
         farm = await self.collection.find_one({
             "user_id": user_id,
-            "farm_name": farm_name,
-            "location": location,
+            "normalized_farm_name": farm_name,
+            "normalized_location": location,
             "is_deleted": False
         })
 
@@ -61,8 +61,8 @@ class FarmRepository:
                 "$ne": object_id
             },
             "user_id": user_id,
-            "farm_name": farm_name,
-            "location": location,
+            "normalized_farm_name": farm_name,
+            "normalized_location": location,
             "is_deleted": False
         })
 
@@ -80,7 +80,13 @@ class FarmRepository:
         }
 
         search_query = build_search_query(
-            "farm_name",
+            [
+                "farm_name",
+                "location",
+                "soil_type",
+                "normalized_farm_name",
+                "normalized_location"
+            ],
             search
         )
 

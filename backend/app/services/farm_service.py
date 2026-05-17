@@ -65,9 +65,16 @@ class FarmService:
 
         farm_data = {
             "user_id": user_id,
-            "farm_name": normalized_farm_name,
+
+            # Original user input
+            "farm_name": payload.farm_name,
+            "location": payload.location,
+
+            # Normalized fields for duplicate checking
+            "normalized_farm_name": normalized_farm_name,
+            "normalized_location": normalized_location,
+
             "acres": payload.acres,
-            "location": normalized_location,
             "soil_type": payload.soil_type,
             "farm_photo": image_url,
             "created_at": datetime.utcnow(),
@@ -165,28 +172,29 @@ class FarmService:
             exclude_none=True
         )
 
-        final_farm_name = normalize_text(
-            update_data.get(
-                "farm_name",
-                existing_farm["farm_name"]
-            )
+        final_farm_name = update_data.get(
+            "farm_name",
+            existing_farm["farm_name"]
         )
 
-        final_location = normalize_text(
-            update_data.get(
-                "location",
-                existing_farm["location"]
-            )
+        final_location = update_data.get(
+            "location",
+            existing_farm["location"]
         )
 
-        update_data["farm_name"] = final_farm_name
-        update_data["location"] = final_location
+        normalized_farm_name = normalize_text(
+            final_farm_name
+        )
+
+        normalized_location = normalize_text(
+            final_location
+        )
 
         duplicate_farm = await self.repo.check_duplicate_farm_for_update(
             farm_id=farm_id,
             user_id=user_id,
-            farm_name=final_farm_name,
-            location=final_location
+            farm_name=normalized_farm_name,
+            location=normalized_location
         )
 
         if duplicate_farm:
@@ -195,6 +203,14 @@ class FarmService:
                 status_code=409,
                 detail="Farm already exists"
             )
+
+        # Store original values
+        update_data["farm_name"] = final_farm_name
+        update_data["location"] = final_location
+
+        # Store normalized values separately
+        update_data["normalized_farm_name"] = normalized_farm_name
+        update_data["normalized_location"] = normalized_location
 
         if farm_photo:
 

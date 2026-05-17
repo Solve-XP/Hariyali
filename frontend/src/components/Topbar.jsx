@@ -5,23 +5,39 @@ import { SUPPORTED_LANGUAGES } from "../i18n/i18n";
 import { IconMenu } from "./Icons";
 
 const titleByPath = {
-  "/dashboard":       "dashboard.title",
-  "/farms":           "farms.title",
-  "/crops":           "crops.title",
-  "/expenses":        "expenses.title",
-  "/rental":          "rental.title",
+
+  "/farmer/dashboard": "dashboard.title",
+
+  "/farmer/farms": "farms.title",
+
+  "/farmer/crops": "crops.title",
+
+  "/farmer/expenses": "expenses.title",
+
+  "/farmer/rental": "rental.title",
+
+  "/farmer/fertilizer": "fertilizer.title",
+
+  "/farmer/pesticides": "pesticides.title",
+
   "/admin/dashboard": "admin.dashboard_title",
-  "/admin/users":     "admin.users_title",
-  "/admin/farms":     "admin.farms_title",
-  "/admin/crops":     "admin.crops_title",
-  "/admin/expenses":  "admin.expenses_title",
+
+  "/admin/users": "admin.users_title",
+
+  "/admin/farms": "admin.farms_title",
+
+  "/admin/crops": "admin.crops_title",
+
+  "/admin/expenses": "admin.expenses_title",
+
   "/admin/equipment": "admin.equipment_title",
+
 };
 
 export default function Topbar({ onMenuClick }) {
   const { t, i18n } = useTranslation();
   const location = useLocation();
-  const titleKey = titleByPath[location.pathname] || "app.name";
+  const titleKey = titleByPath[location.pathname];
   return (
     <header className="topbar">
       <div className="topbar__left">

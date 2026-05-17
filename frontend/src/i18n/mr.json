@@ -148,19 +148,40 @@
     "acres": "एकर",
     "location": "स्थान",
     "soil_type": "मातीचा प्रकार",
+    "farm_photo": "शेतीचा फोटो",
+    "cancel": "रद्द करा",
+    "create_farm": "शेती तयार करा",
+    "update_farm": "शेती अद्ययावत करा",
     "add_title": "नवीन शेत जोडा",
     "name_placeholder": "शेताचे नाव टाका",
     "acres_placeholder": "एकर टाका",
     "location_placeholder": "स्थान टाका",
     "soil_placeholder": "मातीचा प्रकार टाका",
-    "empty": "अद्याप कोणतीही शेती जोडलेली नाही. सुरुवात करण्यासाठी पहिले शेत जोडा."
+    "search_placeholder": "शेती शोधा...",
+     "delete_title": "शेत हटवा",
+    "delete_message": "हे शेत हटवायचे आहे का?", 
+    "empty": "अद्याप कोणतीही शेती जोडलेली नाही. सुरुवात करण्यासाठी पहिले शेत जोडा.",
+
+    "stats": {
+      "total_farms": "एकूण शेती",
+     "farms_added": "जोडलेल्या शेती",
+
+      "total_acres": "एकूण एकर",
+      "acres_land": "जमिनीचे एकर",
+
+      "soil_types": "मातीचे प्रकार",
+      "different_soil_types": "वेगवेगळे मातीचे प्रकार",
+
+      "locations": "स्थाने",
+      "unique_locations": "वेगवेगळी स्थाने"
+    }
   },
-  "crops": {
+ "crops": {
     "title": "पिके",
-    "subtitle": "तुमच्या शेतीतील पिकांचा मागोवा घ्या",
+    "subtitle": "तुमच्या शेतांमधील पिकांचे व्यवस्थापन करा",
     "list_title": "माझी पिके",
     "select_farm": "शेत निवडा",
-    "all_farms": "सर्व शेती",
+    "all_farms": "सर्व शेतं",
     "name": "पिकाचे नाव",
     "farm": "शेत",
     "season": "हंगाम",
@@ -169,9 +190,39 @@
     "add_title": "नवीन पीक जोडा",
     "name_placeholder": "उदा. गहू, तांदूळ, कापूस",
     "season_placeholder": "उदा. खरीप, रब्बी",
-    "empty": "कोणतेही पीक नोंदवलेले नाही. मागोवा सुरू करण्यासाठी पीक जोडा.",
-    "no_farm_selected": "पिके पाहण्यासाठी कृपया शेत निवडा."
+    "empty": "कोणतीही पिके नोंदलेली नाहीत. ट्रॅकिंग सुरू करण्यासाठी पीक जोडा.",
+    "no_farm_selected": "पिके पाहण्यासाठी कृपया शेत निवडा.",
+
+    "add_crop": "पीक जोडा",
+    "edit_crop": "पीक संपादित करा",
+    "update_crop": "पीक अद्यतनित करा",
+    "create_crop": "पीक तयार करा",
+    "crop": "पीक",
+    "financial_year": "आर्थिक वर्ष",
+    "all_seasons": "सर्व हंगाम",
+    "all_financial_years": "सर्व आर्थिक वर्षे",
+    "search_placeholder": "पीक, हंगाम, आर्थिक वर्ष शोधा...",
+    "harvest_date": "अपेक्षित कापणी तारीख",
+    "connected_farms": "जोडलेली शेतं",
+    "farm_coverage": "शेती कव्हरेज",
+    "seasons_count": "हंगाम",
+    "season_categories": "हंगाम प्रकार",
+    "latest_fy": "नवीनतम आर्थिक वर्ष",
+    "registered_crops": "नोंदणीकृत पिके",
+    "total_crops": "एकूण पिके",
+    "loading": "पिके लोड होत आहेत...",
+    "no_crops_found": "कोणतीही पिके आढळली नाहीत",
+    "cancel": "रद्द करा",
+    "actions": "कृती",
+    "delete_crop": "पीक हटवा",
+    "delete_confirm": "तुम्हाला हे पीक हटवायचे आहे का?",
+    "crop_added": "पीक यशस्वीरित्या जोडले गेले",
+    "crop_updated": "पीक यशस्वीरित्या अद्यतनित केले गेले",
+    "crop_deleted": "पीक यशस्वीरित्या हटवले गेले",
+    "enter_crop_name": "पिकाचे नाव प्रविष्ट करा",
+    "kharif_rabi": "खरीप / रब्बी"
   },
+
   "expenses": {
     "title": "खर्च",
     "subtitle": "तुमच्या पिकांवरील प्रत्येक रुपयाचा मागोवा घ्या",
@@ -237,6 +288,8 @@
   },
   "messages": {
     "FARM_ADDED_SUCCESS": "शेत यशस्वीरित्या जोडले",
+    "FARM_UPDATED_SUCCESS": "शेत यशस्वीरित्या अपडेट केले",
+    "FARM_DELETED_SUCCESS": "शेत यशस्वीरित्या हटवले",
     "CROP_ADDED_SUCCESS": "पीक यशस्वीरित्या जोडले",
     "EXPENSE_ADDED_SUCCESS": "खर्च यशस्वीरित्या नोंदवला",
     "EQUIPMENT_ADDED_SUCCESS": "उपकरण यशस्वीरित्या सूचीबद्ध केले",

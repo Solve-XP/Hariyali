@@ -1,11 +1,7 @@
 from bson import ObjectId
 from bson.errors import InvalidId
 
-from datetime import datetime
-
-from app.utils.search import (
-    build_search_query
-)
+from datetime import ( datetime,timezone )
 
 
 class CropRepository:
@@ -39,8 +35,8 @@ class CropRepository:
             "user_id": user_id,
             "farm_id": farm_id,
             "financial_year": financial_year,
-            "crop_name": crop_name,
-            "season": season,
+            "normalized_crop_name": crop_name,
+            "normalized_season": season,
             "sowing_date": sowing_date,
             "is_deleted": False
         })
@@ -73,8 +69,8 @@ class CropRepository:
             "user_id": user_id,
             "farm_id": farm_id,
             "financial_year": financial_year,
-            "crop_name": crop_name,
-            "season": season,
+            "normalized_crop_name": crop_name,
+            "normalized_season": season,
             "sowing_date": sowing_date,
             "is_deleted": False
         })
@@ -95,25 +91,61 @@ class CropRepository:
             "is_deleted": False
         }
 
-        search_query = build_search_query(
-            "crop_name",
-            search
-        )
+        if search and search.strip():
 
-        query.update(search_query)
+            search = search.strip()
 
-        if farm_id:
+            query["$or"] = [
+                {
+                    "crop_name": {
+                        "$regex": search,
+                        "$options": "i"
+                    }
+                },
+                {
+                    "season": {
+                        "$regex": search,
+                        "$options": "i"
+                    }
+                },
+                {
+                    "financial_year": {
+                        "$regex": search,
+                        "$options": "i"
+                    }
+                },
+                {
+                    "normalized_crop_name": {
+                        "$regex": search.lower(),
+                        "$options": "i"
+                    }
+                },
+                {
+                    "normalized_season": {
+                        "$regex": search.lower(),
+                        "$options": "i"
+                    }
+                }
+            ]
+
+        if farm_id and farm_id.strip():
 
             query["farm_id"] = farm_id
 
-        if season:
+        if season and season.strip():
 
-            query["season"] = season
+            query["normalized_season"] = (
+                season.lower().strip()
+            )
 
-        if financial_year:
+        if (
+            financial_year
+            and
+            financial_year.strip()
+        ):
 
             query["financial_year"] = (
-                financial_year
+                financial_year.strip()
             )
 
         crops = await self.collection.find(
@@ -163,7 +195,7 @@ class CropRepository:
             return 0
 
         update_data["updated_at"] = (
-            datetime.utcnow()
+            datetime.now(timezone.utc)
         )
 
         result = await self.collection.update_one(
@@ -203,7 +235,7 @@ class CropRepository:
                 "$set": {
                     "is_deleted": True,
                     "updated_at":
-                        datetime.utcnow()
+                        datetime.now(timezone.utc)
                 }
             }
         )

@@ -7,6 +7,7 @@ from app.api.v1.endpoints import fertilizers
 from app.api.v1.endpoints import pesticides
 from app.api.v1.endpoints import expenses
 from app.api.v1.endpoints import incomes
+from app.api.v1.endpoints import rentals
 
 
 
@@ -19,3 +20,4 @@ api_router.include_router(fertilizers.router)
 api_router.include_router(pesticides.router)
 api_router.include_router(expenses.router)
 api_router.include_router(incomes.router)
+api_router.include_router(rentals.router)

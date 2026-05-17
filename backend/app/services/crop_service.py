@@ -79,10 +79,18 @@ class CropService:
             "financial_year":
                 financial_year,
 
+            # Original values
             "crop_name":
-                normalized_crop_name,
+                payload.crop_name,
 
             "season":
+                payload.season,
+
+            # Normalized values
+            "normalized_crop_name":
+                normalized_crop_name,
+
+            "normalized_season":
                 normalized_season,
 
             "sowing_date":
@@ -292,18 +300,22 @@ class CropService:
             )
         )
 
-        final_crop_name = normalize_text(
-            update_data.get(
-                "crop_name",
-                existing_crop["crop_name"]
-            )
+        final_crop_name = update_data.get(
+            "crop_name",
+            existing_crop["crop_name"]
         )
 
-        final_season = normalize_text(
-            update_data.get(
-                "season",
-                existing_crop["season"]
-            )
+        final_season = update_data.get(
+            "season",
+            existing_crop["season"]
+        )
+
+        normalized_crop_name = normalize_text(
+            final_crop_name
+        )
+
+        normalized_season = normalize_text(
+            final_season
         )
 
         final_sowing_date = update_data.get(
@@ -338,8 +350,8 @@ class CropService:
                     existing_crop["farm_id"]
                 ),
                 financial_year=financial_year,
-                crop_name=final_crop_name,
-                season=final_season,
+                crop_name=normalized_crop_name,
+                season=normalized_season,
                 sowing_date=final_sowing_date
             )
 
@@ -362,6 +374,14 @@ class CropService:
             final_season
         )
 
+        update_data["normalized_crop_name"] = (
+            normalized_crop_name
+        )
+
+        update_data["normalized_season"] = (
+            normalized_season
+        )
+
         if sowing_date_changed:
 
             update_data[
@@ -371,9 +391,9 @@ class CropService:
         if (
             harvest_date_changed
             and
-            update_data[
+            update_data.get(
                 "expected_harvest_date"
-            ]
+            )
         ):
 
             update_data[

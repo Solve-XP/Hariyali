@@ -9,11 +9,35 @@ import {
 } from "./Icons";
 
 const userItems = [
-  { to: "/dashboard", labelKey: "nav.dashboard",  icon: <IconDashboard className="sidebar__icon" /> },
-  { to: "/farms",     labelKey: "nav.farms",       icon: <IconFarm      className="sidebar__icon" /> },
-  { to: "/crops",     labelKey: "nav.crops",       icon: <IconCrop      className="sidebar__icon" /> },
-  { to: "/expenses",  labelKey: "nav.expenses",    icon: <IconExpense   className="sidebar__icon" /> },
-  { to: "/rental",    labelKey: "nav.rental",      icon: <IconRental    className="sidebar__icon" /> },
+  {
+    to: "/farmer/dashboard",
+    labelKey: "nav.dashboard",
+    icon: <IconDashboard className="sidebar__icon" />
+  },
+
+  {
+    to: "/farmer/farms",
+    labelKey: "nav.farms",
+    icon: <IconFarm className="sidebar__icon" />
+  },
+
+  {
+    to: "/farmer/crops",
+    labelKey: "nav.crops",
+    icon: <IconCrop className="sidebar__icon" />
+  },
+
+  {
+    to: "/farmer/expenses",
+    labelKey: "nav.expenses",
+    icon: <IconExpense className="sidebar__icon" />
+  },
+
+  {
+    to: "/farmer/rental",
+    labelKey: "nav.rental",
+    icon: <IconRental className="sidebar__icon" />
+  },
 ];
 const adminItems = [
   { to: "/admin/dashboard", labelKey: "nav.admin_dashboard",  icon: <IconDashboard className="sidebar__icon" /> },
