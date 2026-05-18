@@ -7,6 +7,8 @@
     "dashboard": "Dashboard",
     "farms": "Farms",
     "crops": "Crops",
+     "fertilizers": "Fertilizers",
+     "pesticides": "Pesticides",
     "expenses": "Expenses",
     "rental": "Equipment Rental",
     "admin_section": "Admin",
@@ -452,5 +454,94 @@
   },
   "footer": {
     "copyright": "Field Management — Empowering farmers with technology"
-  }
+  },
+
+
+  "fertilizers": {
+    "title": "Fertilizers",
+    "subtitle": "Manage fertilizer usage records",
+    "add": "Add Fertilizer",
+    "edit": "Edit Fertilizer",
+    "create": "Create Fertilizer",
+    "update": "Update Fertilizer",
+    "delete": "Delete Fertilizer",
+
+    "name": "Fertilizer Name",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "application_date": "Application Date",
+    "financial_year": "Financial Year",
+    "notes": "Notes",
+    "actions": "Actions",
+
+    "search": "Search fertilizers...",
+    "loading": "Loading fertilizers...",
+    "empty": "No fertilizer records found",
+
+    "created": "Fertilizer created successfully",
+    "updated": "Fertilizer updated successfully",
+    "deleted": "Fertilizer deleted successfully",
+
+    "delete_confirm": "Are you sure you want to delete",
+
+    "total_records": "Total Records",
+    "records": "Records",
+
+    "total_quantity": "Total Quantity",
+    "total_used": "Total Used",
+
+    "latest_application": "Latest Application",
+    "latest_record": "Latest Record",
+
+    "all_financial_years": "All Financial Years"
+  },
+
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+
+  "messages": {
+    "GENERIC_ERROR": "Something went wrong",
+    "VALIDATION_ERROR": "Please fill all required fields"
+  },
+
+  "pesticides": {
+  "title": "Pesticides",
+  "subtitle": "Manage pesticide usage records",
+  "add": "Add Pesticide",
+  "edit": "Edit Pesticide",
+  "create": "Create Pesticide",
+  "update": "Update Pesticide",
+  "delete": "Delete Pesticide",
+
+  "name": "Pesticide Name",
+  "quantity": "Quantity",
+  "unit": "Unit",
+  "application_date": "Application Date",
+  "financial_year": "Financial Year",
+  "notes": "Notes",
+  "actions": "Actions",
+
+  "search": "Search pesticides...",
+  "loading": "Loading pesticides...",
+  "empty": "No pesticide records found",
+
+  "created": "Pesticide created successfully",
+  "updated": "Pesticide updated successfully",
+  "deleted": "Pesticide deleted successfully",
+
+  "delete_confirm": "Are you sure you want to delete",
+
+  "total_records": "Total Records",
+  "records": "Records",
+
+  "total_quantity": "Total Quantity",
+  "total_used": "Total Used",
+
+  "latest_application": "Latest Application",
+  "latest_record": "Latest Record",
+
+  "all_financial_years": "All Financial Years"
+}
 }

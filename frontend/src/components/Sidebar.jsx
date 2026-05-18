@@ -5,7 +5,11 @@ import { useAuth } from "../context/AuthContext";
 import { useApp } from "../context/AppContext";
 import {
   IconDashboard, IconFarm, IconCrop, IconExpense,
+<<<<<<< HEAD
   IconRental, IconUsers, IconAdmin, IconLogout,IconFertilizer,IconIncome,
+=======
+  IconRental, IconUsers, IconAdmin, IconLogout,IconFertilizer,IconPesticide,
+>>>>>>> 8965bd3 (Fertilizers and Pesticides created)
 } from "./Icons";
 
 const userItems = [
@@ -32,10 +36,17 @@ const userItems = [
     icon: <IconFertilizer className="sidebar__icon" />
   },
   {
+<<<<<<< HEAD
     to: "/farmer/incomes",
     labelKey: "nav.incomes",
     icon: <IconIncome className="sidebar__icon" />
   },
+=======
+  to: "/farmer/pesticides",
+  labelKey: "nav.pesticides",
+  icon: <IconPesticide className="sidebar__icon" />
+ },
+>>>>>>> 8965bd3 (Fertilizers and Pesticides created)
   {
     to: "/farmer/expenses",
     labelKey: "nav.expenses",

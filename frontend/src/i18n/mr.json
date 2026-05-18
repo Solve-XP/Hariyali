@@ -7,6 +7,8 @@
     "dashboard": "डॅशबोर्ड",
     "farms": "शेती",
     "crops": "पिके",
+    "fertilizers": "खते",
+    "pesticides": "कीटकनाशके",
     "expenses": "खर्च",
     "rental": "उपकरण भाडे",
     "admin_section": "प्रशासन",
@@ -450,5 +452,95 @@
   },
   "footer": {
     "copyright": "फील्ड व्यवस्थापन — तंत्रज्ञानाद्वारे शेतकऱ्यांना सक्षम करत आहे"
+  },
+
+
+  "fertilizers": {
+    "title": "खते",
+    "subtitle": "खत वापर नोंदी व्यवस्थापित करा",
+    "add": "खत जोडा",
+    "edit": "खत संपादित करा",
+    "create": "खत तयार करा",
+    "update": "खत अपडेट करा",
+    "delete": "खत हटवा",
+
+    "name": "खताचे नाव",
+    "quantity": "प्रमाण",
+    "unit": "एकक",
+    "application_date": "वापर तारीख",
+    "financial_year": "आर्थिक वर्ष",
+    "notes": "टीप",
+    "actions": "क्रिया",
+
+    "search": "खते शोधा...",
+    "loading": "खते लोड होत आहेत...",
+    "empty": "खत नोंदी उपलब्ध नाहीत",
+
+    "created": "खत यशस्वीरित्या तयार झाले",
+    "updated": "खत यशस्वीरित्या अपडेट झाले",
+    "deleted": "खत यशस्वीरित्या हटवले",
+
+    "delete_confirm": "तुम्हाला हटवायचे आहे का",
+
+    "total_records": "एकूण नोंदी",
+    "records": "नोंदी",
+
+    "total_quantity": "एकूण प्रमाण",
+    "total_used": "एकूण वापर",
+
+    "latest_application": "अलीकडील वापर",
+    "latest_record": "अलीकडील नोंद",
+
+    "all_financial_years": "सर्व आर्थिक वर्षे"
+  },
+
+  "common": {
+    "cancel": "रद्द करा",
+    "delete": "हटवा"
+  },
+
+  "messages": {
+    "GENERIC_ERROR": "काहीतरी चूक झाली",
+    "VALIDATION_ERROR": "कृपया सर्व आवश्यक माहिती भरा"
+  },
+
+   "pesticides": {
+    "title": "कीटकनाशके",
+    "subtitle": "कीटकनाशक वापर नोंदी व्यवस्थापित करा",
+
+    "add": "कीटकनाशक जोडा",
+    "edit": "कीटकनाशक संपादित करा",
+    "create": "कीटकनाशक तयार करा",
+    "update": "कीटकनाशक अपडेट करा",
+    "delete": "कीटकनाशक हटवा",
+
+    "name": "कीटकनाशक नाव",
+    "quantity": "प्रमाण",
+    "unit": "एकक",
+    "application_date": "वापर तारीख",
+    "financial_year": "आर्थिक वर्ष",
+    "notes": "टीप",
+    "actions": "क्रिया",
+
+    "search": "कीटकनाशके शोधा...",
+    "loading": "कीटकनाशके लोड होत आहेत...",
+    "empty": "कीटकनाशक नोंदी उपलब्ध नाहीत",
+
+    "created": "कीटकनाशक यशस्वीरित्या तयार झाले",
+    "updated": "कीटकनाशक यशस्वीरित्या अपडेट झाले",
+    "deleted": "कीटकनाशक यशस्वीरित्या हटवले",
+
+    "delete_confirm": "तुम्हाला हटवायचे आहे का",
+
+    "total_records": "एकूण नोंदी",
+    "records": "नोंदी",
+
+    "total_quantity": "एकूण प्रमाण",
+    "total_used": "एकूण वापर",
+
+    "latest_application": "अलीकडील वापर",
+    "latest_record": "अलीकडील नोंद",
+
+    "all_financial_years": "सर्व आर्थिक वर्षे"
   }
 }

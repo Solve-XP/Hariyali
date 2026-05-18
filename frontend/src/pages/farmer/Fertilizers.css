@@ -59,6 +59,11 @@
     transform: translateY(-1px);
 }
 
+.icon-btn--danger {
+    color: var(--color-error);
+    border-color: rgba(255, 0, 0, 0.15);
+}
+
 .icon-btn--danger:hover {
     color: var(--color-error);
 }

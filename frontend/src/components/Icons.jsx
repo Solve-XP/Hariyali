@@ -233,3 +233,74 @@ export const IconSoil = ({ size = 18, ...r }) => (
     <path d="M15 7c0-2-1.5-3-3-3"/>
   </svg>
 );
+
+
+
+////Fertilizers////
+
+//financial year
+export const IconFinancialYear = ({ size = 18, ...r }) => (
+  <svg {...bp(size, r)} fill="none" viewBox="0 0 24 24">
+    <rect x="3" y="4" width="18" height="17" rx="2" />
+    <path d="M16 2v4" />
+    <path d="M8 2v4" />
+    <path d="M3 10h18" />
+    <path d="M8 14h3" />
+    <path d="M13 14h3" />
+    <path d="M8 18h3" />
+  </svg>
+);
+
+
+//Total quantity Icon
+export const IconTotalQuantity = ({ size = 18, ...r }) => (
+  <svg {...bp(size, r)} fill="none" viewBox="0 0 24 24">
+    <path d="M6 20h12" />
+    <path d="M9 20V8h6v12" />
+    <path d="M8 8h8" />
+    <path d="M10 4h4v4h-4z" />
+  </svg>
+);
+
+
+//TotalRecords
+export const IconTotalRecords = ({ size = 18, ...r }) => (
+  <svg {...bp(size, r)} fill="none" viewBox="0 0 24 24">
+    <rect x="4" y="3" width="16" height="18" rx="2" />
+    <path d="M8 7h8" />
+    <path d="M8 11h8" />
+    <path d="M8 15h5" />
+  </svg>
+);
+
+
+//LatestApplication
+export const IconLatestApplication = ({ size = 18, ...r }) => (
+  <svg {...bp(size, r)} fill="none" viewBox="0 0 24 24">
+    <circle cx="12" cy="13" r="8" />
+    <path d="M12 9v5l3 2" />
+    <path d="M9 2h6" />
+  </svg>
+);
+
+
+// //Icon Fertilizers
+// export const IconFertilizer = ({ size = 18, ...r }) => (
+//   <svg {...bp(size, r)} fill="none" viewBox="0 0 24 24">
+//     <path d="M8 3h8l2 5v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8l2-5z" />
+//     <path d="M9 8h6" />
+//     <path d="M10 12h4" />
+//     <path d="M12 10v4" />
+//   </svg>
+// );
+
+
+//Pesticides
+export const IconPesticide = ({ size = 18, ...r }) => (
+  <svg {...bp(size, r)}>
+    <path d="M8 3h8l2 5v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8l2-5z" />
+    <path d="M9 8h6" />
+    <path d="M12 11v5" />
+    <path d="M10 13h4" />
+  </svg>
+);

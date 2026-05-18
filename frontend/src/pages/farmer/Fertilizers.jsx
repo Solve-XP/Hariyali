@@ -31,6 +31,11 @@ import {
   IconTrash,
   IconFarmYear,
   IconFertilizer,
+  IconFinancialYear,
+  IconTotalQuantity,
+  IconTotalRecords,
+  IconLatestApplication,
+
 } from "../../components/Icons";
 
 const EMPTY_FORM = {
@@ -97,11 +102,11 @@ export default function Fertilizers() {
      FILTER CHANGE LOAD
   ========================================================= */
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    loadFertilizers(debouncedFilters);
+  //   loadFertilizers(debouncedFilters);
 
-  }, [debouncedFilters]);
+  // }, [debouncedFilters]);
 
   /* =========================================================
      LOAD FERTILIZERS
@@ -212,6 +217,38 @@ export default function Fertilizers() {
       return;
     }
 
+
+    /* Quantity must be positive integer */
+
+const quantity = Number(form.quantity);
+
+if (
+  quantity <= 0 ||
+  !Number.isInteger(quantity)
+) {
+
+  pushToast(
+    "Quantity must be a positive integer",
+    "error"
+  );
+
+  return;
+}
+
+/* Unit must contain only letters */
+
+const unitRegex = /^[A-Za-z\s]+$/;
+
+if (!unitRegex.test(form.unit)) {
+
+  pushToast(
+    "Unit must contain only letters",
+    "error"
+  );
+
+  return;
+}
+
     try {
 
       setLoading(true);
@@ -302,16 +339,39 @@ export default function Fertilizers() {
 
   const filteredFertilizers = useMemo(() => {
 
-    if (selectedFY === "all") {
-      return fertilizers;
-    }
+  //   if (selectedFY === "all") {
+  //     return fertilizers;
+  //   }
 
-    return fertilizers.filter(
-      (fertilizer) =>
-        fertilizer.financial_year === selectedFY
-    );
+  //   return fertilizers.filter(
+  //     (fertilizer) =>
+  //       fertilizer.financial_year === selectedFY
+  //   );
 
-  }, [fertilizers, selectedFY]);
+  // }, [fertilizers, selectedFY]);
+
+   return fertilizers.filter((fertilizer) => {
+
+    const matchesFY =
+      selectedFY === "all" ||
+      fertilizer.financial_year === selectedFY;
+
+    const matchesSearch =
+      fertilizer.fertilizer_name
+        ?.toLowerCase()
+        .includes(
+          filters.search.toLowerCase()
+        );
+
+    return matchesFY && matchesSearch;
+
+  });
+
+}, [
+  fertilizers,
+  selectedFY,
+  filters.search,
+]);
 
   /* =========================================================
      STATS
@@ -319,6 +379,7 @@ export default function Fertilizers() {
 
   const stats = {
 
+    
     total: filteredFertilizers.length,
 
     totalQuantity: filteredFertilizers.reduce(
@@ -436,7 +497,7 @@ export default function Fertilizers() {
       <div className="grid grid--4">
 
         <StatsCard
-          icon={<IconFarmYear size={22} />}
+          icon={<IconFinancialYear  size={22} />}
           title={t("fertilizers.financial_year")}
           value={
             <Select
@@ -469,7 +530,7 @@ export default function Fertilizers() {
         />
 
         <StatsCard
-          icon={<IconFertilizer size={22} />}
+          icon={<IconTotalRecords size={22} />}
           title={t("fertilizers.total_records")}
           value={stats.total}
           subtitle={t("fertilizers.records")}
@@ -477,6 +538,7 @@ export default function Fertilizers() {
         />
 
         <StatsCard
+          icon={<IconTotalQuantity size={22} />}
           title={t("fertilizers.total_quantity")}
           value={stats.totalQuantity}
           subtitle={t("fertilizers.total_used")}
@@ -484,6 +546,7 @@ export default function Fertilizers() {
         />
 
         <StatsCard
+          icon={<IconLatestApplication size={22} />}
           title={t("fertilizers.latest_application")}
           value={stats.latestApplication}
           subtitle={t("fertilizers.latest_record")}
