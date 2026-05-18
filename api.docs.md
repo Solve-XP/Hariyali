@@ -519,3 +519,311 @@ Frontend Notes
   * case-insensitive matching
   * partial keyword matching
 
+
+# Expense Service | Expense API
+
+The Expense Service manages farmer financial expense records and farm-related accounting data.
+
+Only users with the `farmer` role can access expense APIs.
+
+The expense module is designed for:
+
+* farm expense tracking
+* crop-wise expense tracking
+* yearly financial reporting
+* farming cost analysis
+* financial analytics
+
+The expense module supports:
+
+* Create Expense
+* Get All Expenses
+* Search Expenses
+* Filter Expenses
+* Get Expense By ID
+* Update Expense
+* Delete Expense
+
+Financial year is automatically generated from the expense date.
+
+Expense listing supports filtering by:
+
+* farm
+* crop
+* financial year
+* category
+* search keyword
+
+Search currently uses MongoDB regex search with:
+
+* case-insensitive matching
+* partial keyword matching
+
+Duplicate expense records with the same:
+
+* farm
+* crop
+* category
+* item name
+* quantity
+* amount
+* expense date (same day)
+
+are restricted for the same user.
+
+Protected APIs require a valid JWT token in the Authorization header.
+
+Authorization Header Example
+
+```txt id="expdoc1"
+Authorization: Bearer <access_token>
+```
+
+Supported Expense Categories
+
+```txt id="expdoc2"
+fertilizer
+pesticide
+seeds
+labor
+diesel
+transport
+equipment
+electricity
+water
+maintenance
+other
+```
+
+Supported Payment Methods
+
+```txt id="expdoc3"
+cash
+upi
+bank_transfer
+credit
+other
+```
+
+Example Create Expense Request
+
+POST /api/v1/expenses
+
+```json id="expdoc4"
+{
+  "farm_id": "6a04d02f80c35afc502e850b",
+  "crop_id": "6a04d514fb8c129225013400",
+  "category": "pesticide",
+  "item_name": "BVD",
+  "quantity": 10,
+  "unit": "Liter",
+  "amount": 450,
+  "payment_method": "cash",
+  "expense_date": "2026-05-13T20:45:37.993Z",
+  "notes": "Pesticide expense"
+}
+```
+
+Example Get All Expenses Request
+
+```txt id="expdoc5"
+GET /api/v1/expenses
+```
+
+Example Search Expenses Request
+
+```txt id="expdoc6"
+GET /api/v1/expenses?search=bvd
+```
+
+Example Filter Expenses Request
+
+```txt id="expdoc7"
+GET /api/v1/expenses?financial_year=2026-2027&category=pesticide
+```
+
+Example Success Response
+
+```json id="expdoc8"
+[
+  {
+    "id": "6a04e31ff2d7e786956b9f72",
+    "farm_id": "6a04d02f80c35afc502e850b",
+    "crop_id": "6a04d514fb8c129225013400",
+    "financial_year": "2026-2027",
+    "category": "pesticide",
+    "item_name": "BVD",
+    "quantity": 10,
+    "unit": "Liter",
+    "amount": 450,
+    "payment_method": "cash",
+    "expense_date": "2026-05-13T20:45:37.993Z",
+    "notes": "Pesticide expense"
+  }
+]
+```
+
+Frontend Notes
+
+* Frontend should call GET /api/v1/farms to populate farm dropdown while creating expenses.
+* Frontend should call GET /api/v1/crops to populate crop dropdown after farm selection.
+* `farm_id` is mandatory for all expense records.
+* `crop_id` is optional because some expenses may not belong to a specific crop.
+* Frontend should NOT ask users for financial_year. Backend automatically generates it from expense_date.
+* `quantity` and `unit` are optional because some expenses may not have measurable quantity.
+* Update Expense API supports partial updates using PATCH request.
+* Frontend should prevent duplicate submissions by disabling submit button during API request.
+* Search currently uses MongoDB regex search with:
+
+  * case-insensitive matching
+  * partial keyword matching
+
+
+
+# Rental Marketplace Service | Rental Marketplace API
+
+The Rental Marketplace Service manages farm equipment rental listings shared by farmers.
+
+Only authenticated users can create, update, and delete rental listings.
+
+The rental marketplace module is designed for:
+
+equipment rental listing
+farmer-to-farmer equipment sharing
+equipment discovery
+local rental marketplace browsing
+
+The rental marketplace is a listing-based system.
+
+The backend currently supports:
+
+equipment listing creation
+equipment browsing
+search functionality
+equipment availability management
+
+The module does NOT currently support:
+
+online booking
+payment gateway
+live availability calendar
+chat system
+rental contracts
+
+The rental marketplace module supports:
+
+Create Equipment Listing
+Get All Listings
+Search Listings
+Filter Listings
+Get Listing By ID
+Update Listing
+Delete Listing
+
+Financial year is automatically generated while creating the listing.
+
+Equipment photos are uploaded and stored in AWS S3.
+
+Rental listing supports filtering by:
+
+financial year
+search keyword
+
+Search currently uses MongoDB regex search with:
+
+case-insensitive matching
+partial keyword matching
+
+Duplicate listings with the same:
+
+equipment name
+location
+same user
+same day
+
+are restricted.
+
+Protected APIs require a valid JWT token in the Authorization header.
+
+Authorization Header Example
+
+Authorization: Bearer <access_token>
+
+Rental Pricing Logic
+
+At least one pricing field is required:
+
+price_per_hour
+price_per_day
+
+Both can also be provided.
+
+Example Create Rental Listing Request
+
+POST /api/v1/rentals
+
+Content-Type: multipart/form-data
+
+equipment_name = Tractor
+
+price_per_hour = 500
+
+price_per_day = 3500
+
+location = Kolhapur
+
+owner_name = Balraje
+
+phone = 9766863091
+
+description = Heavy duty tractor available for farming work
+
+equipment_photo = tractor.jpg
+
+Example Get All Rental Listings Request
+
+GET /api/v1/rentals
+
+Example Search Rental Listings Request
+
+GET /api/v1/rentals?search=tractor
+
+Example Filter Rental Listings Request
+
+GET /api/v1/rentals?financial_year=2026-2027
+
+Example Success Response
+
+[
+  {
+    "id": "6a05a2cb3186e144bf1d5867",
+    "financial_year": "2026-2027",
+    "equipment_name": "Tractor",
+    "price_per_hour": 500,
+    "price_per_day": 3500,
+    "location": "Kolhapur",
+    "owner_name": "Balraje",
+    "phone": "9766863091",
+    "equipment_photo": "https://bucket-name.s3.region.amazonaws.com/rentals/image.jpg",
+    "description": "Heavy duty tractor available",
+    "is_available": true
+  }
+]
+
+Frontend Notes
+
+Equipment photo upload is mandatory while creating listing.
+Equipment photo upload is optional while updating listing.
+Frontend should use multipart/form-data for create and update APIs.
+Frontend should allow user to provide either:
+hourly pricing
+daily pricing
+or both
+Frontend should show equipment image preview before upload.
+Frontend should prevent duplicate submissions by disabling submit button during API request.
+Update Listing API supports partial updates using PATCH request.
+Backend ignores fields not provided during update requests.
+Search currently uses MongoDB regex search with:
+case-insensitive matching
+partial keyword matching
+
