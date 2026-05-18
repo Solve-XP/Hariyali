@@ -225,27 +225,171 @@
     "kharif_rabi": "खरीप / रब्बी"
   },
 
-  "expenses": {
-    "title": "खर्च",
-    "subtitle": "तुमच्या पिकांवरील प्रत्येक रुपयाचा मागोवा घ्या",
-    "select_crop": "पीक निवडा",
-    "total_for_crop": "निवडलेल्या पिकासाठी एकूण खर्च",
-    "add_title": "खर्च जोडा",
-    "type": "खर्चाचा प्रकार",
+  "fertilizers": {
+    "title": "खते",
+    "subtitle": "खत वापर नोंदी व्यवस्थापित करा",
+    "add": "खत जोडा",
+
+    "name": "खताचे नाव",
+    "quantity": "प्रमाण",
+    "unit": "एकक",
+    "application_date": "वापर दिनांक",
+    "financial_year": "आर्थिक वर्ष",
+    "notes": "नोंदी",
+    "actions": "क्रिया",
+
+    "search": "खते शोधा...",
+    "loading": "खत नोंदी लोड होत आहेत...",
+    "empty": "खत नोंदी उपलब्ध नाहीत",
+
+    "create": "खत तयार करा",
+    "edit": "खत संपादित करा",
+    "update": "खत अद्यतनित करा",
+    "delete": "खत हटवा",
+
+    "created": "खत यशस्वीरित्या तयार झाले",
+    "updated": "खत यशस्वीरित्या अद्यतनित झाले",
+    "deleted": "खत यशस्वीरित्या हटवले",
+
+    "delete_confirm": "तुम्हाला हटवायचे आहे का",
+
+    "total_records": "एकूण नोंदी",
+    "records": "नोंदी",
+
+    "total_quantity": "एकूण प्रमाण",
+    "total_used": "एकूण वापर",
+
+    "latest_application": "शेवटचा वापर",
+    "latest_record": "नवीनतम नोंद",
+
+    "all_financial_years": "सर्व आर्थिक वर्षे"
+  },
+
+  "incomes": {
+    "title": "उत्पन्न",
+    "subtitle": "शेती उत्पन्न नोंदी व्यवस्थापित करा",
+
+    "add": "उत्पन्न जोडा",
+
+    "farm": "शेत",
+    "crop": "पीक",
+    "financial_year": "आर्थिक वर्ष",
+
+    "harvest": "कापणी",
+    "harvest_quantity": "कापणी प्रमाण",
+
+    "unit": "एकक",
     "amount": "रक्कम",
-    "date": "तारीख",
-    "amount_placeholder": "रक्कम टाका",
-    "list_title": "खर्च नोंदी",
-    "empty": "या पिकासाठी अद्याप कोणताही खर्च नोंदवलेला नाही.",
-    "no_crop_selected": "खर्च पाहण्यासाठी कृपया पीक निवडा.",
-    "types": {
-      "SEED": "बियाणे",
-      "FERTILIZER": "खत",
-      "LABOR": "मजुरी",
-      "PESTICIDE": "कीटकनाशक",
-      "IRRIGATION": "सिंचन",
-      "EQUIPMENT": "उपकरणे"
-    }
+
+    "income_date": "उत्पन्न दिनांक",
+
+    "notes": "नोंदी",
+    "actions": "क्रिया",
+
+    "search": "उत्पन्न शोधा...",
+
+    "loading": "उत्पन्न लोड होत आहे...",
+    "empty": "उत्पन्न नोंदी उपलब्ध नाहीत",
+
+    "create": "उत्पन्न तयार करा",
+    "edit": "उत्पन्न संपादित करा",
+    "update": "उत्पन्न अद्यतनित करा",
+    "delete": "उत्पन्न हटवा",
+
+    "created": "उत्पन्न यशस्वीरित्या तयार झाले",
+    "updated": "उत्पन्न यशस्वीरित्या अद्यतनित झाले",
+    "deleted": "उत्पन्न यशस्वीरित्या हटवले",
+
+    "delete_confirm": "तुम्हाला हे उत्पन्न हटवायचे आहे का?",
+
+    "total_income": "एकूण उत्पन्न",
+    "revenue_generated": "निर्मित महसूल",
+
+    "farms": "शेते",
+    "connected_farms": "जोडलेली शेते",
+
+    "crops": "पिके",
+    "income_crops": "उत्पन्न पिके",
+
+    "all_financial_years": "सर्व आर्थिक वर्षे",
+
+    "select_farm": "शेत निवडा",
+    "select_crop": "पीक निवडा"
+  },
+
+
+   "expenses": {
+    "title": "खर्च ",
+    "subtitle": "शेती खर्च आणि खर्चाचे व्यवस्थापन करा.",
+    "add": "खर्च जोडा",
+
+    "financial_year": "आर्थिक वर्ष",
+    "all_financial_years": "सर्व आर्थिक वर्षे",
+
+    "total_expenses": "एकूण खर्च",
+    "expense_amount": "खर्चाची रक्कम",
+
+    "farms": "शेती",
+    "connected_farms": "जोडलेली शेती",
+
+    "crops": "पिके",
+    "expense_crops": "खर्चातील पिके",
+
+    "search": "खर्च शोधा...",
+    "loading": "खर्च लोड होत आहेत...",
+    "empty": "कोणतेही खर्च आढळले नाहीत",
+
+    "farm": "शेती",
+    "crop": "पीक",
+    "category": "वर्ग",
+    "item_name": "वस्तूचे नाव",
+    "quantity": "प्रमाण",
+    "unit": "युनिट",
+    "amount": "रक्कम",
+    "payment_method": "पेमेंट पद्धत",
+    "expense_date": "खर्च तारीख",
+    "notes": "नोंदी",
+
+    "select_farm": "शेती निवडा",
+    "select_crop": "पीक निवडा",
+    "select_category": "वर्ग निवडा",
+    "select_payment": "पेमेंट निवडा",
+
+    "create": "खर्च तयार करा",
+    "update": "खर्च अपडेट करा",
+    "edit": "खर्च संपादित करा",
+    "delete": "खर्च हटवा",
+
+    "delete_confirm": "तुम्हाला हा खर्च हटवायचा आहे का?",
+
+    "table_farm": "शेती",
+    "table_crop": "पीक",
+    "table_financial_year": "आर्थिक वर्ष",
+    "table_category": "वर्ग",
+    "table_item": "वस्तू",
+    "table_quantity": "प्रमाण",
+    "table_payment": "पेमेंट",
+    "table_amount": "रक्कम",
+    "table_expense_date": "खर्च तारीख",
+    "table_actions": "कृती",
+
+    "payment_cash": "रोख",
+    "payment_upi": "UPI",
+    "payment_bank_transfer": "बँक ट्रान्सफर",
+    "payment_credit": "उधार",
+    "payment_other": "इतर",
+
+    "category_fertilizer": "खत",
+    "category_pesticide": "कीटकनाशक",
+    "category_seeds": "बियाणे",
+    "category_labor": "मजुरी",
+    "category_diesel": "डिझेल",
+    "category_transport": "वाहतूक",
+    "category_equipment": "साधने",
+    "category_electricity": "वीज",
+    "category_water": "पाणी",
+    "category_maintenance": "देखभाल",
+    "category_other": "इतर"
   },
   "rental": {
     "title": "उपकरण भाडे",

@@ -111,10 +111,6 @@ export default function Expenses() {
   const [debouncedFilters, setDebouncedFilters] =
     useState(filters);
 
-  /* =========================================================
-     DEBOUNCE
-  ========================================================= */
-
   useEffect(() => {
 
     const timer = setTimeout(() => {
@@ -127,29 +123,17 @@ export default function Expenses() {
 
   }, [filters]);
 
-  /* =========================================================
-     INITIAL LOAD
-  ========================================================= */
-
   useEffect(() => {
 
     loadInitialData();
 
   }, []);
 
-  /* =========================================================
-     FILTER CHANGE
-  ========================================================= */
-
   useEffect(() => {
 
     applyFilters(debouncedFilters);
 
   }, [debouncedFilters, allExpenses]);
-
-  /* =========================================================
-     LOAD DATA
-  ========================================================= */
 
   const loadInitialData = async () => {
 
@@ -190,10 +174,6 @@ export default function Expenses() {
       setLoading(false);
     }
   };
-
-  /* =========================================================
-     APPLY FILTERS
-  ========================================================= */
 
   const applyFilters = (
     customFilters = debouncedFilters
@@ -266,10 +246,6 @@ export default function Expenses() {
     setExpenses(filtered);
   };
 
-  /* =========================================================
-     FARM SELECT
-  ========================================================= */
-
   const handleFarmSelect = async (
     farmId
   ) => {
@@ -305,10 +281,6 @@ export default function Expenses() {
     }
   };
 
-  /* =========================================================
-     MAPS
-  ========================================================= */
-
   const farmsMap = useMemo(() => {
 
     return Object.fromEntries(
@@ -335,10 +307,6 @@ export default function Expenses() {
 
   }, [allCrops]);
 
-  /* =========================================================
-     FINANCIAL YEARS
-  ========================================================= */
-
   const financialYears = useMemo(() => {
 
     const years = allExpenses
@@ -348,10 +316,6 @@ export default function Expenses() {
     return [...new Set(years)].sort();
 
   }, [allExpenses]);
-
-  /* =========================================================
-     STATS
-  ========================================================= */
 
   const statsData = useMemo(() => {
 
@@ -393,10 +357,6 @@ export default function Expenses() {
 
     total: statsData.length,
   };
-
-  /* =========================================================
-     MODAL
-  ========================================================= */
 
   const openCreateModal = () => {
 
@@ -459,10 +419,6 @@ export default function Expenses() {
     setCrops([]);
   };
 
-  /* =========================================================
-     CHANGE
-  ========================================================= */
-
   const handleChange =
     (field) => (e) => {
 
@@ -471,10 +427,6 @@ export default function Expenses() {
         [field]: e.target.value,
       }));
     };
-
-  /* =========================================================
-     SUBMIT
-  ========================================================= */
 
   const handleSubmit = async (e) => {
 
@@ -489,7 +441,7 @@ export default function Expenses() {
     ) {
 
       pushToast(
-        "Please fill required fields",
+        t("expenses.validation_error"),
         "error"
       );
 
@@ -508,7 +460,7 @@ export default function Expenses() {
         );
 
         pushToast(
-          "Expense updated"
+          t("expenses.updated")
         );
 
       } else {
@@ -518,7 +470,7 @@ export default function Expenses() {
         );
 
         pushToast(
-          "Expense created"
+          t("expenses.created")
         );
       }
 
@@ -530,7 +482,7 @@ export default function Expenses() {
 
       pushToast(
         error?.response?.data?.detail ||
-        "Something went wrong",
+        t("messages.GENERIC_ERROR"),
         "error"
       );
 
@@ -539,10 +491,6 @@ export default function Expenses() {
       setLoading(false);
     }
   };
-
-  /* =========================================================
-     DELETE
-  ========================================================= */
 
   const handleDelete = async () => {
 
@@ -557,7 +505,7 @@ export default function Expenses() {
       );
 
       pushToast(
-        "Expense deleted"
+        t("expenses.deleted")
       );
 
       setDeleteExpense(null);
@@ -567,7 +515,7 @@ export default function Expenses() {
     } catch (error) {
 
       pushToast(
-        "Delete failed",
+        t("expenses.delete_failed"),
         "error"
       );
 
@@ -577,15 +525,11 @@ export default function Expenses() {
     }
   };
 
-  /* =========================================================
-     TABLE
-  ========================================================= */
-
   const columns = [
 
     {
       key: "farm",
-      header: "Farm",
+      header: t("expenses.farm"),
       render: (row) => (
         <span className="farm-name">
           {farmsMap[row.farm_id] || "—"}
@@ -595,7 +539,7 @@ export default function Expenses() {
 
     {
       key: "crop",
-      header: "Crop",
+      header: t("expenses.crop"),
       render: (row) => {
 
         const cropName =
@@ -613,7 +557,7 @@ export default function Expenses() {
 
     {
       key: "financial_year",
-      header: "Financial Year",
+      header: t("expenses.financial_year"),
       render: (row) => (
         <span className="financial-year">
           {row.financial_year || "—"}
@@ -623,7 +567,7 @@ export default function Expenses() {
 
     {
       key: "category",
-      header: "Category",
+      header: t("expenses.category"),
       render: (row) => (
         <span className="expense-category">
           {row.category || "—"}
@@ -633,7 +577,7 @@ export default function Expenses() {
 
     {
       key: "item_name",
-      header: "Item",
+      header: t("expenses.table_item"),
       render: (row) => (
         <strong className="expense-item">
           {row.item_name || "—"}
@@ -643,7 +587,7 @@ export default function Expenses() {
 
     {
       key: "quantity",
-      header: "Quantity",
+      header: t("expenses.quantity"),
       render: (row) => (
         <span className="expense-quantity">
           {row.quantity || 0} {row.unit || ""}
@@ -653,7 +597,7 @@ export default function Expenses() {
 
     {
       key: "payment_method",
-      header: "Payment",
+      header: t("expenses.payment_method"),
       render: (row) => (
         <span className="expense-payment">
           {row.payment_method || "—"}
@@ -663,7 +607,7 @@ export default function Expenses() {
 
     {
       key: "amount",
-      header: "Amount",
+      header: t("expenses.amount"),
       render: (row) => (
         <strong className="expense-amount">
           ₹ {Number(row.amount || 0).toLocaleString()}
@@ -673,7 +617,7 @@ export default function Expenses() {
 
     {
       key: "expense_date",
-      header: "Expense Date",
+      header: t("expenses.expense_date"),
       render: (row) => (
         <span className="expense-date">
           {row.expense_date?.split("T")[0] || "—"}
@@ -683,7 +627,7 @@ export default function Expenses() {
 
     {
       key: "actions",
-      header: "Actions",
+      header: t("common.actions"),
       width: 140,
       render: (row) => (
 
@@ -718,15 +662,15 @@ export default function Expenses() {
     <div className="page">
 
       <PageHeader
-        title="Expense Management"
-        subtitle="Track farming expenses and spending."
+        title={t("expenses.title")}
+        subtitle={t("expenses.subtitle")}
         action={
           <Button
             variant="primary"
             onClick={openCreateModal}
           >
             <IconPlus />
-            Add Expense
+            {t("expenses.add")}
           </Button>
         }
       />
@@ -742,7 +686,7 @@ export default function Expenses() {
           <div className="stats-card__content">
 
             <div className="stats-card__title">
-              Financial Year
+              {t("expenses.financial_year")}
             </div>
 
             <div className="stats-select">
@@ -761,7 +705,7 @@ export default function Expenses() {
               >
 
                 <option value="all">
-                  All Financial Years
+                  {t("expenses.all_financial_years")}
                 </option>
 
                 {financialYears.map(
@@ -787,25 +731,25 @@ export default function Expenses() {
 
         <StatsCard
           icon={<IconExpense size={22} />}
-          title="Total Expenses"
+          title={t("expenses.total_expenses")}
           value={`₹ ${stats.totalExpenses.toLocaleString()}`}
-          subtitle="Expense amount"
+          subtitle={t("expenses.expense_amount")}
           colorClass="stat-card__icon--green"
         />
 
         <StatsCard
           icon={<IconFarm size={22} />}
-          title="Farms"
+          title={t("expenses.farms")}
           value={stats.farms}
-          subtitle="Connected farms"
+          subtitle={t("expenses.connected_farms")}
           colorClass="stat-card__icon--accent"
         />
 
         <StatsCard
           icon={<IconCrop size={22} />}
-          title="Crops"
+          title={t("expenses.crops")}
           value={stats.crops}
-          subtitle="Expense crops"
+          subtitle={t("expenses.expense_crops")}
           colorClass="stat-card__icon--purple"
         />
 
@@ -824,38 +768,8 @@ export default function Expenses() {
                   e.target.value,
               }))
             }
-            placeholder="Search expenses..."
+            placeholder={t("expenses.search")}
           />
-
-          {/* <Select
-            value={filters.category}
-            onChange={(e) =>
-              setFilters((prev) => ({
-                ...prev,
-                category:
-                  e.target.value,
-              }))
-            }
-          >
-
-            <option value="all">
-              All Categories
-            </option>
-
-            {CATEGORY_OPTIONS.map(
-              (category) => (
-
-                <option
-                  key={category}
-                  value={category}
-                >
-                  {category}
-                </option>
-
-              )
-            )}
-
-          </Select> */}
 
         </div>
 
@@ -868,7 +782,7 @@ export default function Expenses() {
           <Card>
 
             <div className="loading-state">
-              Loading expenses...
+              {t("expenses.loading")}
             </div>
 
           </Card>
@@ -877,7 +791,7 @@ export default function Expenses() {
 
           <EmptyState
             icon={<IconExpense />}
-            message="No expenses found"
+            message={t("expenses.empty")}
           />
 
         ) : (
@@ -890,148 +804,8 @@ export default function Expenses() {
                 columns={columns}
                 rows={expenses}
                 rowKey={(row) => row.id}
-                emptyMessage="No expenses found"
+                emptyMessage={t("expenses.empty")}
               />
-
-            </div>
-
-            <div className="expenses-mobile-list">
-
-              {expenses.map((expense) => (
-
-                <Card
-                  key={expense.id}
-                  className="expense-mobile-card"
-                >
-
-                  <div className="expense-mobile-card__header">
-
-                    <div>
-
-                      <h3>
-                        {expense.item_name || "—"}
-                      </h3>
-
-                      <div className="expense-category">
-                        {expense.category || "—"}
-                      </div>
-
-                    </div>
-
-                    <strong className="expense-amount">
-                      ₹ {Number(expense.amount || 0).toLocaleString()}
-                    </strong>
-
-                  </div>
-
-                  <div className="expense-mobile-card__body">
-
-                    <div className="expense-mobile-grid">
-
-                      <div className="expense-mobile-item">
-
-                        <div className="expense-mobile-label">
-                          Farm
-                        </div>
-
-                        <div className="expense-mobile-value">
-                          {farmsMap[expense.farm_id] || "—"}
-                        </div>
-
-                      </div>
-
-                      <div className="expense-mobile-item">
-
-                        <div className="expense-mobile-label">
-                          Crop
-                        </div>
-
-                        <div className="expense-mobile-value">
-                          {expense.crop_name ||
-                            expense.crop?.crop_name ||
-                            cropsMap[expense.crop_id] ||
-                            "—"}
-                        </div>
-
-                      </div>
-
-                      <div className="expense-mobile-item">
-
-                        <div className="expense-mobile-label">
-                          Financial Year
-                        </div>
-
-                        <div className="expense-mobile-value">
-                          {expense.financial_year || "—"}
-                        </div>
-
-                      </div>
-
-                      <div className="expense-mobile-item">
-
-                        <div className="expense-mobile-label">
-                          Payment
-                        </div>
-
-                        <div className="expense-mobile-value">
-                          {expense.payment_method || "—"}
-                        </div>
-
-                      </div>
-
-                      <div className="expense-mobile-item">
-
-                        <div className="expense-mobile-label">
-                          Quantity
-                        </div>
-
-                        <div className="expense-mobile-value">
-                          {expense.quantity || 0} {expense.unit || ""}
-                        </div>
-
-                      </div>
-
-                      <div className="expense-mobile-item">
-
-                        <div className="expense-mobile-label">
-                          Expense Date
-                        </div>
-
-                        <div className="expense-mobile-value">
-                          {expense.expense_date?.split("T")[0] || "—"}
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                    <div className="expense-mobile-card__actions">
-
-                      <button
-                        className="icon-btn"
-                        onClick={() =>
-                          openEditModal(expense)
-                        }
-                      >
-                        <IconEdit size={16} />
-                      </button>
-
-                      <button
-                        className="icon-btn icon-btn--danger"
-                        onClick={() =>
-                          setDeleteExpense(expense)
-                        }
-                      >
-                        <IconTrash size={16} />
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </Card>
-
-              ))}
 
             </div>
 
@@ -1046,8 +820,8 @@ export default function Expenses() {
         onClose={closeModal}
         title={
           editingExpense
-            ? "Edit Expense"
-            : "Add Expense"
+            ? t("expenses.edit")
+            : t("expenses.add")
         }
       >
 
@@ -1056,7 +830,7 @@ export default function Expenses() {
           <div className="form-grid">
 
             <Select
-              label="Farm"
+              label={t("expenses.farm")}
               value={form.farm_id}
               onChange={(e) =>
                 handleFarmSelect(
@@ -1066,7 +840,7 @@ export default function Expenses() {
             >
 
               <option value="">
-                Select Farm
+                {t("expenses.select_farm")}
               </option>
 
               {farms.map((farm) => (
@@ -1083,7 +857,7 @@ export default function Expenses() {
             </Select>
 
             <Select
-              label="Crop"
+              label={t("expenses.crop")}
               value={form.crop_id}
               onChange={handleChange(
                 "crop_id"
@@ -1091,7 +865,7 @@ export default function Expenses() {
             >
 
               <option value="">
-                Select Crop
+                {t("expenses.select_crop")}
               </option>
 
               {crops.map((crop) => (
@@ -1108,7 +882,7 @@ export default function Expenses() {
             </Select>
 
             <Select
-              label="Category"
+              label={t("expenses.category")}
               value={form.category}
               onChange={handleChange(
                 "category"
@@ -1116,7 +890,7 @@ export default function Expenses() {
             >
 
               <option value="">
-                Select Category
+                {t("expenses.select_category")}
               </option>
 
               {CATEGORY_OPTIONS.map(
@@ -1126,7 +900,7 @@ export default function Expenses() {
                     key={category}
                     value={category}
                   >
-                    {category}
+                    {t(`expenses.categories.${category}`)}
                   </option>
 
                 )
@@ -1135,7 +909,7 @@ export default function Expenses() {
             </Select>
 
             <Input
-              label="Item Name"
+              label={t("expenses.item_name")}
               value={form.item_name}
               onChange={handleChange(
                 "item_name"
@@ -1143,7 +917,7 @@ export default function Expenses() {
             />
 
             <Input
-              label="Quantity"
+              label={t("expenses.quantity")}
               type="number"
               value={form.quantity}
               onChange={handleChange(
@@ -1152,7 +926,7 @@ export default function Expenses() {
             />
 
             <Input
-              label="Unit"
+              label={t("expenses.unit")}
               value={form.unit}
               onChange={handleChange(
                 "unit"
@@ -1160,7 +934,7 @@ export default function Expenses() {
             />
 
             <Input
-              label="Amount"
+              label={t("expenses.amount")}
               type="number"
               value={form.amount}
               onChange={handleChange(
@@ -1169,7 +943,7 @@ export default function Expenses() {
             />
 
             <Select
-              label="Payment Method"
+              label={t("expenses.payment_method")}
               value={form.payment_method}
               onChange={handleChange(
                 "payment_method"
@@ -1177,7 +951,7 @@ export default function Expenses() {
             >
 
               <option value="">
-                Select Payment
+                {t("expenses.select_payment")}
               </option>
 
               {PAYMENT_OPTIONS.map(
@@ -1187,7 +961,7 @@ export default function Expenses() {
                     key={method}
                     value={method}
                   >
-                    {method}
+                    {t(`expenses.payments.${method}`)}
                   </option>
 
                 )
@@ -1197,7 +971,7 @@ export default function Expenses() {
 
             <Input
               type="date"
-              label="Expense Date"
+              label={t("expenses.expense_date")}
               value={form.expense_date}
               onChange={handleChange(
                 "expense_date"
@@ -1205,7 +979,7 @@ export default function Expenses() {
             />
 
             <Input
-              label="Notes"
+              label={t("expenses.notes")}
               value={form.notes}
               onChange={handleChange(
                 "notes"
@@ -1221,7 +995,7 @@ export default function Expenses() {
               variant="secondary"
               onClick={closeModal}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
 
             <Button
@@ -1230,8 +1004,8 @@ export default function Expenses() {
               disabled={loading}
             >
               {editingExpense
-                ? "Update Expense"
-                : "Create Expense"}
+                ? t("expenses.update")
+                : t("expenses.create")}
             </Button>
 
           </div>
@@ -1242,10 +1016,10 @@ export default function Expenses() {
 
       <ConfirmDialog
         open={!!deleteExpense}
-        title="Delete Expense"
-        message="Are you sure you want to delete this expense?"
-        confirmText="Delete"
-        cancelText="Cancel"
+        title={t("expenses.delete")}
+        message={t("expenses.delete_confirm")}
+        confirmText={t("expenses.delete")}
+        cancelText={t("common.cancel")}
         onConfirm={handleDelete}
         onCancel={() =>
           setDeleteExpense(null)

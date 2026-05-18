@@ -545,7 +545,7 @@ export default function Incomes() {
 
     {
       key: "farm",
-      header: "Farm",
+      header: t("incomes.farm"),
       render: (row) => (
         <span className="farm-name">
           {farmsMap[row.farm_id] || "—"}
@@ -555,7 +555,7 @@ export default function Incomes() {
 
     {
       key: "crop",
-      header: "Crop",
+      header: t("incomes.crop"),
       render: (row) => {
 
         const cropName =
@@ -575,7 +575,7 @@ export default function Incomes() {
 
     {
       key: "financial_year",
-      header: "Financial Year",
+      header: t("incomes.financial_year"),
       render: (row) => (
         <span className="financial-year">
           {row.financial_year || "—"}
@@ -585,7 +585,7 @@ export default function Incomes() {
 
     {
       key: "quantity",
-      header: "Harvest",
+      header: t("incomes.harvest"),
       render: (row) => (
         <span className="harvest-cell">
           {row.harvest_quantity}{" "}
@@ -596,7 +596,7 @@ export default function Incomes() {
 
     {
       key: "amount",
-      header: "Amount",
+      header: t("incomes.amount"),
       render: (row) => (
         <strong className="amount-cell">
           ₹{" "}
@@ -609,7 +609,7 @@ export default function Incomes() {
 
     {
       key: "income_date",
-      header: "Income Date",
+      header: t("incomes.income_date"),
       render: (row) => (
         <span className="date-cell">
           {row.income_date?.split("T")[0] ||
@@ -620,7 +620,7 @@ export default function Incomes() {
 
     {
       key: "actions",
-      header: "Actions",
+      header: t("incomes.actions"),
       width: 140,
       render: (row) => (
 
@@ -654,15 +654,15 @@ export default function Incomes() {
     <div className="page">
 
       <PageHeader
-        title="Income Management"
-        subtitle="Track crop harvest income and farming revenue."
+        title={t("incomes.title")}
+        subtitle={t("incomes.subtitle")}
         action={
           <Button
             variant="primary"
             onClick={openCreateModal}
           >
             <IconPlus />
-            Add Income
+            {t("incomes.add")}
           </Button>
         }
       />
@@ -678,7 +678,7 @@ export default function Incomes() {
           <div className="stats-card__content">
 
             <div className="stats-card__title">
-              Financial Year
+              {t("incomes.financial_year")}
             </div>
 
             <div className="stats-select">
@@ -697,7 +697,7 @@ export default function Incomes() {
               >
 
                 <option value="all">
-                  All Financial Years
+                  {t("incomes.all_financial_years")}
                 </option>
 
                 {financialYears.map(
@@ -723,25 +723,25 @@ export default function Incomes() {
 
         <StatsCard
           icon={<IconExpense size={22} />}
-          title="Total Income"
+          title={t("incomes.total_income")}
           value={`₹ ${stats.totalIncome.toLocaleString()}`}
-          subtitle="Revenue generated"
+          subtitle={t("incomes.total_income")}
           colorClass="stat-card__icon--green"
         />
 
         <StatsCard
           icon={<IconFarm size={22} />}
-          title="Farms"
+          title={t("incomes.connected_farms")}
           value={stats.farms}
-          subtitle="Connected farms"
+          subtitle={t("incomes.connected_farms")}
           colorClass="stat-card__icon--accent"
         />
 
         <StatsCard
           icon={<IconCrop size={22} />}
-          title="Crops"
+          title={t("incomes.income_crops")}
           value={stats.crops}
-          subtitle="Income crops"
+          subtitle={t("incomes.income_crops")}
           colorClass="stat-card__icon--purple"
         />
 
@@ -760,7 +760,7 @@ export default function Incomes() {
                   e.target.value,
               }))
             }
-            placeholder="Search income..."
+            placeholder={t("incomes.search")}
           />
 {/* 
           <Select
@@ -802,7 +802,7 @@ export default function Incomes() {
           <Card>
 
             <div className="loading-state">
-              Loading incomes...
+              {t("incomes.loading")}
             </div>
 
           </Card>
@@ -811,7 +811,7 @@ export default function Incomes() {
 
           <EmptyState
             icon={<IconExpense />}
-            message="No incomes found"
+            message={t("incomes.empty")}
           />
 
         ) : (
@@ -824,7 +824,7 @@ export default function Incomes() {
                 columns={columns}
                 rows={incomes}
                 rowKey={(row) => row.id}
-                emptyMessage="No incomes found"
+                emptyMessage={t("incomes.empty")}
               />
 
             </div>
@@ -874,7 +874,7 @@ export default function Incomes() {
                         <div className="income-mobile-item">
 
                           <div className="income-mobile-label">
-                            Financial Year
+                            {t("incomes.financial_year")}
                           </div>
 
                           <div className="income-mobile-value">
@@ -961,7 +961,7 @@ export default function Incomes() {
           <div className="form-grid">
 
             <Select
-              label="Farm"
+              label={t("incomes.farm")}
               value={form.farm_id}
               onChange={(e) =>
                 handleFarmSelect(
@@ -971,7 +971,7 @@ export default function Incomes() {
             >
 
               <option value="">
-                Select Farm
+                {t("incomes.select_farm")}
               </option>
 
               {farms.map((farm) => (
@@ -988,7 +988,7 @@ export default function Incomes() {
             </Select>
 
             <Select
-              label="Crop"
+              label={t("incomes.crop")}
               value={form.crop_id}
               onChange={handleChange(
                 "crop_id"
@@ -997,7 +997,7 @@ export default function Incomes() {
             >
 
               <option value="">
-                Select Crop
+                {t("incomes.select_farm")}
               </option>
 
               {crops.map((crop) => (
@@ -1014,7 +1014,7 @@ export default function Incomes() {
             </Select>
 
             <Input
-              label="Harvest Quantity"
+              label={t("incomes.harvest_quantity")}
               type="number"
               value={
                 form.harvest_quantity
@@ -1025,7 +1025,7 @@ export default function Incomes() {
             />
 
             <Input
-              label="Unit"
+              label={t("incomes.unit")}
               value={form.unit}
               onChange={handleChange(
                 "unit"
@@ -1033,7 +1033,7 @@ export default function Incomes() {
             />
 
             <Input
-              label="Amount"
+              label={t("incomes.amount")}
               type="number"
               value={form.amount}
               onChange={handleChange(
@@ -1043,7 +1043,7 @@ export default function Incomes() {
 
             <Input
               type="date"
-              label="Income Date"
+              label={t("incomes.income_date")}
               value={form.income_date}
               onChange={handleChange(
                 "income_date"
@@ -1051,7 +1051,7 @@ export default function Incomes() {
             />
 
             <Input
-              label="Notes"
+              label={t("incomes.notes")}
               value={form.notes}
               onChange={handleChange(
                 "notes"
@@ -1067,7 +1067,7 @@ export default function Incomes() {
               variant="secondary"
               onClick={closeModal}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
 
             <Button
@@ -1076,8 +1076,8 @@ export default function Incomes() {
               disabled={loading}
             >
               {editingIncome
-                ? "Update Income"
-                : "Create Income"}
+                ? t("incomes.update")
+                : t("incomes.create")}
             </Button>
 
           </div>
@@ -1088,10 +1088,10 @@ export default function Incomes() {
 
       <ConfirmDialog
         open={!!deleteIncome}
-        title="Delete Income"
-        message="Are you sure you want to delete this income?"
-        confirmText="Delete"
-        cancelText="Cancel"
+        title={t("incomes.delete")}
+        message={t("incomes.delete_confirm")}
+        confirmText={t("incomes.delete")}
+        cancelText={t("common.cancel")}
         onConfirm={handleDelete}
         onCancel={() =>
           setDeleteIncome(null)

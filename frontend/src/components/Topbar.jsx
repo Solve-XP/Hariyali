@@ -12,13 +12,15 @@ const titleByPath = {
 
   "/farmer/crops": "crops.title",
 
+  "/farmer/fertilizers": "fertilizers.title",
+
+  "/farmer/pesticides": "pesticides.title",
+
+  "/farmer/incomes": "incomes.title",
+
   "/farmer/expenses": "expenses.title",
 
   "/farmer/rental": "rental.title",
-
-  "/farmer/fertilizer": "fertilizer.title",
-
-  "/farmer/pesticides": "pesticides.title",
 
   "/admin/dashboard": "admin.dashboard_title",
 
