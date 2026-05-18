@@ -32,11 +32,6 @@ const userItems = [
     icon: <IconFertilizer className="sidebar__icon" />
   },
   {
-    to: "/farmer/pesticides",
-    labelKey: "nav.pesticides",
-    icon: <IconFertilizer className="sidebar__icon" />
-  },
-  {
     to: "/farmer/incomes",
     labelKey: "nav.incomes",
     icon: <IconIncome className="sidebar__icon" />
