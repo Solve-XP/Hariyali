@@ -1,0 +1,397 @@
+/* File: src/pages/farmer/Expenses.css */
+
+.filters-bar {
+    display: grid;
+
+    grid-template-columns:
+        minmax(240px, 1.5fr) minmax(220px, 1fr);
+
+    gap: var(--space-4);
+
+    align-items: end;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats-card__content {
+    flex: 1;
+    min-width: 0;
+}
+
+.stats-select {
+    margin-top: 6px;
+}
+
+.stats-select select {
+    height: 42px;
+
+    font-size: var(--fs-sm);
+    font-weight: 700;
+
+    border-radius: var(--radius-md);
+}
+
+/* =========================================================
+   TABLE CELLS
+========================================================= */
+
+.farm-name,
+.expense-crop,
+.expense-quantity,
+.expense-payment,
+.expense-date {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+
+    color: var(--color-text);
+}
+
+.financial-year {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+
+    color: var(--color-text-muted);
+}
+
+.expense-category {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+
+    padding: 6px 12px;
+
+    border-radius: var(--radius-pill);
+
+    background: var(--color-primary-50);
+
+    color: var(--color-primary);
+
+    font-size: var(--fs-xs);
+    font-weight: 600;
+
+    border: 1px solid var(--color-primary-100);
+
+    white-space: nowrap;
+}
+
+.expense-item {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+
+    color: var(--color-text);
+}
+
+.expense-amount {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+
+    color: var(--color-text);
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading-state {
+    padding: 40px;
+
+    text-align: center;
+
+    color: var(--color-text-muted);
+
+    font-weight: 600;
+}
+
+/* =========================================================
+   TABLE ACTIONS
+========================================================= */
+
+.table-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--space-2);
+}
+
+.icon-btn {
+    width: 36px;
+    height: 36px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: var(--radius-md);
+
+    border: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+
+    color: var(--color-text-muted);
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.icon-btn:hover {
+    transform: translateY(-1px);
+
+    background: var(--color-surface-2);
+
+    border-color: var(--color-border-strong);
+
+    color: var(--color-text);
+}
+
+.icon-btn:active {
+    transform: scale(0.96);
+}
+
+.icon-btn--danger:hover,
+.icon-btn--danger:active {
+    background: var(--color-error-bg);
+
+    border-color: #fecaca;
+
+    color: var(--color-error);
+}
+
+/* =========================================================
+   MOBILE / DESKTOP SWITCH
+========================================================= */
+
+.expenses-mobile-list {
+    display: none;
+}
+
+.expenses-desktop-table {
+    display: block;
+}
+
+/* =========================================================
+   MOBILE CARD
+========================================================= */
+
+.expense-mobile-card {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-4);
+
+    padding: var(--space-4);
+
+    border-radius: var(--radius-xl);
+
+    border: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+
+    box-shadow: var(--shadow-xs);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.expense-mobile-card:hover {
+    transform: translateY(-1px);
+
+    border-color: var(--color-border-strong);
+
+    box-shadow: var(--shadow-md);
+}
+
+/* =========================================================
+   MOBILE HEADER
+========================================================= */
+
+.expense-mobile-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: var(--space-3);
+}
+
+.expense-mobile-card__header h3 {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    color: var(--color-text);
+
+    margin-bottom: 6px;
+}
+
+/* =========================================================
+   MOBILE BODY
+========================================================= */
+
+.expense-mobile-card__body {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-4);
+}
+
+.expense-mobile-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: var(--space-4);
+}
+
+.expense-mobile-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.expense-mobile-label {
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.04em;
+
+    color: var(--color-text-faint);
+}
+
+.expense-mobile-value {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    color: var(--color-text);
+}
+
+/* =========================================================
+   MOBILE ACTIONS
+========================================================= */
+
+.expense-mobile-card__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: var(--space-2);
+
+    margin-top: var(--space-1);
+}
+
+.expense-mobile-card__actions .icon-btn {
+    width: 32px;
+    height: 32px;
+
+    min-width: 32px;
+
+    border-radius: var(--radius-sm);
+}
+
+.expense-mobile-card__actions .icon-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1024px) {
+
+    .filters-bar {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: var(--space-3);
+    }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .grid.grid--4 {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: var(--space-3);
+    }
+
+    .filters-bar {
+
+        grid-template-columns: 1fr;
+
+        gap: var(--space-3);
+    }
+
+    .expenses-desktop-table {
+        display: none;
+    }
+
+    .expenses-mobile-list {
+        display: flex;
+        flex-direction: column;
+
+        gap: var(--space-3);
+    }
+
+    .expense-mobile-card {
+        padding: var(--space-4);
+
+        border-radius: var(--radius-lg);
+    }
+
+    .expense-mobile-card__header h3 {
+        font-size: var(--fs-md);
+    }
+
+    .expense-mobile-value {
+        font-size: var(--fs-sm);
+    }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+
+    .grid.grid--4 {
+        gap: var(--space-2);
+    }
+
+    .filters-bar {
+        gap: var(--space-2);
+    }
+
+    .expense-mobile-grid {
+        gap: var(--space-3);
+    }
+
+    .expense-mobile-card {
+        gap: var(--space-3);
+    }
+
+    .expense-mobile-card__body {
+        gap: var(--space-3);
+    }
+}

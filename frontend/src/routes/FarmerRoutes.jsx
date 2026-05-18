@@ -9,6 +9,7 @@ import Farms from "../pages/farmer/Farms";
 import Crops from "../pages/farmer/Crops";
 import Fertilizers from "../pages/farmer/Fertilizers";
 import Incomes from "../pages/farmer/Incomes";  
+import Expenses from "../pages/farmer/Expenses";
 
 function FarmerRoutes() {
 
@@ -25,6 +26,7 @@ function FarmerRoutes() {
           <Route path="crops" element={<Crops />} />
           <Route path="fertilizers" element={<Fertilizers />} />
           <Route path="incomes" element={<Incomes />} />
+          <Route path="expenses" element={<Expenses />} />
         </Route>
 
       </Routes>

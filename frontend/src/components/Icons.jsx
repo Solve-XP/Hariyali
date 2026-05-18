@@ -100,9 +100,9 @@ export const IconSeason = ({ size = 18, ...r }) => (
     <path d="M4 20H20" />
   </svg>
 );
-export const IconExpense = ({ size = 18, ...r }) => (
-  <svg {...bp(size, r)}><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-);
+// export const IconExpense = ({ size = 18, ...r }) => (
+//   <svg {...bp(size, r)}><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+// );
 export const IconRental = ({ size = 18, ...r }) => (
   <svg {...bp(size, r)}><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/><path d="M3 17.5h2M9 17.5h6M20 17.5h1"/><path d="M5 12V7h6l3 4h5v6"/></svg>
 );
@@ -178,7 +178,26 @@ export const IconEdit = ({ size = 16, ...r }) => (
     <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>
   </svg>
 );
+export const IconExpense = ({ size = 18, ...r }) => (
+  <svg
+    {...bp(size, r)}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    {/* Coin */}
+    <circle cx="12" cy="12" r="9" />
 
+    {/* Downward expense arrow */}
+    <path d="M9 8h6" />
+    <path d="M9 11h5" />
+    <path d="M14 13l-5 5" />
+    <path d="M9 18v-5h5" />
+  </svg>
+);
 export const IconSearch = ({ size = 16, ...r }) => (
   <svg {...bp(size, r)}>
     <circle cx="11" cy="11" r="8"/>
