@@ -1,0 +1,123 @@
+.stats-fy-select {
+    border: none;
+    background: transparent;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-text);
+    padding: 0;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.filters-bar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+}
+
+.pesticide-name-cell strong {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.quantity-cell,
+.financial-year,
+.date-cell,
+.notes-cell {
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+}
+
+.table-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+}
+
+.icon-btn {
+    width: 36px;
+    height: 36px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: var(--radius-md);
+
+    border: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+    transform: translateY(-1px);
+}
+
+.icon-btn--danger:hover {
+    color: var(--color-error);
+}
+
+.loading-state {
+    padding: 40px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.pesticides-mobile-list {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .pesticides-desktop-table {
+        display: none;
+    }
+
+    .pesticides-mobile-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+
+    .pesticide-mobile-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+
+    .pesticide-mobile-card__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .pesticide-mobile-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-4);
+    }
+
+    .pesticide-mobile-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .pesticide-mobile-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: var(--color-text-faint);
+    }
+
+    .pesticide-mobile-value {
+        font-size: var(--fs-sm);
+        font-weight: 600;
+    }
+}
