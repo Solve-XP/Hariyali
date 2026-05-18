@@ -99,7 +99,9 @@ export default function Expenses() {
   const [deleteExpense, setDeleteExpense] =
     useState(null);
 
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [form, setForm] = useState({
+    ...EMPTY_FORM,
+  });
 
   const [filters, setFilters] = useState({
     search: "",
@@ -214,8 +216,8 @@ export default function Expenses() {
 
       filtered = filtered.filter(
         (item) =>
-          item.farm_id ===
-          customFilters.farm_id
+          String(item.farm_id) ===
+          String(customFilters.farm_id)
       );
     }
 
@@ -362,7 +364,9 @@ export default function Expenses() {
 
     setEditingExpense(null);
 
-    setForm(EMPTY_FORM);
+    setForm({
+      ...EMPTY_FORM,
+    });
 
     setCrops([]);
 
@@ -414,7 +418,9 @@ export default function Expenses() {
 
     setEditingExpense(null);
 
-    setForm(EMPTY_FORM);
+    setForm({
+      ...EMPTY_FORM,
+    });
 
     setCrops([]);
   };
@@ -798,6 +804,7 @@ export default function Expenses() {
 
           <>
 
+            {/* Desktop Table */}
             <div className="expenses-desktop-table">
 
               <Table
@@ -806,6 +813,159 @@ export default function Expenses() {
                 rowKey={(row) => row.id}
                 emptyMessage={t("expenses.empty")}
               />
+
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="expenses-mobile-list">
+
+              {expenses.map((expense) => {
+
+                const cropName =
+                  expense.crop_name ||
+                  expense.crop?.crop_name ||
+                  cropsMap[expense.crop_id];
+
+                return (
+
+                  <Card
+                    key={expense.id}
+                    className="expense-mobile-card"
+                  >
+
+                    <div className="expense-mobile-card__header">
+
+                      <div>
+
+                        <h3>
+                          {expense.item_name || "—"}
+                        </h3>
+
+                        <div className="expense-category">
+                          {expense.category || "—"}
+                        </div>
+
+                      </div>
+
+                      <strong className="expense-amount">
+                        ₹ {Number(
+                          expense.amount || 0
+                        ).toLocaleString()}
+                      </strong>
+
+                    </div>
+
+                    <div className="expense-mobile-card__body">
+
+                      <div className="expense-mobile-grid">
+
+                        <div className="expense-mobile-item">
+
+                          <span className="expense-mobile-label">
+                            {t("expenses.farm")}
+                          </span>
+
+                          <span className="expense-mobile-value">
+                            {farmsMap[
+                              expense.farm_id
+                            ] || "—"}
+                          </span>
+
+                        </div>
+
+                        <div className="expense-mobile-item">
+
+                          <span className="expense-mobile-label">
+                            {t("expenses.crop")}
+                          </span>
+
+                          <span className="expense-mobile-value">
+                            {cropName || "—"}
+                          </span>
+
+                        </div>
+
+                        <div className="expense-mobile-item">
+
+                          <span className="expense-mobile-label">
+                            {t("expenses.quantity")}
+                          </span>
+
+                          <span className="expense-mobile-value">
+                            {expense.quantity || 0}
+                            {" "}
+                            {expense.unit || ""}
+                          </span>
+
+                        </div>
+
+                        <div className="expense-mobile-item">
+
+                          <span className="expense-mobile-label">
+                            {t("expenses.payment_method")}
+                          </span>
+
+                          <span className="expense-mobile-value">
+                            {expense.payment_method || "—"}
+                          </span>
+
+                        </div>
+
+                        <div className="expense-mobile-item">
+
+                          <span className="expense-mobile-label">
+                            {t("expenses.expense_date")}
+                          </span>
+
+                          <span className="expense-mobile-value">
+                            {expense.expense_date
+                              ?.split("T")[0] || "—"}
+                          </span>
+
+                        </div>
+
+                        <div className="expense-mobile-item">
+
+                          <span className="expense-mobile-label">
+                            {t("expenses.financial_year")}
+                          </span>
+
+                          <span className="expense-mobile-value">
+                            {expense.financial_year || "—"}
+                          </span>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div className="expense-mobile-card__actions">
+
+                      <button
+                        className="icon-btn"
+                        onClick={() =>
+                          openEditModal(expense)
+                        }
+                      >
+                        <IconEdit size={16} />
+                      </button>
+
+                      <button
+                        className="icon-btn icon-btn--danger"
+                        onClick={() =>
+                          setDeleteExpense(expense)
+                        }
+                      >
+                        <IconTrash size={16} />
+                      </button>
+
+                    </div>
+
+                  </Card>
+
+                );
+              })}
 
             </div>
 
