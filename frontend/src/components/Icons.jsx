@@ -152,7 +152,26 @@ export const IconFertilizer = ({ size = 16, ...r }) => (
     <path d="M12 12c-1.5-2-4-2-4-2s0 2.5 2 4 4 2 4 2" />
   </svg>
 );
+export const IconIncome = ({ size = 16, ...r }) => (
+  <svg
+    {...bp(size, r)}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    {/* Coin */}
+    <circle cx="12" cy="12" r="9" />
 
+    {/* Rupee / income arrow */}
+    <path d="M9 8h6" />
+    <path d="M9 11h5" />
+    <path d="M10 16l5-5" />
+    <path d="M15 11v5h-5" />
+  </svg>
+);
 export const IconEdit = ({ size = 16, ...r }) => (
   <svg {...bp(size, r)}>
     <path d="M12 20h9"/>

@@ -562,7 +562,7 @@ export default function Crops() {
             }
             placeholder={t("crops.search_placeholder")}
           />
-
+{/* 
           <Select
             value={filters.farm_id}
             onChange={(e) =>
@@ -615,7 +615,7 @@ export default function Crops() {
 
             ))}
 
-          </Select>
+          </Select> */}
 
         </div>
 

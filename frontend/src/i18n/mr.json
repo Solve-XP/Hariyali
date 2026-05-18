@@ -15,7 +15,9 @@
     "admin_farms": "शेती",
     "admin_crops": "पिके",
     "admin_expenses": "खर्च",
-    "admin_equipment": "उपकरणे"
+    "admin_equipment": "उपकरणे",
+    "fertilizers": "खत",
+    "incomes": "उत्पन्न"
   },
   "topbar": {
     "welcome": "स्वागत आहे",
