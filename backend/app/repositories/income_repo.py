@@ -51,7 +51,11 @@ class IncomeRepository:
             query["financial_year"] = financial_year
 
         search_query = build_search_query(
-            "unit",
+            [
+                "unit",
+                "financial_year",
+                "notes"
+            ],
             search
         )
 
@@ -59,6 +63,9 @@ class IncomeRepository:
 
         incomes = await self.collection.find(
             query
+        ).sort(
+            "income_date",
+            -1
         ).to_list(length=None)
 
         formatted_incomes = []

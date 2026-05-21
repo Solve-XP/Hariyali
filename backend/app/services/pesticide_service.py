@@ -51,6 +51,7 @@ class PesticideService:
 
             "financial_year": financial_year,
 
+            # KEEP ORIGINAL USER VALUE
             "pesticide_name": data.pesticide_name,
 
             "quantity": data.quantity,
@@ -73,14 +74,17 @@ class PesticideService:
 
             "financial_year": financial_year,
 
+            # SAVE EXACT USER INPUT
             "pesticide_name": data.pesticide_name,
 
             "quantity": data.quantity,
 
+            # SAVE EXACT USER INPUT
             "unit": data.unit,
 
             "application_date": data.application_date,
 
+            # SAVE EXACT USER INPUT
             "notes": data.notes,
 
             "is_deleted": False,
@@ -193,6 +197,7 @@ class PesticideService:
 
             "financial_year": final_financial_year,
 
+            # KEEP ORIGINAL VALUE
             "pesticide_name": final_pesticide_name,
 
             "quantity": final_quantity,
@@ -215,6 +220,25 @@ class PesticideService:
                 get_financial_year_from_date(
                     update_data["application_date"].date()
                 )
+            )
+
+        # KEEP EXACT USER INPUT
+        if "pesticide_name" in update_data:
+
+            update_data["pesticide_name"] = (
+                update_data["pesticide_name"]
+            )
+
+        if "unit" in update_data:
+
+            update_data["unit"] = (
+                update_data["unit"]
+            )
+
+        if "notes" in update_data:
+
+            update_data["notes"] = (
+                update_data["notes"]
             )
 
         modified_count = await self.pesticide_repo.update_pesticide(

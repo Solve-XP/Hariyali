@@ -1,6 +1,17 @@
+/* =========================================================
+   UPDATED CROPS PAGE
+   FULL BACKEND SEARCH + FILTER ARCHITECTURE
+   FIXED FINANCIAL YEAR DROPDOWN ISSUE
+========================================================= */
+
 import "./Crops.css";
 
-import { useEffect, useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
 import { useTranslation } from "react-i18next";
 
 import { useApp } from "../../context/AppContext";
@@ -44,32 +55,48 @@ export default function Crops() {
 
   const { pushToast } = useApp();
 
-  const [farms, setFarms] = useState([]);
+  const [farms, setFarms] =
+    useState([]);
 
-  const [crops, setCrops] = useState([]);
+  const [allCrops, setAllCrops] =
+    useState([]);
 
-  const [loading, setLoading] = useState(false);
+  const [crops, setCrops] =
+    useState([]);
 
-  const [modalOpen, setModalOpen] = useState(false);
+  /* FIXED FINANCIAL YEARS */
 
-  const [editingCrop, setEditingCrop] = useState(null);
+  const [financialYears, setFinancialYears] =
+    useState([]);
 
-  const [deleteCrop, setDeleteCrop] = useState(null);
+  const [loading, setLoading] =
+    useState(false);
 
-  const [selectedFY, setSelectedFY] = useState("all");
+  const [modalOpen, setModalOpen] =
+    useState(false);
 
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [editingCrop, setEditingCrop] =
+    useState(null);
 
-  const [filters, setFilters] = useState({
-    search: "",
-    farm_id: "all",
-    season: "all",
-  });
+  const [deleteCrop, setDeleteCrop] =
+    useState(null);
 
-  const [debouncedFilters, setDebouncedFilters] = useState(filters);
+  const [form, setForm] =
+    useState(EMPTY_FORM);
+
+  const [filters, setFilters] =
+    useState({
+      search: "",
+      farm_id: "all",
+      season: "all",
+      financial_year: "all",
+    });
+
+  const [debouncedFilters, setDebouncedFilters] =
+    useState(filters);
 
   /* =========================================================
-     DEBOUNCE SEARCH
+     DEBOUNCE
   ========================================================= */
 
   useEffect(() => {
@@ -78,7 +105,7 @@ export default function Crops() {
 
       setDebouncedFilters(filters);
 
-    }, 500);
+    }, 400);
 
     return () => clearTimeout(timer);
 
@@ -95,43 +122,14 @@ export default function Crops() {
   }, []);
 
   /* =========================================================
-     FILTER CHANGE LOAD
+     FILTER LOAD
   ========================================================= */
 
   useEffect(() => {
 
-    if (farms.length) {
-
-      loadCrops(debouncedFilters);
-
-    }
+    loadCrops(debouncedFilters);
 
   }, [debouncedFilters]);
-
-  /* =========================================================
-     LOAD CROPS
-  ========================================================= */
-
-  const loadCrops = async (customFilters = debouncedFilters) => {
-
-    try {
-
-      setLoading(true);
-
-      const response = await CropsService.getAll(customFilters);
-
-      setCrops(response ?? []);
-
-    } catch (error) {
-
-      pushToast(t("messages.GENERIC_ERROR"), "error");
-
-    } finally {
-
-      setLoading(false);
-
-    }
-  };
 
   /* =========================================================
      LOAD INITIAL DATA
@@ -143,25 +141,148 @@ export default function Crops() {
 
       setLoading(true);
 
-      const farmsResponse = await FarmsService.getAll();
+      const farmsResponse =
+        await FarmsService.getAll();
 
       setFarms(farmsResponse ?? []);
 
-      await loadCrops();
+      const cropsResponse =
+        await CropsService.getAll();
+
+      const data = cropsResponse ?? [];
+
+      setAllCrops(data);
+
+      setCrops(data);
+
+      /* INITIAL YEARS */
+
+      const years = data
+        .map(
+          (item) =>
+            item.financial_year
+        )
+        .filter(Boolean);
+
+      setFinancialYears([
+        ...new Set(years),
+      ].sort());
 
     } catch (error) {
 
-      pushToast(t("messages.GENERIC_ERROR"), "error");
+      pushToast(
+        t("messages.GENERIC_ERROR"),
+        "error"
+      );
 
     } finally {
 
       setLoading(false);
-
     }
   };
 
   /* =========================================================
-     FARM MAP
+     LOAD CROPS
+  ========================================================= */
+
+  const loadCrops = async (
+    currentFilters = debouncedFilters
+  ) => {
+
+    try {
+
+      setLoading(true);
+
+      const params = {};
+
+      /* SEARCH */
+
+      if (
+        currentFilters.search?.trim()
+      ) {
+
+        params.search =
+          currentFilters.search.trim();
+      }
+
+      /* FARM */
+
+      if (
+        currentFilters.farm_id &&
+        currentFilters.farm_id !== "all"
+      ) {
+
+        params.farm_id =
+          currentFilters.farm_id;
+      }
+
+      /* SEASON */
+
+      if (
+        currentFilters.season &&
+        currentFilters.season !== "all"
+      ) {
+
+        params.season =
+          currentFilters.season;
+      }
+
+      /* FINANCIAL YEAR */
+
+      if (
+        currentFilters.financial_year &&
+        currentFilters.financial_year !==
+          "all"
+      ) {
+
+        params.financial_year =
+          currentFilters.financial_year;
+      }
+
+      const response =
+        await CropsService.getAll(
+          params
+        );
+
+      const data = response ?? [];
+
+      setCrops(data);
+
+      /* FIXED YEARS */
+
+      setFinancialYears((prev) => {
+
+        const years = [
+          ...prev,
+          ...data
+            .map(
+              (item) =>
+                item.financial_year
+            )
+            .filter(Boolean),
+        ];
+
+        return [
+          ...new Set(years),
+        ].sort();
+
+      });
+
+    } catch (error) {
+
+      pushToast(
+        t("messages.GENERIC_ERROR"),
+        "error"
+      );
+
+    } finally {
+
+      setLoading(false);
+    }
+  };
+
+  /* =========================================================
+     MEMOIZED MAP
   ========================================================= */
 
   const farmsMap = useMemo(() => {
@@ -181,6 +302,22 @@ export default function Crops() {
 
     return farmsMap[id] || "—";
   };
+
+  /* =========================================================
+     MEMOIZED SEASONS
+  ========================================================= */
+
+  const seasons = useMemo(() => (
+
+    [
+      ...new Set(
+        allCrops
+          .map((c) => c.season)
+          .filter(Boolean)
+      ),
+    ].sort()
+
+  ), [allCrops]);
 
   /* =========================================================
      FORM HELPERS
@@ -203,7 +340,8 @@ export default function Crops() {
       farm_id: crop.farm_id || "",
       crop_name: crop.crop_name || "",
       season: crop.season || "",
-      sowing_date: crop.sowing_date?.split("T")[0] || "",
+      sowing_date:
+        crop.sowing_date?.split("T")[0] || "",
       expected_harvest_date:
         crop.expected_harvest_date?.split("T")[0] || "",
     });
@@ -220,13 +358,15 @@ export default function Crops() {
     setForm(EMPTY_FORM);
   };
 
-  const handleChange = (field) => (e) => {
+  const handleChange =
+    (field) => (e) => {
 
-    setForm((prev) => ({
-      ...prev,
-      [field]: e.target.value,
-    }));
-  };
+      setForm((prev) => ({
+        ...prev,
+        [field]:
+          e.target.value,
+      }));
+    };
 
   /* =========================================================
      SUBMIT
@@ -236,9 +376,15 @@ export default function Crops() {
 
     e.preventDefault();
 
-    if (!form.farm_id || !form.crop_name) {
+    if (
+      !form.farm_id ||
+      !form.crop_name
+    ) {
 
-      pushToast(t("messages.VALIDATION_ERROR"), "error");
+      pushToast(
+        t("messages.VALIDATION_ERROR"),
+        "error"
+      );
 
       return;
     }
@@ -249,24 +395,40 @@ export default function Crops() {
 
       if (editingCrop) {
 
-        await CropsService.update(editingCrop.id, form);
+        await CropsService.update(
+          editingCrop.id,
+          form
+        );
 
-        pushToast(t("crops.crop_updated"));
+        pushToast(
+          t("crops.crop_updated")
+        );
 
       } else {
 
-        await CropsService.create(form);
+        await CropsService.create(
+          form
+        );
 
-        pushToast(t("crops.crop_added"));
+        pushToast(
+          t("crops.crop_added")
+        );
       }
 
       closeModal();
 
-      await loadCrops(debouncedFilters);
+      await loadCrops(
+        debouncedFilters
+      );
+
+      await loadInitialData();
 
     } catch (error) {
 
-      pushToast(t("messages.GENERIC_ERROR"), "error");
+      pushToast(
+        t("messages.GENERIC_ERROR"),
+        "error"
+      );
 
     } finally {
 
@@ -280,23 +442,35 @@ export default function Crops() {
 
   const handleDelete = async () => {
 
-    if (!deleteCrop) return;
+    if (!deleteCrop)
+      return;
 
     try {
 
       setLoading(true);
 
-      await CropsService.delete(deleteCrop.id);
+      await CropsService.delete(
+        deleteCrop.id
+      );
 
-      pushToast(t("crops.crop_deleted"));
+      pushToast(
+        t("crops.crop_deleted")
+      );
 
       setDeleteCrop(null);
 
-      await loadCrops(debouncedFilters);
+      await loadCrops(
+        debouncedFilters
+      );
+
+      await loadInitialData();
 
     } catch (error) {
 
-      pushToast(t("messages.GENERIC_ERROR"), "error");
+      pushToast(
+        t("messages.GENERIC_ERROR"),
+        "error"
+      );
 
     } finally {
 
@@ -305,69 +479,25 @@ export default function Crops() {
   };
 
   /* =========================================================
-     MEMOIZED DATA
-  ========================================================= */
-
-  const seasons = useMemo(() => (
-    [...new Set(crops.map(c => c.season).filter(Boolean))]
-  ), [crops]);
-
-  const financialYears = useMemo(() => (
-    [...new Set(crops.map(c => c.financial_year).filter(Boolean))]
-  ), [crops]);
-
-  /* =========================================================
-     FILTERED STATS DATA
-  ========================================================= */
-
-  const statsData = useMemo(() => {
-
-    if (selectedFY === "all") {
-
-      return crops;
-
-    }
-
-    return crops.filter(
-      (crop) => crop.financial_year === selectedFY
-    );
-
-  }, [crops, selectedFY]);
-
-  /* =========================================================
-     FILTERED TABLE DATA
-  ========================================================= */
-
-  const filteredCrops = useMemo(() => {
-
-    if (selectedFY === "all") {
-
-      return crops;
-
-    }
-
-    return crops.filter(
-      (crop) => crop.financial_year === selectedFY
-    );
-
-  }, [crops, selectedFY]);
-
-  /* =========================================================
      STATS
   ========================================================= */
 
   const stats = {
 
-    total: statsData.length,
+    total:
+      crops.length,
 
     farms: new Set(
-      statsData.map((c) => c.farm_id)
+      crops.map(
+        (c) => c.farm_id
+      )
     ).size,
 
     seasons: new Set(
-      statsData.map((c) => c.season).filter(Boolean)
+      crops.map(
+        (c) => c.season
+      )
     ).size,
-
   };
 
   /* =========================================================
@@ -381,7 +511,9 @@ export default function Crops() {
       header: t("crops.crop"),
       render: (row) => (
         <div className="crop-name-cell">
-          <strong>{row.crop_name}</strong>
+          <strong>
+            {row.crop_name}
+          </strong>
         </div>
       ),
     },
@@ -417,26 +549,6 @@ export default function Crops() {
     },
 
     {
-      key: "sowing_date",
-      header: t("crops.sowing_date"),
-      render: (row) => (
-        <span className="date-cell">
-          {row.sowing_date?.split("T")[0] || "—"}
-        </span>
-      ),
-    },
-
-    {
-      key: "harvest",
-      header: t("crops.harvest_date"),
-      render: (row) => (
-        <span className="date-cell">
-          {row.expected_harvest_date?.split("T")[0] || "—"}
-        </span>
-      ),
-    },
-
-    {
       key: "actions",
       header: t("crops.actions"),
       width: 140,
@@ -446,14 +558,18 @@ export default function Crops() {
 
           <button
             className="icon-btn"
-            onClick={() => openEditModal(row)}
+            onClick={() =>
+              openEditModal(row)
+            }
           >
             <IconEdit size={16} />
           </button>
 
           <button
             className="icon-btn icon-btn--danger"
-            onClick={() => setDeleteCrop(row)}
+            onClick={() =>
+              setDeleteCrop(row)
+            }
           >
             <IconTrash size={16} />
           </button>
@@ -461,6 +577,7 @@ export default function Crops() {
         </div>
       ),
     },
+
   ];
 
   return (
@@ -489,9 +606,12 @@ export default function Crops() {
           value={
 
             <Select
-              value={selectedFY}
+              value={filters.financial_year}
               onChange={(e) =>
-                setSelectedFY(e.target.value)
+              setFilters((prev) => ({
+               ...prev,
+               financial_year: e.target.value,
+                }))
               }
               className="stats-fy-select"
             >
@@ -515,9 +635,9 @@ export default function Crops() {
 
           }
           subtitle={
-            selectedFY === "all"
+            filters.financial_year === "all"
               ? t("crops.all_financial_years")
-              : selectedFY
+              : filters.financial_year  
           }
           colorClass="stat-card__icon--info"
         />
@@ -640,7 +760,7 @@ export default function Crops() {
 
           </Card>
 
-        ) : filteredCrops.length === 0 ? (
+        ) : crops.length === 0 ? (
 
           <EmptyState
             icon={<IconCrop />}
@@ -655,7 +775,7 @@ export default function Crops() {
 
               <Table
                 columns={columns}
-                rows={filteredCrops}
+                rows={crops}
                 rowKey={(row) => row.id}
                 emptyMessage={t("crops.no_crops_found")}
               />
@@ -664,7 +784,7 @@ export default function Crops() {
 
             <div className="crops-mobile-list">
 
-              {filteredCrops.map((crop) => (
+              {crops.map((crop) => (
 
                 <Card
                   key={crop.id}

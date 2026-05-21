@@ -1,9 +1,6 @@
 from bson import ObjectId
 
-from datetime import (
-    datetime,
-    time
-)
+from datetime import datetime
 
 from fastapi import HTTPException
 from fastapi import status
@@ -25,6 +22,10 @@ from app.repositories.expense_repo import (
 
 from app.utils.financial_year import (
     get_financial_year_from_date
+)
+
+from app.utils.normalize import (
+    normalize_text
 )
 
 
@@ -103,50 +104,31 @@ class ExpenseService:
                     detail="Crop not found"
                 )
 
-        financial_year = get_financial_year_from_date(
-            data.expense_date.date()
+        financial_year = normalize_text(
+            get_financial_year_from_date(
+                data.expense_date.date()
+            )
         )
 
-        expense_day = data.expense_date.date()
-
-        start_of_day = datetime.combine(
-            expense_day,
-            time.min
+        normalized_item_name = normalize_text(
+            data.item_name
         )
 
-        end_of_day = datetime.combine(
-            expense_day,
-            time.max
+        existing_expense = await self.expense_repo.check_duplicate_expense(
+            user_id=user_id,
+            farm_id=data.farm_id,
+            crop_id=data.crop_id,
+            category=data.category,
+            normalized_item_name=normalized_item_name,
+            quantity=data.quantity,
+            amount=data.amount,
+            expense_date=data.expense_date
         )
-
-        existing_expense = await expenses_collection.find_one({
-
-            "user_id": user_id,
-
-            "farm_id": data.farm_id,
-
-            "crop_id": data.crop_id,
-
-            "category": data.category,
-
-            "item_name": data.item_name,
-
-            "quantity": data.quantity,
-
-            "amount": data.amount,
-
-            "expense_date": {
-                "$gte": start_of_day,
-                "$lte": end_of_day
-            },
-
-            "is_deleted": False
-        })
 
         if existing_expense:
 
             raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
+                status_code=status.HTTP_409_CONFLICT,
                 detail="Similar expense record already exists"
             )
 
@@ -163,6 +145,9 @@ class ExpenseService:
             "category": data.category,
 
             "item_name": data.item_name,
+
+            "normalized_item_name":
+                normalized_item_name,
 
             "quantity": data.quantity,
 
@@ -251,7 +236,8 @@ class ExpenseService:
             )
 
         update_data = data.dict(
-            exclude_unset=True
+            exclude_unset=True,
+            exclude_none=True
         )
 
         if "category" in update_data:
@@ -336,27 +322,10 @@ class ExpenseService:
             expense["expense_date"]
         )
 
-        update_data["financial_year"] = (
+        update_data["financial_year"] = normalize_text(
             get_financial_year_from_date(
                 final_expense_date.date()
             )
-        )
-
-        expense_day = final_expense_date.date()
-
-        start_of_day = datetime.combine(
-            expense_day,
-            time.min
-        )
-
-        end_of_day = datetime.combine(
-            expense_day,
-            time.max
-        )
-
-        final_category = update_data.get(
-            "category",
-            expense["category"]
         )
 
         final_item_name = update_data.get(
@@ -364,50 +333,57 @@ class ExpenseService:
             expense["item_name"]
         )
 
-        final_quantity = update_data.get(
-            "quantity",
-            expense["quantity"]
+        normalized_item_name = normalize_text(
+            final_item_name
         )
 
-        final_amount = update_data.get(
-            "amount",
-            expense["amount"]
-        )
+        requires_duplicate_check = any([
+            "farm_id" in update_data,
+            "crop_id" in update_data,
+            "category" in update_data,
+            "item_name" in update_data,
+            "quantity" in update_data,
+            "amount" in update_data,
+            "expense_date" in update_data
+        ])
 
-        existing_expense = await expenses_collection.find_one({
+        if requires_duplicate_check:
 
-            "_id": {
-                "$ne": ObjectId(expense_id)
-            },
-
-            "user_id": user_id,
-
-            "farm_id": final_farm_id,
-
-            "crop_id": final_crop_id,
-
-            "category": final_category,
-
-            "item_name": final_item_name,
-
-            "quantity": final_quantity,
-
-            "amount": final_amount,
-
-            "expense_date": {
-                "$gte": start_of_day,
-                "$lte": end_of_day
-            },
-
-            "is_deleted": False
-        })
-
-        if existing_expense:
-
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Similar expense record already exists"
+            duplicate_expense = await self.expense_repo.check_duplicate_expense_for_update(
+                expense_id=expense_id,
+                user_id=user_id,
+                farm_id=final_farm_id,
+                crop_id=final_crop_id,
+                category=update_data.get(
+                    "category",
+                    expense["category"]
+                ),
+                normalized_item_name=normalized_item_name,
+                quantity=update_data.get(
+                    "quantity",
+                    expense["quantity"]
+                ),
+                amount=update_data.get(
+                    "amount",
+                    expense["amount"]
+                ),
+                expense_date=final_expense_date
             )
+
+            if duplicate_expense:
+
+                raise HTTPException(
+                    status_code=status.HTTP_409_CONFLICT,
+                    detail="Similar expense record already exists"
+                )
+
+        update_data["item_name"] = (
+            final_item_name
+        )
+
+        update_data["normalized_item_name"] = (
+            normalized_item_name
+        )
 
         modified_count = await self.expense_repo.update_expense(
             expense_id,

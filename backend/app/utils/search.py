@@ -14,22 +14,52 @@
     }'''
 
 
+# def build_search_query(
+#     fields: list,
+#     search: str
+# ):
+
+#     if not search:
+#         return {}
+
+#     return {
+#         "$or": [
+#             {
+#                 field: {
+#                     "$regex": search,
+#                     "$options": "i"
+#                 }
+#             }
+#             for field in fields
+#         ]
+#     }
+
 def build_search_query(
     fields: list,
     search: str
 ):
 
-    if not search:
+    if (
+        not search
+        or
+        not search.strip()
+    ):
+
         return {}
 
-    return {
-        "$or": [
-            {
-                field: {
-                    "$regex": search,
-                    "$options": "i"
-                }
+    search = search.strip()
+
+    or_conditions = []
+
+    for field in fields:
+
+        or_conditions.append({
+            field: {
+                "$regex": search,
+                "$options": "i"
             }
-            for field in fields
-        ]
+        })
+
+    return {
+        "$or": or_conditions
     }

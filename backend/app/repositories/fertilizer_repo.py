@@ -1,6 +1,7 @@
 from bson import ObjectId
+from bson.errors import InvalidId
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from app.utils.search import (
     build_search_query
@@ -24,6 +25,77 @@ class FertilizerRepository:
 
         return str(result.inserted_id)
 
+    async def check_duplicate_fertilizer(
+        self,
+        user_id: str,
+        financial_year: str,
+        fertilizer_name: str,
+        quantity: float,
+        application_date: datetime
+    ):
+
+        fertilizer = await self.collection.find_one({
+
+            "user_id": user_id,
+
+            "financial_year": financial_year,
+
+            "normalized_fertilizer_name": (
+                fertilizer_name
+            ),
+
+            "quantity": quantity,
+
+            "application_date": application_date,
+
+            "is_deleted": False
+        })
+
+        return fertilizer
+
+    async def check_duplicate_fertilizer_for_update(
+        self,
+        fertilizer_id: str,
+        user_id: str,
+        financial_year: str,
+        fertilizer_name: str,
+        quantity: float,
+        application_date: datetime
+    ):
+
+        try:
+
+            object_id = ObjectId(
+                fertilizer_id
+            )
+
+        except InvalidId:
+
+            return None
+
+        fertilizer = await self.collection.find_one({
+
+            "_id": {
+                "$ne": object_id
+            },
+
+            "user_id": user_id,
+
+            "financial_year": financial_year,
+
+            "normalized_fertilizer_name": (
+                fertilizer_name
+            ),
+
+            "quantity": quantity,
+
+            "application_date": application_date,
+
+            "is_deleted": False
+        })
+
+        return fertilizer
+
     async def get_all_fertilizers(
         self,
         user_id: str,
@@ -32,23 +104,37 @@ class FertilizerRepository:
     ):
 
         query = {
+
             "user_id": user_id,
+
             "is_deleted": False
         }
 
         if financial_year:
 
-            query["financial_year"] = financial_year
+            query["financial_year"] = (
+                financial_year
+            )
 
-        search_query = build_search_query(
-            "fertilizer_name",
-            search
-        )
+        if search and search.strip():
 
-        query.update(search_query)
+            search_query = build_search_query(
+                [
+                    "fertilizer_name",
+                    "normalized_fertilizer_name",
+                    "financial_year",
+                    "unit"
+                ],
+                search
+            )
+
+            query.update(search_query)
 
         fertilizers = await self.collection.find(
             query
+        ).sort(
+            "created_at",
+            -1
         ).to_list(length=None)
 
         formatted_fertilizers = []
@@ -73,9 +159,22 @@ class FertilizerRepository:
         user_id: str
     ):
 
+        try:
+
+            object_id = ObjectId(
+                fertilizer_id
+            )
+
+        except InvalidId:
+
+            return None
+
         fertilizer = await self.collection.find_one({
-            "_id": ObjectId(fertilizer_id),
+
+            "_id": object_id,
+
             "user_id": user_id,
+
             "is_deleted": False
         })
 
@@ -96,12 +195,26 @@ class FertilizerRepository:
         update_data: dict
     ):
 
-        update_data["updated_at"] = datetime.utcnow()
+        try:
+
+            object_id = ObjectId(
+                fertilizer_id
+            )
+
+        except InvalidId:
+
+            return 0
+
+        update_data["updated_at"] = (
+            datetime.now(timezone.utc)
+        )
 
         result = await self.collection.update_one(
             {
-                "_id": ObjectId(fertilizer_id),
+                "_id": object_id,
+
                 "user_id": user_id,
+
                 "is_deleted": False
             },
             {
@@ -117,15 +230,32 @@ class FertilizerRepository:
         user_id: str
     ):
 
+        try:
+
+            object_id = ObjectId(
+                fertilizer_id
+            )
+
+        except InvalidId:
+
+            return 0
+
         result = await self.collection.update_one(
             {
-                "_id": ObjectId(fertilizer_id),
-                "user_id": user_id
+                "_id": object_id,
+
+                "user_id": user_id,
+
+                "is_deleted": False
             },
             {
                 "$set": {
                     "is_deleted": True,
-                    "updated_at": datetime.utcnow()
+                    "updated_at": (
+                        datetime.now(
+                            timezone.utc
+                        )
+                    )
                 }
             }
         )

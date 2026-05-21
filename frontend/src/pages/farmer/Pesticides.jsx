@@ -2,7 +2,6 @@ import "./Pesticides.css";
 
 import {
   useEffect,
-  useMemo,
   useState,
 } from "react";
 
@@ -49,51 +48,139 @@ export default function Pesticides() {
 
   const { pushToast } = useApp();
 
-  const [pesticides, setPesticides] = useState([]);
+  const [allPesticides, setAllPesticides] =
+    useState([]);
 
-  const [loading, setLoading] = useState(false);
+  const [pesticides, setPesticides] =
+    useState([]);
 
-  const [modalOpen, setModalOpen] = useState(false);
+  /* FIXED FINANCIAL YEAR STATE */
 
-  const [editingPesticide, setEditingPesticide] = useState(null);
+  const [financialYears, setFinancialYears] =
+    useState([]);
 
-  const [deletePesticide, setDeletePesticide] = useState(null);
+  const [loading, setLoading] =
+    useState(false);
 
-  const [selectedFY, setSelectedFY] = useState("all");
+  const [modalOpen, setModalOpen] =
+    useState(false);
 
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [
+    editingPesticide,
+    setEditingPesticide,
+  ] = useState(null);
 
-  const [filters, setFilters] = useState({
-    search: "",
-  });
+  const [
+    deletePesticide,
+    setDeletePesticide,
+  ] = useState(null);
+
+  const [form, setForm] =
+    useState(EMPTY_FORM);
+
+  const [filters, setFilters] =
+    useState({
+      search: "",
+      financial_year: "all",
+    });
+
+  const [
+    debouncedFilters,
+    setDebouncedFilters,
+  ] = useState(filters);
 
   /* =========================================================
-     INITIAL LOAD
+     SEARCH DEBOUNCE
   ========================================================= */
 
   useEffect(() => {
 
-    loadPesticides();
+    const timer = setTimeout(() => {
 
-  }, []);
+      setDebouncedFilters(filters);
+
+    }, 400);
+
+    return () => clearTimeout(timer);
+
+  }, [filters]);
+
+  /* =========================================================
+     LOAD ON FILTER CHANGE
+  ========================================================= */
+
+  useEffect(() => {
+
+    loadPesticides(debouncedFilters);
+
+  }, [debouncedFilters]);
 
   /* =========================================================
      LOAD PESTICIDES
   ========================================================= */
 
   const loadPesticides = async (
-    customFilters = filters
+    currentFilters = debouncedFilters
   ) => {
 
     try {
 
       setLoading(true);
 
-      const response = await PesticidesService.getAll(
-        customFilters
-      );
+      const params = {};
 
-      setPesticides(response ?? []);
+      /* SEARCH */
+
+      if (
+        currentFilters.search?.trim()
+      ) {
+
+        params.search =
+          currentFilters.search.trim();
+      }
+
+      /* FINANCIAL YEAR */
+
+      if (
+        currentFilters.financial_year &&
+        currentFilters.financial_year !==
+          "all"
+      ) {
+
+        params.financial_year =
+          currentFilters.financial_year;
+      }
+
+      const response =
+        await PesticidesService.getAll(
+          params
+        );
+
+      const data = response ?? [];
+
+      setAllPesticides(data);
+
+      setPesticides(data);
+
+      /* FIXED FINANCIAL YEARS */
+
+      setFinancialYears((prev) => {
+
+        const years = [
+          ...prev,
+          ...data
+            .map(
+              (p) =>
+                p.financial_year
+            )
+            .filter(Boolean),
+        ];
+
+        return [
+          ...new Set(years),
+        ].sort();
+
+      });
 
     } catch (error) {
 
@@ -105,7 +192,6 @@ export default function Pesticides() {
     } finally {
 
       setLoading(false);
-
     }
   };
 
@@ -122,13 +208,18 @@ export default function Pesticides() {
     setModalOpen(true);
   };
 
-  const openEditModal = (pesticide) => {
+  const openEditModal = (
+    pesticide
+  ) => {
 
-    setEditingPesticide(pesticide);
+    setEditingPesticide(
+      pesticide
+    );
 
     setForm({
       pesticide_name:
-        pesticide.pesticide_name || "",
+        pesticide.pesticide_name ||
+        "",
 
       quantity:
         pesticide.quantity || "",
@@ -137,7 +228,9 @@ export default function Pesticides() {
         pesticide.unit || "",
 
       application_date:
-        pesticide.application_date?.split("T")[0] || "",
+        pesticide.application_date?.split(
+          "T"
+        )[0] || "",
 
       notes:
         pesticide.notes || "",
@@ -155,13 +248,15 @@ export default function Pesticides() {
     setForm(EMPTY_FORM);
   };
 
-  const handleChange = (field) => (e) => {
+  const handleChange =
+    (field) => (e) => {
 
-    setForm((prev) => ({
-      ...prev,
-      [field]: e.target.value,
-    }));
-  };
+      setForm((prev) => ({
+        ...prev,
+        [field]:
+          e.target.value,
+      }));
+    };
 
   /* =========================================================
      SUBMIT
@@ -186,9 +281,8 @@ export default function Pesticides() {
       return;
     }
 
-    /* Quantity validation */
-
-    const quantity = Number(form.quantity);
+    const quantity =
+      Number(form.quantity);
 
     if (
       quantity <= 0 ||
@@ -203,11 +297,12 @@ export default function Pesticides() {
       return;
     }
 
-    /* Unit validation */
+    const unitRegex =
+      /^[A-Za-z\s]+$/;
 
-    const unitRegex = /^[A-Za-z\s]+$/;
-
-    if (!unitRegex.test(form.unit)) {
+    if (
+      !unitRegex.test(form.unit)
+    ) {
 
       pushToast(
         "Unit must contain only letters",
@@ -221,25 +316,35 @@ export default function Pesticides() {
 
       setLoading(true);
 
-      if (editingPesticide) {
+      if (
+        editingPesticide
+      ) {
 
         await PesticidesService.update(
           editingPesticide.id,
           form
         );
 
-        pushToast(t("pesticides.updated"));
+        pushToast(
+          t("pesticides.updated")
+        );
 
       } else {
 
-        await PesticidesService.create(form);
+        await PesticidesService.create(
+          form
+        );
 
-        pushToast(t("pesticides.created"));
+        pushToast(
+          t("pesticides.created")
+        );
       }
 
       closeModal();
 
-      await loadPesticides(filters);
+      await loadPesticides(
+        debouncedFilters
+      );
 
     } catch (error) {
 
@@ -258,77 +363,44 @@ export default function Pesticides() {
      DELETE
   ========================================================= */
 
-  const handleDelete = async () => {
+  const handleDelete =
+    async () => {
 
-    if (!deletePesticide) return;
+      if (!deletePesticide)
+        return;
 
-    try {
+      try {
 
-      setLoading(true);
+        setLoading(true);
 
-      await PesticidesService.delete(
-        deletePesticide.id
-      );
+        await PesticidesService.delete(
+          deletePesticide.id
+        );
 
-      pushToast(t("pesticides.deleted"));
+        pushToast(
+          t("pesticides.deleted")
+        );
 
-      setDeletePesticide(null);
+        setDeletePesticide(
+          null
+        );
 
-      await loadPesticides(filters);
+        await loadPesticides(
+          debouncedFilters
+        );
 
-    } catch (error) {
+      } catch (error) {
 
-      pushToast(
-        t("messages.GENERIC_ERROR"),
-        "error"
-      );
+        pushToast(
+          t("messages.GENERIC_ERROR"),
+          "error"
+        );
 
-    } finally {
+      } finally {
 
-      setLoading(false);
-    }
-  };
-
-  /* =========================================================
-     MEMOIZED DATA
-  ========================================================= */
-
-  const financialYears = useMemo(() => (
-
-    [
-      ...new Set(
-        pesticides
-          .map((p) => p.financial_year)
-          .filter(Boolean)
-      ),
-    ]
-
-  ), [pesticides]);
-
-  const filteredPesticides = useMemo(() => {
-
-    return pesticides.filter((pesticide) => {
-
-      const matchesFY =
-        selectedFY === "all" ||
-        pesticide.financial_year === selectedFY;
-
-      const matchesSearch =
-        pesticide.pesticide_name
-          ?.toLowerCase()
-          .includes(
-            filters.search.toLowerCase()
-          );
-
-      return matchesFY && matchesSearch;
-
-    });
-
-  }, [
-    pesticides,
-    selectedFY,
-    filters.search,
-  ]);
+        setLoading(false);
+      }
+    };
 
   /* =========================================================
      STATS
@@ -336,15 +408,23 @@ export default function Pesticides() {
 
   const stats = {
 
-    total: filteredPesticides.length,
+    total:
+      pesticides.length,
 
-    totalQuantity: filteredPesticides.reduce(
-      (acc, item) => acc + Number(item.quantity || 0),
-      0
-    ),
+    totalQuantity:
+      pesticides.reduce(
+        (acc, item) =>
+          acc +
+          Number(
+            item.quantity || 0
+          ),
+        0
+      ),
 
     latestApplication:
-      filteredPesticides[0]?.application_date?.split("T")[0] || "—",
+      pesticides[0]
+        ?.application_date
+        ?.split("T")[0] || "—",
   };
 
   /* =========================================================
@@ -355,47 +435,64 @@ export default function Pesticides() {
 
     {
       key: "pesticide_name",
-      header: t("pesticides.name"),
+      header:
+        t("pesticides.name"),
       render: (row) => (
         <div className="pesticide-name-cell">
-          <strong>{row.pesticide_name}</strong>
+          <strong>
+            {row.pesticide_name}
+          </strong>
         </div>
       ),
     },
 
     {
       key: "quantity",
-      header: t("pesticides.quantity"),
+      header:
+        t(
+          "pesticides.quantity"
+        ),
       render: (row) => (
         <span className="quantity-cell">
-          {row.quantity} {row.unit}
+          {row.quantity}{" "}
+          {row.unit}
         </span>
       ),
     },
 
     {
       key: "financial_year",
-      header: t("pesticides.financial_year"),
+      header:
+        t(
+          "pesticides.financial_year"
+        ),
       render: (row) => (
         <span className="financial-year">
-          {row.financial_year || "—"}
+          {row.financial_year ||
+            "—"}
         </span>
       ),
     },
 
     {
       key: "application_date",
-      header: t("pesticides.application_date"),
+      header:
+        t(
+          "pesticides.application_date"
+        ),
       render: (row) => (
         <span className="date-cell">
-          {row.application_date?.split("T")[0] || "—"}
+          {row.application_date?.split(
+            "T"
+          )[0] || "—"}
         </span>
       ),
     },
 
     {
       key: "notes",
-      header: t("pesticides.notes"),
+      header:
+        t("pesticides.notes"),
       render: (row) => (
         <span className="notes-cell">
           {row.notes || "—"}
@@ -405,7 +502,10 @@ export default function Pesticides() {
 
     {
       key: "actions",
-      header: t("pesticides.actions"),
+      header:
+        t(
+          "pesticides.actions"
+        ),
       width: 140,
       render: (row) => (
 
@@ -413,14 +513,20 @@ export default function Pesticides() {
 
           <button
             className="icon-btn"
-            onClick={() => openEditModal(row)}
+            onClick={() =>
+              openEditModal(row)
+            }
           >
             <IconEdit size={16} />
           </button>
 
           <button
             className="icon-btn icon-btn--danger"
-            onClick={() => setDeletePesticide(row)}
+            onClick={() =>
+              setDeletePesticide(
+                row
+              )
+            }
           >
             <IconTrash size={16} />
           </button>
@@ -429,21 +535,29 @@ export default function Pesticides() {
       ),
     },
   ];
-
+  
   return (
 
     <div className="page">
 
       <PageHeader
-        title={t("pesticides.title")}
-        subtitle={t("pesticides.subtitle")}
+        title={t(
+          "pesticides.title"
+        )}
+        subtitle={t(
+          "pesticides.subtitle"
+        )}
         action={
           <Button
             variant="primary"
-            onClick={openCreateModal}
+            onClick={
+              openCreateModal
+            }
           >
             <IconPlus />
-            {t("pesticides.add")}
+            {t(
+              "pesticides.add"
+            )}
           </Button>
         }
       />
@@ -451,59 +565,107 @@ export default function Pesticides() {
       <div className="grid grid--4">
 
         <StatsCard
-          icon={<IconFinancialYear size={22} />}
-          title={t("pesticides.financial_year")}
+          icon={
+            <IconFinancialYear
+              size={22}
+            />
+          }
+          title={t(
+            "pesticides.financial_year"
+          )}
           value={
             <Select
-              value={selectedFY}
+              value={
+                filters.financial_year
+              }
               onChange={(e) =>
-                setSelectedFY(e.target.value)
+                setFilters(
+                  (prev) => ({
+                    ...prev,
+                    financial_year:
+                      e.target.value,
+                  })
+                )
               }
               className="stats-fy-select"
             >
 
               <option value="all">
-                {t("pesticides.all_financial_years")}
+                {t(
+                  "pesticides.all_financial_years"
+                )}
               </option>
 
-              {financialYears.map((fy) => (
+              {financialYears.map(
+                (fy) => (
 
-                <option
-                  key={fy}
-                  value={fy}
-                >
-                  {fy}
-                </option>
+                  <option
+                    key={fy}
+                    value={fy}
+                  >
+                    {fy}
+                  </option>
 
-              ))}
+                )
+              )}
 
             </Select>
           }
-          subtitle={selectedFY}
+          subtitle={
+            filters.financial_year
+          }
           colorClass="stat-card__icon--info"
         />
 
         <StatsCard
-          icon={<IconTotalRecords size={22} />}
-          title={t("pesticides.total_records")}
+          icon={
+            <IconTotalRecords
+              size={22}
+            />
+          }
+          title={t(
+            "pesticides.total_records"
+          )}
           value={stats.total}
-          subtitle={t("pesticides.records")}
+          subtitle={t(
+            "pesticides.records"
+          )}
           colorClass="stat-card__icon--green"
         />
 
         <StatsCard
-          icon={<IconTotalQuantity size={22} />}
-          title={t("pesticides.total_quantity")}
-          value={stats.totalQuantity}
-          subtitle={t("pesticides.total_used")}
+          icon={
+            <IconTotalQuantity
+              size={22}
+            />
+          }
+          title={t(
+            "pesticides.total_quantity"
+          )}
+          value={
+            stats.totalQuantity
+          }
+          subtitle={t(
+            "pesticides.total_used"
+          )}
           colorClass="stat-card__icon--accent"
         />
 
         <StatsCard
-          icon={<IconLatestApplication size={22} />}
-          title={t("pesticides.latest_application")}
-          value={stats.latestApplication}
-          subtitle={t("pesticides.latest_record")}
+          icon={
+            <IconLatestApplication
+              size={22}
+            />
+          }
+          title={t(
+            "pesticides.latest_application"
+          )}
+          value={
+            stats.latestApplication
+          }
+          subtitle={t(
+            "pesticides.latest_record"
+          )}
           colorClass="stat-card__icon--purple"
         />
 
@@ -514,14 +676,21 @@ export default function Pesticides() {
         <div className="filters-bar">
 
           <SearchInput
-            value={filters.search}
-            onChange={(e) =>
-              setFilters((prev) => ({
-                ...prev,
-                search: e.target.value,
-              }))
+            value={
+              filters.search
             }
-            placeholder={t("pesticides.search")}
+            onChange={(e) =>
+              setFilters(
+                (prev) => ({
+                  ...prev,
+                  search:
+                    e.target.value,
+                })
+              )
+            }
+            placeholder={t(
+              "pesticides.search"
+            )}
           />
 
         </div>
@@ -535,29 +704,168 @@ export default function Pesticides() {
           <Card>
 
             <div className="loading-state">
-              {t("pesticides.loading")}
+              {t(
+                "pesticides.loading"
+              )}
             </div>
 
           </Card>
 
-        ) : filteredPesticides.length === 0 ? (
+        ) : pesticides.length ===
+          0 ? (
 
           <EmptyState
-            message={t("pesticides.empty")}
+            icon={
+              <IconPesticide />
+            }
+            message={t(
+              "pesticides.empty"
+            )}
           />
 
         ) : (
 
-          <div className="pesticides-desktop-table">
+          <>
 
-            <Table
-              columns={columns}
-              rows={filteredPesticides}
-              rowKey={(row) => row.id}
-              emptyMessage={t("pesticides.empty")}
-            />
+            {/* Desktop Table */}
 
-          </div>
+            <div className="pesticides-desktop-table">
+
+              <Table
+                columns={columns}
+                rows={pesticides}
+                rowKey={(row) =>
+                  row.id
+                }
+                emptyMessage={t(
+                  "pesticides.empty"
+                )}
+              />
+
+            </div>
+
+            {/* Mobile Cards */}
+
+            <div className="pesticides-mobile-list">
+
+              {pesticides.map(
+                (pesticide) => (
+
+                  <Card
+                    key={
+                      pesticide.id
+                    }
+                    className="pesticide-mobile-card"
+                  >
+
+                    <div className="pesticide-mobile-card__header">
+
+                      <div>
+
+                        <h3>
+                          {pesticide.pesticide_name ||
+                            "—"}
+                        </h3>
+
+                      </div>
+
+                      <strong className="quantity-cell">
+                        {
+                          pesticide.quantity
+                        }{" "}
+                        {
+                          pesticide.unit
+                        }
+                      </strong>
+
+                    </div>
+
+                    <div className="pesticide-mobile-grid">
+
+                      <div className="pesticide-mobile-item">
+
+                        <span className="pesticide-mobile-label">
+                          {t(
+                            "pesticides.financial_year"
+                          )}
+                        </span>
+
+                        <span className="pesticide-mobile-value">
+                          {pesticide.financial_year ||
+                            "—"}
+                        </span>
+
+                      </div>
+
+                      <div className="pesticide-mobile-item">
+
+                        <span className="pesticide-mobile-label">
+                          {t(
+                            "pesticides.application_date"
+                          )}
+                        </span>
+
+                        <span className="pesticide-mobile-value">
+                          {pesticide.application_date
+                            ?.split(
+                              "T"
+                            )[0] ||
+                            "—"}
+                        </span>
+
+                      </div>
+
+                      <div className="pesticide-mobile-item">
+
+                        <span className="pesticide-mobile-label">
+                          {t(
+                            "pesticides.notes"
+                          )}
+                        </span>
+
+                        <span className="pesticide-mobile-value">
+                          {pesticide.notes ||
+                            "—"}
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                    <div className="table-actions">
+
+                      <button
+                        className="icon-btn"
+                        onClick={() =>
+                          openEditModal(
+                            pesticide
+                          )
+                        }
+                      >
+                        <IconEdit size={16} />
+                      </button>
+
+                      <button
+                        className="icon-btn icon-btn--danger"
+                        onClick={() =>
+                          setDeletePesticide(
+                            pesticide
+                          )
+                        }
+                      >
+                        <IconTrash size={16} />
+                      </button>
+
+                    </div>
+
+                  </Card>
+
+                )
+              )}
+
+            </div>
+
+          </>
 
         )}
 
@@ -568,47 +876,85 @@ export default function Pesticides() {
         onClose={closeModal}
         title={
           editingPesticide
-            ? t("pesticides.edit")
-            : t("pesticides.create")
+            ? t(
+                "pesticides.edit"
+              )
+            : t(
+                "pesticides.create"
+              )
         }
       >
 
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={
+            handleSubmit
+          }
+        >
 
           <div className="form-grid">
 
             <Input
-              label={t("pesticides.name")}
-              value={form.pesticide_name}
-              onChange={handleChange("pesticide_name")}
+              label={t(
+                "pesticides.name"
+              )}
+              value={
+                form.pesticide_name
+              }
+              onChange={handleChange(
+                "pesticide_name"
+              )}
             />
 
             <Input
               type="number"
               min="1"
               step="1"
-              label={t("pesticides.quantity")}
-              value={form.quantity}
-              onChange={handleChange("quantity")}
+              label={t(
+                "pesticides.quantity"
+              )}
+              value={
+                form.quantity
+              }
+              onChange={handleChange(
+                "quantity"
+              )}
             />
 
             <Input
-              label={t("pesticides.unit")}
-              value={form.unit}
-              onChange={handleChange("unit")}
+              label={t(
+                "pesticides.unit"
+              )}
+              value={
+                form.unit
+              }
+              onChange={handleChange(
+                "unit"
+              )}
             />
 
             <Input
               type="date"
-              label={t("pesticides.application_date")}
-              value={form.application_date}
-              onChange={handleChange("application_date")}
+              label={t(
+                "pesticides.application_date"
+              )}
+              value={
+                form.application_date
+              }
+              onChange={handleChange(
+                "application_date"
+              )}
             />
 
             <Input
-              label={t("pesticides.notes")}
-              value={form.notes}
-              onChange={handleChange("notes")}
+              label={t(
+                "pesticides.notes"
+              )}
+              value={
+                form.notes
+              }
+              onChange={handleChange(
+                "notes"
+              )}
             />
 
           </div>
@@ -618,9 +964,13 @@ export default function Pesticides() {
             <Button
               type="button"
               variant="secondary"
-              onClick={closeModal}
+              onClick={
+                closeModal
+              }
             >
-              {t("common.cancel")}
+              {t(
+                "common.cancel"
+              )}
             </Button>
 
             <Button
@@ -629,8 +979,12 @@ export default function Pesticides() {
               disabled={loading}
             >
               {editingPesticide
-                ? t("pesticides.update")
-                : t("pesticides.create")}
+                ? t(
+                    "pesticides.update"
+                  )
+                : t(
+                    "pesticides.create"
+                  )}
             </Button>
 
           </div>
@@ -640,13 +994,31 @@ export default function Pesticides() {
       </Modal>
 
       <ConfirmDialog
-        open={!!deletePesticide}
-        title={t("pesticides.delete")}
-        message={`${t("pesticides.delete_confirm")} "${deletePesticide?.pesticide_name}"?`}
-        confirmText={t("common.delete")}
-        cancelText={t("common.cancel")}
-        onConfirm={handleDelete}
-        onCancel={() => setDeletePesticide(null)}
+        open={
+          !!deletePesticide
+        }
+        title={t(
+          "pesticides.delete"
+        )}
+        message={`${t(
+          "pesticides.delete_confirm"
+        )} "${
+          deletePesticide?.pesticide_name
+        }"?`}
+        confirmText={t(
+          "common.delete"
+        )}
+        cancelText={t(
+          "common.cancel"
+        )}
+        onConfirm={
+          handleDelete
+        }
+        onCancel={() =>
+          setDeletePesticide(
+            null
+          )
+        }
         loading={loading}
       />
 

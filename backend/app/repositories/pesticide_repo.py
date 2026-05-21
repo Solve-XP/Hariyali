@@ -41,7 +41,12 @@ class PesticideRepository:
             query["financial_year"] = financial_year
 
         search_query = build_search_query(
-            "pesticide_name",
+            [
+                "pesticide_name",
+                "unit",
+                "notes",
+                "financial_year"
+            ],
             search
         )
 
@@ -49,6 +54,9 @@ class PesticideRepository:
 
         pesticides = await self.collection.find(
             query
+        ).sort(
+            "created_at",
+            -1
         ).to_list(length=None)
 
         formatted_pesticides = []

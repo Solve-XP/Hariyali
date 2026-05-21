@@ -1,3 +1,9 @@
+/* =========================================================
+   UPDATED INCOMES PAGE
+   FULL BACKEND SEARCH + FILTER ARCHITECTURE
+   FIXED FINANCIAL YEAR DROPDOWN ISSUE
+========================================================= */
+
 import "./Incomes.css";
 
 import {
@@ -52,19 +58,31 @@ export default function Incomes() {
 
   const { pushToast } = useApp();
 
-  const [farms, setFarms] = useState([]);
+  const [farms, setFarms] =
+    useState([]);
 
-  const [allCrops, setAllCrops] = useState([]);
+  const [allCrops, setAllCrops] =
+    useState([]);
 
-  const [crops, setCrops] = useState([]);
+  const [crops, setCrops] =
+    useState([]);
 
-  const [allIncomes, setAllIncomes] = useState([]);
+  const [allIncomes, setAllIncomes] =
+    useState([]);
 
-  const [incomes, setIncomes] = useState([]);
+  const [incomes, setIncomes] =
+    useState([]);
 
-  const [loading, setLoading] = useState(false);
+  /* FIXED FINANCIAL YEARS */
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [financialYears, setFinancialYears] =
+    useState([]);
+
+  const [loading, setLoading] =
+    useState(false);
+
+  const [modalOpen, setModalOpen] =
+    useState(false);
 
   const [editingIncome, setEditingIncome] =
     useState(null);
@@ -72,13 +90,15 @@ export default function Incomes() {
   const [deleteIncome, setDeleteIncome] =
     useState(null);
 
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [form, setForm] =
+    useState(EMPTY_FORM);
 
-  const [filters, setFilters] = useState({
-    search: "",
-    farm_id: "all",
-    financial_year: "all",
-  });
+  const [filters, setFilters] =
+    useState({
+      search: "",
+      farm_id: "all",
+      financial_year: "all",
+    });
 
   const [debouncedFilters, setDebouncedFilters] =
     useState(filters);
@@ -110,14 +130,14 @@ export default function Incomes() {
   }, []);
 
   /* =========================================================
-     FILTER CHANGE
+     FILTER LOAD
   ========================================================= */
 
   useEffect(() => {
 
-    applyFilters(debouncedFilters);
+    loadIncomes(debouncedFilters);
 
-  }, [debouncedFilters, allIncomes]);
+  }, [debouncedFilters]);
 
   /* =========================================================
      LOAD INITIAL DATA
@@ -150,6 +170,19 @@ export default function Incomes() {
 
       setIncomes(incomeData);
 
+      /* INITIAL YEARS */
+
+      const years = incomeData
+        .map(
+          (item) =>
+            item.financial_year
+        )
+        .filter(Boolean);
+
+      setFinancialYears([
+        ...new Set(years),
+      ].sort());
+
     } catch (error) {
 
       pushToast(
@@ -164,68 +197,92 @@ export default function Incomes() {
   };
 
   /* =========================================================
-     APPLY FILTERS
+     LOAD INCOMES
   ========================================================= */
 
-  const applyFilters = (
-    customFilters = debouncedFilters
+  const loadIncomes = async (
+    currentFilters = debouncedFilters
   ) => {
 
-    let filtered = [...allIncomes];
+    try {
 
-    if (customFilters.search) {
+      setLoading(true);
 
-      const search =
-        customFilters.search.toLowerCase();
+      const params = {};
 
-      filtered = filtered.filter((item) =>
+      /* SEARCH */
 
-        String(item.notes || "")
-          .toLowerCase()
-          .includes(search)
+      if (
+        currentFilters.search?.trim()
+      ) {
 
-        ||
+        params.search =
+          currentFilters.search.trim();
+      }
 
-        String(item.financial_year || "")
-          .toLowerCase()
-          .includes(search)
+      /* FARM */
 
-        ||
+      if (
+        currentFilters.farm_id &&
+        currentFilters.farm_id !== "all"
+      ) {
 
-        String(
-          cropsMap[item.crop_id] || ""
-        )
-          .toLowerCase()
-          .includes(search)
+        params.farm_id =
+          currentFilters.farm_id;
+      }
 
+      /* FINANCIAL YEAR */
+
+      if (
+        currentFilters.financial_year &&
+        currentFilters.financial_year !==
+          "all"
+      ) {
+
+        params.financial_year =
+          currentFilters.financial_year;
+      }
+
+      const response =
+        await IncomesService.getAll(
+          params
+        );
+
+      const data = response ?? [];
+
+      setIncomes(data);
+
+      /* FIXED YEARS */
+
+      setFinancialYears((prev) => {
+
+        const years = [
+          ...prev,
+          ...data
+            .map(
+              (item) =>
+                item.financial_year
+            )
+            .filter(Boolean),
+        ];
+
+        return [
+          ...new Set(years),
+        ].sort();
+
+      });
+
+    } catch (error) {
+
+      pushToast(
+        t("messages.GENERIC_ERROR"),
+        "error"
       );
+
+    } finally {
+
+      setLoading(false);
     }
-
-    if (
-      customFilters.farm_id &&
-      customFilters.farm_id !== "all"
-    ) {
-
-      filtered = filtered.filter(
-        (item) =>
-          String(item.farm_id) ===
-          String(customFilters.farm_id)
-      );
-    }
-
-    if (
-      customFilters.financial_year &&
-      customFilters.financial_year !== "all"
-    ) {
-
-      filtered = filtered.filter(
-        (item) =>
-          item.financial_year ===
-          customFilters.financial_year
-      );
-    }
-
-    setIncomes(filtered);
   };
 
   /* =========================================================
@@ -298,63 +355,40 @@ export default function Incomes() {
   }, [allCrops]);
 
   /* =========================================================
-     FINANCIAL YEARS
+     STATS
   ========================================================= */
 
-  const financialYears = useMemo(() => {
-
-    const years = allIncomes
-      .map((i) => i.financial_year)
-      .filter(Boolean);
-
-    return [...new Set(years)].sort();
-
-  }, [allIncomes]);
-
-  /* =========================================================
-     FILTERED STATS
-  ========================================================= */
-
-  const statsData = useMemo(() => {
-
-    if (
-      filters.financial_year === "all"
-    ) {
-
-      return allIncomes;
-    }
-
-    return allIncomes.filter(
-      (item) =>
-        item.financial_year ===
-        filters.financial_year
-    );
-
-  }, [
-    allIncomes,
-    filters.financial_year,
-  ]);
+  const statsData = incomes;
 
   const stats = {
 
     financialYears:
       financialYears.length,
 
-    total: statsData.length,
+    total:
+      statsData.length,
 
     farms: new Set(
-      statsData.map((i) => i.farm_id)
+      statsData.map(
+        (i) => i.farm_id
+      )
     ).size,
 
     crops: new Set(
-      statsData.map((i) => i.crop_id)
+      statsData.map(
+        (i) => i.crop_id
+      )
     ).size,
 
-    totalIncome: statsData.reduce(
-      (sum, item) =>
-        sum + Number(item.amount || 0),
-      0
-    ),
+    totalIncome:
+      statsData.reduce(
+        (sum, item) =>
+          sum +
+          Number(
+            item.amount || 0
+          ),
+        0
+      ),
   };
 
   /* =========================================================
@@ -381,23 +415,35 @@ export default function Incomes() {
     setModalOpen(true);
 
     setForm({
-      farm_id: income.farm_id || "",
-      crop_id: income.crop_id || "",
+      farm_id:
+        income.farm_id || "",
+
+      crop_id:
+        income.crop_id || "",
+
       harvest_quantity:
         income.harvest_quantity || "",
-      unit: income.unit || "",
-      amount: income.amount || "",
+
+      unit:
+        income.unit || "",
+
+      amount:
+        income.amount || "",
+
       income_date:
         income.income_date?.split("T")[0] ||
         "",
-      notes: income.notes || "",
+
+      notes:
+        income.notes || "",
     });
 
     try {
 
       const response =
         await CropsService.getAll({
-          farm_id: income.farm_id,
+          farm_id:
+            income.farm_id,
         });
 
       setCrops(response ?? []);
@@ -431,7 +477,8 @@ export default function Incomes() {
 
       setForm((prev) => ({
         ...prev,
-        [field]: e.target.value,
+        [field]:
+          e.target.value,
       }));
     };
 
@@ -485,6 +532,10 @@ export default function Incomes() {
 
       closeModal();
 
+      await loadIncomes(
+        debouncedFilters
+      );
+
       await loadInitialData();
 
     } catch (error) {
@@ -506,7 +557,8 @@ export default function Incomes() {
 
   const handleDelete = async () => {
 
-    if (!deleteIncome) return;
+    if (!deleteIncome)
+      return;
 
     try {
 
@@ -521,6 +573,10 @@ export default function Incomes() {
       );
 
       setDeleteIncome(null);
+
+      await loadIncomes(
+        debouncedFilters
+      );
 
       await loadInitialData();
 
@@ -545,23 +601,29 @@ export default function Incomes() {
 
     {
       key: "farm",
-      header: t("incomes.farm"),
+      header:
+        t("incomes.farm"),
       render: (row) => (
         <span className="farm-name">
-          {farmsMap[row.farm_id] || "—"}
+          {farmsMap[
+            row.farm_id
+          ] || "—"}
         </span>
       ),
     },
 
     {
       key: "crop",
-      header: t("incomes.crop"),
+      header:
+        t("incomes.crop"),
       render: (row) => {
 
         const cropName =
           row.crop_name ||
           row.crop?.crop_name ||
-          cropsMap[row.crop_id];
+          cropsMap[
+            row.crop_id
+          ];
 
         return (
           <div className="income-crop-cell">
@@ -575,7 +637,8 @@ export default function Incomes() {
 
     {
       key: "financial_year",
-      header: t("incomes.financial_year"),
+      header:
+        t("incomes.financial_year"),
       render: (row) => (
         <span className="financial-year">
           {row.financial_year || "—"}
@@ -585,7 +648,8 @@ export default function Incomes() {
 
     {
       key: "quantity",
-      header: t("incomes.harvest"),
+      header:
+        t("incomes.harvest"),
       render: (row) => (
         <span className="harvest-cell">
           {row.harvest_quantity}{" "}
@@ -596,7 +660,8 @@ export default function Incomes() {
 
     {
       key: "amount",
-      header: t("incomes.amount"),
+      header:
+        t("incomes.amount"),
       render: (row) => (
         <strong className="amount-cell">
           ₹{" "}
@@ -609,7 +674,8 @@ export default function Incomes() {
 
     {
       key: "income_date",
-      header: t("incomes.income_date"),
+      header:
+        t("incomes.income_date"),
       render: (row) => (
         <span className="date-cell">
           {row.income_date?.split("T")[0] ||
@@ -620,7 +686,8 @@ export default function Incomes() {
 
     {
       key: "actions",
-      header: t("incomes.actions"),
+      header:
+        t("incomes.actions"),
       width: 140,
       render: (row) => (
 
@@ -647,8 +714,9 @@ export default function Incomes() {
         </div>
       ),
     },
-  ];
 
+  ];
+  
   return (
 
     <div className="page">

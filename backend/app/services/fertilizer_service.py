@@ -1,6 +1,7 @@
 from bson import ObjectId
+from bson.errors import InvalidId
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from fastapi import HTTPException
 from fastapi import status
@@ -45,20 +46,19 @@ class FertilizerService:
             data.application_date.date()
         )
 
-        existing_fertilizer = await fertilizers_collection.find_one({
+        normalized_fertilizer_name = (
+            data.fertilizer_name.lower().strip()
+        )
 
-            "user_id": user_id,
-
-            "financial_year": financial_year,
-
-            "fertilizer_name": data.fertilizer_name,
-
-            "quantity": data.quantity,
-
-            "application_date": data.application_date,
-
-            "is_deleted": False
-        })
+        existing_fertilizer = await (
+            self.fertilizer_repo.check_duplicate_fertilizer(
+                user_id=user_id,
+                financial_year=financial_year,
+                fertilizer_name=normalized_fertilizer_name,
+                quantity=data.quantity,
+                application_date=data.application_date
+            )
+        )
 
         if existing_fertilizer:
 
@@ -73,7 +73,15 @@ class FertilizerService:
 
             "financial_year": financial_year,
 
-            "fertilizer_name": data.fertilizer_name,
+            # ORIGINAL VALUE
+            "fertilizer_name": (
+                data.fertilizer_name.strip()
+            ),
+
+            # NORMALIZED VALUE
+            "normalized_fertilizer_name": (
+                normalized_fertilizer_name
+            ),
 
             "quantity": data.quantity,
 
@@ -85,13 +93,19 @@ class FertilizerService:
 
             "is_deleted": False,
 
-            "created_at": datetime.utcnow(),
+            "created_at": datetime.now(
+                timezone.utc
+            ),
 
-            "updated_at": datetime.utcnow()
+            "updated_at": datetime.now(
+                timezone.utc
+            )
         }
 
-        fertilizer_id = await self.fertilizer_repo.create_fertilizer(
-            fertilizer_data
+        fertilizer_id = await (
+            self.fertilizer_repo.create_fertilizer(
+                fertilizer_data
+            )
         )
 
         return {
@@ -106,10 +120,12 @@ class FertilizerService:
         search: str = None
     ):
 
-        return await self.fertilizer_repo.get_all_fertilizers(
-            user_id=user_id,
-            financial_year=financial_year,
-            search=search
+        return await (
+            self.fertilizer_repo.get_all_fertilizers(
+                user_id=user_id,
+                financial_year=financial_year,
+                search=search
+            )
         )
 
     async def get_fertilizer_by_id(
@@ -118,9 +134,11 @@ class FertilizerService:
         user_id: str
     ):
 
-        fertilizer = await self.fertilizer_repo.get_fertilizer_by_id(
-            fertilizer_id,
-            user_id
+        fertilizer = await (
+            self.fertilizer_repo.get_fertilizer_by_id(
+                fertilizer_id,
+                user_id
+            )
         )
 
         if not fertilizer:
@@ -139,9 +157,22 @@ class FertilizerService:
         data
     ):
 
-        fertilizer = await self.fertilizer_repo.get_fertilizer_by_id(
-            fertilizer_id,
-            user_id
+        try:
+
+            ObjectId(fertilizer_id)
+
+        except InvalidId:
+
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid fertilizer id"
+            )
+
+        fertilizer = await (
+            self.fertilizer_repo.get_fertilizer_by_id(
+                fertilizer_id,
+                user_id
+            )
         )
 
         if not fertilizer:
@@ -155,22 +186,26 @@ class FertilizerService:
             exclude_unset=True
         )
 
-        if "quantity" in update_data:
+        if (
+            "quantity" in update_data
+            and
+            update_data["quantity"] <= 0
+        ):
 
-            if update_data["quantity"] <= 0:
-
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail="Quantity must be greater than 0"
-                )
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Quantity must be greater than 0"
+            )
 
         final_application_date = update_data.get(
             "application_date",
             fertilizer["application_date"]
         )
 
-        final_financial_year = get_financial_year_from_date(
-            final_application_date.date()
+        final_financial_year = (
+            get_financial_year_from_date(
+                final_application_date.date()
+            )
         )
 
         final_fertilizer_name = update_data.get(
@@ -183,24 +218,20 @@ class FertilizerService:
             fertilizer["quantity"]
         )
 
-        existing_fertilizer = await fertilizers_collection.find_one({
+        normalized_fertilizer_name = (
+            final_fertilizer_name.lower().strip()
+        )
 
-            "_id": {
-                "$ne": ObjectId(fertilizer_id)
-            },
-
-            "user_id": user_id,
-
-            "financial_year": final_financial_year,
-
-            "fertilizer_name": final_fertilizer_name,
-
-            "quantity": final_quantity,
-
-            "application_date": final_application_date,
-
-            "is_deleted": False
-        })
+        existing_fertilizer = await (
+            self.fertilizer_repo.check_duplicate_fertilizer_for_update(
+                fertilizer_id=fertilizer_id,
+                user_id=user_id,
+                financial_year=final_financial_year,
+                fertilizer_name=normalized_fertilizer_name,
+                quantity=final_quantity,
+                application_date=final_application_date
+            )
+        )
 
         if existing_fertilizer:
 
@@ -209,18 +240,36 @@ class FertilizerService:
                 detail="Similar fertilizer record already exists"
             )
 
+        if "fertilizer_name" in update_data:
+
+            update_data["fertilizer_name"] = (
+                update_data["fertilizer_name"].strip()
+            )
+
+            update_data[
+                "normalized_fertilizer_name"
+            ] = (
+                update_data["fertilizer_name"]
+                .lower()
+                .strip()
+            )
+
         if "application_date" in update_data:
 
             update_data["financial_year"] = (
                 get_financial_year_from_date(
-                    update_data["application_date"].date()
+                    update_data[
+                        "application_date"
+                    ].date()
                 )
             )
 
-        modified_count = await self.fertilizer_repo.update_fertilizer(
-            fertilizer_id,
-            user_id,
-            update_data
+        modified_count = await (
+            self.fertilizer_repo.update_fertilizer(
+                fertilizer_id,
+                user_id,
+                update_data
+            )
         )
 
         if modified_count == 0:
@@ -240,9 +289,11 @@ class FertilizerService:
         user_id: str
     ):
 
-        fertilizer = await self.fertilizer_repo.get_fertilizer_by_id(
-            fertilizer_id,
-            user_id
+        fertilizer = await (
+            self.fertilizer_repo.get_fertilizer_by_id(
+                fertilizer_id,
+                user_id
+            )
         )
 
         if not fertilizer:
@@ -252,9 +303,11 @@ class FertilizerService:
                 detail="Fertilizer not found"
             )
 
-        modified_count = await self.fertilizer_repo.delete_fertilizer(
-            fertilizer_id,
-            user_id
+        modified_count = await (
+            self.fertilizer_repo.delete_fertilizer(
+                fertilizer_id,
+                user_id
+            )
         )
 
         if modified_count == 0:

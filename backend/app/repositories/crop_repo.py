@@ -1,7 +1,14 @@
 from bson import ObjectId
 from bson.errors import InvalidId
 
-from datetime import ( datetime,timezone )
+from datetime import (
+    datetime,
+    timezone
+)
+
+from app.utils.search import (
+    build_search_query
+)
 
 
 class CropRepository:
@@ -91,48 +98,32 @@ class CropRepository:
             "is_deleted": False
         }
 
-        if search and search.strip():
+        search_query = build_search_query(
+            [
+                "crop_name",
+                "season",
+                "financial_year",
+                "normalized_crop_name",
+                "normalized_season"
+            ],
+            search
+        )
 
-            search = search.strip()
+        query.update(search_query)
 
-            query["$or"] = [
-                {
-                    "crop_name": {
-                        "$regex": search,
-                        "$options": "i"
-                    }
-                },
-                {
-                    "season": {
-                        "$regex": search,
-                        "$options": "i"
-                    }
-                },
-                {
-                    "financial_year": {
-                        "$regex": search,
-                        "$options": "i"
-                    }
-                },
-                {
-                    "normalized_crop_name": {
-                        "$regex": search.lower(),
-                        "$options": "i"
-                    }
-                },
-                {
-                    "normalized_season": {
-                        "$regex": search.lower(),
-                        "$options": "i"
-                    }
-                }
-            ]
-
-        if farm_id and farm_id.strip():
+        if (
+            farm_id
+            and
+            farm_id.strip()
+        ):
 
             query["farm_id"] = farm_id
 
-        if season and season.strip():
+        if (
+            season
+            and
+            season.strip()
+        ):
 
             query["normalized_season"] = (
                 season.lower().strip()

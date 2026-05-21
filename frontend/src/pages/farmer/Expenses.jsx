@@ -38,6 +38,29 @@ import {
   IconExpense,
 } from "../../components/Icons";
 
+const UNIT_OPTIONS = [
+  "kg",
+  "gram",
+  "quintal",
+  "ton",
+  "liter",
+  "ml",
+  "piece",
+  "packet",
+  "bag",
+  "box",
+  "bottle",
+  "bundle",
+  "acre",
+  "hectare",
+  "hour",
+  "day",
+  "person",
+  "trip",
+  "unit",
+  "other",
+];
+
 const CATEGORY_OPTIONS = [
   "fertilizer",
   "pesticide",
@@ -85,13 +108,21 @@ export default function Expenses() {
 
   const [crops, setCrops] = useState([]);
 
-  const [allExpenses, setAllExpenses] = useState([]);
+  const [allExpenses, setAllExpenses] =
+    useState([]);
 
-  const [expenses, setExpenses] = useState([]);
+  const [expenses, setExpenses] =
+    useState([]);
 
-  const [loading, setLoading] = useState(false);
+  /* UPDATED */
+  const [financialYears, setFinancialYears] =
+    useState([]);
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] =
+    useState(false);
+
+  const [modalOpen, setModalOpen] =
+    useState(false);
 
   const [editingExpense, setEditingExpense] =
     useState(null);
@@ -113,6 +144,10 @@ export default function Expenses() {
   const [debouncedFilters, setDebouncedFilters] =
     useState(filters);
 
+  /* =========================================================
+     SEARCH DEBOUNCE
+  ========================================================= */
+
   useEffect(() => {
 
     const timer = setTimeout(() => {
@@ -125,17 +160,29 @@ export default function Expenses() {
 
   }, [filters]);
 
+  /* =========================================================
+     INITIAL LOAD
+  ========================================================= */
+
   useEffect(() => {
 
     loadInitialData();
 
   }, []);
 
+  /* =========================================================
+     FILTER CHANGE LOAD
+  ========================================================= */
+
   useEffect(() => {
 
-    applyFilters(debouncedFilters);
+    loadExpenses(debouncedFilters);
 
-  }, [debouncedFilters, allExpenses]);
+  }, [debouncedFilters]);
+
+  /* =========================================================
+     LOAD INITIAL DATA
+  ========================================================= */
 
   const loadInitialData = async () => {
 
@@ -164,6 +211,19 @@ export default function Expenses() {
 
       setExpenses(expenseData);
 
+      /* UPDATED */
+
+      const years = expenseData
+        .map(
+          (item) =>
+            item.financial_year
+        )
+        .filter(Boolean);
+
+      setFinancialYears([
+        ...new Set(years),
+      ].sort());
+
     } catch (error) {
 
       pushToast(
@@ -177,76 +237,108 @@ export default function Expenses() {
     }
   };
 
-  const applyFilters = (
-    customFilters = debouncedFilters
+  /* =========================================================
+     LOAD EXPENSES
+  ========================================================= */
+
+  const loadExpenses = async (
+    currentFilters = debouncedFilters
   ) => {
 
-    let filtered = [...allExpenses];
+    try {
 
-    if (customFilters.search) {
+      setLoading(true);
 
-      const search =
-        customFilters.search.toLowerCase();
+      const params = {};
 
-      filtered = filtered.filter((item) =>
+      /* SEARCH */
 
-        String(item.item_name || "")
-          .toLowerCase()
-          .includes(search)
+      if (
+        currentFilters.search?.trim()
+      ) {
 
-        ||
+        params.search =
+          currentFilters.search.trim();
+      }
 
-        String(item.notes || "")
-          .toLowerCase()
-          .includes(search)
+      /* FARM */
 
-        ||
+      if (
+        currentFilters.farm_id &&
+        currentFilters.farm_id !== "all"
+      ) {
 
-        String(item.category || "")
-          .toLowerCase()
-          .includes(search)
+        params.farm_id =
+          currentFilters.farm_id;
+      }
 
+      /* CATEGORY */
+
+      if (
+        currentFilters.category &&
+        currentFilters.category !== "all"
+      ) {
+
+        params.category =
+          currentFilters.category;
+      }
+
+      /* FINANCIAL YEAR */
+
+      if (
+        currentFilters.financial_year &&
+        currentFilters.financial_year !==
+          "all"
+      ) {
+
+        params.financial_year =
+          currentFilters.financial_year;
+      }
+
+      const response =
+        await ExpensesService.getAll(
+          params
+        );
+
+      const data = response ?? [];
+
+      setExpenses(data);
+
+      /* UPDATED */
+
+      setFinancialYears((prev) => {
+
+        const years = [
+          ...prev,
+          ...data
+            .map(
+              (item) =>
+                item.financial_year
+            )
+            .filter(Boolean),
+        ];
+
+        return [
+          ...new Set(years),
+        ].sort();
+      });
+
+    } catch (error) {
+
+      pushToast(
+        t("messages.GENERIC_ERROR"),
+        "error"
       );
+
+    } finally {
+
+      setLoading(false);
     }
-
-    if (
-      customFilters.farm_id &&
-      customFilters.farm_id !== "all"
-    ) {
-
-      filtered = filtered.filter(
-        (item) =>
-          String(item.farm_id) ===
-          String(customFilters.farm_id)
-      );
-    }
-
-    if (
-      customFilters.category &&
-      customFilters.category !== "all"
-    ) {
-
-      filtered = filtered.filter(
-        (item) =>
-          item.category ===
-          customFilters.category
-      );
-    }
-
-    if (
-      customFilters.financial_year &&
-      customFilters.financial_year !== "all"
-    ) {
-
-      filtered = filtered.filter(
-        (item) =>
-          item.financial_year ===
-          customFilters.financial_year
-      );
-    }
-
-    setExpenses(filtered);
   };
+
+  /* =========================================================
+     FARM SELECT
+  ========================================================= */
 
   const handleFarmSelect = async (
     farmId
@@ -283,6 +375,10 @@ export default function Expenses() {
     }
   };
 
+  /* =========================================================
+     MEMOIZED MAPS
+  ========================================================= */
+
   const farmsMap = useMemo(() => {
 
     return Object.fromEntries(
@@ -309,35 +405,11 @@ export default function Expenses() {
 
   }, [allCrops]);
 
-  const financialYears = useMemo(() => {
+  /* =========================================================
+     UPDATED STATS
+  ========================================================= */
 
-    const years = allExpenses
-      .map((i) => i.financial_year)
-      .filter(Boolean);
-
-    return [...new Set(years)].sort();
-
-  }, [allExpenses]);
-
-  const statsData = useMemo(() => {
-
-    if (
-      filters.financial_year === "all"
-    ) {
-
-      return allExpenses;
-    }
-
-    return allExpenses.filter(
-      (item) =>
-        item.financial_year ===
-        filters.financial_year
-    );
-
-  }, [
-    allExpenses,
-    filters.financial_year,
-  ]);
+  const statsData = expenses;
 
   const stats = {
 
@@ -359,6 +431,10 @@ export default function Expenses() {
 
     total: statsData.length,
   };
+
+  /* =========================================================
+     MODAL HELPERS
+  ========================================================= */
 
   const openCreateModal = () => {
 
@@ -434,6 +510,10 @@ export default function Expenses() {
       }));
     };
 
+  /* =========================================================
+     SUBMIT
+  ========================================================= */
+
   const handleSubmit = async (e) => {
 
     e.preventDefault();
@@ -482,6 +562,12 @@ export default function Expenses() {
 
       closeModal();
 
+      /* UPDATED */
+
+      await loadExpenses(
+        debouncedFilters
+      );
+
       await loadInitialData();
 
     } catch (error) {
@@ -497,6 +583,10 @@ export default function Expenses() {
       setLoading(false);
     }
   };
+
+  /* =========================================================
+     DELETE
+  ========================================================= */
 
   const handleDelete = async () => {
 
@@ -516,6 +606,12 @@ export default function Expenses() {
 
       setDeleteExpense(null);
 
+      /* UPDATED */
+
+      await loadExpenses(
+        debouncedFilters
+      );
+
       await loadInitialData();
 
     } catch (error) {
@@ -531,137 +627,144 @@ export default function Expenses() {
     }
   };
 
-  const columns = [
+  /* =========================================================
+   TABLE COLUMNS
+========================================================= */
 
-    {
-      key: "farm",
-      header: t("expenses.farm"),
-      render: (row) => (
-        <span className="farm-name">
-          {farmsMap[row.farm_id] || "—"}
+const columns = [
+
+  {
+    key: "farm",
+    header: t("expenses.farm"),
+    render: (row) => (
+      <span className="farm-name">
+        {farmsMap[row.farm_id] || "—"}
+      </span>
+    ),
+  },
+
+  {
+    key: "crop",
+    header: t("expenses.crop"),
+    render: (row) => {
+
+      const cropName =
+        row.crop_name ||
+        row.crop?.crop_name ||
+        cropsMap[row.crop_id];
+
+      return (
+        <span className="expense-crop">
+          {cropName || "—"}
         </span>
-      ),
+      );
     },
+  },
 
-    {
-      key: "crop",
-      header: t("expenses.crop"),
-      render: (row) => {
+  {
+    key: "financial_year",
+    header: t("expenses.financial_year"),
+    render: (row) => (
+      <span className="financial-year">
+        {row.financial_year || "—"}
+      </span>
+    ),
+  },
 
-        const cropName =
-          row.crop_name ||
-          row.crop?.crop_name ||
-          cropsMap[row.crop_id];
+  {
+    key: "category",
+    header: t("expenses.category"),
+    render: (row) => (
+      <span className="expense-category">
+        {row.category || "—"}
+      </span>
+    ),
+  },
 
-        return (
-          <span className="expense-crop">
-            {cropName || "—"}
-          </span>
-        );
-      },
-    },
+  {
+    key: "item_name",
+    header: t("expenses.table_item"),
+    render: (row) => (
+      <strong className="expense-item">
+        {row.item_name || "—"}
+      </strong>
+    ),
+  },
 
-    {
-      key: "financial_year",
-      header: t("expenses.financial_year"),
-      render: (row) => (
-        <span className="financial-year">
-          {row.financial_year || "—"}
-        </span>
-      ),
-    },
+  {
+    key: "quantity",
+    header: t("expenses.quantity"),
+    render: (row) => (
+      <span className="expense-quantity">
+        {row.quantity || 0}{" "}
+        {row.unit || ""}
+      </span>
+    ),
+  },
 
-    {
-      key: "category",
-      header: t("expenses.category"),
-      render: (row) => (
-        <span className="expense-category">
-          {row.category || "—"}
-        </span>
-      ),
-    },
+  {
+    key: "payment_method",
+    header: t("expenses.payment_method"),
+    render: (row) => (
+      <span className="expense-payment">
+        {row.payment_method || "—"}
+      </span>
+    ),
+  },
 
-    {
-      key: "item_name",
-      header: t("expenses.table_item"),
-      render: (row) => (
-        <strong className="expense-item">
-          {row.item_name || "—"}
-        </strong>
-      ),
-    },
+  {
+    key: "amount",
+    header: t("expenses.amount"),
+    render: (row) => (
+      <strong className="expense-amount">
+        ₹ {Number(
+          row.amount || 0
+        ).toLocaleString()}
+      </strong>
+    ),
+  },
 
-    {
-      key: "quantity",
-      header: t("expenses.quantity"),
-      render: (row) => (
-        <span className="expense-quantity">
-          {row.quantity || 0} {row.unit || ""}
-        </span>
-      ),
-    },
+  {
+    key: "expense_date",
+    header: t("expenses.expense_date"),
+    render: (row) => (
+      <span className="expense-date">
+        {row.expense_date?.split("T")[0] || "—"}
+      </span>
+    ),
+  },
 
-    {
-      key: "payment_method",
-      header: t("expenses.payment_method"),
-      render: (row) => (
-        <span className="expense-payment">
-          {row.payment_method || "—"}
-        </span>
-      ),
-    },
+  {
+    key: "actions",
+    header: t("common.actions"),
+    width: 140,
+    render: (row) => (
 
-    {
-      key: "amount",
-      header: t("expenses.amount"),
-      render: (row) => (
-        <strong className="expense-amount">
-          ₹ {Number(row.amount || 0).toLocaleString()}
-        </strong>
-      ),
-    },
+      <div className="table-actions">
 
-    {
-      key: "expense_date",
-      header: t("expenses.expense_date"),
-      render: (row) => (
-        <span className="expense-date">
-          {row.expense_date?.split("T")[0] || "—"}
-        </span>
-      ),
-    },
+        <button
+          className="icon-btn"
+          onClick={() =>
+            openEditModal(row)
+          }
+        >
+          <IconEdit size={16} />
+        </button>
 
-    {
-      key: "actions",
-      header: t("common.actions"),
-      width: 140,
-      render: (row) => (
+        <button
+          className="icon-btn icon-btn--danger"
+          onClick={() =>
+            setDeleteExpense(row)
+          }
+        >
+          <IconTrash size={16} />
+        </button>
 
-        <div className="table-actions">
+      </div>
+    ),
+  },
 
-          <button
-            className="icon-btn"
-            onClick={() =>
-              openEditModal(row)
-            }
-          >
-            <IconEdit size={16} />
-          </button>
-
-          <button
-            className="icon-btn icon-btn--danger"
-            onClick={() =>
-              setDeleteExpense(row)
-            }
-          >
-            <IconTrash size={16} />
-          </button>
-
-        </div>
-      ),
-    },
-
-  ];
+];
 
   return (
 
@@ -1060,7 +1163,7 @@ export default function Expenses() {
                     key={category}
                     value={category}
                   >
-                    {t(`expenses.categories.${category}`)}
+                    {t(`expenses.category_${category}`)}
                   </option>
 
                 )
@@ -1085,13 +1188,28 @@ export default function Expenses() {
               )}
             />
 
-            <Input
+            <Select
               label={t("expenses.unit")}
               value={form.unit}
-              onChange={handleChange(
-                "unit"
-              )}
-            />
+              onChange={handleChange("unit")}
+              >
+
+              <option value="">
+                 {t("expenses.select_unit")}
+              </option>
+
+              {UNIT_OPTIONS.map((unit) => (
+
+              <option
+                key={unit}
+                value={unit}
+              >
+                {t(`expenses.units_${unit}`)}
+              </option>
+
+              ))}
+
+            </Select>
 
             <Input
               label={t("expenses.amount")}
@@ -1121,7 +1239,7 @@ export default function Expenses() {
                     key={method}
                     value={method}
                   >
-                    {t(`expenses.payments.${method}`)}
+                    {t(`expenses.payment_${method}`)}
                   </option>
 
                 )

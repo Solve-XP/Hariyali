@@ -1,9 +1,13 @@
+/* =========================================================
+   UPDATED FERTILIZERS PAGE
+   FULL BACKEND SEARCH + FILTER ARCHITECTURE
+   FIXED FINANCIAL YEAR DROPDOWN ISSUE
+========================================================= */
 
 import "./Fertilizers.css";
 
 import {
   useEffect,
-  useMemo,
   useState,
 } from "react";
 
@@ -29,13 +33,11 @@ import {
   IconPlus,
   IconEdit,
   IconTrash,
-  IconFarmYear,
   IconFertilizer,
   IconFinancialYear,
   IconTotalQuantity,
   IconTotalRecords,
   IconLatestApplication,
-
 } from "../../components/Icons";
 
 const EMPTY_FORM = {
@@ -52,28 +54,47 @@ export default function Fertilizers() {
 
   const { pushToast } = useApp();
 
-  const [fertilizers, setFertilizers] = useState([]);
+  const [allFertilizers, setAllFertilizers] =
+    useState([]);
 
-  const [loading, setLoading] = useState(false);
+  const [fertilizers, setFertilizers] =
+    useState([]);
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [financialYears, setFinancialYears] =
+    useState([]);
 
-  const [editingFertilizer, setEditingFertilizer] = useState(null);
+  const [loading, setLoading] =
+    useState(false);
 
-  const [deleteFertilizer, setDeleteFertilizer] = useState(null);
+  const [modalOpen, setModalOpen] =
+    useState(false);
 
-  const [selectedFY, setSelectedFY] = useState("all");
+  const [
+    editingFertilizer,
+    setEditingFertilizer,
+  ] = useState(null);
 
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [
+    deleteFertilizer,
+    setDeleteFertilizer,
+  ] = useState(null);
 
-  const [filters, setFilters] = useState({
-    search: "",
-  });
+  const [form, setForm] =
+    useState(EMPTY_FORM);
 
-  const [debouncedFilters, setDebouncedFilters] = useState(filters);
+  const [filters, setFilters] =
+    useState({
+      search: "",
+      financial_year: "all",
+    });
+
+  const [
+    debouncedFilters,
+    setDebouncedFilters,
+  ] = useState(filters);
 
   /* =========================================================
-     DEBOUNCE SEARCH
+     SEARCH DEBOUNCE
   ========================================================= */
 
   useEffect(() => {
@@ -82,49 +103,87 @@ export default function Fertilizers() {
 
       setDebouncedFilters(filters);
 
-    }, 500);
+    }, 400);
 
     return () => clearTimeout(timer);
 
   }, [filters]);
 
   /* =========================================================
-     INITIAL LOAD
+     LOAD ON FILTER CHANGE
   ========================================================= */
 
   useEffect(() => {
 
-    loadFertilizers();
+    loadFertilizers(debouncedFilters);
 
-  }, []);
-
-  /* =========================================================
-     FILTER CHANGE LOAD
-  ========================================================= */
-
-  // useEffect(() => {
-
-  //   loadFertilizers(debouncedFilters);
-
-  // }, [debouncedFilters]);
+  }, [debouncedFilters]);
 
   /* =========================================================
      LOAD FERTILIZERS
   ========================================================= */
 
   const loadFertilizers = async (
-    customFilters = debouncedFilters
+    currentFilters = debouncedFilters
   ) => {
 
     try {
 
       setLoading(true);
 
-      const response = await FertilizersService.getAll(
-        customFilters
-      );
+      const params = {};
 
-      setFertilizers(response ?? []);
+      /* SEARCH */
+
+      if (
+        currentFilters.search?.trim()
+      ) {
+
+        params.search =
+          currentFilters.search.trim();
+      }
+
+      /* FINANCIAL YEAR */
+
+      if (
+        currentFilters.financial_year &&
+        currentFilters.financial_year !==
+          "all"
+      ) {
+
+        params.financial_year =
+          currentFilters.financial_year;
+      }
+
+      const response =
+        await FertilizersService.getAll(
+          params
+        );
+
+      const data = response ?? [];
+
+      setAllFertilizers(data);
+
+      setFertilizers(data);
+
+      /* KEEP ALL YEARS */
+
+      setFinancialYears((prev) => {
+
+        const years = [
+          ...prev,
+          ...data
+            .map(
+              (f) =>
+                f.financial_year
+            )
+            .filter(Boolean),
+        ];
+
+        return [
+          ...new Set(years),
+        ].sort();
+      });
 
     } catch (error) {
 
@@ -136,7 +195,6 @@ export default function Fertilizers() {
     } finally {
 
       setLoading(false);
-
     }
   };
 
@@ -153,13 +211,18 @@ export default function Fertilizers() {
     setModalOpen(true);
   };
 
-  const openEditModal = (fertilizer) => {
+  const openEditModal = (
+    fertilizer
+  ) => {
 
-    setEditingFertilizer(fertilizer);
+    setEditingFertilizer(
+      fertilizer
+    );
 
     setForm({
       fertilizer_name:
-        fertilizer.fertilizer_name || "",
+        fertilizer.fertilizer_name ||
+        "",
 
       quantity:
         fertilizer.quantity || "",
@@ -168,7 +231,9 @@ export default function Fertilizers() {
         fertilizer.unit || "",
 
       application_date:
-        fertilizer.application_date?.split("T")[0] || "",
+        fertilizer.application_date?.split(
+          "T"
+        )[0] || "",
 
       notes:
         fertilizer.notes || "",
@@ -186,13 +251,15 @@ export default function Fertilizers() {
     setForm(EMPTY_FORM);
   };
 
-  const handleChange = (field) => (e) => {
+  const handleChange =
+    (field) => (e) => {
 
-    setForm((prev) => ({
-      ...prev,
-      [field]: e.target.value,
-    }));
-  };
+      setForm((prev) => ({
+        ...prev,
+        [field]:
+          e.target.value,
+      }));
+    };
 
   /* =========================================================
      SUBMIT
@@ -217,61 +284,70 @@ export default function Fertilizers() {
       return;
     }
 
+    const quantity =
+      Number(form.quantity);
 
-    /* Quantity must be positive integer */
+    if (
+      quantity <= 0 ||
+      !Number.isInteger(quantity)
+    ) {
 
-const quantity = Number(form.quantity);
+      pushToast(
+        "Quantity must be a positive integer",
+        "error"
+      );
 
-if (
-  quantity <= 0 ||
-  !Number.isInteger(quantity)
-) {
+      return;
+    }
 
-  pushToast(
-    "Quantity must be a positive integer",
-    "error"
-  );
+    const unitRegex =
+      /^[A-Za-z\s]+$/;
 
-  return;
-}
+    if (
+      !unitRegex.test(form.unit)
+    ) {
 
-/* Unit must contain only letters */
+      pushToast(
+        "Unit must contain only letters",
+        "error"
+      );
 
-const unitRegex = /^[A-Za-z\s]+$/;
-
-if (!unitRegex.test(form.unit)) {
-
-  pushToast(
-    "Unit must contain only letters",
-    "error"
-  );
-
-  return;
-}
+      return;
+    }
 
     try {
 
       setLoading(true);
 
-      if (editingFertilizer) {
+      if (
+        editingFertilizer
+      ) {
 
         await FertilizersService.update(
           editingFertilizer.id,
           form
         );
 
-        pushToast(t("fertilizers.updated"));
+        pushToast(
+          t("fertilizers.updated")
+        );
 
       } else {
 
-        await FertilizersService.create(form);
+        await FertilizersService.create(
+          form
+        );
 
-        pushToast(t("fertilizers.created"));
+        pushToast(
+          t("fertilizers.created")
+        );
       }
 
       closeModal();
 
-      await loadFertilizers(debouncedFilters);
+      await loadFertilizers(
+        debouncedFilters
+      );
 
     } catch (error) {
 
@@ -290,88 +366,44 @@ if (!unitRegex.test(form.unit)) {
      DELETE
   ========================================================= */
 
-  const handleDelete = async () => {
+  const handleDelete =
+    async () => {
 
-    if (!deleteFertilizer) return;
+      if (!deleteFertilizer)
+        return;
 
-    try {
+      try {
 
-      setLoading(true);
+        setLoading(true);
 
-      await FertilizersService.delete(
-        deleteFertilizer.id
-      );
-
-      pushToast(t("fertilizers.deleted"));
-
-      setDeleteFertilizer(null);
-
-      await loadFertilizers(debouncedFilters);
-
-    } catch (error) {
-
-      pushToast(
-        t("messages.GENERIC_ERROR"),
-        "error"
-      );
-
-    } finally {
-
-      setLoading(false);
-    }
-  };
-
-  /* =========================================================
-     MEMOIZED DATA
-  ========================================================= */
-
-  const financialYears = useMemo(() => (
-
-    [
-      ...new Set(
-        fertilizers
-          .map((f) => f.financial_year)
-          .filter(Boolean)
-      ),
-    ]
-
-  ), [fertilizers]);
-
-  const filteredFertilizers = useMemo(() => {
-
-  //   if (selectedFY === "all") {
-  //     return fertilizers;
-  //   }
-
-  //   return fertilizers.filter(
-  //     (fertilizer) =>
-  //       fertilizer.financial_year === selectedFY
-  //   );
-
-  // }, [fertilizers, selectedFY]);
-
-   return fertilizers.filter((fertilizer) => {
-
-    const matchesFY =
-      selectedFY === "all" ||
-      fertilizer.financial_year === selectedFY;
-
-    const matchesSearch =
-      fertilizer.fertilizer_name
-        ?.toLowerCase()
-        .includes(
-          filters.search.toLowerCase()
+        await FertilizersService.delete(
+          deleteFertilizer.id
         );
 
-    return matchesFY && matchesSearch;
+        pushToast(
+          t("fertilizers.deleted")
+        );
 
-  });
+        setDeleteFertilizer(
+          null
+        );
 
-}, [
-  fertilizers,
-  selectedFY,
-  filters.search,
-]);
+        await loadFertilizers(
+          debouncedFilters
+        );
+
+      } catch (error) {
+
+        pushToast(
+          t("messages.GENERIC_ERROR"),
+          "error"
+        );
+
+      } finally {
+
+        setLoading(false);
+      }
+    };
 
   /* =========================================================
      STATS
@@ -379,18 +411,23 @@ if (!unitRegex.test(form.unit)) {
 
   const stats = {
 
-    
-    total: filteredFertilizers.length,
+    total:
+      fertilizers.length,
 
-    totalQuantity: filteredFertilizers.reduce(
-      (acc, item) => acc + Number(item.quantity || 0),
-      0
-    ),
-
-    financialYears: financialYears.length,
+    totalQuantity:
+      fertilizers.reduce(
+        (acc, item) =>
+          acc +
+          Number(
+            item.quantity || 0
+          ),
+        0
+      ),
 
     latestApplication:
-      filteredFertilizers[0]?.application_date?.split("T")[0] || "—",
+      fertilizers[0]
+        ?.application_date
+        ?.split("T")[0] || "—",
   };
 
   /* =========================================================
@@ -401,47 +438,64 @@ if (!unitRegex.test(form.unit)) {
 
     {
       key: "fertilizer_name",
-      header: t("fertilizers.name"),
+      header:
+        t("fertilizers.name"),
       render: (row) => (
         <div className="fertilizer-name-cell">
-          <strong>{row.fertilizer_name}</strong>
+          <strong>
+            {row.fertilizer_name}
+          </strong>
         </div>
       ),
     },
 
     {
       key: "quantity",
-      header: t("fertilizers.quantity"),
+      header:
+        t(
+          "fertilizers.quantity"
+        ),
       render: (row) => (
         <span className="quantity-cell">
-          {row.quantity} {row.unit}
+          {row.quantity}{" "}
+          {row.unit}
         </span>
       ),
     },
 
     {
       key: "financial_year",
-      header: t("fertilizers.financial_year"),
+      header:
+        t(
+          "fertilizers.financial_year"
+        ),
       render: (row) => (
         <span className="financial-year">
-          {row.financial_year || "—"}
+          {row.financial_year ||
+            "—"}
         </span>
       ),
     },
 
     {
       key: "application_date",
-      header: t("fertilizers.application_date"),
+      header:
+        t(
+          "fertilizers.application_date"
+        ),
       render: (row) => (
         <span className="date-cell">
-          {row.application_date?.split("T")[0] || "—"}
+          {row.application_date?.split(
+            "T"
+          )[0] || "—"}
         </span>
       ),
     },
 
     {
       key: "notes",
-      header: t("fertilizers.notes"),
+      header:
+        t("fertilizers.notes"),
       render: (row) => (
         <span className="notes-cell">
           {row.notes || "—"}
@@ -451,7 +505,10 @@ if (!unitRegex.test(form.unit)) {
 
     {
       key: "actions",
-      header: t("fertilizers.actions"),
+      header:
+        t(
+          "fertilizers.actions"
+        ),
       width: 140,
       render: (row) => (
 
@@ -459,14 +516,20 @@ if (!unitRegex.test(form.unit)) {
 
           <button
             className="icon-btn"
-            onClick={() => openEditModal(row)}
+            onClick={() =>
+              openEditModal(row)
+            }
           >
             <IconEdit size={16} />
           </button>
 
           <button
             className="icon-btn icon-btn--danger"
-            onClick={() => setDeleteFertilizer(row)}
+            onClick={() =>
+              setDeleteFertilizer(
+                row
+              )
+            }
           >
             <IconTrash size={16} />
           </button>
@@ -497,19 +560,25 @@ if (!unitRegex.test(form.unit)) {
       <div className="grid grid--4">
 
         <StatsCard
-          icon={<IconFinancialYear  size={22} />}
+          icon={<IconFinancialYear size={22} />}
           title={t("fertilizers.financial_year")}
           value={
             <Select
-              value={selectedFY}
+              value={filters.financial_year}
               onChange={(e) =>
-                setSelectedFY(e.target.value)
+                setFilters((prev) => ({
+                  ...prev,
+                  financial_year:
+                    e.target.value,
+                }))
               }
               className="stats-fy-select"
             >
 
               <option value="all">
-                {t("fertilizers.all_financial_years")}
+                {t(
+                  "fertilizers.all_financial_years"
+                )}
               </option>
 
               {financialYears.map((fy) => (
@@ -525,7 +594,13 @@ if (!unitRegex.test(form.unit)) {
 
             </Select>
           }
-          subtitle={selectedFY}
+          subtitle={
+            filters.financial_year === "all"
+              ? t(
+                  "fertilizers.all_financial_years"
+                )
+              : filters.financial_year
+          }
           colorClass="stat-card__icon--info"
         />
 
@@ -564,7 +639,8 @@ if (!unitRegex.test(form.unit)) {
             onChange={(e) =>
               setFilters((prev) => ({
                 ...prev,
-                search: e.target.value,
+                search:
+                  e.target.value,
               }))
             }
             placeholder={t("fertilizers.search")}
@@ -586,9 +662,10 @@ if (!unitRegex.test(form.unit)) {
 
           </Card>
 
-        ) : filteredFertilizers.length === 0 ? (
+        ) : fertilizers.length === 0 ? (
 
           <EmptyState
+            icon={<IconFertilizer />}
             message={t("fertilizers.empty")}
           />
 
@@ -600,7 +677,7 @@ if (!unitRegex.test(form.unit)) {
 
               <Table
                 columns={columns}
-                rows={filteredFertilizers}
+                rows={fertilizers}
                 rowKey={(row) => row.id}
                 emptyMessage={t("fertilizers.empty")}
               />
@@ -609,7 +686,7 @@ if (!unitRegex.test(form.unit)) {
 
             <div className="fertilizers-mobile-list">
 
-              {filteredFertilizers.map((item) => (
+              {fertilizers.map((item) => (
 
                 <Card
                   key={item.id}
@@ -664,14 +741,18 @@ if (!unitRegex.test(form.unit)) {
 
                     <button
                       className="icon-btn"
-                      onClick={() => openEditModal(item)}
+                      onClick={() =>
+                        openEditModal(item)
+                      }
                     >
                       <IconEdit size={16} />
                     </button>
 
                     <button
                       className="icon-btn icon-btn--danger"
-                      onClick={() => setDeleteFertilizer(item)}
+                      onClick={() =>
+                        setDeleteFertilizer(item)
+                      }
                     >
                       <IconTrash size={16} />
                     </button>
@@ -771,7 +852,9 @@ if (!unitRegex.test(form.unit)) {
         confirmText={t("common.delete")}
         cancelText={t("common.cancel")}
         onConfirm={handleDelete}
-        onCancel={() => setDeleteFertilizer(null)}
+        onCancel={() =>
+          setDeleteFertilizer(null)
+        }
         loading={loading}
       />
 

@@ -1,6 +1,10 @@
 from bson import ObjectId
+from bson.errors import InvalidId
 
-from datetime import datetime
+from datetime import (
+    datetime,
+    time
+)
 
 from app.utils.search import (
     build_search_query
@@ -24,6 +28,121 @@ class ExpenseRepository:
 
         return str(result.inserted_id)
 
+    async def check_duplicate_expense(
+        self,
+        user_id: str,
+        farm_id: str,
+        crop_id: str,
+        category: str,
+        normalized_item_name: str,
+        quantity,
+        amount,
+        expense_date: datetime
+    ):
+
+        expense_day = expense_date.date()
+
+        start_of_day = datetime.combine(
+            expense_day,
+            time.min
+        )
+
+        end_of_day = datetime.combine(
+            expense_day,
+            time.max
+        )
+
+        expense = await self.collection.find_one({
+
+            "user_id": user_id,
+
+            "farm_id": farm_id,
+
+            "crop_id": crop_id,
+
+            "category": category,
+
+            "normalized_item_name":
+                normalized_item_name,
+
+            "quantity": quantity,
+
+            "amount": amount,
+
+            "expense_date": {
+                "$gte": start_of_day,
+                "$lte": end_of_day
+            },
+
+            "is_deleted": False
+        })
+
+        return expense
+
+    async def check_duplicate_expense_for_update(
+        self,
+        expense_id: str,
+        user_id: str,
+        farm_id: str,
+        crop_id: str,
+        category: str,
+        normalized_item_name: str,
+        quantity,
+        amount,
+        expense_date: datetime
+    ):
+
+        try:
+
+            object_id = ObjectId(expense_id)
+
+        except InvalidId:
+
+            return None
+
+        expense_day = expense_date.date()
+
+        start_of_day = datetime.combine(
+            expense_day,
+            time.min
+        )
+
+        end_of_day = datetime.combine(
+            expense_day,
+            time.max
+        )
+
+        expense = await self.collection.find_one({
+
+            "_id": {
+                "$ne": object_id
+            },
+
+            "user_id": user_id,
+
+            "farm_id": farm_id,
+
+            "crop_id": crop_id,
+
+            "category": category,
+
+            "normalized_item_name":
+                normalized_item_name,
+
+            "quantity": quantity,
+
+            "amount": amount,
+
+            "expense_date": {
+                "$gte": start_of_day,
+                "$lte": end_of_day
+            },
+
+            "is_deleted": False
+        })
+
+        return expense
+
     async def get_all_expenses(
         self,
         user_id: str,
@@ -39,24 +158,39 @@ class ExpenseRepository:
             "is_deleted": False
         }
 
-        if farm_id:
+        if farm_id and farm_id.strip():
 
             query["farm_id"] = farm_id
 
-        if crop_id:
+        if crop_id and crop_id.strip():
 
             query["crop_id"] = crop_id
 
-        if financial_year:
+        if (
+            financial_year
+            and
+            financial_year.strip()
+        ):
 
-            query["financial_year"] = financial_year
+            query["financial_year"] = (
+                financial_year.strip()
+            )
 
-        if category:
+        if category and category.strip():
 
-            query["category"] = category
+            query["category"] = (
+                category.strip()
+            )
 
         search_query = build_search_query(
-            "item_name",
+            [
+                "item_name",
+                "category",
+                "financial_year",
+                "payment_method",
+                "notes",
+                "normalized_item_name"
+            ],
             search
         )
 
@@ -64,6 +198,9 @@ class ExpenseRepository:
 
         expenses = await self.collection.find(
             query
+        ).sort(
+            "created_at",
+            -1
         ).to_list(length=None)
 
         formatted_expenses = []
@@ -75,6 +212,11 @@ class ExpenseRepository:
             )
 
             expense.pop("_id")
+
+            expense.pop(
+                "normalized_item_name",
+                None
+            )
 
             formatted_expenses.append(
                 expense
@@ -88,8 +230,16 @@ class ExpenseRepository:
         user_id: str
     ):
 
+        try:
+
+            object_id = ObjectId(expense_id)
+
+        except InvalidId:
+
+            return None
+
         expense = await self.collection.find_one({
-            "_id": ObjectId(expense_id),
+            "_id": object_id,
             "user_id": user_id,
             "is_deleted": False
         })
@@ -102,6 +252,11 @@ class ExpenseRepository:
 
             expense.pop("_id")
 
+            expense.pop(
+                "normalized_item_name",
+                None
+            )
+
         return expense
 
     async def update_expense(
@@ -111,11 +266,21 @@ class ExpenseRepository:
         update_data: dict
     ):
 
-        update_data["updated_at"] = datetime.utcnow()
+        try:
+
+            object_id = ObjectId(expense_id)
+
+        except InvalidId:
+
+            return 0
+
+        update_data["updated_at"] = (
+            datetime.utcnow()
+        )
 
         result = await self.collection.update_one(
             {
-                "_id": ObjectId(expense_id),
+                "_id": object_id,
                 "user_id": user_id,
                 "is_deleted": False
             },
@@ -132,10 +297,19 @@ class ExpenseRepository:
         user_id: str
     ):
 
+        try:
+
+            object_id = ObjectId(expense_id)
+
+        except InvalidId:
+
+            return 0
+
         result = await self.collection.update_one(
             {
-                "_id": ObjectId(expense_id),
-                "user_id": user_id
+                "_id": object_id,
+                "user_id": user_id,
+                "is_deleted": False
             },
             {
                 "$set": {

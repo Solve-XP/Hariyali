@@ -237,6 +237,18 @@ class IncomeService:
                     detail="Amount must be greater than 0"
                 )
 
+        if "unit" in update_data:
+
+            update_data["unit"] = (
+                update_data["unit"].strip()
+            )
+
+        if "notes" in update_data and update_data["notes"]:
+
+            update_data["notes"] = (
+                update_data["notes"].strip()
+            )
+
         final_farm_id = update_data.get(
             "farm_id",
             income["farm_id"]
@@ -353,8 +365,14 @@ class IncomeService:
                 detail="Income not updated"
             )
 
+        updated_income = await self.income_repo.get_income_by_id(
+            income_id,
+            user_id
+        )
+
         return {
-            "message": "Income updated successfully"
+            "message": "Income updated successfully",
+            "income": updated_income
         }
 
     async def delete_income(
