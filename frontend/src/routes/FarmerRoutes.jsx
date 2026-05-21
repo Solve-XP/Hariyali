@@ -8,38 +8,26 @@ import Dashboard from "../pages/farmer/Dashboard";
 import Farms from "../pages/farmer/Farms";
 import Crops from "../pages/farmer/Crops";
 import Fertilizers from "../pages/farmer/Fertilizers";
-<<<<<<< HEAD
-import Incomes from "../pages/farmer/Incomes";  
-import Expenses from "../pages/farmer/Expenses";
-=======
 import Pesticides from "../pages/farmer/Pesticides";
->>>>>>> 8965bd3 (Fertilizers and Pesticides created)
+import Incomes from "../pages/farmer/Incomes";
+import Expenses from "../pages/farmer/Expenses";
+import Rentals from "../pages/farmer/Rentals";
 
 function FarmerRoutes() {
-
   return (
-
     <ProtectedRoute role="farmer">
-
       <Routes>
-
         <Route element={<MainLayout />}>
-
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="farms" element={<Farms />}/>
+          <Route path="farms" element={<Farms />} />
           <Route path="crops" element={<Crops />} />
           <Route path="fertilizers" element={<Fertilizers />} />
-<<<<<<< HEAD
+          <Route path="pesticides" element={<Pesticides />} />
           <Route path="incomes" element={<Incomes />} />
           <Route path="expenses" element={<Expenses />} />
-=======
-          <Route path="pesticides"element={<Pesticides />}/>
-    
->>>>>>> 8965bd3 (Fertilizers and Pesticides created)
+          <Route path="rentals" element={<Rentals />} />
         </Route>
-
       </Routes>
-
     </ProtectedRoute>
   );
 }
