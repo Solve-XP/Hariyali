@@ -5,12 +5,14 @@ export default function StatCard({ label, value, hint, trend, icon, iconVariant 
                 : iconVariant === "info" ? "card stat-card stat-card--info"
                 : iconVariant === "green" ? "card stat-card stat-card--green"
                 : iconVariant === "purple" ? "card stat-card stat-card--purple"
+                : iconVariant === "cyan" ? "card stat-card stat-card--cyan"
                 : "card stat-card";
 
   const iconCls = iconVariant === "accent" ? "stat-card__icon stat-card__icon--accent"
                 : iconVariant === "info" ? "stat-card__icon stat-card__icon--info"
                 : iconVariant === "green" ? "stat-card__icon stat-card__icon--green"
                 : iconVariant === "purple" ? "stat-card__icon stat-card__icon--purple"
+                : iconVariant === "cyan" ? "stat-card__icon stat-card__icon--cyan"
                 : "stat-card__icon";
 
   return (

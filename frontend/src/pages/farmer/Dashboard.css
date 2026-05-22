@@ -1,0 +1,526 @@
+/* src/pages/farmer/Dashboard.css */
+
+.dashboard-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.dashboard-loading {
+    padding: var(--space-8) var(--space-5);
+    text-align: center;
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--color-text-muted);
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.dashboard-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-4);
+}
+
+.dashboard-bottom-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+}
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.dashboard-main-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-5);
+}
+
+/* =========================================================
+   TABLE GRID
+========================================================= */
+
+.dashboard-tables-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+}
+
+/* =========================================================
+   CHART GRID
+========================================================= */
+
+.dashboard-chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+}
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.dashboard-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-5);
+}
+
+.dashboard-card-header h3 {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.dashboard-card-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+
+.dashboard-view-all-btn {
+    border: none;
+    background: transparent;
+    color: var(--color-primary);
+    font-size: var(--fs-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        opacity 0.2s ease,
+        text-decoration-color 0.2s ease;
+}
+
+.dashboard-view-all-btn:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* =========================================================
+   FINANCIAL OVERVIEW
+========================================================= */
+
+.dashboard-chart-card {
+    overflow: hidden;
+}
+
+.financial-overview-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: var(--space-5);
+    align-items: center;
+}
+
+.financial-overview-side {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.net-profit-label {
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+}
+
+.net-profit-value {
+    font-size: var(--fs-4xl);
+    font-weight: 800;
+    color: var(--color-success);
+    line-height: 1;
+}
+
+.net-profit-sub {
+    font-size: var(--fs-sm);
+    color: var(--color-text-faint);
+}
+
+.financial-chart {
+    width: 100%;
+    min-height: 320px;
+}
+
+/* =========================================================
+   QUICK ACTIONS
+========================================================= */
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+}
+
+.quick-action-btn {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+    min-height: 88px;
+
+    padding: 18px;
+
+    border-radius: var(--radius-xl);
+
+    border: 1px solid var(--color-border);
+
+    background: linear-gradient(135deg,
+            var(--color-surface),
+            var(--color-surface-hover));
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+
+    overflow: hidden;
+}
+
+.quick-action-btn::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.05),
+            rgba(255, 255, 255, 0));
+
+    opacity: 0;
+
+    transition: opacity 0.25s ease;
+}
+
+.quick-action-btn:hover {
+    transform: translateY(-4px);
+
+    box-shadow: var(--shadow-lg);
+
+    border-color: rgba(16, 185, 129, 0.2);
+}
+
+.quick-action-btn:hover::before {
+    opacity: 1;
+}
+
+/* =========================================================
+   QUICK ACTION ICON
+========================================================= */
+
+.quick-action-icon {
+    width: 56px;
+    height: 56px;
+
+    min-width: 56px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: var(--color-text-inverse);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.quick-action-btn:hover .quick-action-icon {
+    transform: scale(1.08);
+}
+
+/* =========================================================
+   QUICK ACTION CONTENT
+========================================================= */
+
+.quick-action-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.quick-action-content span {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.quick-action-content small {
+    margin-top: var(--space-1);
+
+    font-size: var(--fs-xs);
+
+    color: var(--color-text-muted);
+}
+
+/* =========================================================
+   FARM
+========================================================= */
+
+.quick-action-btn.farm .quick-action-icon {
+    background: linear-gradient(135deg,
+            var(--color-primary-500),
+            var(--color-primary-600));
+
+    box-shadow:
+        0 10px 24px rgba(16, 185, 129, 0.30);
+}
+
+/* =========================================================
+   INCOME
+========================================================= */
+
+.quick-action-btn.income .quick-action-icon {
+    background: linear-gradient(135deg,
+            #3b82f6,
+            #2563eb);
+
+    box-shadow:
+        0 10px 24px rgba(59, 130, 246, 0.30);
+}
+
+/* =========================================================
+   EXPENSE
+========================================================= */
+
+.quick-action-btn.expense .quick-action-icon {
+    background: linear-gradient(135deg,
+            #ef4444,
+            #dc2626);
+
+    box-shadow:
+        0 10px 24px rgba(239, 68, 68, 0.30);
+}
+
+/* =========================================================
+   FERTILIZER
+========================================================= */
+
+.quick-action-btn.fertilizer .quick-action-icon {
+    background: linear-gradient(135deg,
+            #eab308,
+            #ca8a04);
+
+    box-shadow:
+        0 10px 24px rgba(234, 179, 8, 0.30);
+}
+
+/* =========================================================
+   PESTICIDE
+========================================================= */
+
+.quick-action-btn.pesticide .quick-action-icon {
+    background: linear-gradient(135deg,
+            #a855f7,
+            var(--color-purple));
+
+    box-shadow:
+        0 10px 24px rgba(168, 85, 247, 0.30);
+}
+
+/* =========================================================
+   RENTAL
+========================================================= */
+
+.quick-action-btn.rental .quick-action-icon {
+    background: linear-gradient(135deg,
+            #06b6d4,
+            #0284c7);
+
+    box-shadow:
+        0 10px 24px rgba(6, 182, 212, 0.30);
+}
+
+/* =========================================================
+   TABLES
+========================================================= */
+
+.dashboard-table-wrap {
+    overflow-x: auto;
+}
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dashboard-table thead {
+    background: var(--color-surface-2);
+}
+
+.dashboard-table th {
+    padding: 14px;
+    text-align: left;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+}
+
+.dashboard-table td {
+    padding: 14px;
+    border-top: 1px solid var(--color-border);
+    font-size: var(--fs-sm);
+    color: var(--color-text);
+}
+
+/* =========================================================
+   RENTALS
+========================================================= */
+
+.dashboard-rental-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+}
+
+.dashboard-rental-card {
+    overflow: hidden;
+
+    border-radius: var(--radius-xl);
+
+    border: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.dashboard-rental-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.dashboard-rental-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.dashboard-rental-body {
+    padding: var(--space-4);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.dashboard-rental-body h4 {
+    font-size: var(--fs-md);
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.dashboard-rental-price {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+
+    font-size: var(--fs-sm);
+    font-weight: 700;
+
+    color: var(--color-primary);
+}
+
+.dashboard-rental-location {
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .dashboard-stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .dashboard-rental-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+
+    .dashboard-main-grid,
+    .dashboard-tables-grid,
+    .dashboard-chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .financial-overview-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .financial-chart {
+        min-height: 260px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .dashboard-stats-grid,
+    .dashboard-bottom-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .dashboard-rental-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-action-btn {
+        min-height: 78px;
+        padding: 16px;
+    }
+
+    .quick-action-icon {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+    }
+
+    .net-profit-value {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 520px) {
+
+    .dashboard-stats-grid,
+    .dashboard-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+    }
+
+    .dashboard-table th,
+    .dashboard-table td {
+        padding: 10px;
+    }
+}

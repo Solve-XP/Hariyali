@@ -14,6 +14,19 @@
   background: radial-gradient(circle at center, var(--color-primary-50), transparent 70%);
   pointer-events: none;
 }
+.stat-card--cyan::after {
+  background: radial-gradient(
+    circle at center,
+    var(--color-cyan-bg),
+    transparent 70%
+  );
+}
+
+.stat-card__icon--cyan {
+  background: var(--color-cyan-bg);
+  color: var(--color-cyan);
+  border-color: #a5f3fc;
+}
 .stat-card--accent::after { background: radial-gradient(circle at center, var(--color-accent-50), transparent 70%); }
 .stat-card--info::after   { background: radial-gradient(circle at center, var(--color-info-bg),   transparent 70%); }
 .stat-card--green::after { background: radial-gradient(circle at center, var(--color-green-soft-bg), transparent 70%); }
