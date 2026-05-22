@@ -46,10 +46,12 @@ export default function Rentals() {
 
   const { t } = useTranslation();
 
-  const {
-    user,
-    pushToast,
-  } = useApp();
+  const { pushToast } = useApp();
+
+const user = JSON.parse(
+  localStorage.getItem("fm_user")
+);
+  console.log("USER DATA:", user);
 
   const [rentals, setRentals] = useState([]);
 
@@ -376,6 +378,9 @@ export default function Rentals() {
 
   const filteredRentals = useMemo(() => {
 
+    console.log("USER:", user);
+    console.log("RENTALS:", rentals);
+
     let data = rentals;
 
     /* =========================================
@@ -630,6 +635,15 @@ export default function Rentals() {
 
                 </div>
 
+                 {item.description && (
+
+                  <p className="rental-description">
+                    {item.description}
+                  </p>
+
+                )}
+
+
                 <div className="rental-pricing">
 
                   {item.price_per_hour && (
@@ -656,7 +670,7 @@ export default function Rentals() {
                     📍 {item.location}
                   </div>
 
-                  <div>
+                  <div className="owner-info">
                     👤 {item.owner_name}
                   </div>
 
@@ -664,16 +678,29 @@ export default function Rentals() {
                     📞 {item.phone}
                   </div>
 
+                 <div className="marketplace-actions">
+
+  <a
+    href={`tel:${item.phone}`}
+    className="contact-btn call-btn"
+  >
+    📞 Call
+  </a>
+
+  <a
+    href={`https://wa.me/91${item.phone}`}
+    target="_blank"
+    rel="noreferrer"
+    className="contact-btn whatsapp-btn"
+  >
+    WhatsApp
+  </a>
+
+</div>
+
                 </div>
 
-                {item.description && (
-
-                  <p className="rental-description">
-                    {item.description}
-                  </p>
-
-                )}
-
+               
                 {activeTab === "my" && (
 
                   <div className="rental-actions">
@@ -850,6 +877,7 @@ export default function Rentals() {
         }
         loading={loading}
       />
+
 
     </div>
   );
