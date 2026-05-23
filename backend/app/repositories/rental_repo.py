@@ -1,3 +1,5 @@
+# app/repositories/rental_repo.py
+
 from bson import ObjectId
 
 from datetime import datetime
@@ -25,30 +27,91 @@ class RentalRepository:
         return str(result.inserted_id)
 
     async def get_all_rentals(
+
         self,
+
         financial_year: str = None,
-        search: str = None
+
+        search: str = None,
+
+        current_user_id: str = None,
+
+        exclude_my_listings: bool = False
     ):
 
         query = {
+
             "is_deleted": False,
+
             "is_available": True
         }
 
         if financial_year:
 
-            query["financial_year"] = financial_year
+            query["financial_year"] = (
+                financial_year
+            )
 
         search_query = build_search_query(
-            "equipment_name",
+
+            [
+                "equipment_name",
+                "village",
+                "taluka",
+                "district",
+                "state"
+            ],
+
             search
         )
 
         query.update(search_query)
 
+        if (
+            exclude_my_listings
+            and
+            current_user_id
+        ):
+
+            query["user_id"] = {
+                "$ne": current_user_id
+            }
+
         rentals = await self.collection.find(
             query
         ).sort(
+            "created_at",
+            -1
+        ).to_list(length=None)
+
+        formatted_rentals = []
+
+        for rental in rentals:
+
+            rental["id"] = str(
+                rental["_id"]
+            )
+
+            rental.pop("_id")
+
+            formatted_rentals.append(
+                rental
+            )
+
+        return formatted_rentals
+
+    async def get_my_rentals(
+        self,
+        user_id: str
+    ):
+
+        rentals = await self.collection.find({
+
+            "user_id": user_id,
+
+            "is_deleted": False
+
+        }).sort(
             "created_at",
             -1
         ).to_list(length=None)
@@ -75,7 +138,9 @@ class RentalRepository:
     ):
 
         rental = await self.collection.find_one({
+
             "_id": ObjectId(rental_id),
+
             "is_deleted": False
         })
 
@@ -90,20 +155,30 @@ class RentalRepository:
         return rental
 
     async def update_rental(
+
         self,
+
         rental_id: str,
+
         user_id: str,
+
         update_data: dict
     ):
 
-        update_data["updated_at"] = datetime.utcnow()
+        update_data["updated_at"] = (
+            datetime.utcnow()
+        )
 
         result = await self.collection.update_one(
+
             {
                 "_id": ObjectId(rental_id),
+
                 "user_id": user_id,
+
                 "is_deleted": False
             },
+
             {
                 "$set": update_data
             }
@@ -112,19 +187,27 @@ class RentalRepository:
         return result.modified_count
 
     async def delete_rental(
+
         self,
+
         rental_id: str,
+
         user_id: str
     ):
 
         result = await self.collection.update_one(
+
             {
                 "_id": ObjectId(rental_id),
+
                 "user_id": user_id
             },
+
             {
                 "$set": {
+
                     "is_deleted": True,
+
                     "updated_at": datetime.utcnow()
                 }
             }

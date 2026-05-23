@@ -1,4 +1,9 @@
-from typing import Optional
+# app/api/v1/endpoints/rentals.py
+
+from typing import (
+    List,
+    Optional
+)
 
 from fastapi import (
     APIRouter,
@@ -34,41 +39,98 @@ rental_service = (
 
 @router.post("")
 async def create_rental(
+
     equipment_name: str = Form(...),
+
     price_per_hour: Optional[float] = Form(None),
+
     price_per_day: Optional[float] = Form(None),
-    location: str = Form(...),
+
+    village: str = Form(...),
+
+    taluka: str = Form(...),
+
+    district: str = Form(...),
+
+    state: str = Form(...),
+
     owner_name: str = Form(...),
+
     phone: str = Form(...),
+
     description: str = Form(None),
-    equipment_photo: UploadFile = File(...),
+
+    equipment_images: List[UploadFile] = File(...),
+
     current_user=Depends(
         get_current_user
     )
 ):
 
     return await rental_service.create_rental(
+
         str(current_user["_id"]),
+
         equipment_name,
+
         price_per_hour,
+
         price_per_day,
-        location,
+
+        village,
+
+        taluka,
+
+        district,
+
+        state,
+
         owner_name,
+
         phone,
+
         description,
-        equipment_photo
+
+        equipment_images
     )
 
 
 @router.get("")
 async def get_all_rentals(
+
     financial_year: Optional[str] = Query(None),
-    search: Optional[str] = Query(None)
+
+    search: Optional[str] = Query(None),
+
+    exclude_my_listings: bool = Query(False),
+
+    current_user=Depends(
+        get_current_user
+    )
 ):
 
     return await rental_service.get_all_rentals(
+
         financial_year,
-        search
+
+        search,
+
+        str(current_user["_id"]),
+
+        exclude_my_listings
+    )
+
+
+@router.get("/my-listings")
+async def get_my_rentals(
+
+    current_user=Depends(
+        get_current_user
+    )
+):
+
+    return await rental_service.get_my_rentals(
+        str(current_user["_id"])
     )
 
 
@@ -84,43 +146,80 @@ async def get_rental_by_id(
 
 @router.patch("/{rental_id}")
 async def update_rental(
+
     rental_id: str,
+
     equipment_name: Optional[str] = Form(None),
+
     price_per_hour: Optional[float] = Form(None),
+
     price_per_day: Optional[float] = Form(None),
-    location: Optional[str] = Form(None),
+
+    village: Optional[str] = Form(None),
+
+    taluka: Optional[str] = Form(None),
+
+    district: Optional[str] = Form(None),
+
+    state: Optional[str] = Form(None),
+
     owner_name: Optional[str] = Form(None),
+
     phone: Optional[str] = Form(None),
+
     description: Optional[str] = Form(None),
+
     is_available: Optional[bool] = Form(None),
-    equipment_photo: UploadFile = File(None),
+
+    equipment_images: List[UploadFile] = File(None),
+
     current_user=Depends(
         get_current_user
     )
 ):
 
     data = RentalUpdate(
+
         equipment_name=equipment_name,
+
         price_per_hour=price_per_hour,
+
         price_per_day=price_per_day,
-        location=location,
+
+        village=village,
+
+        taluka=taluka,
+
+        district=district,
+
+        state=state,
+
         owner_name=owner_name,
+
         phone=phone,
+
         description=description,
+
         is_available=is_available
     )
 
     return await rental_service.update_rental(
+
         rental_id,
+
         str(current_user["_id"]),
+
         data,
-        equipment_photo
+
+        equipment_images
     )
 
 
 @router.delete("/{rental_id}")
 async def delete_rental(
+
     rental_id: str,
+
     current_user=Depends(
         get_current_user
     )

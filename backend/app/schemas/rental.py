@@ -1,6 +1,31 @@
-from pydantic import BaseModel
+# app/schemas/rental.py
 
 from typing import Optional
+
+from pydantic import BaseModel
+
+
+class RentalCreate(BaseModel):
+
+    equipment_name: str
+
+    price_per_hour: Optional[float] = None
+
+    price_per_day: Optional[float] = None
+
+    village: str
+
+    taluka: str
+
+    district: str
+
+    state: str
+
+    owner_name: str
+
+    phone: str
+
+    description: Optional[str] = None
 
 
 class RentalUpdate(BaseModel):
@@ -11,7 +36,13 @@ class RentalUpdate(BaseModel):
 
     price_per_day: Optional[float] = None
 
-    location: Optional[str] = None
+    village: Optional[str] = None
+
+    taluka: Optional[str] = None
+
+    district: Optional[str] = None
+
+    state: Optional[str] = None
 
     owner_name: Optional[str] = None
 

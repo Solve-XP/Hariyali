@@ -600,168 +600,6 @@ Frontend Notes
   * partial keyword matching
 
 
-# Rental Marketplace Service | Rental Marketplace API
-
-The Rental Marketplace Service manages farm equipment rental listings shared by farmers.
-
-Only authenticated users can create, update, and delete rental listings.
-
-The rental marketplace module is designed for:
-
-* equipment rental listing
-* farmer-to-farmer equipment sharing
-* equipment discovery
-* local rental marketplace browsing
-
-The rental marketplace is a listing-based system.
-
-The backend currently supports:
-
-* equipment listing creation
-* equipment browsing
-* search functionality
-* equipment availability management
-
-The module does NOT currently support:
-
-* online booking
-* payment gateway
-* live availability calendar
-* chat system
-* rental contracts
-
-The rental marketplace module supports:
-
-* Create Equipment Listing
-* Get All Listings
-* Search Listings
-* Filter Listings
-* Get Listing By ID
-* Update Listing
-* Delete Listing
-
-Financial year is automatically generated while creating the listing.
-
-Equipment photos are uploaded and stored in AWS S3.
-
-Rental listing supports filtering by:
-
-* financial year
-* search keyword
-
-Search currently uses MongoDB regex search with:
-
-* case-insensitive matching
-* partial keyword matching
-
-Duplicate listings with the same:
-
-* equipment name
-* location
-* same user
-* same day
-
-are restricted.
-
-Protected APIs require a valid JWT token in the Authorization header.
-
-Authorization Header Example
-
-```txt
-Authorization: Bearer <access_token>
-```
-
-Rental Pricing Logic
-
-At least one pricing field is required:
-
-* price_per_hour
-* price_per_day
-
-Both can also be provided.
-
-Example Create Rental Listing Request
-
-POST /api/v1/rentals
-
-Content-Type: multipart/form-data
-
-```txt
-equipment_name = Tractor
-
-price_per_hour = 500
-
-price_per_day = 3500
-
-location = Kolhapur
-
-owner_name = Balraje
-
-phone = 9766863091
-
-description = Heavy duty tractor available for farming work
-
-equipment_photo = tractor.jpg
-```
-
-Example Get All Rental Listings Request
-
-```txt
-GET /api/v1/rentals
-```
-
-Example Search Rental Listings Request
-
-```txt
-GET /api/v1/rentals?search=tractor
-```
-
-Example Filter Rental Listings Request
-
-```txt
-GET /api/v1/rentals?financial_year=2026-2027
-```
-
-Example Success Response
-
-```json
-[
-  {
-    "id": "6a05a2cb3186e144bf1d5867",
-    "financial_year": "2026-2027",
-    "equipment_name": "Tractor",
-    "price_per_hour": 500,
-    "price_per_day": 3500,
-    "location": "Kolhapur",
-    "owner_name": "Balraje",
-    "phone": "9766863091",
-    "equipment_photo": "https://bucket-name.s3.region.amazonaws.com/rentals/image.jpg",
-    "description": "Heavy duty tractor available",
-    "is_available": true
-  }
-]
-```
-
-Frontend Notes
-
-* Equipment photo upload is mandatory while creating listing.
-* Equipment photo upload is optional while updating listing.
-* Frontend should use multipart/form-data for create and update APIs.
-* Frontend should allow user to provide either:
-
-  * hourly pricing
-  * daily pricing
-  * or both
-* Frontend should show equipment image preview before upload.
-* Frontend should prevent duplicate submissions by disabling submit button during API request.
-* Update Listing API supports partial updates using PATCH request.
-* Backend ignores fields not provided during update requests.
-* Search currently uses MongoDB regex search with:
-
-  * case-insensitive matching
-  * partial keyword matching
-
-
 # Profile Module Frontend Notes
 
 ## APIs
@@ -908,3 +746,539 @@ Keep same:
 * typography
 
 Match existing app UI.
+
+
+
+# Rental Module Frontend Notes
+
+## Overview
+
+Rental module allows users to:
+
+### Farmer
+
+* add equipment rental listings
+* upload multiple equipment images
+* view own rentals
+* browse other rentals
+* edit/delete rentals
+
+### Merchant
+
+* browse rental listings
+* contact equipment owners
+
+---
+
+# Pages Required
+
+## 1. Rental Marketplace Page
+
+Route example:
+
+```text id="m7q2v5"
+/rentals
+```
+
+Purpose:
+
+* browse rental listings
+
+---
+
+## 2. My Rentals Page
+
+Route example:
+
+```text id="x4v8m1"
+/rentals/my-listings
+```
+
+Purpose:
+
+* show current user's rentals
+
+---
+
+## 3. Create Rental Page
+
+Route example:
+
+```text id="p2m8q4"
+/rentals/create
+```
+
+Purpose:
+
+* create rental listing
+
+---
+
+## 4. Rental Details Page
+
+Route example:
+
+```text id="r5v1m8"
+/rentals/:rentalId
+```
+
+Purpose:
+
+* detailed rental view
+
+---
+
+# APIs
+
+---
+
+# Create Rental
+
+## Endpoint
+
+```http id="v9q2m5"
+POST /api/v1/rentals
+```
+
+---
+
+# Content Type
+
+```text id="k8m3q1"
+multipart/form-data
+```
+
+because:
+
+* multiple image upload
+
+---
+
+# Required Fields
+
+| Field            | Type           |
+| ---------------- | -------------- |
+| equipment_name   | string         |
+| price_per_hour   | number         |
+| price_per_day    | number         |
+| village          | string         |
+| taluka           | string         |
+| district         | string         |
+| state            | string         |
+| owner_name       | string         |
+| phone            | string         |
+| description      | string         |
+| equipment_images | multiple files |
+
+---
+
+# Price Validation
+
+At least one required:
+
+* price_per_hour
+  OR
+* price_per_day
+
+---
+
+# Multiple Image Upload
+
+Use:
+
+```html id="n4v8m2"
+<input type="file" multiple />
+```
+
+---
+
+# Append Images
+
+```js id="f6m2q8"
+files.forEach((file) => {
+  formData.append("equipment_images", file)
+})
+```
+
+---
+
+# Rental Feed API
+
+## Farmer Feed
+
+Exclude own rentals:
+
+```http id="c7v1m5"
+GET /api/v1/rentals?exclude_my_listings=true
+```
+
+Use for:
+
+* rental marketplace page
+
+---
+
+## Merchant Feed
+
+Show all rentals:
+
+```http id="u8q3m2"
+GET /api/v1/rentals
+```
+
+---
+
+# My Rentals API
+
+```http id="y3m7q4"
+GET /api/v1/rentals/my-listings
+```
+
+Shows:
+
+* current user rentals only
+
+---
+
+# Rental Details API
+
+```http id="e8v2m5"
+GET /api/v1/rentals/{rental_id}
+```
+
+---
+
+# Update Rental
+
+```http id="p3q7m1"
+PATCH /api/v1/rentals/{rental_id}
+```
+
+Content type:
+
+```text id="t6m2q9"
+multipart/form-data
+```
+
+because:
+
+* image update supported
+
+---
+
+# Delete Rental
+
+```http id="v1q8m3"
+DELETE /api/v1/rentals/{rental_id}
+```
+
+---
+
+# Rental Card UI
+
+Each card should show:
+
+* equipment image
+* equipment name
+* hourly price
+* daily price
+* village
+* taluka
+* district
+* state
+* owner name
+* phone number
+* availability status
+
+---
+
+# Rental Details Page
+
+Show:
+
+* image gallery slider
+* equipment details
+* pricing
+* location
+* owner info
+* description
+* availability
+
+---
+
+# Recommended UI Sections
+
+# Rental Feed Page
+
+Top section:
+
+* search bar
+* filters
+* sort dropdown
+
+---
+
+# Search
+
+Search API supports:
+
+* equipment_name
+* village
+* taluka
+* district
+* state
+
+Example:
+
+```http id="k4m8q2"
+GET /api/v1/rentals?search=tractor
+```
+
+---
+
+# Filters
+
+Recommended frontend filters:
+
+* district
+* state
+* availability
+
+---
+
+# Sort Options
+
+Frontend-side acceptable initially:
+
+* latest
+* oldest
+* price low-high
+* price high-low
+
+---
+
+# Create Rental Form Structure
+
+## Section 1
+
+Equipment Info
+
+* equipment name
+* hourly price
+* daily price
+
+---
+
+## Section 2
+
+Location
+
+* village
+* taluka
+* district
+* state
+
+---
+
+## Section 3
+
+Owner Details
+
+* owner name
+* phone
+
+---
+
+## Section 4
+
+Description
+
+* textarea
+
+---
+
+## Section 5
+
+Images
+
+* multiple image upload
+* image previews
+
+---
+
+# Important UX Rules
+
+## Disable submit button during upload
+
+Prevent duplicate submissions.
+
+---
+
+# Show Image Preview
+
+Before submit:
+
+* preview selected images
+
+---
+
+# Recommended Limits
+
+## Max Images
+
+```text id="j7v3m1"
+5
+```
+
+## Max Size
+
+```text id="h2q9m4"
+5MB per image
+```
+
+---
+
+# Error Handling
+
+Duplicate listing response:
+
+```json id="n5m1q8"
+{
+  "detail": "Similar equipment listing already exists"
+}
+```
+
+Show:
+
+* toast
+* snackbar
+* alert
+
+---
+
+# Responsive Design
+
+Support:
+
+* mobile
+* tablet
+* desktop
+
+---
+
+# Mobile Layout
+
+Use stacked cards.
+
+---
+
+# Desktop Layout
+
+Recommended:
+
+```css id="z1v8m5"
+grid-template-columns:
+repeat(auto-fit, minmax(320px, 1fr));
+```
+
+---
+
+# Recommended Rental Card Layout
+
+Sections:
+
+* image slider
+* equipment info
+* price
+* location
+* owner details
+* action buttons
+
+---
+
+# Farmer Actions
+
+Inside My Rentals:
+
+```text id="r1v8m3"
+Edit
+Delete
+View Details
+```
+
+---
+
+# Merchant Actions
+
+Inside Rental Feed:
+
+```text id="f9q2m7"
+Call Owner
+View Details
+```
+
+---
+
+# Important Frontend Logic
+
+## Farmer Marketplace Feed
+
+Call:
+
+```js id="u5m2q8"
+axios.get(
+  "/api/v1/rentals?exclude_my_listings=true"
+)
+```
+
+---
+
+# Merchant Feed
+
+Call:
+
+```js id="d8q4m1"
+axios.get(
+  "/api/v1/rentals"
+)
+```
+
+---
+
+# My Rentals
+
+Call:
+
+```js id="r3m9q1"
+axios.get(
+  "/api/v1/rentals/my-listings"
+)
+```
+
+---
+
+# Important Backend Notes
+
+Image field name must be:
+
+```text id="y7v4m2"
+equipment_images
+```
+
+NOT:
+
+* images
+* equipment_photo
+
+---
+
+# State Management Recommendation
+
+```js id="j5m1q8"
+rentals
+selectedRental
+images
+search
+filters
+loading
+```
