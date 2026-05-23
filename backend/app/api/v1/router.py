@@ -10,6 +10,7 @@ from app.api.v1.endpoints import incomes
 from app.api.v1.endpoints import rentals
 from app.api.v1.endpoints import dashboard
 from app.api.v1.endpoints import users
+from app.api.v1.endpoints import marketplace
 
 
 
@@ -26,3 +27,4 @@ api_router.include_router(incomes.router)
 api_router.include_router(rentals.router)
 api_router.include_router(dashboard.router)
 api_router.include_router(users.router)
+api_router.include_router(marketplace.router)
