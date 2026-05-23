@@ -11,101 +11,227 @@ const AuthContext = createContext(null);
 const TOKEN_KEY = "fm_token";
 const USER_KEY = "fm_user";
 
+/* =========================================================
+   LOAD FROM LOCAL STORAGE
+========================================================= */
+
 function load(key, fallback = null) {
 
   try {
-    return JSON.parse(localStorage.getItem(key)) ?? fallback;
+
+    return (
+      JSON.parse(
+        localStorage.getItem(key)
+      ) ?? fallback
+    );
+
   } catch {
+
     return fallback;
   }
 }
 
+/* =========================================================
+   PROVIDER
+========================================================= */
+
 export function AuthProvider({ children }) {
 
+  /* =====================================================
+     TOKEN
+  ====================================================== */
+
   const [token, setToken] = useState(
-    () => localStorage.getItem(TOKEN_KEY) || null
+
+    () =>
+      localStorage.getItem(
+        TOKEN_KEY
+      ) || null
+
   );
+
+  /* =====================================================
+     USER
+  ====================================================== */
 
   const [user, setUser] = useState(
+
     () => load(USER_KEY)
+
   );
 
-  // Save login data
-  const saveAuth = useCallback((token, user) => {
+  /* =====================================================
+     SAVE AUTH
+  ====================================================== */
 
-    localStorage.setItem(TOKEN_KEY, token);
+  const saveAuth = useCallback(
 
-    localStorage.setItem(
-      USER_KEY,
-      JSON.stringify(user)
-    );
+    (token, user) => {
 
-    setToken(token);
-    setUser(user);
+      localStorage.setItem(
+        TOKEN_KEY,
+        token
+      );
 
-  }, []);
+      localStorage.setItem(
+        USER_KEY,
+        JSON.stringify(user)
+      );
 
-  // Logout
+      setToken(token);
+
+      setUser(user);
+    },
+
+    []
+
+  );
+
+  /* =====================================================
+     UPDATE USER
+  ====================================================== */
+
+  const updateUser = useCallback(
+
+    (updatedData) => {
+
+      const updatedUser = {
+        ...user,
+        ...updatedData,
+      };
+
+      setUser(updatedUser);
+
+      localStorage.setItem(
+        USER_KEY,
+        JSON.stringify(updatedUser)
+      );
+    },
+
+    [user]
+
+  );
+
+  /* =====================================================
+     LOGOUT
+  ====================================================== */
+
   const logout = useCallback(() => {
 
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
+    localStorage.removeItem(
+      TOKEN_KEY
+    );
+
+    localStorage.removeItem(
+      USER_KEY
+    );
 
     setToken(null);
+
     setUser(null);
 
   }, []);
 
-  // Role checks
-  const isAuthenticated = Boolean(token);
+  /* =====================================================
+     ROLE CHECKS
+  ====================================================== */
 
-  const isAdmin = user?.role === "admin";
+  const isAuthenticated =
+    Boolean(token);
 
-  const isFarmer = user?.role === "farmer";
+  const isAdmin =
+    user?.role === "admin";
 
-  const isMerchant = user?.role === "merchant";
+  const isFarmer =
+    user?.role === "farmer";
+
+  const isMerchant =
+    user?.role === "merchant";
+
+  /* =====================================================
+     CONTEXT VALUE
+  ====================================================== */
 
   const value = useMemo(
+
     () => ({
+
       token,
+
       user,
+
+      setUser,
+
+      updateUser,
 
       isAuthenticated,
 
       isAdmin,
+
       isFarmer,
+
       isMerchant,
 
       saveAuth,
+
       logout,
+
     }),
+
     [
+
       token,
+
       user,
+
+      setUser,
+
+      updateUser,
 
       isAuthenticated,
 
       isAdmin,
+
       isFarmer,
+
       isMerchant,
 
       saveAuth,
+
       logout,
+
     ]
+
   );
 
+  /* =====================================================
+     PROVIDER
+  ====================================================== */
+
   return (
-    <AuthContext.Provider value={value}>
+
+    <AuthContext.Provider
+      value={value}
+    >
+
       {children}
+
     </AuthContext.Provider>
+
   );
 }
 
+/* =========================================================
+   HOOK
+========================================================= */
+
 export function useAuth() {
 
-  const ctx = useContext(AuthContext);
+  const ctx =
+    useContext(AuthContext);
 
   if (!ctx) {
+
     throw new Error(
       "useAuth must be used inside AuthProvider"
     );

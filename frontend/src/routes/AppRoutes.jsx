@@ -7,6 +7,7 @@ import AdminRoutes from "./AdminRoutes";
 import FarmerRoutes from "./FarmerRoutes";
 import MerchantRoutes from "./MerchantRoutes";
 
+
 function AppRoutes() {
   return (
     <Routes>
@@ -41,8 +42,7 @@ function AppRoutes() {
       <Route
         path="/merchant/*"
         element={<MerchantRoutes />}
-      />    
-        
+      /> 
 
     </Routes>
   );

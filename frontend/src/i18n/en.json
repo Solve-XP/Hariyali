@@ -571,5 +571,51 @@
   "latest_record": "Latest Record",
 
   "all_financial_years": "All Financial Years"
+},
+
+"profile": {
+  "title": "Profile",
+  "subtitle": "Manage your account settings",
+
+  "edit_profile": "Edit Profile",
+  "edit_profile_subtitle": "Update your personal details",
+
+  "change_password": "Change Password",
+  "change_password_subtitle": "Keep your account secure",
+
+  "name": "Name",
+  "phone": "Phone",
+
+  "enter_name": "Enter name",
+  "enter_phone": "Enter phone number",
+
+  "current_password": "Current Password",
+  "new_password": "New Password",
+  "confirm_password": "Confirm Password",
+
+  "enter_current_password": "Enter current password",
+  "enter_new_password": "Enter new password",
+  "enter_confirm_password": "Confirm new password",
+
+  "save_changes": "Save Changes",
+  "update_password": "Update Password",
+
+  "loading": "Loading profile...",
+
+  "failed_load": "Failed to load profile",
+  "failed_update": "Failed to update profile",
+  "failed_password_update": "Failed to update password",
+
+  "updated_success": "Profile updated successfully",
+  "password_updated_success": "Password updated successfully",
+
+  "no_changes": "No changes made",
+
+  "name_validation": "Name must be at least 2 characters",
+  "phone_validation": "Invalid phone number",
+
+  "current_password_required": "Current password is required",
+  "password_validation": "Password must be at least 8 characters",
+  "password_mismatch": "Passwords do not match"
 }
 }

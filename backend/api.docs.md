@@ -760,3 +760,151 @@ Frontend Notes
 
   * case-insensitive matching
   * partial keyword matching
+
+
+# Profile Module Frontend Notes
+
+## APIs
+
+### Get User Profile
+
+GET `/api/v1/users/me`
+
+Response:
+
+```json
+{
+  "id": "",
+  "name": "",
+  "phone": "",
+  "role": ""
+}
+```
+
+---
+
+### Update Profile
+
+PATCH `/api/v1/users/me`
+
+Send ONLY changed fields.
+
+Examples:
+
+```json
+{
+  "name": "Balraje"
+}
+```
+
+```json
+{
+  "phone": "9766863091"
+}
+```
+
+```json
+{
+  "name": "Balraje",
+  "phone": "9766863091"
+}
+```
+
+Do NOT send:
+
+```json
+{
+  "name": null
+}
+```
+
+or empty fields.
+
+---
+
+### Change Password
+
+PATCH `/api/v1/users/change-password`
+
+Request:
+
+```json
+{
+  "current_password": "",
+  "new_password": ""
+}
+```
+
+---
+
+# UI Sections
+
+## Profile Card
+
+* user avatar
+* name
+* phone
+* role
+
+---
+
+## Edit Profile Form
+
+* name input
+* phone input
+* save changes button
+
+Prefill inputs using `/users/me`.
+
+---
+
+## Change Password Form
+
+* current password
+* new password
+* confirm password
+* update password button
+
+---
+
+# Validation
+
+## Phone
+
+* 10 digits
+* numeric only
+
+## Password
+
+* minimum 8 characters
+
+---
+
+# Important
+
+Use PATCH properly:
+
+* send only updated fields
+* preserve old values automatically
+
+---
+
+# Responsive Design
+
+No separate mobile API needed.
+
+Use:
+
+* flexbox
+* css grid
+* media queries
+
+Keep same:
+
+* sidebar
+* navbar
+* theme
+* colors
+* typography
+
+Match existing app UI.

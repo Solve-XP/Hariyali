@@ -5,6 +5,7 @@ import MainLayout from "../layouts/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
 import Dashboard from "../pages/admin/Dashboard";
+import Profile from "../pages/profile/Profile";
 
 function AdminRoutes() {
 
@@ -20,6 +21,9 @@ function AdminRoutes() {
             path="dashboard"
             element={<Dashboard />}
           />
+          <Route
+            path="profile"
+            element={<Profile />} />
 
         </Route>
 

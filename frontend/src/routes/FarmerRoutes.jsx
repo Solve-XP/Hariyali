@@ -12,6 +12,7 @@ import Pesticides from "../pages/farmer/Pesticides";
 import Incomes from "../pages/farmer/Incomes";
 import Expenses from "../pages/farmer/Expenses";
 import Rentals from "../pages/farmer/Rentals";
+import Profile from "../pages/profile/Profile";
 
 function FarmerRoutes() {
   return (
@@ -26,6 +27,7 @@ function FarmerRoutes() {
           <Route path="incomes" element={<Incomes />} />
           <Route path="expenses" element={<Expenses />} />
           <Route path="rentals" element={<Rentals />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </ProtectedRoute>

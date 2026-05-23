@@ -1,31 +1,68 @@
-from fastapi import APIRouter, Depends
+# app/api/v1/endpoints/users.py
 
-from app.core.security import require_admin
-
-from app.repositories.user_repo import (
-    UserRepository
+from fastapi import (
+    APIRouter,
+    Depends
 )
 
-router = APIRouter()
+from app.api.dependencies.auth import (
+    get_current_user
+)
+
+from app.schemas.user import (
+    UserProfileResponse,
+    UpdateProfileRequest,
+    ChangePasswordRequest
+)
+
+from app.services.user_service import (
+    UserService
+)
 
 
-@router.get("")
-async def list_users(
-    _: dict = Depends(require_admin)
+router = APIRouter(
+    prefix="/users",
+    tags=["Users"]
+)
+
+
+@router.get(
+    "/me",
+    response_model=UserProfileResponse
+)
+async def get_my_profile(
+    current_user: dict = Depends(get_current_user)
 ):
 
-    users = await UserRepository.get_all_farmers()
+    return await UserService.get_current_user_profile(
+        current_user
+    )
 
-    data = []
 
-    for u in users:
-        data.append({
-            "id": str(u["_id"]),
-            "name": u["name"],
-            "phone": u.get("phone", ""),
-            "status": u.get("status", "active"),
-        })
+@router.patch(
+    "/me",
+    response_model=UserProfileResponse
+)
+async def update_my_profile(
+    payload: UpdateProfileRequest,
+    current_user: dict = Depends(get_current_user)
+):
 
-    return {
-        "data": data
-    }
+    return await UserService.update_profile(
+        current_user,
+        payload
+    )
+
+
+@router.patch(
+    "/change-password"
+)
+async def change_password(
+    payload: ChangePasswordRequest,
+    current_user: dict = Depends(get_current_user)
+):
+
+    return await UserService.change_password(
+        current_user,
+        payload
+    )

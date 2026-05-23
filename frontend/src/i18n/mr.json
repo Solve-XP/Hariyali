@@ -571,5 +571,50 @@
     "latest_record": "अलीकडील नोंद",
 
     "all_financial_years": "सर्व आर्थिक वर्षे"
-  }
+  },
+  "profile": {
+  "title": "प्रोफाइल",
+  "subtitle": "तुमच्या खात्याच्या सेटिंग्ज व्यवस्थापित करा",
+
+  "edit_profile": "प्रोफाइल संपादित करा",
+  "edit_profile_subtitle": "तुमची वैयक्तिक माहिती अपडेट करा",
+
+  "change_password": "पासवर्ड बदला",
+  "change_password_subtitle": "तुमचे खाते सुरक्षित ठेवा",
+
+  "name": "नाव",
+  "phone": "फोन",
+
+  "enter_name": "नाव प्रविष्ट करा",
+  "enter_phone": "फोन नंबर प्रविष्ट करा",
+
+  "current_password": "सध्याचा पासवर्ड",
+  "new_password": "नवीन पासवर्ड",
+  "confirm_password": "पासवर्डची पुष्टी करा",
+
+  "enter_current_password": "सध्याचा पासवर्ड प्रविष्ट करा",
+  "enter_new_password": "नवीन पासवर्ड प्रविष्ट करा",
+  "enter_confirm_password": "नवीन पासवर्डची पुष्टी करा",
+
+  "save_changes": "बदल जतन करा",
+  "update_password": "पासवर्ड अपडेट करा",
+
+  "loading": "प्रोफाइल लोड होत आहे...",
+
+  "failed_load": "प्रोफाइल लोड करण्यात अयशस्वी",
+  "failed_update": "प्रोफाइल अपडेट करण्यात अयशस्वी",
+  "failed_password_update": "पासवर्ड अपडेट करण्यात अयशस्वी",
+
+  "updated_success": "प्रोफाइल यशस्वीरित्या अपडेट झाले",
+  "password_updated_success": "पासवर्ड यशस्वीरित्या अपडेट झाला",
+
+  "no_changes": "कोणतेही बदल केले नाहीत",
+
+  "name_validation": "नाव किमान 2 अक्षरांचे असणे आवश्यक आहे",
+  "phone_validation": "अवैध फोन नंबर",
+
+  "current_password_required": "सध्याचा पासवर्ड आवश्यक आहे",
+  "password_validation": "पासवर्ड किमान 8 अक्षरांचा असावा",
+  "password_mismatch": "पासवर्ड जुळत नाहीत"
+}
 }
