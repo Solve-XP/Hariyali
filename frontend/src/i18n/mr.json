@@ -125,24 +125,64 @@
     "filter": "फिल्टर",
     "select_option": "एक पर्याय निवडा"
   },
+
   "dashboard": {
-    "title": "डॅशबोर्ड",
-    "subtitle": "तुमच्या शेती कामकाजाचे विहंगावलोकन",
-    "total_expenses": "एकूण खर्च",
-    "total_farms": "एकूण शेती",
-    "total_crops": "एकूण पिके",
-    "active_listings": "खर्च नोंदी",
-    "entries_recorded": "नोंदी केलेल्या",
-    "expenses_unit": "या हंगामात",
-    "farms_unit": "नोंदणीकृत",
-    "crops_unit": "वाढत आहेत",
-    "recent_activity": "अलीकडील क्रियाकलाप",
-    "recent_activity_sub": "तुमच्या शेतीतील ताजे खर्च",
-    "quick_actions": "जलद क्रिया",
-    "add_farm": "शेती जोडा",
-    "add_crop": "पीक जोडा",
-    "add_expense": "खर्च जोडा"
-  },
+  "title": "डॅशबोर्ड",
+  "subtitle": "तुमचा शेती व्यवसाय कार्यक्षमतेने व्यवस्थापित करा.",
+
+  "loading": "डॅशबोर्ड लोड होत आहे...",
+
+  "all_financial_years": "सर्व आर्थिक वर्षे",
+
+  "total_farms": "एकूण शेत",
+  "connected_farms": "जोडलेली शेत",
+
+  "total_income": "एकूण उत्पन्न",
+
+  "total_expenses": "एकूण खर्च",
+
+  "total_crops": "एकूण पिके",
+  "active_crops": "सक्रिय पिके",
+
+  "rental_listings": "भाडे यादी",
+  "equipment_marketplace": "उपकरण मार्केटप्लेस",
+
+  "financial_overview": "आर्थिक आढावा",
+
+  "net_profit": "निव्वळ नफा",
+  "income_minus_expenses": "उत्पन्न - खर्च",
+
+  "income": "उत्पन्न",
+  "expenses": "खर्च",
+  "profit": "नफा",
+
+  "quick_actions": "जलद कृती",
+  "quick_actions_subtitle": "तुमच्या शेतीच्या कामांचे जलद व्यवस्थापन करा",
+
+  "add_farm": "शेत जोडा",
+  "add_income": "उत्पन्न जोडा",
+  "add_expense": "खर्च जोडा",
+  "add_fertilizer": "खत जोडा",
+  "add_pesticide": "कीटकनाशक जोडा",
+  "rent_equipment": "उपकरण भाड्याने द्या",
+
+  "recent_incomes": "अलीकडील उत्पन्न",
+  "recent_expenses": "अलीकडील खर्च",
+
+  "view_all": "सर्व पहा",
+
+  "amount": "रक्कम",
+  "date": "तारीख",
+  "name": "नाव",
+
+  "expense_breakdown": "खर्च विभागणी",
+  "crop_income_breakdown": "पीक उत्पन्न विभागणी",
+
+  "fertilizers": "खते",
+  "pesticides": "कीटकनाशके",
+
+  "total_records": "एकूण नोंदी"
+}, 
   "farms": {
     "title": "शेती",
     "subtitle": "तुमच्या शेतीचे व्यवस्थापन करा",

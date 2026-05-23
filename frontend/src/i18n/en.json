@@ -126,24 +126,66 @@
     "filter": "Filter",
     "select_option": "Select an option"
   },
+  
+  
   "dashboard": {
-    "title": "Dashboard",
-    "subtitle": "Overview of your farm operations",
-    "total_expenses": "Total Expenses",
-    "total_farms": "Total Farms",
-    "total_crops": "Total Crops",
-    "active_listings": "Expense Entries",
-    "entries_recorded": "records logged",
-    "expenses_unit": "this season",
-    "farms_unit": "registered",
-    "crops_unit": "growing",
-    "recent_activity": "Recent Activity",
-    "recent_activity_sub": "Latest expenses across your farms",
-    "quick_actions": "Quick Actions",
-    "add_farm": "Add Farm",
-    "add_crop": "Add Crop",
-    "add_expense": "Add Expense"
-  },
+    
+  "title": "Dashboard",
+  "subtitle": "Manage your farming business efficiently.",
+
+  "loading": "Loading dashboard...",
+
+  "all_financial_years": "All Financial Years",
+
+  "total_farms": "Total Farms",
+  "connected_farms": "Connected farms",
+
+  "total_income": "Total Income",
+
+  "total_expenses": "Total Expenses",
+
+  "total_crops": "Total Crops",
+  "active_crops": "Active crops",
+
+  "rental_listings": "Rental Listings",
+  "equipment_marketplace": "Equipment marketplace",
+
+  "financial_overview": "Financial Overview",
+
+  "net_profit": "Net Profit",
+  "income_minus_expenses": "Income - Expenses",
+
+  "income": "Income",
+  "expenses": "Expenses",
+  "profit": "Profit",
+
+  "quick_actions": "Quick Actions",
+  "quick_actions_subtitle": "Manage your farming activities quickly",
+
+  "add_farm": "Add Farm",
+  "add_income": "Add Income",
+  "add_expense": "Add Expense",
+  "add_fertilizer": "Add Fertilizer",
+  "add_pesticide": "Add Pesticide",
+  "rent_equipment": "Rent Equipment",
+
+  "recent_incomes": "Recent Incomes",
+  "recent_expenses": "Recent Expenses",
+
+  "view_all": "View All",
+
+  "amount": "Amount",
+  "date": "Date",
+  "name": "Name",
+
+  "expense_breakdown": "Expense Breakdown",
+  "crop_income_breakdown": "Crop Income Breakdown",
+
+  "fertilizers": "Fertilizers",
+  "pesticides": "Pesticides",
+
+  "total_records": "Total records"
+},
   "farms": {
     "title": "Farms",
     "subtitle": "Manage your farm properties",

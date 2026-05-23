@@ -99,7 +99,9 @@ export default function Dashboard() {
     useState([]);
 
   const [selectedFY, setSelectedFY] =
-    useState("All Financial Years");
+    useState(
+      t("dashboard.all_financial_years")
+    );
 
   /* =========================================================
      LOAD FILTER OPTIONS
@@ -130,9 +132,9 @@ export default function Dashboard() {
 
         setSelectedFY(
           years.includes(
-            "All Financial Years"
+            t("dashboard.all_financial_years")
           )
-            ? "All Financial Years"
+            ? t("dashboard.all_financial_years")
             : years[0]
         );
       }
@@ -294,37 +296,37 @@ export default function Dashboard() {
   const quickActions = [
 
     {
-      label: "Add Farm",
+      label: t("dashboard.add_farm"),
       path: "/farmer/farms",
       className: "farm",
     },
 
     {
-      label: "Add Income",
+      label: t("dashboard.add_income"),
       path: "/farmer/incomes",
       className: "income",
     },
 
     {
-      label: "Add Expense",
+      label: t("dashboard.add_expense"),
       path: "/farmer/expenses",
       className: "expense",
     },
 
     {
-      label: "Add Fertilizer",
+      label: t("dashboard.add_fertilizer"),
       path: "/farmer/fertilizers",
       className: "fertilizer",
     },
 
     {
-      label: "Add Pesticide",
+      label: t("dashboard.add_pesticide"),
       path: "/farmer/pesticides",
       className: "pesticide",
     },
 
     {
-      label: "Rent Equipment",
+      label: t("dashboard.rent_equipment"),
       path: "/farmer/rentals",
       className: "rental",
     },
@@ -335,7 +337,7 @@ export default function Dashboard() {
     return (
 
       <div className="dashboard-loading">
-        Loading dashboard...
+        {t("dashboard.loading")}
       </div>
     );
   }
@@ -345,8 +347,8 @@ export default function Dashboard() {
     <div className="page dashboard-page">
 
       <PageHeader
-        title="Dashboard"
-        subtitle="Manage your farming business efficiently."
+        title={t("dashboard.title")}
+        subtitle={t("dashboard.subtitle")}
       />
 
       {/* =====================================================
@@ -392,17 +394,17 @@ export default function Dashboard() {
 
         <StatsCard
           icon={<IconFarm size={22} />}
-          title="Total Farms"
+          title={t("dashboard.total_farms")}
           value={
             summary?.total_farms || 0
           }
-          subtitle="Connected farms"
+          subtitle={t("dashboard.connected_farms")}
           colorClass="stat-card__icon--green"
         />
 
         <StatsCard
           icon={<IconIncome size={22} />}
-          title="Total Income"
+          title={t("dashboard.total_income")}
           value={`₹ ${
             summary?.total_income || 0
           }`}
@@ -412,7 +414,7 @@ export default function Dashboard() {
 
         <StatsCard
           icon={<IconExpense size={22} />}
-          title="Total Expenses"
+          title={t("dashboard.total_expenses")}
           value={`₹ ${
             summary?.total_expenses || 0
           }`}
@@ -422,21 +424,21 @@ export default function Dashboard() {
 
         <StatsCard
           icon={<IconCrop size={22} />}
-          title="Total Crops"
+          title={t("dashboard.total_crops")}
           value={
             summary?.total_crops || 0
           }
-          subtitle="Active crops"
+          subtitle={t("dashboard.active_crops")}
           colorClass="stat-card__icon--info"
         />
 
         <StatsCard
           icon={<IconRental size={22} />}
-          title="Rental Listings"
+          title={t("dashboard.rental_listings")}
           value={
             summary?.total_rentals || 0
           }
-          subtitle="Equipment marketplace"
+          subtitle={t("dashboard.equipment_marketplace")}
           colorClass="stat-card__icon--cyan"
         />
 
@@ -448,10 +450,6 @@ export default function Dashboard() {
 
       <div className="dashboard-main-grid">
 
-        {/* =================================================
-            FINANCIAL OVERVIEW
-        ================================================== */}
-
         <Card className="dashboard-chart-card">
 
           <div className="dashboard-card-header">
@@ -459,7 +457,7 @@ export default function Dashboard() {
             <div>
 
               <h3>
-                Financial Overview
+                {t("dashboard.financial_overview")}
               </h3>
 
               <p>
@@ -475,7 +473,7 @@ export default function Dashboard() {
             <div className="financial-overview-side">
 
               <div className="net-profit-label">
-                Net Profit
+                {t("dashboard.net_profit")}
               </div>
 
               <div className="net-profit-value">
@@ -486,7 +484,7 @@ export default function Dashboard() {
 
               <div className="net-profit-sub">
 
-                Income - Expenses
+                {t("dashboard.income_minus_expenses")}
 
               </div>
 
@@ -526,7 +524,7 @@ export default function Dashboard() {
                     dataKey="income"
                     stroke="#16a34a"
                     strokeWidth={3}
-                    name="Income"
+                    name={t("dashboard.income")}
                   />
 
                   <Line
@@ -534,7 +532,7 @@ export default function Dashboard() {
                     dataKey="expenses"
                     stroke="#dc2626"
                     strokeWidth={3}
-                    name="Expenses"
+                    name={t("dashboard.expenses")}
                   />
 
                   <Line
@@ -542,7 +540,7 @@ export default function Dashboard() {
                     dataKey="profit"
                     stroke="#2563eb"
                     strokeWidth={3}
-                    name="Profit"
+                    name={t("dashboard.profit")}
                   />
 
                 </LineChart>
@@ -555,19 +553,22 @@ export default function Dashboard() {
 
         </Card>
 
-        {/* =================================================
-            QUICK ACTIONS
-        ================================================== */}
-
         <Card className="dashboard-actions-card">
 
           <div className="dashboard-card-header">
+
             <div>
-              <h3>Quick Actions</h3>
+
+              <h3>
+                {t("dashboard.quick_actions")}
+              </h3>
+
               <p>
-                Manage your farming activities quickly
+                {t("dashboard.quick_actions_subtitle")}
               </p>
+
             </div>
+
           </div>
 
           <div className="quick-actions-grid">
@@ -585,11 +586,13 @@ export default function Dashboard() {
                 </div>
 
                 <div className="quick-action-content">
+
                   <span>{action.label}</span>
 
                   <small>
                     {action.description}
                   </small>
+
                 </div>
 
               </button>
@@ -608,24 +611,22 @@ export default function Dashboard() {
 
       <div className="dashboard-tables-grid">
 
-        {/* =================================================
-            RECENT INCOMES
-        ================================================== */}
-
         <Card>
 
           <div className="dashboard-card-header dashboard-card-header-flex">
 
-            <h3> Recent Incomes </h3>
+            <h3>
+              {t("dashboard.recent_incomes")}
+            </h3>
 
             <button
-            className="dashboard-view-all-btn"
-            onClick={() =>
-              navigate("/farmer/incomes")
-            }
+              className="dashboard-view-all-btn"
+              onClick={() =>
+                navigate("/farmer/incomes")
+              }
             >
-            View All
-           </button>
+              {t("dashboard.view_all")}
+            </button>
 
           </div>
 
@@ -638,11 +639,11 @@ export default function Dashboard() {
                 <tr>
 
                   <th>
-                    Amount
+                    {t("dashboard.amount")}
                   </th>
 
                   <th>
-                    Date
+                    {t("dashboard.date")}
                   </th>
 
                 </tr>
@@ -683,15 +684,13 @@ export default function Dashboard() {
 
         </Card>
 
-        {/* =================================================
-            RECENT EXPENSES
-        ================================================== */}
-
         <Card>
 
           <div className="dashboard-card-header dashboard-card-header-flex">
 
-            <h3> Recent Expenses </h3>
+            <h3>
+              {t("dashboard.recent_expenses")}
+            </h3>
 
             <button
               className="dashboard-view-all-btn"
@@ -699,7 +698,7 @@ export default function Dashboard() {
               navigate("/farmer/expenses")
               }
             >
-              View All
+              {t("dashboard.view_all")}
             </button>
 
           </div>
@@ -713,11 +712,11 @@ export default function Dashboard() {
                 <tr>
 
                   <th>
-                    Name
+                    {t("dashboard.name")}
                   </th>
 
                   <th>
-                    Amount
+                    {t("dashboard.amount")}
                   </th>
 
                 </tr>
@@ -768,16 +767,12 @@ export default function Dashboard() {
 
       <div className="dashboard-chart-grid">
 
-        {/* =================================================
-            EXPENSE BREAKDOWN
-        ================================================== */}
-
         <Card>
 
           <div className="dashboard-card-header">
 
             <h3>
-              Expense Breakdown
+              {t("dashboard.expense_breakdown")}
             </h3>
 
           </div>
@@ -828,16 +823,12 @@ export default function Dashboard() {
 
         </Card>
 
-        {/* =================================================
-            INCOME BREAKDOWN
-        ================================================== */}
-
         <Card>
 
           <div className="dashboard-card-header">
 
             <h3>
-              Crop Income Breakdown
+              {t("dashboard.crop_income_breakdown")}
             </h3>
 
           </div>
@@ -891,99 +882,6 @@ export default function Dashboard() {
       </div>
 
       {/* =====================================================
-          MARKETPLACE
-      ====================================================== */}
-
-      {/* <Card>
-
-        <div className="dashboard-card-header">
-
-          <h3>
-            Equipment Marketplace
-          </h3>
-
-        </div>
-
-        <div className="dashboard-rental-grid">
-
-          {recentRentals.map(
-            (item) => (
-
-              <div
-                key={item._id}
-                className="dashboard-rental-card"
-              >
-
-                <img
-                  src={
-                    item.equipment_photo
-                  }
-                  alt={
-                    item.equipment_name
-                  }
-                  className="dashboard-rental-image"
-                />
-
-                <div className="dashboard-rental-body">
-
-                  <h4>
-
-                    {
-                      item.equipment_name
-                    }
-
-                  </h4>
-
-                  <div className="dashboard-rental-price">
-
-                    {item.price_per_hour && (
-
-                      <span>
-
-                        ₹
-                        {
-                          item.price_per_hour
-                        }
-                        /hr
-
-                      </span>
-
-                    )}
-
-                    {item.price_per_day && (
-
-                      <span>
-
-                        ₹
-                        {
-                          item.price_per_day
-                        }
-                        /day
-
-                      </span>
-
-                    )}
-
-                  </div>
-
-                  <div className="dashboard-rental-location">
-
-                    {item.location}
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            )
-          )}
-
-        </div>
-
-      </Card> */}
-
-      {/* =====================================================
           BOTTOM STATS
       ====================================================== */}
 
@@ -995,12 +893,12 @@ export default function Dashboard() {
               size={20}
             />
           }
-          title="Fertilizers"
+          title={t("dashboard.fertilizers")}
           value={
             summary?.total_fertilizers ||
             0
           }
-          subtitle="Total records"
+          subtitle={t("dashboard.total_records")}
           colorClass="stat-card__icon--green"
         />
 
@@ -1010,12 +908,12 @@ export default function Dashboard() {
               size={20}
             />
           } 
-          title="Pesticides"
+          title={t("dashboard.pesticides")}
           value={
             summary?.total_pesticides ||
             0
           }
-          subtitle="Total records"
+          subtitle={t("dashboard.total_records")}
           colorClass="stat-card__icon--purple"
         />
 
