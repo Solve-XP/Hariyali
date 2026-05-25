@@ -77,6 +77,15 @@ const userItems = [
     labelKey: "nav.rental",
     icon: <IconRental className="sidebar__icon" />,
   },
+  {
+  to: "/farmer/marketplace",
+  labelKey: "nav.marketplace",
+  icon: (
+    <IconCrop
+      className="sidebar__icon"
+    />
+  ),
+},
 ];
 
 /* =========================================================
@@ -122,6 +131,22 @@ const adminItems = [
 ];
 
 /* =========================================================
+   MERCHANT NAVIGATION
+========================================================= */
+
+const merchantItems = [
+  {
+    to: "/merchant/marketplace",
+    labelKey: "nav.marketplace",
+    icon: (
+      <IconCrop
+        className="sidebar__icon"
+      />
+    ),
+  }
+];
+
+/* =========================================================
    COMPONENT
 ========================================================= */
 
@@ -148,7 +173,9 @@ export default function Sidebar({ onNavigate }) {
   const items =
     location.pathname.startsWith("/admin")
       ? adminItems
-      : userItems;
+      : location.pathname.startsWith("/merchant")
+        ? merchantItems
+        : userItems;
 
   /* =====================================================
      LOGOUT

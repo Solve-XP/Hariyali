@@ -1,0 +1,88 @@
+/* ==========================================
+   TABS
+========================================== */
+
+.marketplace-tabs {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    width: fit-content;
+
+    background:
+        var(--color-surface-2);
+
+    padding: 4px;
+
+    border-radius:
+        16px;
+
+    box-shadow:
+        var(--shadow-xs);
+}
+
+.marketplace-tab {
+    border: none;
+
+    background:
+        transparent;
+
+    color:
+        var(--color-text-muted);
+
+    padding:
+        12px 18px;
+
+    border-radius:
+        12px;
+
+    font-size:
+        14px;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+    transition:
+        all .2s ease;
+}
+
+.marketplace-tab:hover {
+    background:
+        rgba(255,
+            255,
+            255,
+            .65);
+}
+
+.marketplace-tab--active {
+    background:
+        var(--color-surface);
+
+    color:
+        var(--color-primary);
+
+    box-shadow:
+        var(--shadow-xs);
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .marketplace-tabs {
+        width: 100%;
+    }
+
+    .marketplace-tab {
+        flex: 1;
+
+        text-align:
+            center;
+    }
+}

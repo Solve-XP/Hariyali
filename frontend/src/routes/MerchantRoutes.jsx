@@ -6,6 +6,9 @@ import ProtectedRoute from "./ProtectedRoute";
 
 import Dashboard from "../pages/merchant/Dashboard";
 import Profile from "../pages/profile/Profile";
+import Marketplace from "../pages/marketplace/Marketplace";
+import ListingDetails from "../pages/marketplace/ListingDetails";
+
 
 function MerchantRoutes() {
 
@@ -16,14 +19,15 @@ function MerchantRoutes() {
       <Routes>
 
         <Route element={<MainLayout />}>
-
-          <Route
-            path="dashboard"
-            element={<Dashboard />}
-          />
           <Route
             path="profile"
             element={<Profile />} />
+          <Route
+            path="marketplace"
+            element={<Marketplace />} />
+          <Route
+            path="marketplace/:id"
+            element={<ListingDetails />} />
         </Route>
 
       </Routes>

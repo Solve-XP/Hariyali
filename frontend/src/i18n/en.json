@@ -19,7 +19,8 @@
     "admin_expenses": "Expenses",
     "admin_equipment": "Equipment",
     "fertilizers": "Fertilizers",
-    "incomes": "Incomes"
+    "incomes": "Incomes",
+    "marketplace": "Marketplace"
   },
   "topbar": {
     "welcome": "Welcome",
@@ -118,6 +119,7 @@
     "inactive": "Inactive",
     "amount": "Amount",
     "date": "Date",
+    "details": "Details",
     "type": "Type",
     "all": "All",
     "total": "Total",
@@ -126,8 +128,169 @@
     "filter": "Filter",
     "select_option": "Select an option"
   },
+  "listing": {
+    "rentalPrice": "Rental Price",
+    "expectedPrice": "Expected Price",
+    "available": "Available",
+    "expectedQuantity": "Exp. Quantity",
+    "availableDate": "Available Date",
+    "harvestDate": "Harvest Date",
+    "untitled": "Untitled",
+    "unknownSeller": "Unknown Seller",
+    "verified": "Verified",
+    "noListingsFound": "No listings found",
+    "tryChangingFilters": "Try changing filters or create a listing.",
+    "searchPlaceholder": "Search crop, farm, village...",
+    "allStates": "All States",
+    "allDistricts": "All Districts",
+    "allTaluka": "All Taluka",
+    "latestListings": "Latest Listings",
+    "oldestListings": "Oldest Listings",
+    "priceLowHigh": "Price Low → High",
+    "priceHighLow": "Price High → Low"
+  },
+
+  "location": {
+    "state": "State",
+    "district": "District",
+    "taluka": "Taluka"
+  },
   
+  "listingForm": {
+    "failedToLoadFarms": "Failed to load farms",
+    "failedToLoadCrops": "Failed to load crops",
+    "failedToLoadListing": "Failed to load listing",
+
+    "maximum5Images": "Maximum 5 images allowed",
+    "imageBelow5mb": "Each image must be below 5MB",
+
+    "pleaseSelectFarm": "Please select farm",
+    "pleaseSelectCrop": "Please select crop",
+    "pleaseEnterQuantity": "Please enter quantity",
+    "pleaseEnterExpectedPrice": "Please enter expected price",
+    "pleaseSelectHarvestDate": "Please select harvest date",
+    "pleaseEnterCustomUnit": "Please enter custom unit",
+
+    "listingCreated": "Listing created successfully",
+    "listingUpdated": "Listing updated successfully",
+    "failedToUpdate": "Failed to update listing",
+    "failedToCreate": "Failed to create listing",
+
+    "loadingListing": "Loading listing...",
+
+    "farm": "Farm",
+    "selectFarm": "Select Farm",
+    "selectCrop": "Select Crop",
+
+    "quantity": "Quantity",
+    "enterQuantity": "Enter quantity",
+
+    "unit": "Unit",
+    "customUnit": "Custom Unit",
+    "customUnitPlaceholder": "e.g. bundle",
+
+    "expectedPrice": "Expected Price",
+    "expectedPricePlaceholder": "e.g. 80000",
+
+    "harvestDate": "Harvest Date",
+
+    "village": "Village",
+    "enterVillage": "Enter village",
+
+    "taluka": "Taluka",
+    "enterTaluka": "Enter taluka",
+
+    "district": "District",
+    "enterDistrict": "Enter district",
+
+    "statePincode": "State + Pincode",
+    "statePincodePlaceholder": "Maharashtra 413107",
+
+    "descriptionOptional": "Description (Optional)",
+    "descriptionPlaceholder": "Add crop quality, freshness, special details...",
+
+    "currentImages": "Current Images",
+    "imagesCannotEdit": "Images cannot be edited",
+    "crop": "Crop",
+    "noImagesAvailable": "No images available",
+
+    "uploadCropImages": "Upload Crop Images",
+    "addUpTo5Images": "Add up to 5 images",
+    "chooseImages": "Choose Images",
+
+    "updating": "Updating...",
+    "creating": "Creating...",
+    "updateListing": "Update Listing",
+    "createListing": "Create Listing"
+  },
   
+  "listingImage": {
+    "noImagesAvailable": "No Images Available",
+    "sellerNoImages": "Seller has not uploaded any images yet.",
+    "listing": "Listing",
+    "thumbnail": "Thumbnail"
+  }, 
+  "listingSeller": {
+    "unknownSeller": "Unknown Seller",
+    "verified": "Verified",
+    "farmer": "Farmer"
+  },
+
+
+  "marketplace": {
+    "expectedPrice": "Expected Price",
+    "expectedQuantity": "Exp. Quantity",
+    "expectedHarvestDate": "Exp. Harvest Date",
+    "marketplace": "Marketplace",
+    "myListings": "My Listings",
+     "createListing": "Create Listing",
+    "sellYourCrops": "Sell your crops in marketplace",
+    "editListing": "Edit Listing",
+    "updateMarketplaceListing": "Update your marketplace listing",
+     "failedToLoad": "Failed to load marketplace",
+    "browseListings": "Browse marketplace listings",
+    "noListingsFound": "No marketplace listings found",
+    "trySearchFilters": "Try changing search filters."
+  },
+  "myListings": {
+    "failedToLoad": "Failed to load listings",
+    "deletedSuccess": "Listing deleted successfully",
+    "failedToDelete": "Failed to delete listing",
+    "manageListings": "Manage your marketplace listings",
+    "addListing": "+ Add Listing",
+    "noListingsFound": "No listings found",
+    "noListingSubtitle": "You have not created any listing yet."
+  },
+
+  "listingDetails": {
+    "failedToLoadListing": "Failed to load listing",
+    "listingDeleted": "Listing deleted successfully",
+    "failedToDelete": "Failed to delete listing",
+
+    "quantity": "Quantity",
+    "harvestDate": "Harvest Date",
+    "village": "Village",
+    "taluka": "Taluka",
+    "district": "District",
+    "status": "Status",
+
+    "location": "Location",
+    "description": "Description",
+
+    "noDescription": "No description provided by seller.",
+
+    "editListing": "Edit Listing",
+
+    "deleteListing": "Delete Listing",
+    "deleteConfirm": "Are you sure you want to delete this listing?"
+  },
+
+  "contact": {
+    "call": "Call",
+    "whatsapp": "WhatsApp"
+  },
+
+
   "dashboard": {
     
   "title": "Dashboard",

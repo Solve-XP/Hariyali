@@ -291,6 +291,12 @@ class MarketplaceService:
 
                 "crop_name":
                     item["crop_name"],
+                    
+                    "seller_name":
+                    item["seller_name"],
+
+                "seller_phone":
+                    item["seller_phone"],
 
                 "quantity":
                     item["quantity"],

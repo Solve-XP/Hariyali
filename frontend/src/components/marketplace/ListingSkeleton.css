@@ -1,0 +1,155 @@
+/* ==========================================
+   GRID
+========================================== */
+
+.listing-skeleton-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill,
+            minmax(300px,
+                1fr));
+
+    gap: 18px;
+}
+
+/* ==========================================
+   CARD
+========================================== */
+
+.listing-skeleton-card {
+    overflow: hidden;
+
+    border-radius:
+        20px;
+
+    border:
+        1px solid var(--color-border);
+
+    background:
+        var(--color-surface);
+
+    box-shadow:
+        var(--shadow-xs);
+}
+
+/* ==========================================
+   SHIMMER
+========================================== */
+
+.listing-skeleton-image,
+.listing-skeleton-title,
+.listing-skeleton-subtitle,
+.listing-skeleton-box,
+.listing-skeleton-location,
+.listing-skeleton-button {
+    background:
+        linear-gradient(90deg,
+            rgba(0, 0, 0, .05) 25%,
+            rgba(0, 0, 0, .08) 37%,
+            rgba(0, 0, 0, .05) 63%);
+
+    background-size:
+        400% 100%;
+
+    animation:
+        shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer {
+
+    0% {
+        background-position:
+            100% 0;
+    }
+
+    100% {
+        background-position:
+            -100% 0;
+    }
+}
+
+/* ==========================================
+   IMAGE
+========================================== */
+
+.listing-skeleton-image {
+    height: 180px;
+}
+
+/* ==========================================
+   BODY
+========================================== */
+
+.listing-skeleton-body {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+
+    padding: 16px;
+}
+
+.listing-skeleton-title {
+    height: 24px;
+    width: 70%;
+
+    border-radius: 8px;
+}
+
+.listing-skeleton-subtitle {
+    height: 14px;
+    width: 45%;
+
+    border-radius: 8px;
+}
+
+.listing-skeleton-meta {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+}
+
+.listing-skeleton-box {
+    height: 62px;
+
+    border-radius:
+        14px;
+}
+
+.listing-skeleton-location {
+    height: 40px;
+
+    border-radius:
+        12px;
+}
+
+.listing-skeleton-actions {
+    display: flex;
+
+    gap: 10px;
+}
+
+.listing-skeleton-button {
+    flex: 1;
+
+    height: 42px;
+
+    border-radius:
+        12px;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .listing-skeleton-grid {
+        grid-template-columns:
+            1fr;
+    }
+}

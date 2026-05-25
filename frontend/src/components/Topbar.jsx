@@ -22,6 +22,10 @@ const titleByPath = {
 
   "/farmer/rental": "rental.title",
 
+  "/farmer/marketplace": "marketplace.title",
+    
+  "/merchant/marketplace": "marketplace.title",
+
   "/admin/dashboard": "admin.dashboard_title",
 
   "/admin/users": "admin.users_title",

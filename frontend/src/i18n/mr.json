@@ -18,7 +18,8 @@
     "admin_crops": "पिके",
     "admin_expenses": "खर्च",
     "admin_equipment": "उपकरणे",
-    "incomes": "उत्पन्न"
+    "incomes": "उत्पन्न",
+    "marketplace": "मार्केटप्लेस"
   },
   "topbar": {
     "welcome": "स्वागत आहे",
@@ -110,6 +111,7 @@
     "loading": "लोड होत आहे...",
     "back": "मागे",
     "submit": "सबमिट करा",
+    "details": "तपशील",
     "name": "नाव",
     "phone": "फोन",
     "status": "स्थिती",
@@ -124,6 +126,152 @@
     "view": "पहा",
     "filter": "फिल्टर",
     "select_option": "एक पर्याय निवडा"
+  },
+
+  "listing": {
+    "rentalPrice": "भाडे किंमत",
+    "expectedPrice": "अपेक्षित किंमत",
+    "available": "उपलब्ध",
+    "expectedQuantity": "अपेक्षित प्रमाण",
+    "availableDate": "उपलब्ध तारीख",
+    "harvestDate": "कापणी तारीख",
+    "untitled": "शीर्षक नाही",
+    "unknownSeller": "अज्ञात विक्रेता",
+    "verified": "पडताळलेले",
+     "noListingsFound": "कोणतीही लिस्टिंग आढळली नाही",
+    "tryChangingFilters": "फिल्टर बदला किंवा नवीन लिस्टिंग तयार करा.",
+    "searchPlaceholder": "पीक, शेत, गाव शोधा...",
+    "allStates": "सर्व राज्ये",
+    "allDistricts": "सर्व जिल्हे",
+    "allTaluka": "सर्व तालुके",
+    "latestListings": "नवीन लिस्टिंग",
+    "oldestListings": "जुन्या लिस्टिंग",
+    "priceLowHigh": "किंमत कमी → जास्त",
+    "priceHighLow": "किंमत जास्त → कमी"
+  },
+  "location": {
+    "state": "राज्य",
+    "district": "जिल्हा",
+    "taluka": "तालुका"
+  },
+
+  "listingForm": {
+    "failedToLoadFarms": "शेती माहिती लोड करण्यात अयशस्वी",
+    "failedToLoadCrops": "पिकांची माहिती लोड करण्यात अयशस्वी",
+    "failedToLoadListing": "लिस्टिंग लोड करण्यात अयशस्वी",
+
+    "maximum5Images": "जास्तीत जास्त 5 प्रतिमा अपलोड करू शकता",
+    "imageBelow5mb": "प्रत्येक प्रतिमा 5MB पेक्षा कमी असावी",
+
+    "pleaseSelectFarm": "कृपया शेत निवडा",
+    "pleaseSelectCrop": "कृपया पीक निवडा",
+    "pleaseEnterQuantity": "कृपया प्रमाण टाका",
+    "pleaseEnterExpectedPrice": "कृपया अपेक्षित किंमत टाका",
+    "pleaseSelectHarvestDate": "कृपया कापणी तारीख निवडा",
+    "pleaseEnterCustomUnit": "कृपया सानुकूल एकक टाका",
+
+    "listingCreated": "लिस्टिंग यशस्वीरित्या तयार झाली",
+    "listingUpdated": "लिस्टिंग यशस्वीरित्या अद्यतनित झाली",
+    "failedToUpdate": "लिस्टिंग अद्यतनित करण्यात अयशस्वी",
+    "failedToCreate": "लिस्टिंग तयार करण्यात अयशस्वी",
+
+    "loadingListing": "लिस्टिंग लोड होत आहे...",
+
+    "farm": "शेत",
+    "selectFarm": "शेत निवडा",
+
+    "selectCrop": "पीक निवडा",
+
+    "quantity": "प्रमाण",
+    "enterQuantity": "प्रमाण टाका",
+
+    "unit": "एकक",
+    "customUnit": "सानुकूल एकक",
+    "customUnitPlaceholder": "उदा. गठ्ठा",
+
+    "expectedPrice": "अपेक्षित किंमत",
+    "expectedPricePlaceholder": "उदा. 80000",
+
+    "harvestDate": "कापणी तारीख",
+
+    "village": "गाव",
+    "enterVillage": "गाव टाका",
+
+    "taluka": "तालुका",
+    "enterTaluka": "तालुका टाका",
+
+    "district": "जिल्हा",
+    "enterDistrict": "जिल्हा टाका",
+
+    "statePincode": "राज्य + पिनकोड",
+    "statePincodePlaceholder": "महाराष्ट्र 413107",
+
+    "descriptionOptional": "वर्णन (ऐच्छिक)",
+    "descriptionPlaceholder": "पिकाची गुणवत्ता, ताजेपणा, विशेष माहिती जोडा...",
+
+    "currentImages": "सध्याच्या प्रतिमा",
+    "imagesCannotEdit": "प्रतिमा संपादित करता येणार नाहीत",
+    "crop": "पीक",
+    "noImagesAvailable": "कोणतीही प्रतिमा उपलब्ध नाही",
+
+    "uploadCropImages": "पिकांच्या प्रतिमा अपलोड करा",
+    "addUpTo5Images": "जास्तीत जास्त 5 प्रतिमा जोडा",
+    "chooseImages": "प्रतिमा निवडा",
+
+    "updating": "अद्यतनित होत आहे...",
+    "creating": "तयार होत आहे...",
+    "updateListing": "लिस्टिंग अद्यतनित करा",
+    "createListing": "लिस्टिंग तयार करा"
+  },
+  "listingImage": {
+    "noImagesAvailable": "कोणत्याही प्रतिमा उपलब्ध नाहीत",
+    "sellerNoImages": "विक्रेत्याने अद्याप कोणत्याही प्रतिमा अपलोड केलेल्या नाहीत.",
+    "listing": "लिस्टिंग",
+    "thumbnail": "थंबनेल"
+  },
+  "listingSeller": {
+    "unknownSeller": "अज्ञात विक्रेता",
+    "verified": "पडताळलेले",
+    "farmer": "शेतकरी"
+  },
+
+   "marketplace": {
+    "expectedPrice": "अपेक्षित किंमत",
+    "expectedQuantity": "अपेक्षित प्रमाण",
+    "expectedHarvestDate": "अपेक्षित कापणी तारीख",
+    "marketplace": "मार्केटप्लेस",
+    "myListings": "माझ्या लिस्टिंग",
+    "createListing": "लिस्टिंग तयार करा",
+    "sellYourCrops": "मार्केटप्लेसमध्ये आपली पिके विक्री करा",
+     "editListing": "लिस्टिंग संपादित करा",
+    "updateMarketplaceListing": "आपली मार्केटप्लेस लिस्टिंग अद्यतनित करा",
+    "failedToLoad": "मार्केटप्लेस लोड करण्यात अयशस्वी",
+    "browseListings": "मार्केटप्लेस लिस्टिंग ब्राउज करा",
+    "noListingsFound": "कोणतीही मार्केटप्लेस लिस्टिंग आढळली नाही",
+    "trySearchFilters": "शोध फिल्टर बदलून पहा."
+  },
+
+   "listingDetails": {
+    "failedToLoadListing": "लिस्टिंग लोड करण्यात अयशस्वी",
+    "listingDeleted": "लिस्टिंग यशस्वीरित्या हटवली",
+    "failedToDelete": "लिस्टिंग हटवण्यात अयशस्वी",
+
+    "quantity": "प्रमाण",
+    "harvestDate": "कापणी तारीख",
+    "village": "गाव",
+    "taluka": "तालुका",
+    "district": "जिल्हा",
+    "status": "स्थिती",
+
+    "location": "स्थान",
+    "description": "वर्णन",
+
+    "noDescription": "विक्रेत्याने कोणतेही वर्णन दिलेले नाही.",
+
+    "editListing": "लिस्टिंग संपादित करा",
+
+    "deleteListing": "लिस्टिंग हटवा",
+    "deleteConfirm": "तुम्हाला ही लिस्टिंग हटवायची आहे का?"
   },
 
   "dashboard": {
@@ -563,16 +711,6 @@
     "all_financial_years": "सर्व आर्थिक वर्षे"
   },
 
-  "common": {
-    "cancel": "रद्द करा",
-    "delete": "हटवा"
-  },
-
-  "messages": {
-    "GENERIC_ERROR": "काहीतरी चूक झाली",
-    "VALIDATION_ERROR": "कृपया सर्व आवश्यक माहिती भरा"
-  },
-
    "pesticides": {
     "title": "कीटकनाशके",
     "subtitle": "कीटकनाशक वापर नोंदी व्यवस्थापित करा",
@@ -612,6 +750,22 @@
 
     "all_financial_years": "सर्व आर्थिक वर्षे"
   },
+
+
+  "contact": {
+    "call": "कॉल",
+    "whatsapp": "व्हॉट्सअॅप"
+  },
+  "myListings": {
+    "failedToLoad": "लिस्टिंग लोड करण्यात अयशस्वी",
+    "deletedSuccess": "लिस्टिंग यशस्वीरित्या हटवली",
+    "failedToDelete": "लिस्टिंग हटवण्यात अयशस्वी",
+    "manageListings": "आपल्या मार्केटप्लेस लिस्टिंग व्यवस्थापित करा",
+    "addListing": "+ लिस्टिंग जोडा",
+    "noListingsFound": "कोणतीही लिस्टिंग आढळली नाही",
+    "noListingSubtitle": "आपण अजून कोणतीही लिस्टिंग तयार केलेली नाही."
+  },
+
   "profile": {
   "title": "प्रोफाइल",
   "subtitle": "तुमच्या खात्याच्या सेटिंग्ज व्यवस्थापित करा",

@@ -1,0 +1,283 @@
+/* ==========================================
+   CARD
+========================================== */
+
+.listing-card {
+    padding: 0;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+
+    border-radius: 20px;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.listing-card:hover {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        var(--shadow-lg);
+}
+
+/* ==========================================
+   IMAGE
+========================================== */
+
+.listing-card__image {
+    position: relative;
+
+    overflow: hidden;
+
+    border-bottom:
+        1px solid var(--color-divider);
+}
+
+.listing-card__badge {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    z-index: 2;
+}
+
+/* ==========================================
+   BODY
+========================================== */
+
+.listing-card__body {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+
+    padding: 16px;
+
+    flex: 1;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.listing-card__header {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        flex-start;
+
+    gap: 14px;
+}
+
+.listing-card__heading {
+    min-width: 0;
+}
+
+.listing-card__title {
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    color:
+        var(--color-text);
+}
+
+.listing-card__subtitle {
+    margin-top: 4px;
+
+    font-size: 13px;
+
+    color:
+        var(--color-text-muted);
+}
+
+.listing-card__price-wrap {
+    text-align: right;
+
+    flex-shrink: 0;
+}
+
+.listing-card__price {
+    font-size: 24px;
+
+    font-weight: 800;
+
+    color:
+        var(--color-success);
+
+    line-height: 1;
+}
+
+.listing-card__price-label {
+    margin-top: 4px;
+
+    font-size: 12px;
+
+    color:
+        var(--color-text-muted);
+}
+
+/* ==========================================
+   META
+========================================== */
+
+.listing-card__meta {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    padding-bottom:
+        12px;
+
+    border-bottom:
+        1px solid var(--color-divider);
+}
+
+.listing-card__meta-item {
+    min-width: 0;
+}
+
+.listing-card__meta-item strong {
+    display: block;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color:
+        var(--color-text);
+}
+
+.listing-card__meta-item p {
+    margin: 4px 0 0;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    color:
+        var(--color-text-muted);
+}
+
+/* ==========================================
+   SELLER
+========================================== */
+
+.listing-card__seller {
+    padding-top: 2px;
+}
+
+.listing-card__seller-row {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap: 10px;
+}
+
+.listing-card__seller-name,
+.listing-card__seller-phone {
+    margin: 0;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    color:
+        var(--color-text);
+
+    display: flex;
+    align-items: center;
+
+    gap: 4px;
+}
+
+/* ==========================================
+   LOCATION
+========================================== */
+
+.listing-card__location {
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    color:
+        var(--color-text);
+}
+
+.listing-card__location strong {
+    font-weight: 700;
+}
+
+/* ==========================================
+   ACTIONS
+========================================== */
+
+.listing-card__actions {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: auto;
+
+    padding-top: 4px;
+}
+
+.listing-card__actions .btn {
+    flex: 1;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .listing-card__body {
+        padding: 14px;
+
+        gap: 12px;
+    }
+
+    .listing-card__title {
+        font-size: 20px;
+    }
+
+    .listing-card__price {
+        font-size: 22px;
+    }
+
+    .listing-card__seller-name,
+    .listing-card__seller-phone {
+        font-size: 14px;
+    }
+
+    .listing-card__location {
+        font-size: 13px;
+    }
+
+    .listing-card__actions {
+        flex-wrap: wrap;
+    }
+}

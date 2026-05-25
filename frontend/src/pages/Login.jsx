@@ -118,7 +118,7 @@ export default function Login() {
         case "merchant":
 
           navigate(
-            "/merchant/dashboard",
+            "/merchant/marketplace",
             {
               replace: true,
             }
