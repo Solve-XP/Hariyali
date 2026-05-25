@@ -126,7 +126,11 @@
     "currency": "₹",
     "view": "View",
     "filter": "Filter",
-    "select_option": "Select an option"
+    "select_option": "Select an option",
+    "latest": "Latest",
+    "oldest": "Oldest",
+    "priceLowHigh": "Price Low → High",
+    "priceHighLow": "Price High → Low"
   },
   "listing": {
     "rentalPrice": "Rental Price",
@@ -651,6 +655,87 @@
     "phone_placeholder": "Contact number",
     "empty": "No equipment listed yet."
   },
+
+  
+  "rentals": {
+    "marketplace": "Rental Marketplace",
+    "marketplaceSubtitle": "Rent farming equipment near you",
+    "searchPlaceholder": "Search equipment, village, taluka, district...",
+    "allDistricts": "All Districts",
+    "allStates": "All States",
+    "noRentalsFound": "No Rentals Found",
+    "tryChangingFilters": "Try changing filters"
+  },
+
+  "rentalForm": {
+    "equipmentInfo": "Equipment Info",
+    "equipmentName": "Equipment Name",
+    "equipmentPlaceholder": "e.g. John Deere 5055E",
+    "hourlyPrice": "Hourly Price",
+    "hourlyPricePlaceholder": "e.g. 500",
+    "dailyPrice": "Daily Price",
+    "dailyPricePlaceholder": "e.g. 2000",
+    "villagePlaceholder": "e.g. Goradwadi",
+    "talukaPlaceholder": "e.g. Malshiras",
+    "districtPlaceholder": "e.g. Pune",
+    "statePincode": "State, Pincode",
+    "statePincodePlaceholder": "e.g. Maharashtra, 413107",
+    "ownerDetails": "Owner Details",
+    "ownerName": "Owner Name",
+    "ownerPlaceholder": "e.g. Ramesh Patil",
+    "phoneNumber": "Phone Number",
+    "phonePlaceholder": "e.g. 9766860000",
+    "descriptionPlaceholder": "Add equipment details",
+    "equipmentImages": "Equipment Images",
+    "imageEditNotSupported": "Image editing is currently not supported.",
+    "uploadEquipmentImages": "Upload Equipment Images",
+    "addUpTo5Images": "Add up to 5 images",
+    "chooseImages": "Choose Images",
+    "saving": "Saving...",
+    "updateRental": "Update Rental",
+    "createRental": "Create Rental"
+  },
+
+  "rentalCreate": {
+    "fillRequiredFields": "Please fill all required fields",
+    "addPrice": "Please add hourly or daily price",
+    "uploadImage": "Please upload at least one image",
+    "createdSuccess": "Rental created successfully",
+    "createRental": "Create Rental",
+    "addEquipment": "Add farming equipment for rent"
+  },
+
+  "editRental": {
+    "updatedSuccess": "Rental updated successfully",
+    "editRental": "Edit Rental",
+    "updateRentalDetails": "Update equipment rental details"
+  },
+
+  "myRentals": {
+    "failedToLoad": "Failed to load rentals",
+    "deletedSuccess": "Rental deleted successfully",
+    "failedToDelete": "Failed to delete rental",
+    "myRentals": "My Rentals",
+    "manageEquipment": "Manage your equipment listings",
+    "addRental": "+ Add Rental",
+    "rentalMarketplace": "Rental Marketplace",
+    "noRentals": "No Rentals Yet",
+    "createFirstRental": "Create your first rental listing",
+    "deleteRental": "Delete Rental",
+    "deleteConfirm": "Are you sure you want to delete"
+  },
+
+
+  "rentalDetails": {
+    "state": "State",
+    "availability": "Availability",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "noDescription": "No description provided.",
+    "deleteConfirm": "Are you sure you want to delete this rental?"
+  },
+
+
   "admin": {
     "dashboard_title": "Admin Dashboard",
     "dashboard_subtitle": "System-wide overview",
@@ -732,10 +817,7 @@
     "all_financial_years": "All Financial Years"
   },
 
-  "common": {
-    "cancel": "Cancel",
-    "delete": "Delete"
-  },
+  
 
   "messages": {
     "GENERIC_ERROR": "Something went wrong",

@@ -125,7 +125,11 @@
     "currency": "₹",
     "view": "पहा",
     "filter": "फिल्टर",
-    "select_option": "एक पर्याय निवडा"
+    "select_option": "एक पर्याय निवडा",
+     "latest": "नवीनतम",
+    "oldest": "जुने",
+    "priceLowHigh": "किंमत कमी → जास्त",
+    "priceHighLow": "किंमत जास्त → कमी"
   },
 
   "listing": {
@@ -633,6 +637,87 @@
     "phone_placeholder": "संपर्क क्रमांक",
     "empty": "अद्याप कोणतीही उपकरणे सूचीबद्ध नाहीत."
   },
+
+
+  "rentals": {
+    "marketplace": "भाडे मार्केटप्लेस",
+    "marketplaceSubtitle": "तुमच्या जवळ शेती उपकरण भाड्याने घ्या",
+    "searchPlaceholder": "उपकरण, गाव, तालुका, जिल्हा शोधा...",
+    "allDistricts": "सर्व जिल्हे",
+    "allStates": "सर्व राज्ये",
+    "noRentalsFound": "कोणतेही भाडे आढळले नाही",
+    "tryChangingFilters": "फिल्टर बदलून पहा"
+  },
+
+  "rentalForm": {
+    "equipmentInfo": "उपकरण माहिती",
+    "equipmentName": "उपकरणाचे नाव",
+    "equipmentPlaceholder": "उदा. John Deere 5055E",
+    "hourlyPrice": "तासिक किंमत",
+    "hourlyPricePlaceholder": "उदा. 500",
+    "dailyPrice": "दैनिक किंमत",
+    "dailyPricePlaceholder": "उदा. 2000",
+    "villagePlaceholder": "उदा. गोराडवाडी",
+    "talukaPlaceholder": "उदा. माळशिरस",
+    "districtPlaceholder": "उदा. पुणे",
+    "statePincode": "राज्य, पिनकोड",
+    "statePincodePlaceholder": "उदा. महाराष्ट्र, 413107",
+    "ownerDetails": "मालक माहिती",
+    "ownerName": "मालकाचे नाव",
+    "ownerPlaceholder": "उदा. रमेश पाटील",
+    "phoneNumber": "फोन नंबर",
+    "phonePlaceholder": "उदा. 9766860000",
+    "descriptionPlaceholder": "उपकरणाची माहिती जोडा",
+    "equipmentImages": "उपकरण प्रतिमा",
+    "imageEditNotSupported": "प्रतिमा संपादन सध्या समर्थित नाही.",
+    "uploadEquipmentImages": "उपकरण प्रतिमा अपलोड करा",
+    "addUpTo5Images": "जास्तीत जास्त 5 प्रतिमा जोडा",
+    "chooseImages": "प्रतिमा निवडा",
+    "saving": "सेव्ह होत आहे...",
+    "updateRental": "भाडे अद्यतनित करा",
+    "createRental": "भाडे तयार करा"
+  },
+
+
+  "rentalCreate": {
+    "fillRequiredFields": "कृपया सर्व आवश्यक माहिती भरा",
+    "addPrice": "कृपया तासिक किंवा दैनिक किंमत जोडा",
+    "uploadImage": "कृपया किमान एक प्रतिमा अपलोड करा",
+    "createdSuccess": "भाडे यशस्वीरित्या तयार झाले",
+    "createRental": "भाडे तयार करा",
+    "addEquipment": "भाड्यासाठी शेती उपकरण जोडा"
+  },
+
+  "editRental": {
+    "updatedSuccess": "भाडे यशस्वीरित्या अद्यतनित झाले",
+    "editRental": "भाडे संपादित करा",
+    "updateRentalDetails": "उपकरण भाडे तपशील अद्यतनित करा"
+  },
+
+  "myRentals": {
+    "failedToLoad": "भाडे लोड करण्यात अयशस्वी",
+    "deletedSuccess": "भाडे यशस्वीरित्या हटवले",
+    "failedToDelete": "भाडे हटवण्यात अयशस्वी",
+    "myRentals": "माझी भाडे यादी",
+    "manageEquipment": "आपल्या उपकरण लिस्टिंग व्यवस्थापित करा",
+    "addRental": "+ भाडे जोडा",
+    "rentalMarketplace": "भाडे मार्केटप्लेस",
+    "noRentals": "अद्याप कोणतेही भाडे नाही",
+    "createFirstRental": "आपली पहिली भाडे लिस्टिंग तयार करा",
+    "deleteRental": "भाडे हटवा",
+    "deleteConfirm": "तुम्हाला हटवायचे आहे का"
+  },
+
+  "rentalDetails": {
+    "state": "राज्य",
+    "availability": "उपलब्धता",
+    "available": "उपलब्ध",
+    "unavailable": "अनुपलब्ध",
+    "noDescription": "कोणतेही वर्णन दिलेले नाही.",
+    "deleteConfirm": "तुम्हाला हे भाडे हटवायचे आहे का?"
+  },
+
+  
   "admin": {
     "dashboard_title": "प्रशासन डॅशबोर्ड",
     "dashboard_subtitle": "संपूर्ण प्रणालीचे विहंगावलोकन",

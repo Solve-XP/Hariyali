@@ -10,6 +10,9 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
+import {
+  useTranslation,
+} from "react-i18next";
 
 import Modal
 from "../../components/Modal";
@@ -49,6 +52,10 @@ import {
 
 export default function RentalDetails() {
 
+  const { t } =
+    useTranslation();
+  
+  
   const navigate =
     useNavigate();
 
@@ -316,7 +323,9 @@ export default function RentalDetails() {
                     </strong>
 
                     <span>
-                      / hour
+                      {t(
+                        "rental.perHour"
+                      )}
                     </span>
 
                   </div>
@@ -338,7 +347,9 @@ export default function RentalDetails() {
                     </strong>
 
                     <span>
-                      / day
+                      {t(
+                        "rental.perDay"
+                      )}
                     </span>
 
                   </div>
@@ -364,7 +375,9 @@ export default function RentalDetails() {
                 <div>
 
                   <strong>
-                    Village
+                    {t(
+                      "listingDetails.village"
+                    )}
                   </strong>
 
                   <span>
@@ -379,7 +392,9 @@ export default function RentalDetails() {
                 <div>
 
                   <strong>
-                    Taluka
+                    {t(
+                      "listingDetails.taluka"
+                    )}
                   </strong>
 
                   <span>
@@ -394,7 +409,9 @@ export default function RentalDetails() {
                 <div>
 
                   <strong>
-                    District
+                    {t(
+                      "listingDetails.district"
+                    )}
                   </strong>
 
                   <span>
@@ -409,7 +426,9 @@ export default function RentalDetails() {
                 <div>
 
                   <strong>
-                    State
+                    {t(
+                      "rentalDetails.state"
+                    )}
                   </strong>
 
                   <span>
@@ -424,7 +443,9 @@ export default function RentalDetails() {
                 <div>
 
                   <strong>
-                    Availability
+                    {t(
+                      "rentalDetails.availability"
+                    )}
                   </strong>
 
                   <span>
@@ -432,9 +453,13 @@ export default function RentalDetails() {
                     {rental
                       ?.is_available
 
-                      ? "Available"
+                      ? t(
+                          "rentalDetails.available"
+                        )
 
-                      : "Unavailable"}
+                      : t(
+                          "rentalDetails.unavailable"
+                        )}
 
                   </span>
 
@@ -458,7 +483,9 @@ export default function RentalDetails() {
               ">
 
                 <h3>
-                  Description
+                  {t(
+                    "listingDetails.description"
+                  )}
                 </h3>
 
                 <p>
@@ -470,7 +497,9 @@ export default function RentalDetails() {
 
                     ||
 
-                    "No description provided."
+                    t(
+                      "rentalDetails.noDescription"
+                    )
                   }
 
                 </p>
@@ -524,7 +553,9 @@ export default function RentalDetails() {
                       )
                     }
                   >
-                    Edit Rental
+                    {t(
+                      "editRental.editRental"
+                    )}
                   </Button>
 
                   <Button
@@ -537,7 +568,9 @@ export default function RentalDetails() {
                       )
                     }
                   >
-                    Delete
+                    {t(
+                      "common.delete"
+                    )}
                   </Button>
 
                 </div>
@@ -560,22 +593,25 @@ export default function RentalDetails() {
         </div>
       )}
 
-      {/* DELETE */}
-
       <ConfirmDialog
         open={
           deleteOpen
         }
-        title="
-          Delete Rental
-        "
-        message="
-          Are you sure you want
-          to delete this rental?
-        "
-        confirmText="
-          Delete
-        "
+        title={
+          t(
+            "myRentals.deleteRental"
+          )
+        }
+        message={
+          t(
+            "rentalDetails.deleteConfirm"
+          )
+        }
+        confirmText={
+          t(
+            "common.delete"
+          )
+        }
         onConfirm={
           handleDelete
         }
@@ -588,4 +624,5 @@ export default function RentalDetails() {
 
     </Modal>
   );
-}   
+}
+   

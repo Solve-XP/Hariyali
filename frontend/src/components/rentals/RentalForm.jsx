@@ -2,7 +2,7 @@ import {
   useRef,
   useState,
 } from "react";
-
+import { useTranslation } from "react-i18next";
 import "./RentalForm.css";
 
 import Card from "../Card";
@@ -88,6 +88,11 @@ export default function RentalForm({
         ?.equipment_images ||
       []
     );
+  
+  
+  
+  const { t } =
+  useTranslation();
 
   /* ==========================================
       INPUT CHANGE
@@ -262,14 +267,20 @@ export default function RentalForm({
       <Card>
 
         <h3>
-          Equipment Info
+          {t("rentalForm.equipmentInfo")}
         </h3>
 
         <Input
-          label="
-            Equipment Name
-          "
-          placeholder="e.g. John Deere 5055E"
+          label={
+            t(
+              "rentalForm.equipmentName"
+            )
+          }
+          placeholder={
+            t(
+              "rentalForm.equipmentPlaceholder"
+            )
+          }
           value={
             form
               .equipment_name
@@ -291,10 +302,16 @@ export default function RentalForm({
         ">
 
           <Input
-            label="
-              Hourly Price
-            "
-            placeholder="e.g. 500"
+            label={
+              t(
+                "rentalForm.hourlyPrice"
+              )
+            }
+            placeholder={
+              t(
+                "rentalForm.hourlyPricePlaceholder"
+              )
+            }
             type="
               number
             "
@@ -314,13 +331,19 @@ export default function RentalForm({
           />
 
           <Input
-            label="
-              Daily Price
-            "
+            label={
+              t(
+                "rentalForm.dailyPrice"
+              )
+            }
             type="
               number
             "
-            placeholder="e.g. 2000"
+            placeholder={
+              t(
+                "rentalForm.dailyPricePlaceholder"
+              )
+            }
             value={
               form
                 .price_per_day
@@ -345,7 +368,7 @@ export default function RentalForm({
       <Card>
 
         <h3>
-          Location
+          {t("listingDetails.location")}
         </h3>
 
         <div className="
@@ -353,10 +376,16 @@ export default function RentalForm({
         ">
 
           <Input
-            label="
-              Village
-            "
-            placeholder="e.g. Goradwadi"
+            label={
+              t(
+                "listingDetails.village"
+              )
+            }
+            placeholder={
+              t(
+                "rentalForm.villagePlaceholder"
+              )
+            }
             value={
               form
                 .village
@@ -373,10 +402,16 @@ export default function RentalForm({
           />
 
           <Input
-            label="
-              Taluka
-            "
-            placeholder="e.g. Malshiras"
+            label={
+              t(
+                "listingDetails.taluka"
+              )
+            }
+            placeholder={
+              t(
+                "rentalForm.talukaPlaceholder"
+              )
+            }
             value={
               form
                 .taluka
@@ -399,10 +434,16 @@ export default function RentalForm({
         ">
 
           <Input
-            label="
-              District
-            "
-            placeholder="e.g. Pune"
+            label={
+              t(
+                "listingDetails.district"
+              )
+            }
+            placeholder={
+              t(
+                "rentalForm.districtPlaceholder"
+              )
+            }
             value={
               form
                 .district
@@ -419,10 +460,16 @@ export default function RentalForm({
           />
 
           <Input
-            label="
-              State, Pincode
-            "
-            placeholder="e.g. Maharashtra, 413107"
+            label={
+              t(
+                "rentalForm.statePincode"
+              )
+            }
+            placeholder={
+              t(
+                "rentalForm.statePincodePlaceholder"
+              )
+            }
             value={
               form
                 .state
@@ -447,7 +494,7 @@ export default function RentalForm({
       <Card>
 
         <h3>
-          Owner Details
+          {t("rentalForm.ownerDetails")}
         </h3>
 
         <div className="
@@ -455,10 +502,16 @@ export default function RentalForm({
         ">
 
           <Input
-            label="
-              Owner Name
-            "
-            placeholder="e.g. Ramesh Patil"
+            label={
+              t(
+                "rentalForm.ownerName"
+              )
+            }
+            placeholder={
+              t(
+                "rentalForm.ownerPlaceholder"
+              )
+            }
             value={
               form
                 .owner_name
@@ -475,10 +528,16 @@ export default function RentalForm({
           />
 
           <Input
-            label="
-              Phone Number
-            "
-            placeholder="e.g. 9766860000"
+            label={
+              t(
+                "rentalForm.phoneNumber"
+              )
+            }
+            placeholder={
+              t(
+                "rentalForm.phonePlaceholder"
+              )
+            }
             value={
               form
                 .phone
@@ -503,7 +562,9 @@ export default function RentalForm({
       <Card>
 
         <h3>
-          Description
+          {t(
+            "listingDetails.description"
+          )}
         </h3>
 
         <textarea
@@ -511,9 +572,11 @@ export default function RentalForm({
           className="
             input
           "
-          placeholder="
-            Add equipment details
-          "
+          placeholder={
+            t(
+              "rentalForm.descriptionPlaceholder"
+            )
+          }
           value={
             form
               .description
@@ -536,7 +599,9 @@ export default function RentalForm({
       <Card>
 
         <h3>
-          Equipment Images
+          {t(
+            "rentalForm.equipmentImages"
+          )}
         </h3>
 
         {mode ===
@@ -578,8 +643,9 @@ export default function RentalForm({
             <div className="
               rental-image-note
             ">
-              Image editing is
-              currently not supported.
+              {t(
+                "rentalForm.imageEditNotSupported"
+              )}
             </div>
 
           </>
@@ -606,13 +672,15 @@ export default function RentalForm({
               </div>
 
               <h4>
-                Upload Equipment
-                Images
+                {t(
+                  "rentalForm.uploadEquipmentImages"
+                )}
               </h4>
 
               <p>
-                Add up to
-                5 images
+                {t(
+                  "rentalForm.addUpTo5Images"
+                )}
               </p>
 
               <button
@@ -631,7 +699,9 @@ export default function RentalForm({
                     ?.click();
                 }}
               >
-                Choose Images
+                {t(
+                  "rentalForm.chooseImages"
+                )}
               </button>
 
               <input
@@ -711,11 +781,17 @@ export default function RentalForm({
       >
 
         {loading
-          ? "Saving..."
+          ? t(
+            "rentalForm.saving"
+          )
           : mode ===
             "edit"
-          ? "Update Rental"
-          : "Create Rental"}
+            ? t(
+              "rentalForm.updateRental"
+            )
+            : t(
+              "rentalForm.createRental"
+            )}
 
       </Button>
 

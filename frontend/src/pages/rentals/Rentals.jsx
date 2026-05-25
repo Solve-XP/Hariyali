@@ -1,5 +1,6 @@
 import "./Rental.css";
 
+
 import {
   useEffect,
   useMemo,
@@ -48,6 +49,7 @@ import ListingSkeleton
 from "../../components/marketplace/ListingSkeleton";
 
 export default function Rentals() {
+
 
   const navigate =
     useNavigate();
@@ -358,22 +360,23 @@ export default function Rentals() {
   /* ==========================================
       RENDER
   ========================================== */
-
-  return (
+return (
 
     <div className="
       marketplace-page
     ">
 
       <PageHeader
-        title="
-          Rental Marketplace
-        "
-        subtitle="
-          Rent farming
-          equipment near
-          you
-        "
+        title={
+          t(
+            "rentals.marketplace"
+          )
+        }
+        subtitle={
+          t(
+            "rentals.marketplaceSubtitle"
+          )
+        }
       />
 
       {/* TABS */}
@@ -388,7 +391,9 @@ export default function Rentals() {
             marketplace-tab--active
           "
         >
-          Rental Marketplace
+          {t(
+            "rentals.marketplace"
+          )}
         </button>
 
         <button
@@ -401,7 +406,9 @@ export default function Rentals() {
             )
           }
         >
-          My Rentals
+          {t(
+            "myRentals.myRentals"
+          )}
         </button>
 
       </div>
@@ -415,12 +422,11 @@ export default function Rentals() {
         ">
 
           <SearchInput
-            placeholder="
-              Search equipment,
-              village,
-              taluka,
-              district...
-            "
+            placeholder={
+              t(
+                "rentals.searchPlaceholder"
+              )
+            }
             value={
               search
             }
@@ -449,7 +455,9 @@ export default function Rentals() {
           >
 
             <option value="">
-              All Districts
+              {t(
+                "rentals.allDistricts"
+              )}
             </option>
 
             {districtOptions.map(
@@ -483,7 +491,9 @@ export default function Rentals() {
           >
 
             <option value="">
-              All States
+              {t(
+                "rentals.allStates"
+              )}
             </option>
 
             {stateOptions.map(
@@ -517,15 +527,21 @@ export default function Rentals() {
           >
 
             <option value="">
-              Availability
+              {t(
+                "rentalDetails.availability"
+              )}
             </option>
 
             <option value="true">
-              Available
+              {t(
+                "rentalDetails.available"
+              )}
             </option>
 
             <option value="false">
-              Unavailable
+              {t(
+                "rentalDetails.unavailable"
+              )}
             </option>
 
           </Select>
@@ -545,19 +561,27 @@ export default function Rentals() {
           >
 
             <option value="latest">
-              Latest
+              {t(
+                "common.latest"
+              )}
             </option>
 
             <option value="oldest">
-              Oldest
+              {t(
+                "common.oldest"
+              )}
             </option>
 
             <option value="price-low">
-              Price Low → High
+              {t(
+                "common.priceLowHigh"
+              )}
             </option>
 
             <option value="price-high">
-              Price High → Low
+              {t(
+                "common.priceHighLow"
+              )}
             </option>
 
           </Select>
@@ -578,12 +602,16 @@ export default function Rentals() {
           .length ? (
 
         <ListingEmpty
-          title="
-            No Rentals Found
-          "
-          subtitle="
-            Try changing filters
-          "
+          title={
+            t(
+              "rentals.noRentalsFound"
+            )
+          }
+          subtitle={
+            t(
+              "rentals.tryChangingFilters"
+            )
+          }
         />
 
       ) : (
@@ -630,4 +658,4 @@ export default function Rentals() {
 
     </div>
   );
-} 
+}

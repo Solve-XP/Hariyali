@@ -129,7 +129,7 @@ export default function RentalCard({
               rental-card__heading
             "
           >
-            
+
             <h3
               className="
                 rental-card__title
@@ -137,7 +137,12 @@ export default function RentalCard({
             >
               {title}
             </h3>
-            <p>Equipment Name</p>
+
+            <p>
+              {t(
+                "rental.equipmentName"
+              )}
+            </p>
 
           </div>
 
@@ -160,7 +165,9 @@ export default function RentalCard({
                 ).toLocaleString()}
 
                 <span>
-                  /day
+                  {t(
+                    "rental.perDay"
+                  )}
                 </span>
               </div>
             )}
@@ -176,7 +183,10 @@ export default function RentalCard({
                 {Number(
                   hourlyPrice
                 ).toLocaleString()}
-                /hour
+
+                {t(
+                  "rental.perHour"
+                )}
               </div>
             )}
 

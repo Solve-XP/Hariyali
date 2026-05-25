@@ -55,10 +55,6 @@ export default function MyRentals() {
     pushToast,
   } = useApp();
 
-  /* ==========================================
-      STATE
-  ========================================== */
-
   const [rentals,
     setRentals] =
     useState([]);
@@ -74,10 +70,6 @@ export default function MyRentals() {
   const [deleteOpen,
     setDeleteOpen] =
     useState(false);
-
-  /* ==========================================
-      FETCH RENTALS
-  ========================================== */
 
   async function
     fetchRentals() {
@@ -107,7 +99,9 @@ export default function MyRentals() {
           error
         ) ||
 
-        "Failed to load rentals",
+        t(
+          "myRentals.failedToLoad"
+        ),
 
         "error"
       );
@@ -126,10 +120,6 @@ export default function MyRentals() {
 
   }, []);
 
-  /* ==========================================
-      DELETE
-  ========================================== */
-
   async function
     handleDelete() {
 
@@ -145,7 +135,9 @@ export default function MyRentals() {
         );
 
       pushToast(
-        "Rental deleted successfully",
+        t(
+          "myRentals.deletedSuccess"
+        ),
         "success"
       );
 
@@ -169,16 +161,14 @@ export default function MyRentals() {
           error
         ) ||
 
-        "Failed to delete rental",
+        t(
+          "myRentals.failedToDelete"
+        ),
 
         "error"
       );
     }
   }
-
-  /* ==========================================
-      RENDER
-  ========================================== */
 
   return (
 
@@ -187,13 +177,16 @@ export default function MyRentals() {
     ">
 
       <PageHeader
-        title="
-          My Rentals
-        "
-        subtitle="
-          Manage your
-          equipment listings
-        "
+        title={
+          t(
+            "myRentals.myRentals"
+          )
+        }
+        subtitle={
+          t(
+            "myRentals.manageEquipment"
+          )
+        }
         action={
 
           <Button
@@ -203,7 +196,9 @@ export default function MyRentals() {
               )
             }
           >
-            + Add Rental
+            {t(
+              "myRentals.addRental"
+            )}
           </Button>
 
         }
@@ -225,7 +220,9 @@ export default function MyRentals() {
             )
           }
         >
-          Rental Marketplace
+          {t(
+            "myRentals.rentalMarketplace"
+          )}
         </button>
 
         <button
@@ -234,7 +231,9 @@ export default function MyRentals() {
             marketplace-tab--active
           "
         >
-          My Rentals
+          {t(
+            "myRentals.myRentals"
+          )}
         </button>
 
       </div>
@@ -251,13 +250,16 @@ export default function MyRentals() {
           .length ? (
 
         <ListingEmpty
-          title="
-            No Rentals Yet
-          "
-          subtitle="
-            Create your first
-            rental listing
-          "
+          title={
+            t(
+              "myRentals.noRentals"
+            )
+          }
+          subtitle={
+            t(
+              "myRentals.createFirstRental"
+            )
+          }
           action={
 
             <Button
@@ -267,7 +269,9 @@ export default function MyRentals() {
                 )
               }
             >
-              Add Rental
+              {t(
+                "myRentals.addRental"
+              )}
             </Button>
 
           }
@@ -332,23 +336,26 @@ export default function MyRentals() {
         </div>
       )}
 
-      {/* DELETE */}
-
       <ConfirmDialog
         open={
           deleteOpen
         }
-        title="
-          Delete Rental
-        "
+        title={
+          t(
+            "myRentals.deleteRental"
+          )
+        }
         message={`
-          Are you sure
-          you want to delete
+          ${t(
+            "myRentals.deleteConfirm"
+          )}
           "${selectedRental?.equipment_name}"?
         `}
-        confirmText="
-          Delete
-        "
+        confirmText={
+          t(
+            "common.delete"
+          )
+        }
         onConfirm={
           handleDelete
         }

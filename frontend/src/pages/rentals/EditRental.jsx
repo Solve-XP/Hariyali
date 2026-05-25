@@ -51,10 +51,6 @@ export default function EditRental() {
     pushToast,
   } = useApp();
 
-  /* ==========================================
-      STATE
-  ========================================== */
-
   const [loading,
     setLoading] =
     useState(true);
@@ -66,10 +62,6 @@ export default function EditRental() {
   const [rental,
     setRental] =
     useState(null);
-
-  /* ==========================================
-      FETCH RENTAL
-  ========================================== */
 
   async function
     fetchRental() {
@@ -125,10 +117,6 @@ export default function EditRental() {
 
   }, [id]);
 
-  /* ==========================================
-      SUBMIT
-  ========================================== */
-
   async function
     handleSubmit(
       formData
@@ -159,16 +147,14 @@ export default function EditRental() {
     ) {
 
       pushToast(
-        "Please fill all required fields",
+        t(
+          "rentalCreate.fillRequiredFields"
+        ),
         "error"
       );
 
       return;
     }
-
-    /* ======================================
-       PRICE VALIDATION
-    ====================================== */
 
     if (
 
@@ -181,7 +167,9 @@ export default function EditRental() {
     ) {
 
       pushToast(
-        "Please add hourly or daily price",
+        t(
+          "rentalCreate.addPrice"
+        ),
         "error"
       );
 
@@ -254,7 +242,6 @@ export default function EditRental() {
             .description
             ?.trim(),
 
-        /* NO IMAGE UPDATE */
       };
 
       await RentalsService
@@ -264,7 +251,9 @@ export default function EditRental() {
         );
 
       pushToast(
-        "Rental updated successfully",
+        t(
+          "editRental.updatedSuccess"
+        ),
         "success"
       );
 
@@ -293,10 +282,6 @@ export default function EditRental() {
     }
   }
 
-  /* ==========================================
-      LOADING
-  ========================================== */
-
   if (
     loading
   ) {
@@ -307,15 +292,13 @@ export default function EditRental() {
         rental-loading
       ">
 
-        Loading...
+        {t(
+          "common.loading"
+        )}
 
       </div>
     );
   }
-
-  /* ==========================================
-      RENDER
-  ========================================== */
 
   return (
 
@@ -324,13 +307,16 @@ export default function EditRental() {
     ">
 
       <PageHeader
-        title="
-          Edit Rental
-        "
-        subtitle="
-          Update equipment
-          rental details
-        "
+        title={
+          t(
+            "editRental.editRental"
+          )
+        }
+        subtitle={
+          t(
+            "editRental.updateRentalDetails"
+          )
+        }
       />
 
       <RentalForm

@@ -92,7 +92,9 @@ export default function CreateRental() {
     ) {
 
       pushToast(
-        "Please fill all required fields",
+        t(
+          "rentalCreate.fillRequiredFields"
+        ),
         "error"
       );
 
@@ -114,7 +116,9 @@ export default function CreateRental() {
     ) {
 
       pushToast(
-        "Please add hourly or daily price",
+        t(
+          "rentalCreate.addPrice"
+        ),
         "error"
       );
 
@@ -134,7 +138,9 @@ export default function CreateRental() {
     ) {
 
       pushToast(
-        "Please upload at least one image",
+        t(
+          "rentalCreate.uploadImage"
+        ),
         "error"
       );
 
@@ -218,7 +224,9 @@ export default function CreateRental() {
         );
 
       pushToast(
-        "Rental created successfully",
+        t(
+          "rentalCreate.createdSuccess"
+        ),
         "success"
       );
 
@@ -258,13 +266,16 @@ export default function CreateRental() {
     ">
 
       <PageHeader
-        title="
-          Create Rental
-        "
-        subtitle="
-          Add farming
-          equipment for rent
-        "
+        title={
+          t(
+            "rentalCreate.createRental"
+          )
+        }
+        subtitle={
+          t(
+            "rentalCreate.addEquipment"
+          )
+        }
       />
 
       <RentalForm
