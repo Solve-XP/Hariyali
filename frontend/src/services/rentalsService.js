@@ -1,92 +1,226 @@
 import api from "../api/axios";
 
-const BASE_URL = "/rentals";
+import {
+  buildFormData,
+} from "../utils/formData";
 
 export const RentalsService = {
 
-  async getAll(params = {}) {
+  /* ==========================================
+     GET RENTALS MARKETPLACE
+  ========================================== */
 
-    const response = await api.get(
-      BASE_URL,
+  getRentals(
+    params = {}
+  ) {
+
+    return api.get(
+      "/rentals",
       {
         params,
       }
     );
-
-    return response.data;
   },
 
-  async getById(id) {
+  /* ==========================================
+     GET MY RENTALS
+  ========================================== */
 
-    const response = await api.get(
-      `${BASE_URL}/${id}`
+  getMyRentals() {
+
+    return api.get(
+      "/rentals/my-listings"
+    );
+  },
+
+  /* ==========================================
+     GET RENTAL DETAILS
+  ========================================== */
+
+  getRentalById(
+    rentalId
+  ) {
+
+    return api.get(
+      `/rentals/${rentalId}`
+    );
+  },
+
+  /* ==========================================
+     CREATE RENTAL
+  ========================================== */
+
+  createRental(
+    data
+  ) {
+
+    const formData =
+      new FormData();
+
+    /* ======================================
+       TEXT FIELDS
+    ====================================== */
+
+    Object.entries(
+      data
+    ).forEach(
+      ([
+        key,
+        value,
+      ]) => {
+
+        if (
+          key ===
+          "equipment_images"
+        ) {
+          return;
+        }
+
+        if (
+          value !==
+            undefined &&
+          value !== null &&
+          value !== ""
+        ) {
+
+          formData.append(
+            key,
+            value
+          );
+        }
+      }
     );
 
-    return response.data;
-  },
+    /* ======================================
+       MULTIPLE IMAGES
+    ====================================== */
 
-  async create(data) {
+    if (
+      data
+        ?.equipment_images
+        ?.length
+    ) {
 
-    const formData = new FormData();
+      data
+        .equipment_images
+        .forEach(
+          (
+            image
+          ) => {
 
-    Object.entries(data).forEach(([key, value]) => {
+            formData.append(
+              "equipment_images",
+              image
+            );
+          }
+        );
+    }
 
-      if (
-        value !== undefined &&
-        value !== null &&
-        value !== ""
-      ) {
-        formData.append(key, value);
-      }
-    });
-
-    const response = await api.post(
-      BASE_URL,
+    return api.post(
+      "/rentals",
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type":
+            "multipart/form-data",
         },
       }
     );
-
-    return response.data;
   },
 
-  async update(id, data) {
+  /* ==========================================
+     UPDATE RENTAL
+  ========================================== */
 
-    const formData = new FormData();
+  updateRental(
+    rentalId,
+    data
+  ) {
 
-    Object.entries(data).forEach(([key, value]) => {
+    const formData =
+      new FormData();
 
-      if (
-        value !== undefined &&
-        value !== null &&
-        value !== ""
-      ) {
-        formData.append(key, value);
+    /* ======================================
+       TEXT FIELDS
+    ====================================== */
+
+    Object.entries(
+      data
+    ).forEach(
+      ([
+        key,
+        value,
+      ]) => {
+
+        if (
+          key ===
+          "equipment_images"
+        ) {
+          return;
+        }
+
+        if (
+          value !==
+            undefined &&
+          value !== null &&
+          value !== ""
+        ) {
+
+          formData.append(
+            key,
+            value
+          );
+        }
       }
-    });
+    );
 
-    const response = await api.patch(
-      `${BASE_URL}/${id}`,
+    /* ======================================
+       MULTIPLE IMAGES
+    ====================================== */
+
+    if (
+      data
+        ?.equipment_images
+        ?.length
+    ) {
+
+      data
+        .equipment_images
+        .forEach(
+          (
+            image
+          ) => {
+
+            formData.append(
+              "equipment_images",
+              image
+            );
+          }
+        );
+    }
+
+    return api.patch(
+      `/rentals/${rentalId}`,
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type":
+            "multipart/form-data",
         },
       }
     );
-
-    return response.data;
   },
 
-  async delete(id) {
+  /* ==========================================
+     DELETE RENTAL
+  ========================================== */
 
-    const response = await api.delete(
-      `${BASE_URL}/${id}`
+  deleteRental(
+    rentalId
+  ) {
+
+    return api.delete(
+      `/rentals/${rentalId}`
     );
-
-    return response.data;
   },
 };

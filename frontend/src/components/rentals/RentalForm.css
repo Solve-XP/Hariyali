@@ -1,0 +1,363 @@
+/* ==========================================
+   FORM
+========================================== */
+
+.rental-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+/* ==========================================
+   SECTION HEADINGS
+========================================== */
+
+.rental-form h3 {
+    margin: 0 0 18px;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    color:
+        var(--color-text);
+}
+
+/* ==========================================
+   GRID ROWS
+========================================== */
+
+.rental-form__row {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 16px;
+}
+
+.rental-form__row:last-child {
+    margin-bottom: 0;
+}
+
+/* ==========================================
+   TEXTAREA
+========================================== */
+
+.rental-form textarea {
+    width: 100%;
+
+    min-height: 150px;
+
+    resize: vertical;
+
+    padding: 18px;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius:
+        18px;
+
+    background:
+        var(--color-surface);
+
+    font-size: 15px;
+
+    color:
+        var(--color-text);
+
+    outline: none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.rental-form textarea:focus {
+    border-color:
+        var(--color-primary);
+
+    box-shadow:
+        var(--ring-primary);
+}
+
+.rental-form textarea::placeholder {
+    color:
+        var(--color-text-muted);
+}
+
+/* ==========================================
+   MARKETPLACE STYLE UPLOAD
+========================================== */
+
+.rental-upload-box {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    min-height: 280px;
+
+    border:
+        2px dashed var(--color-border);
+
+    border-radius:
+        28px;
+
+    background:
+        var(--color-surface-2);
+
+    padding: 36px;
+
+    transition:
+        border-color .2s ease,
+        transform .2s ease,
+        background .2s ease;
+}
+
+.rental-upload-box:hover {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        var(--color-success);
+
+    background:
+        rgba(16,
+            185,
+            129,
+            .04);
+}
+
+/* ==========================================
+   PLUS ICON
+========================================== */
+
+.rental-upload-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 86px;
+    height: 86px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(16,
+            185,
+            129,
+            .12);
+
+    color:
+        var(--color-success);
+
+    font-size: 44px;
+    font-weight: 500;
+
+    margin-bottom: 18px;
+}
+
+/* ==========================================
+   TEXT
+========================================== */
+
+.rental-upload-box h4 {
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    color:
+        var(--color-text);
+}
+
+.rental-upload-box p {
+    margin:
+        10px 0 24px;
+
+    font-size: 16px;
+
+    color:
+        var(--color-text-muted);
+}
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+.rental-upload-btn {
+    border: none;
+
+    border-radius:
+        14px;
+
+    background:
+        white;
+
+    padding:
+        14px 22px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        var(--shadow-sm);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.rental-upload-btn:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        var(--shadow-md);
+}
+
+/* ==========================================
+   IMAGE PREVIEW GRID
+========================================== */
+
+.rental-preview-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill,
+            minmax(160px,
+                1fr));
+
+    gap: 18px;
+
+    margin-top: 24px;
+}
+
+.rental-preview-card {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius:
+        20px;
+
+    aspect-ratio:
+        1 / 1;
+
+    border:
+        1px solid var(--color-border);
+
+    background:
+        var(--color-surface);
+}
+
+.rental-preview-card img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+/* ==========================================
+   REMOVE IMAGE BUTTON
+========================================== */
+
+.rental-preview-card button {
+    position: absolute;
+
+    top: 10px;
+    right: 10px;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(0,
+            0,
+            0,
+            .75);
+
+    color: white;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        background .2s ease;
+}
+
+.rental-preview-card button:hover {
+    transform:
+        scale(1.08);
+
+    background:
+        rgba(220,
+            38,
+            38,
+            .95);
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .rental-form__row {
+        grid-template-columns:
+            1fr;
+
+        gap: 14px;
+    }
+
+    .rental-upload-box {
+        min-height: 220px;
+
+        border-radius:
+            22px;
+
+        padding: 24px;
+    }
+
+    .rental-upload-icon {
+        width: 72px;
+        height: 72px;
+
+        font-size: 36px;
+    }
+
+    .rental-upload-box h4 {
+        font-size: 18px;
+    }
+
+    .rental-upload-box p {
+        font-size: 14px;
+    }
+
+    .rental-preview-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 14px;
+    }
+}

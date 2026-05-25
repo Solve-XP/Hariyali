@@ -11,13 +11,18 @@ import Fertilizers from "../pages/farmer/Fertilizers";
 import Pesticides from "../pages/farmer/Pesticides";
 import Incomes from "../pages/farmer/Incomes";
 import Expenses from "../pages/farmer/Expenses";
-import Rentals from "../pages/farmer/Rentals";
+// import Rentals from "../pages/farmer/Rentals";
 import Profile from "../pages/profile/Profile";
 import Marketplace from "../pages/marketplace/Marketplace";
 import MyListings from "../pages/marketplace/MyListings";
 import CreateListing from "../pages/marketplace/CreateListing";
 import EditListing from "../pages/marketplace/EditListing";
 import ListingDetails from "../pages/marketplace/ListingDetails";
+import Rentals from "../pages/rentals/Rentals";
+import MyRentals from "../pages/rentals/MyRentals";
+import CreateRental from "../pages/rentals/CreateRental";
+import EditRental from "../pages/rentals/EditRental";
+import RentalDetails from "../pages/rentals/RentalDetails";
 
 
 
@@ -33,13 +38,18 @@ function FarmerRoutes() {
           <Route path="pesticides" element={<Pesticides />} />
           <Route path="incomes" element={<Incomes />} />
           <Route path="expenses" element={<Expenses />} />
-          <Route path="rentals" element={<Rentals />} />
+          {/* <Route path="rentals" element={<Rentals />} /> */}
           <Route path="profile" element={<Profile />} />
           <Route path="marketplace" element={<Marketplace />} />
           <Route path="marketplace/my-listings" element={<MyListings />} />
           <Route path="marketplace/create" element={<CreateListing />} />
           <Route path="marketplace/:id" element={<ListingDetails />} />
           <Route path="marketplace/edit/:id" element={<EditListing />} />
+          <Route path="rentals" element={<Rentals />} />
+          <Route path="rentals/my-rentals" element={<MyRentals />} />
+          <Route path="rentals/create" element={<CreateRental />} />
+          <Route path="rentals/edit/:id" element={<EditRental />} />
+          <Route path="rentals/:id" element={<RentalDetails />} />
         </Route>
       </Routes>
     </ProtectedRoute>

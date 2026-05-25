@@ -629,6 +629,9 @@
   "units_other": "Other"
 },
   "rental": {
+    "equipmentName": "Equipment Name",
+    "perDay": "/day",
+    "perHour": "/hour",
     "title": "Equipment Rental",
     "subtitle": "Rent equipment from nearby owners",
     "list_title": "Available Equipment",
