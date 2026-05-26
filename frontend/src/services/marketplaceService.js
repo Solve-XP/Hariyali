@@ -1,89 +1,3 @@
-// // src/services/marketplaceService.js
-
-// import api from "../api/axios";
-
-// export const MarketplaceService = {
-
-//   /* ==========================================
-//      GET MARKETPLACE LISTINGS
-//   ========================================== */
-
-//   getListings(params = {}) {
-
-//     return api.get(
-//       "/marketplace/listings",
-//       {
-//         params,
-//       }
-//     );
-//   },
-
-//   /* ==========================================
-//      GET MY LISTINGS
-//   ========================================== */
-
-//   getMyListings() {
-
-//     return api.get(
-//       "/marketplace/my-listings"
-//     );
-//   },
-
-//   /* ==========================================
-//      GET SINGLE LISTING
-//   ========================================== */
-
-//   getListingById(listingId) {
-
-//     return api.get(
-//       `/marketplace/listings/${listingId}`
-//     );
-//   },
-
-//   /* ==========================================
-//      CREATE LISTING
-//   ========================================== */
-
-//   createListing(formData) {
-
-//     return api.post(
-//       "/marketplace/listings",
-//       formData,
-//       {
-//         headers: {
-//           "Content-Type":
-//             "multipart/form-data",
-//         },
-//       }
-//     );
-//   },
-
-//   /* ==========================================
-//      UPDATE LISTING
-//   ========================================== */
-
-//   updateListing(
-//   listingId,
-//   payload
-// ) {
-//   return api.patch(
-//     `/marketplace/listings/${listingId}`,
-//     payload
-//   );
-// },
-
-//   /* ==========================================
-//      DELETE LISTING
-//   ========================================== */
-
-//   deleteListing(listingId) {
-
-//     return api.delete(
-//       `/marketplace/listings/${listingId}`
-//     );
-//   },
-// };
-
 import api
 from "../api/axios";
 
@@ -120,7 +34,7 @@ function cleanParams(
 export const MarketplaceService = {
 
   /* ========================================
-      GET MARKETPLACE LISTINGS
+      PRIVATE LISTINGS
   ========================================= */
 
   async getListings(
@@ -144,7 +58,31 @@ export const MarketplaceService = {
   },
 
   /* ========================================
-      GET MY LISTINGS
+      PUBLIC LISTINGS
+  ========================================= */
+
+  async getPublicListings(
+    params = {}
+  ) {
+
+    const response =
+      await api.get(
+
+        `${BASE_URL}/public/listings`,
+
+        {
+          params:
+            cleanParams(
+              params
+            ),
+        }
+      );
+
+    return response;
+  },
+
+  /* ========================================
+      MY LISTINGS
   ========================================= */
 
   async getMyListings(
@@ -168,7 +106,7 @@ export const MarketplaceService = {
   },
 
   /* ========================================
-      GET SINGLE LISTING
+      SINGLE LISTING
   ========================================= */
 
   async getListingById(
@@ -194,7 +132,7 @@ export const MarketplaceService = {
   },
 
   /* ========================================
-      CREATE LISTING
+      CREATE
   ========================================= */
 
   async createListing(
@@ -220,7 +158,7 @@ export const MarketplaceService = {
   },
 
   /* ========================================
-      UPDATE LISTING
+      UPDATE
   ========================================= */
 
   async updateListing(
@@ -249,7 +187,7 @@ export const MarketplaceService = {
   },
 
   /* ========================================
-      DELETE LISTING
+      DELETE
   ========================================= */
 
   async deleteListing(

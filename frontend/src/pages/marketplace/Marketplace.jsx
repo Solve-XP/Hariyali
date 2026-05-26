@@ -61,8 +61,9 @@ export default function Marketplace() {
   } = useApp();
 
   const {
-    isFarmer,
-  } = useAuth();
+  isFarmer,
+  isAuthenticated,
+} = useAuth();
 
   const [listings,
     setListings] =
@@ -153,66 +154,83 @@ export default function Marketplace() {
     return sorted;
   }
 
-  async function fetchListings() {
+  async function
+  fetchListings() {
 
-    try {
+  try {
 
-      setLoading(
-        true
-      );
+    setLoading(
+      true
+    );
 
-      const params = {
-        search,
-      };
+    const params = {
+      search,
+    };
 
-      if (
-        isFarmer
-      ) {
+    /* ======================================
+       FARMER EXCLUDE OWN
+    ====================================== */
 
-        params.exclude_my_listings =
-          true;
-      }
-
-      const response =
-        await MarketplaceService
-          .getListings(
-            params
-          );
-
-      const data =
-        response?.data ||
-        [];
-
-      setListings(
-        applySorting(
-          data
-        )
-      );
-
-    } catch (
-      error
+    if (
+      isAuthenticated &&
+      isFarmer
     ) {
 
-      pushToast(
-
-        getErrorMessage(
-          error
-        ) ||
-
-        t(
-          "marketplace.failedToLoad"
-        ),
-
-        "error"
-      );
-
-    } finally {
-
-      setLoading(
-        false
-      );
+      params.exclude_my_listings =
+        true;
     }
+
+    /* ======================================
+       API SWITCH
+    ====================================== */
+
+    const response =
+      isAuthenticated
+
+        ? await MarketplaceService
+            .getListings(
+              params
+            )
+
+        : await MarketplaceService
+            .getPublicListings(
+              params
+            );
+
+    const data =
+      response?.data ||
+      [];
+
+    setListings(
+      applySorting(
+        data
+      )
+    );
+
+  } catch (
+    error
+  ) {
+
+    pushToast(
+
+      getErrorMessage(
+        error
+      ) ||
+
+      t(
+        "marketplace.failedToLoad"
+      ),
+
+      "error"
+    );
+
+  } finally {
+
+    setLoading(
+      false
+    );
   }
+}
 
   useEffect(() => {
 
@@ -247,7 +265,8 @@ export default function Marketplace() {
           FARMER TABS
       ====================================== */}
 
-      {isFarmer && (
+      {isAuthenticated &&
+        isFarmer && (
 
         <MarketplaceTabs />
 
@@ -322,22 +341,45 @@ export default function Marketplace() {
           }
 
           onViewDetails={(
-              listing
-            ) =>
+            listing
+          ) => {
+
+            /* ==============================
+              PUBLIC LOCK
+            =============================== */
+
+            if (
+              listing?.is_locked
+            ) {
+
+              pushToast(
+                t("authMessages.loginToViewListing"),
+                "error"
+              );
+
               navigate(
-                `${
-                  isFarmer
-                    ? "/farmer"
-                    : "/merchant"
-                }/marketplace/${listing.id}`,
-                {
-                  state: {
-                    from:
-                      "marketplace",
-                  },
-                }
-              )
+                "/login"
+              );
+
+              return;
             }
+
+            navigate(
+
+              `${
+                isFarmer
+                  ? "/farmer"
+                  : "/merchant"
+              }/marketplace/${listing.id}`,
+
+              {
+                state: {
+                  from:
+                    "marketplace",
+                },
+              }
+            );
+          }}
 
           onImageClick={(
             image

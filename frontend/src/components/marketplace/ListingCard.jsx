@@ -310,7 +310,10 @@ export default function ListingCard({
           ) : (
             <ContactActions
               phone={
-                listing?.seller_phone
+                listing.seller_phone
+              }
+              isLocked={
+                listing.is_locked
               }
             />
           )}

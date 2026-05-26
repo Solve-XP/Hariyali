@@ -6,6 +6,9 @@ import Signup from "../pages/Signup";
 import AdminRoutes from "./AdminRoutes";
 import FarmerRoutes from "./FarmerRoutes";
 import MerchantRoutes from "./MerchantRoutes";
+import Marketplace from "../pages/marketplace/Marketplace";
+import Rentals from "../pages/rentals/Rentals";
+
 
 
 function AppRoutes() {
@@ -27,6 +30,20 @@ function AppRoutes() {
       <Route
         path="/signup"
         element={<Signup />}
+      />
+
+      <Route
+        path="/marketplace"
+        element={
+          <Marketplace />
+        }
+      />
+
+      <Route
+        path="/rentals"
+        element={
+          <Rentals />
+        }
       />
 
       <Route

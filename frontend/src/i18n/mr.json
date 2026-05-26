@@ -860,5 +860,12 @@
   "current_password_required": "सध्याचा पासवर्ड आवश्यक आहे",
   "password_validation": "पासवर्ड किमान 8 अक्षरांचा असावा",
   "password_mismatch": "पासवर्ड जुळत नाहीत"
+},
+"authMessages": {
+  "loginRequired": "लॉगिन आवश्यक आहे",
+  "loginToCall": "विक्रेत्याला कॉल करण्यासाठी लॉगिन करा",
+  "loginToWhatsapp": "व्हॉट्सअ‍ॅपवर चॅट करण्यासाठी लॉगिन करा",
+  "loginToViewDetails": "संपूर्ण माहिती पाहण्यासाठी लॉगिन करा",
+  "loginToViewListing": "लिस्टिंग तपशील पाहण्यासाठी लॉगिन करा"
 }
 }
