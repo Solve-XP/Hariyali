@@ -132,6 +132,16 @@ async def get_all_listings(
         exclude_my_listings=exclude_my_listings
     )
 
+@router.get("/public/listings")
+async def get_public_listings(
+
+    search: Optional[str] = None
+):
+
+    return await marketplace_service.get_public_listings(
+        search=search
+    )
+
 
 @router.get("/my-listings")
 async def get_my_listings(

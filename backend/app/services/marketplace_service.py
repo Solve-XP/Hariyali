@@ -4,6 +4,7 @@ from datetime import (
     datetime
 )
 
+
 from fastapi import (
     HTTPException
 )
@@ -14,6 +15,11 @@ from app.integrations.s3 import (
 
 from app.utils.normalize import (
     normalize_text
+)
+
+from app.utils.mask import (
+    mask_name,
+    mask_phone
 )
 
 
@@ -261,6 +267,76 @@ class MarketplaceService:
             })
 
         return formatted_list
+
+    async def get_public_listings(
+        self,
+        search: str = None
+    ):
+
+        listings = await self.repo.get_all_listings(
+            search=search
+        )
+
+        masked_list = []
+
+        for item in listings:
+
+            masked_list.append({
+
+                "id":
+                    str(item["_id"]),
+
+                "crop_name":
+                    item["crop_name"],
+
+                "farm_name":
+                    item["farm_name"],
+
+                "quantity":
+                    item["quantity"],
+
+                "unit":
+                    item["unit"],
+
+                "expected_price":
+                    item["expected_price"],
+
+                "harvest_date":
+                    item["harvest_date"],
+
+                "village":
+                    item["village"],
+
+                "taluka":
+                    item["taluka"],
+
+                "district":
+                    item["district"],
+
+                "state":
+                    item["state"],
+
+                "description":
+                    item["description"],
+
+                "crop_images":
+                    item["crop_images"],
+
+                "seller_name":
+                    mask_name(
+                        item["seller_name"]
+                    ),
+
+                "seller_phone":
+                    mask_phone(
+                        item["seller_phone"]
+                    ),
+
+                "is_locked":
+                    True
+            })
+
+        return masked_list
 
     async def get_my_listings(
         self,

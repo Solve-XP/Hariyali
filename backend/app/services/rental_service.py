@@ -28,6 +28,10 @@ from app.integrations.s3 import (
 from app.utils.financial_year import (
     get_current_financial_year
 )
+from app.utils.mask import (
+    mask_name,
+    mask_phone
+)
 
 from app.utils.normalize import (
     normalize_text
@@ -316,6 +320,79 @@ class RentalService:
             )
 
         return rental
+    
+
+
+    async def get_public_rentals(
+
+        self,
+
+        financial_year: str = None,
+
+        search: str = None
+    ):
+
+        rentals = await self.rental_repo.get_all_rentals(
+
+            financial_year,
+
+            search
+        )
+
+        masked_rentals = []
+
+        for item in rentals:
+
+            masked_rentals.append({
+
+                "id":
+                    item["id"],
+
+                "equipment_name":
+                    item["equipment_name"],
+
+                "price_per_hour":
+                    item["price_per_hour"],
+
+                "price_per_day":
+                    item["price_per_day"],
+
+                "village":
+                    item["village"],
+
+                "taluka":
+                    item["taluka"],
+
+                "district":
+                    item["district"],
+
+                "state":
+                    item["state"],
+
+                "equipment_images":
+                    item["equipment_images"],
+
+                "description":
+                    item["description"],
+
+                "owner_name":
+                    mask_name(
+                        item["owner_name"]
+                    ),
+
+                "phone":
+                    mask_phone(
+                        item["phone"]
+                    ),
+
+                "is_locked":
+                    True
+            })
+
+        return masked_rentals
+
+
+
 
     async def update_rental(
 

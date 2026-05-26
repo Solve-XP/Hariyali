@@ -120,6 +120,19 @@ async def get_all_rentals(
         exclude_my_listings
     )
 
+@router.get("/public")
+async def get_public_rentals(
+
+    financial_year: Optional[str] = None,
+
+    search: Optional[str] = None
+):
+
+    return await rental_service.get_public_rentals(
+        financial_year,
+        search
+    )
+
 
 @router.get("/my-listings")
 async def get_my_rentals(
