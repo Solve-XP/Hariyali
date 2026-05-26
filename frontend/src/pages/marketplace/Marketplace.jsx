@@ -7,12 +7,11 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import { useTranslation } from "react-i18next";
+import {
+  useTranslation,
+} from "react-i18next";
 
 import "./Marketplace.css";
-
-import PageHeader
-from "../../components/PageHeader";
 
 import ListingGrid
 from "../../components/marketplace/ListingGrid";
@@ -61,30 +60,39 @@ export default function Marketplace() {
   } = useApp();
 
   const {
-  isFarmer,
-  isAuthenticated,
-} = useAuth();
+    isFarmer,
+    isAuthenticated,
+  } = useAuth();
 
-  const [listings,
-    setListings] =
-    useState([]);
+  const [
+    listings,
+    setListings,
+  ] = useState([]);
 
-  const [loading,
-    setLoading] =
-    useState(true);
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
 
-  const [search,
-    setSearch] =
-    useState("");
+  const [
+    search,
+    setSearch,
+  ] = useState("");
 
-  const [sortBy,
-    setSortBy] =
-    useState("latest");
+  const [
+    sortBy,
+    setSortBy,
+  ] = useState("latest");
 
   const [
     selectedImage,
     setSelectedImage,
   ] = useState(null);
+
+  const [
+    showAll,
+    setShowAll,
+  ] = useState(false);
 
   /* ==========================================
       SORT
@@ -154,83 +162,82 @@ export default function Marketplace() {
     return sorted;
   }
 
+  /* ==========================================
+      FETCH
+  ========================================== */
+
   async function
   fetchListings() {
 
-  try {
+    try {
 
-    setLoading(
-      true
-    );
+      setLoading(
+        true
+      );
 
-    const params = {
-      search,
-    };
+      const params = {
+        search,
+      };
 
-    /* ======================================
-       FARMER EXCLUDE OWN
-    ====================================== */
+      if (
+        isAuthenticated &&
+        isFarmer
+      ) {
 
-    if (
-      isAuthenticated &&
-      isFarmer
+        params.exclude_my_listings =
+          true;
+      }
+
+      const response =
+
+        isAuthenticated
+
+          ? await MarketplaceService
+              .getListings(
+                params
+              )
+
+          : await MarketplaceService
+              .getPublicListings(
+                params
+              );
+
+      const data =
+        response?.data ||
+        [];
+
+      setListings(
+
+        applySorting(
+          data
+        )
+
+      );
+
+    } catch (
+      error
     ) {
 
-      params.exclude_my_listings =
-        true;
+      pushToast(
+
+        getErrorMessage(
+          error
+        ) ||
+
+        t(
+          "marketplace.failedToLoad"
+        ),
+
+        "error"
+      );
+
+    } finally {
+
+      setLoading(
+        false
+      );
     }
-
-    /* ======================================
-       API SWITCH
-    ====================================== */
-
-    const response =
-      isAuthenticated
-
-        ? await MarketplaceService
-            .getListings(
-              params
-            )
-
-        : await MarketplaceService
-            .getPublicListings(
-              params
-            );
-
-    const data =
-      response?.data ||
-      [];
-
-    setListings(
-      applySorting(
-        data
-      )
-    );
-
-  } catch (
-    error
-  ) {
-
-    pushToast(
-
-      getErrorMessage(
-        error
-      ) ||
-
-      t(
-        "marketplace.failedToLoad"
-      ),
-
-      "error"
-    );
-
-  } finally {
-
-    setLoading(
-      false
-    );
   }
-}
 
   useEffect(() => {
 
@@ -241,25 +248,107 @@ export default function Marketplace() {
     sortBy,
   ]);
 
+  /* ==========================================
+      PUBLIC LIMIT
+  ========================================== */
+
+  const visibleListings =
+
+    !isAuthenticated &&
+    !showAll
+
+      ? listings.slice(
+          0,
+          8
+        )
+
+      : listings;
+
   return (
 
     <div className="
       marketplace-page
     ">
 
-      <PageHeader
-        title={
-          t(
-            "marketplace.marketplace"
-          )
-        }
+      {/* ======================================
+          PUBLIC HEADER
+      ====================================== */}
 
-        subtitle={
-          t(
-            "marketplace.browseListings"
-          )
-        }
-      />
+      <div className="
+        marketplace-public-header
+      ">
+
+        <div className="
+          marketplace-public-content
+        ">
+
+          <h1 className="
+            marketplace-public-title
+          ">
+
+            {t(
+              "marketplace.marketplace"
+            )}
+
+          </h1>
+
+          <p className="
+            marketplace-public-subtitle
+          ">
+
+            {t(
+              "marketplace.browseListings"
+            )}
+
+          </p>
+
+        </div>
+
+        {!isAuthenticated && (
+
+          <div className="
+            marketplace-auth-actions
+          ">
+
+            <button
+              className="
+                marketplace-login-btn
+              "
+              onClick={() =>
+                navigate(
+                  "/login"
+                )
+              }
+            >
+
+              {t(
+                "auth.login"
+              )}
+
+            </button>
+
+            <button
+              className="
+                marketplace-signup-btn
+              "
+              onClick={() =>
+                navigate(
+                  "/signup"
+                )
+              }
+            >
+
+              {t(
+                "auth.signup"
+              )}
+
+            </button>
+
+          </div>
+
+        )}
+
+      </div>
 
       {/* ======================================
           FARMER TABS
@@ -305,7 +394,7 @@ export default function Marketplace() {
       {loading ? (
 
         <ListingSkeleton
-          count={6}
+          count={8}
         />
 
       ) : !listings
@@ -327,68 +416,104 @@ export default function Marketplace() {
 
       ) : (
 
-        <ListingGrid
-          listings={
-            listings
-          }
+        <>
 
-          type="
-            marketplace
-          "
-
-          isOwner={
-            false
-          }
-
-          onViewDetails={(
-            listing
-          ) => {
-
-            /* ==============================
-              PUBLIC LOCK
-            =============================== */
-
-            if (
-              listing?.is_locked
-            ) {
-
-              pushToast(
-                t("authMessages.loginToViewListing"),
-                "error"
-              );
-
-              navigate(
-                "/login"
-              );
-
-              return;
+          <ListingGrid
+            listings={
+              visibleListings
             }
 
-            navigate(
+            type="
+              marketplace
+            "
 
-              `${
-                isFarmer
-                  ? "/farmer"
-                  : "/merchant"
-              }/marketplace/${listing.id}`,
+            isOwner={
+              false
+            }
 
-              {
-                state: {
-                  from:
-                    "marketplace",
-                },
+            onViewDetails={(
+              listing
+            ) => {
+
+              if (
+                listing?.is_locked
+              ) {
+
+                pushToast(
+                  t(
+                    "authMessages.loginToViewListing"
+                  ),
+                  "error"
+                );
+
+                navigate(
+                  "/login"
+                );
+
+                return;
               }
-            );
-          }}
 
-          onImageClick={(
-            image
-          ) =>
-            setSelectedImage(
+              navigate(
+
+                `${
+                  isFarmer
+                    ? "/farmer"
+                    : "/merchant"
+                }/marketplace/${listing.id}`,
+
+                {
+                  state: {
+                    from:
+                      "marketplace",
+                  },
+                }
+              );
+            }}
+
+            onImageClick={(
               image
-            )
-          }
-        />
+            ) =>
+              setSelectedImage(
+                image
+              )
+            }
+          />
+
+          {!isAuthenticated &&
+            listings.length > 8 && (
+
+            <div className="
+              marketplace-view-all
+            ">
+
+              <button
+                className="
+                  marketplace-view-all-btn
+                "
+                onClick={() =>
+                  setShowAll(
+                    !showAll
+                  )
+                }
+              >
+
+                {showAll
+
+                  ? t(
+                      "marketplace.showLess"
+                    )
+
+                  : t(
+                      "marketplace.viewAll"
+                    )}
+
+              </button>
+
+            </div>
+
+          )}
+
+        </>
 
       )}
 

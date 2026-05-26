@@ -56,7 +56,9 @@
     "admin_id_placeholder": "प्रशासक आयडी टाका",
     "admin_demo": "डेमो प्रशासक",
     "farmer_demo": "डेमो शेतकरी",
-    "role":"भूमिका"
+    "role":"भूमिका",
+    "login": "लॉगिन",
+    "signup": "साइन अप"
   },
    
   "signup": {
@@ -240,6 +242,7 @@
   },
 
    "marketplace": {
+    "title": "मार्केटप्लेस",
     "expectedPrice": "अपेक्षित किंमत",
     "expectedQuantity": "अपेक्षित प्रमाण",
     "expectedHarvestDate": "अपेक्षित कापणी तारीख",
@@ -252,7 +255,9 @@
     "failedToLoad": "मार्केटप्लेस लोड करण्यात अयशस्वी",
     "browseListings": "मार्केटप्लेस लिस्टिंग ब्राउज करा",
     "noListingsFound": "कोणतीही मार्केटप्लेस लिस्टिंग आढळली नाही",
-    "trySearchFilters": "शोध फिल्टर बदलून पहा."
+    "trySearchFilters": "शोध फिल्टर बदलून पहा.",
+    "viewAll": "सर्व पहा",
+    "showLess": "कमी दाखवा"
   },
 
    "listingDetails": {

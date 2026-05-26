@@ -275,6 +275,427 @@
 }
 
 /* ==========================================
+   PUBLIC MARKETPLACE
+========================================== */
+
+.marketplace-page {
+    width: 100%;
+    min-height: 100vh;
+
+    padding: 32px 24px 60px;
+
+    background: #f8fafc;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ==========================================
+   PUBLIC HEADER
+========================================== */
+
+.marketplace-public-header {
+    max-width: 1440px;
+
+    width: 100%;
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+}
+
+.marketplace-public-content {
+    flex: 1;
+}
+
+.marketplace-public-title {
+    margin: 0;
+
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.1;
+
+    color: #0f172a;
+}
+
+.marketplace-public-subtitle {
+    margin-top: 8px;
+
+    font-size: 17px;
+    font-weight: 500;
+
+    color: #64748b;
+}
+
+/* ==========================================
+   AUTH BUTTONS
+========================================== */
+
+.marketplace-auth-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.marketplace-login-btn,
+.marketplace-signup-btn {
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    padding: 14px 24px;
+
+    border-radius: 14px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    transition: all .2s ease;
+}
+
+.marketplace-login-btn {
+    background: #ffffff;
+    color: #0f172a;
+
+    border: 1px solid #dbe4ee;
+}
+
+.marketplace-signup-btn {
+    background: #0f8b5f;
+    color: #ffffff;
+
+    box-shadow:
+        0 10px 24px rgba(15, 139, 95, .18);
+}
+
+.marketplace-login-btn:hover,
+.marketplace-signup-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   FILTERS
+========================================== */
+
+.marketplace-page .listing-filters {
+    max-width: 1440px;
+    width: 100%;
+
+    margin: 0 auto;
+
+    padding: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 4px 18px rgba(15, 23, 42, .04);
+}
+
+/* ==========================================
+   GRID
+========================================== */
+
+.marketplace-page .listing-grid {
+    max-width: 1440px;
+    width: 100%;
+
+    margin: 0 auto;
+}
+
+/* ==========================================
+   CARD POLISH
+========================================== */
+
+.marketplace-page .listing-card {
+    background: #ffffff;
+
+    border: 1px solid #e7edf3;
+
+    border-radius: 26px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 6px 24px rgba(15, 23, 42, .05);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.marketplace-page .listing-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 18px 40px rgba(15, 23, 42, .10);
+}
+
+/* ==========================================
+   VIEW ALL BUTTON
+========================================== */
+
+.marketplace-view-all {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 8px;
+}
+
+.marketplace-view-all-btn {
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    min-width: 240px;
+
+    padding: 16px 28px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(135deg,
+            #0f8b5f,
+            #0b6e4c);
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    box-shadow:
+        0 12px 30px rgba(15, 139, 95, .22);
+
+    transition: all .22s ease;
+}
+
+.marketplace-view-all-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 18px 40px rgba(15, 139, 95, .30);
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 1024px) {
+
+    .marketplace-page {
+        padding:
+            24px 18px 50px;
+    }
+
+    .marketplace-public-title {
+        font-size: 36px;
+    }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .marketplace-page {
+        padding:
+            18px 14px 40px;
+    }
+
+    .marketplace-public-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .marketplace-auth-actions {
+        width: 100%;
+    }
+
+    .marketplace-login-btn,
+    .marketplace-signup-btn {
+        flex: 1;
+    }
+
+    .marketplace-public-title {
+        font-size: 30px;
+    }
+
+    .marketplace-public-subtitle {
+        font-size: 15px;
+    }
+
+    .marketplace-page .listing-filters {
+        padding: 14px;
+        border-radius: 18px;
+    }
+
+    .marketplace-view-all-btn {
+        width: 100%;
+    }
+}
+/* ==========================================
+   FILTER CONTAINER
+========================================== */
+
+.marketplace-page .listing-filters {
+    max-width: 1440px;
+
+    margin: 0 auto 36px;
+
+    padding: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 26px;
+
+    box-shadow:
+        0 4px 20px rgba(15, 23, 42, 0.04);
+}
+
+/* ==========================================
+   LISTING GRID WRAPPER
+========================================== */
+
+.marketplace-page .listing-grid {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+/* ==========================================
+   CARD POLISH
+========================================== */
+
+.marketplace-page .listing-card {
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+    border-radius: 26px;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e7edf3;
+
+    box-shadow:
+        0 6px 24px rgba(15, 23, 42, 0.05);
+}
+
+.marketplace-page .listing-card:hover {
+    transform:
+        translateY(-6px);
+
+    box-shadow:
+        0 18px 40px rgba(15, 23, 42, 0.10);
+}
+
+/* ==========================================
+   IMAGE LOOK
+========================================== */
+
+.marketplace-page .listing-card-image,
+.marketplace-page .listing-image {
+    border-radius: 22px;
+}
+
+/* ==========================================
+   VIEW ALL BUTTON
+========================================== */
+
+.marketplace-view-all {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 42px;
+}
+
+.marketplace-view-all-btn {
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    min-width: 240px;
+
+    padding: 16px 28px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(135deg,
+            #0f8b5f,
+            #0b6e4c);
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    box-shadow:
+        0 12px 30px rgba(15, 139, 95, 0.22);
+
+    transition: all 0.22s ease;
+}
+
+.marketplace-view-all-btn:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 18px 40px rgba(15, 139, 95, 0.30);
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 1024px) {
+
+    .marketplace-page {
+        padding: 24px 18px 50px;
+    }
+
+    .marketplace-page .page-header-title {
+        font-size: 34px;
+    }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .marketplace-page {
+        padding: 18px 14px 40px;
+    }
+
+    .marketplace-page .page-header-title {
+        font-size: 28px;
+    }
+
+    .marketplace-page .listing-filters {
+        border-radius: 20px;
+        padding: 14px;
+    }
+
+    .marketplace-view-all-btn {
+        width: 100%;
+    }
+}
+
+/* ==========================================
    ACTIONS
 ========================================== */
 

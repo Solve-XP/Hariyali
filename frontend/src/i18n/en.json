@@ -56,7 +56,9 @@
     "admin_id_placeholder": "Enter admin ID",
     "admin_demo": "Demo admin",
     "farmer_demo": "Demo farmer",
-    "role":"Role"
+    "role":"Role",
+    "login": "Login",
+    "signup": "Sign Up"
   },
   
    "signup": {
@@ -241,6 +243,7 @@
 
 
   "marketplace": {
+    "title": "Marketplace",
     "expectedPrice": "Expected Price",
     "expectedQuantity": "Exp. Quantity",
     "expectedHarvestDate": "Exp. Harvest Date",
@@ -253,7 +256,9 @@
      "failedToLoad": "Failed to load marketplace",
     "browseListings": "Browse marketplace listings",
     "noListingsFound": "No marketplace listings found",
-    "trySearchFilters": "Try changing search filters."
+    "trySearchFilters": "Try changing search filters.",
+    "viewAll": "View All",
+    "showLess": "Show Less"
   },
   "myListings": {
     "failedToLoad": "Failed to load listings",
