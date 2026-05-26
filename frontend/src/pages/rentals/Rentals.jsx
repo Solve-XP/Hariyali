@@ -1,6 +1,5 @@
 import "./Rental.css";
 
-
 import {
   useEffect,
   useMemo,
@@ -20,15 +19,16 @@ import {
 } from "../../context/AppContext";
 
 import {
+  useAuth,
+} from "../../context/AuthContext";
+
+import {
   RentalsService,
 } from "../../services/rentalsService";
 
 import {
   getErrorMessage,
 } from "../../utils/errorHandler";
-
-import PageHeader
-from "../../components/PageHeader";
 
 import Card
 from "../../components/Card";
@@ -50,7 +50,6 @@ from "../../components/marketplace/ListingSkeleton";
 
 export default function Rentals() {
 
-
   const navigate =
     useNavigate();
 
@@ -61,44 +60,65 @@ export default function Rentals() {
     pushToast,
   } = useApp();
 
-  /* ==========================================
-      STATE
-  ========================================== */
+  const {
+    isAuthenticated,
+    isFarmer,
+  } = useAuth();
 
-  const [rentals,
-    setRentals] =
+  const [
+    rentals,
+    setRentals,
+  ] =
     useState([]);
 
-  const [loading,
-    setLoading] =
+  const [
+    loading,
+    setLoading,
+  ] =
     useState(true);
 
-  const [search,
-    setSearch] =
+  const [
+    search,
+    setSearch,
+  ] =
     useState("");
 
-  const [sortBy,
-    setSortBy] =
+  const [
+    sortBy,
+    setSortBy,
+  ] =
     useState("latest");
 
-  const [district,
-    setDistrict] =
+  const [
+    district,
+    setDistrict,
+  ] =
     useState("");
 
-  const [stateFilter,
-    setStateFilter] =
+  const [
+    stateFilter,
+    setStateFilter,
+  ] =
     useState("");
 
-  const [availability,
-    setAvailability] =
+  const [
+    availability,
+    setAvailability,
+  ] =
     useState("");
+
+  const [
+    showAll,
+    setShowAll,
+  ] =
+    useState(false);
 
   /* ==========================================
       FETCH RENTALS
   ========================================== */
 
   async function
-    fetchRentals() {
+  fetchRentals() {
 
     try {
 
@@ -106,15 +126,32 @@ export default function Rentals() {
         true
       );
 
+      const params = {
+        search,
+      };
+
+      if (
+        isAuthenticated &&
+        isFarmer
+      ) {
+
+        params.exclude_my_listings =
+          true;
+      }
+
       const response =
-        await RentalsService
-          .getRentals({
 
-            search,
+        isAuthenticated
 
-            exclude_my_listings:
-              true,
-          });
+          ? await RentalsService
+              .getRentals(
+                params
+              )
+
+          : await RentalsService
+              .getPublicRentals(
+                params
+              );
 
       setRentals(
         response
@@ -131,7 +168,9 @@ export default function Rentals() {
           error
         ) ||
 
-        "Failed to load rentals",
+        t(
+          "rentals.failedToLoad"
+        ),
 
         "error"
       );
@@ -160,8 +199,6 @@ export default function Rentals() {
       let data =
         [...rentals];
 
-      /* DISTRICT */
-
       if (
         district
       ) {
@@ -180,8 +217,6 @@ export default function Rentals() {
                 .toLowerCase()
           );
       }
-
-      /* STATE */
 
       if (
         stateFilter
@@ -202,8 +237,6 @@ export default function Rentals() {
           );
       }
 
-      /* AVAILABILITY */
-
       if (
         availability
       ) {
@@ -221,8 +254,6 @@ export default function Rentals() {
               availability
           );
       }
-
-      /* SORT */
 
       switch (
         sortBy
@@ -325,9 +356,17 @@ export default function Rentals() {
       sortBy,
     ]);
 
-  /* ==========================================
-      FILTER OPTIONS
-  ========================================== */
+  const visibleRentals =
+
+    !isAuthenticated &&
+    !showAll
+
+      ? filteredRentals.slice(
+          0,
+          8
+        )
+
+      : filteredRentals;
 
   const districtOptions =
     [
@@ -357,61 +396,124 @@ export default function Rentals() {
       ),
     ];
 
-  /* ==========================================
-      RENDER
-  ========================================== */
-return (
+  return (
 
     <div className="
       marketplace-page
     ">
 
-      <PageHeader
-        title={
-          t(
-            "rentals.marketplace"
-          )
-        }
-        subtitle={
-          t(
-            "rentals.marketplaceSubtitle"
-          )
-        }
-      />
-
-      {/* TABS */}
+      {/* HEADER */}
 
       <div className="
-        marketplace-tabs
+        marketplace-public-header
       ">
 
-        <button
-          className="
-            marketplace-tab
-            marketplace-tab--active
-          "
-        >
-          {t(
-            "rentals.marketplace"
-          )}
-        </button>
+        <div className="
+          marketplace-public-content
+        ">
 
-        <button
-          className="
-            marketplace-tab
-          "
-          onClick={() =>
-            navigate(
-              "/farmer/rentals/my-rentals"
-            )
-          }
-        >
-          {t(
-            "myRentals.myRentals"
-          )}
-        </button>
+          <h1 className="
+            marketplace-public-title
+          ">
+
+            {t(
+              "rentals.marketplace"
+            )}
+
+          </h1>
+
+          <p className="
+            marketplace-public-subtitle
+          ">
+
+            {t(
+              "rentals.marketplaceSubtitle"
+            )}
+
+          </p>
+
+        </div>
+
+        {!isAuthenticated && (
+
+          <div className="
+            marketplace-auth-actions
+          ">
+
+            <button
+              className="
+                marketplace-login-btn
+              "
+              onClick={() =>
+                navigate(
+                  "/login"
+                )
+              }
+            >
+              {t(
+                "auth.login"
+              )}
+            </button>
+
+            <button
+              className="
+                marketplace-signup-btn
+              "
+              onClick={() =>
+                navigate(
+                  "/signup"
+                )
+              }
+            >
+              {t(
+                "auth.signup"
+              )}
+            </button>
+
+          </div>
+
+        )}
 
       </div>
+
+      {/* FARMER TABS */}
+
+      {isAuthenticated &&
+        isFarmer && (
+
+        <div className="
+          marketplace-tabs
+        ">
+
+          <button
+            className="
+              marketplace-tab
+              marketplace-tab--active
+            "
+          >
+            {t(
+              "rentals.marketplace"
+            )}
+          </button>
+
+          <button
+            className="
+              marketplace-tab
+            "
+            onClick={() =>
+              navigate(
+                "/farmer/rentals/my-rentals"
+              )
+            }
+          >
+            {t(
+              "myRentals.myRentals"
+            )}
+          </button>
+
+        </div>
+
+      )}
 
       {/* FILTERS */}
 
@@ -434,8 +536,7 @@ return (
               e
             ) =>
               setSearch(
-                e.target
-                  .value
+                e.target.value
               )
             }
           />
@@ -448,12 +549,10 @@ return (
               e
             ) =>
               setDistrict(
-                e.target
-                  .value
+                e.target.value
               )
             }
           >
-
             <option value="">
               {t(
                 "rentals.allDistricts"
@@ -464,7 +563,6 @@ return (
               (
                 item
               ) => (
-
                 <option
                   key={item}
                   value={item}
@@ -473,129 +571,18 @@ return (
                 </option>
               )
             )}
-
-          </Select>
-
-          <Select
-            value={
-              stateFilter
-            }
-            onChange={(
-              e
-            ) =>
-              setStateFilter(
-                e.target
-                  .value
-              )
-            }
-          >
-
-            <option value="">
-              {t(
-                "rentals.allStates"
-              )}
-            </option>
-
-            {stateOptions.map(
-              (
-                item
-              ) => (
-
-                <option
-                  key={item}
-                  value={item}
-                >
-                  {item}
-                </option>
-              )
-            )}
-
-          </Select>
-
-          <Select
-            value={
-              availability
-            }
-            onChange={(
-              e
-            ) =>
-              setAvailability(
-                e.target
-                  .value
-              )
-            }
-          >
-
-            <option value="">
-              {t(
-                "rentalDetails.availability"
-              )}
-            </option>
-
-            <option value="true">
-              {t(
-                "rentalDetails.available"
-              )}
-            </option>
-
-            <option value="false">
-              {t(
-                "rentalDetails.unavailable"
-              )}
-            </option>
-
-          </Select>
-
-          <Select
-            value={
-              sortBy
-            }
-            onChange={(
-              e
-            ) =>
-              setSortBy(
-                e.target
-                  .value
-              )
-            }
-          >
-
-            <option value="latest">
-              {t(
-                "common.latest"
-              )}
-            </option>
-
-            <option value="oldest">
-              {t(
-                "common.oldest"
-              )}
-            </option>
-
-            <option value="price-low">
-              {t(
-                "common.priceLowHigh"
-              )}
-            </option>
-
-            <option value="price-high">
-              {t(
-                "common.priceHighLow"
-              )}
-            </option>
-
           </Select>
 
         </div>
 
       </Card>
 
-      {/* RENTALS GRID */}
+      {/* GRID */}
 
       {loading ? (
 
         <ListingSkeleton
-          count={6}
+          count={8}
         />
 
       ) : !filteredRentals
@@ -616,44 +603,96 @@ return (
 
       ) : (
 
-        <div className="
-          marketplace-grid
-        ">
+        <>
 
-          {filteredRentals.map(
-            (
-              rental
-            ) => (
+          <div className="
+            marketplace-grid
+          ">
 
-              <RentalCard
-                key={
-                  rental.id
-                }
+            {visibleRentals.map(
+              (
+                rental
+              ) => (
 
-                rental={
-                  rental
-                }
+                <RentalCard
+                  key={
+                    rental.id
+                  }
 
-                isOwner={
-                  false
-                }
+                  rental={
+                    rental
+                  }
 
-                onViewDetails={() =>
-                  navigate(
-                    `/farmer/rentals/${rental.id}`,
-                    {
-                      state: {
-                        from:
-                          "marketplace",
-                      },
+                  isOwner={
+                    false
+                  }
+
+                  onViewDetails={() => {
+
+                    if (
+                      rental?.is_locked
+                    ) {
+
+                      pushToast(
+                        t(
+                          "authMessages.loginToViewRental"
+                        ),
+                        "error"
+                      );
+
+                      navigate(
+                        "/login"
+                      );
+
+                      return;
                     }
+
+                    navigate(
+                      `/farmer/rentals/${rental.id}`
+                    );
+                  }}
+                />
+              )
+            )}
+
+          </div>
+
+          {!isAuthenticated &&
+            filteredRentals.length > 8 && (
+
+            <div className="
+              marketplace-view-all
+            ">
+
+              <button
+                className="
+                  marketplace-view-all-btn
+                "
+                onClick={() =>
+                  setShowAll(
+                    !showAll
                   )
                 }
-              />
-            )
+              >
+
+                {showAll
+
+                  ? t(
+                      "marketplace.showLess"
+                    )
+
+                  : t(
+                      "marketplace.viewAll"
+                    )}
+
+              </button>
+
+            </div>
+
           )}
 
-        </div>
+        </>
+
       )}
 
     </div>

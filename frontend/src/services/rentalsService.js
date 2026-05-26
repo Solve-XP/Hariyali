@@ -1,8 +1,6 @@
-import api from "../api/axios";
+// src/services/rentalsService.js
 
-import {
-  buildFormData,
-} from "../utils/formData";
+import api from "../api/axios";
 
 export const RentalsService = {
 
@@ -16,6 +14,22 @@ export const RentalsService = {
 
     return api.get(
       "/rentals",
+      {
+        params,
+      }
+    );
+  },
+
+  /* ==========================================
+     GET PUBLIC RENTALS
+  ========================================== */
+
+  getPublicRentals(
+    params = {}
+  ) {
+
+    return api.get(
+      "/rentals/public",
       {
         params,
       }
@@ -57,10 +71,6 @@ export const RentalsService = {
     const formData =
       new FormData();
 
-    /* ======================================
-       TEXT FIELDS
-    ====================================== */
-
     Object.entries(
       data
     ).forEach(
@@ -90,10 +100,6 @@ export const RentalsService = {
         }
       }
     );
-
-    /* ======================================
-       MULTIPLE IMAGES
-    ====================================== */
 
     if (
       data
@@ -140,10 +146,6 @@ export const RentalsService = {
     const formData =
       new FormData();
 
-    /* ======================================
-       TEXT FIELDS
-    ====================================== */
-
     Object.entries(
       data
     ).forEach(
@@ -173,10 +175,6 @@ export const RentalsService = {
         }
       }
     );
-
-    /* ======================================
-       MULTIPLE IMAGES
-    ====================================== */
 
     if (
       data
