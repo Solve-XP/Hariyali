@@ -3,11 +3,19 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 
+import MainLayout
+from "../layouts/MainLayout";
+
 import AdminRoutes from "./AdminRoutes";
 import FarmerRoutes from "./FarmerRoutes";
 import MerchantRoutes from "./MerchantRoutes";
 import Marketplace from "../pages/marketplace/Marketplace";
 import Rentals from "../pages/rentals/Rentals";
+
+import PrivacyPolicy from "../pages/static/PrivacyPolicy";
+import Terms from "../pages/static/Terms";
+import Support from "../pages/static/support";
+import Contact from "../pages/static/Contact";
 
 
 
@@ -60,6 +68,31 @@ function AppRoutes() {
         path="/merchant/*"
         element={<MerchantRoutes />}
       /> 
+
+      <Route
+        element={
+          <MainLayout />
+        }
+      >
+      
+        <Route
+          path="/privacy-policy"
+          element={<PrivacyPolicy />}
+        />
+
+        <Route
+          path="/terms"
+          element={<Terms />}
+        />
+        <Route
+          path="/support"
+          element={<Support />}
+        />
+        <Route
+          path="/contact"
+          element={<Contact />}
+        />
+      </Route>
 
     </Routes>
   );

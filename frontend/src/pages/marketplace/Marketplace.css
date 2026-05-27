@@ -2,19 +2,63 @@
    PAGE
 ========================================== */
 
-.marketplace-page {
+/* .marketplace-page {
+    width: 100%;
+
+    min-width: 0;
+
+    min-height: 100vh;
+
+    padding:
+        32px 24px 60px;
+
+    background:
+        #f8fafc;
+
     display: flex;
+
     flex-direction: column;
 
-    gap: 20px;
-}
+    gap: 24px;
 
+    overflow-x: hidden;
+
+    box-sizing:
+        border-box;
+} */
+
+
+.marketplace-page {
+    width: 100%;
+
+    min-width: 0;
+
+    min-height: 100vh;
+
+    padding:
+        32px 24px 60px;
+
+    background:
+        #f8fafc;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+
+    overflow-x: hidden;
+
+    box-sizing:
+        border-box;
+}
 /* ==========================================
    TABS
 ========================================== */
 
 .marketplace-tabs {
     display: flex;
+
     align-items: center;
 
     gap: 8px;
@@ -26,8 +70,7 @@
 
     padding: 4px;
 
-    border-radius:
-        16px;
+    border-radius: 16px;
 
     box-shadow:
         var(--shadow-xs);
@@ -63,10 +106,12 @@
 
 .marketplace-tab:hover {
     background:
-        rgba(255,
+        rgba(
             255,
             255,
-            .65);
+            255,
+            .65
+        );
 }
 
 .marketplace-tab--active {
@@ -81,217 +126,6 @@
 }
 
 /* ==========================================
-   MARKETPLACE DETAILS
-========================================== */
-
-.marketplace-details {
-    display: grid;
-
-    grid-template-columns:
-        minmax(560px, 1.1fr) minmax(420px, .9fr);
-
-    gap: 28px;
-
-    align-items: start;
-
-    width: 100%;
-}
-
-.marketplace-details__gallery {
-    min-width: 0;
-}
-
-.marketplace-details__content {
-    display: flex;
-    flex-direction: column;
-
-    min-width: 0;
-}
-
-/* ==========================================
-   HEADER
-========================================== */
-
-.marketplace-details__header {
-    display: flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        flex-start;
-
-    gap: 16px;
-
-    margin-bottom:
-        18px;
-}
-
-.marketplace-details__title {
-    margin: 0;
-
-    font-size:
-        34px;
-
-    font-weight:
-        800;
-
-    line-height:
-        1.15;
-
-    color:
-        var(--color-text);
-}
-
-.marketplace-details__farm {
-    margin:
-        8px 0 0;
-
-    font-size:
-        15px;
-
-    font-weight:
-        600;
-
-    color:
-        var(--color-text-muted);
-}
-
-.marketplace-details__price {
-    font-size:
-        42px;
-
-    font-weight:
-        800;
-
-    color:
-        var(--color-success);
-
-    white-space:
-        nowrap;
-}
-
-/* ==========================================
-   DETAILS GRID
-========================================== */
-
-.marketplace-details__grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 14px;
-}
-
-.marketplace-details__grid>div {
-    display: flex;
-    flex-direction: column;
-
-    gap: 6px;
-
-    padding: 16px;
-
-    border-radius:
-        18px;
-
-    background:
-        var(--color-surface-2);
-
-    border:
-        1px solid var(--color-border);
-}
-
-.marketplace-details__grid strong {
-    font-size:
-        12px;
-
-    font-weight:
-        700;
-
-    text-transform:
-        uppercase;
-
-    color:
-        var(--color-text-muted);
-}
-
-.marketplace-details__grid span {
-    font-size:
-        16px;
-
-    font-weight:
-        700;
-
-    color:
-        var(--color-text);
-}
-
-/* ==========================================
-   SECTION
-========================================== */
-
-.listing-section {
-    display: flex;
-    flex-direction: column;
-
-    gap: 12px;
-}
-
-.listing-section h3 {
-    margin: 0;
-
-    font-size:
-        18px;
-
-    font-weight:
-        700;
-
-    color:
-        var(--color-text);
-}
-
-.listing-section p {
-    margin: 0;
-
-    line-height:
-        1.8;
-
-    font-size:
-        15px;
-
-    color:
-        var(--color-text-2);
-}
-
-/* ==========================================
-   DETAILS CARD
-========================================== */
-
-.listing-details-card {
-    position: sticky;
-
-    top: 16px;
-}
-
-/* ==========================================
-   PUBLIC MARKETPLACE
-========================================== */
-
-.marketplace-page {
-    width: 100%;
-    min-height: 100vh;
-
-    padding: 32px 24px 60px;
-
-    background: #f8fafc;
-
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-/* ==========================================
    PUBLIC HEADER
 ========================================== */
 
@@ -300,24 +134,33 @@
 
     width: 100%;
 
+    min-width: 0;
+
     margin: 0 auto;
 
     display: flex;
+
     align-items: center;
-    justify-content: space-between;
+
+    justify-content:
+        space-between;
 
     gap: 24px;
 }
 
 .marketplace-public-content {
     flex: 1;
+
+    min-width: 0;
 }
 
 .marketplace-public-title {
     margin: 0;
 
     font-size: 42px;
+
     font-weight: 800;
+
     line-height: 1.1;
 
     color: #0f172a;
@@ -327,6 +170,7 @@
     margin-top: 8px;
 
     font-size: 17px;
+
     font-weight: 500;
 
     color: #64748b;
@@ -338,44 +182,68 @@
 
 .marketplace-auth-actions {
     display: flex;
+
     align-items: center;
+
     gap: 14px;
 }
 
 .marketplace-login-btn,
 .marketplace-signup-btn {
     border: none;
+
     outline: none;
+
     cursor: pointer;
 
-    padding: 14px 24px;
+    padding:
+        14px 24px;
 
-    border-radius: 14px;
+    border-radius:
+        14px;
 
-    font-size: 15px;
-    font-weight: 700;
+    font-size:
+        15px;
 
-    transition: all .2s ease;
+    font-weight:
+        700;
+
+    transition:
+        all .2s ease;
 }
 
 .marketplace-login-btn {
-    background: #ffffff;
-    color: #0f172a;
+    background:
+        #ffffff;
 
-    border: 1px solid #dbe4ee;
+    color:
+        #0f172a;
+
+    border:
+        1px solid #dbe4ee;
 }
 
 .marketplace-signup-btn {
-    background: #0f8b5f;
-    color: #ffffff;
+    background:
+        #0f8b5f;
+
+    color:
+        #ffffff;
 
     box-shadow:
-        0 10px 24px rgba(15, 139, 95, .18);
+        0 10px 24px
+        rgba(
+            15,
+            139,
+            95,
+            .18
+        );
 }
 
 .marketplace-login-btn:hover,
 .marketplace-signup-btn:hover {
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
 }
 
 /* ==========================================
@@ -384,20 +252,36 @@
 
 .marketplace-page .listing-filters {
     max-width: 1440px;
+
     width: 100%;
 
-    margin: 0 auto;
+    min-width: 0;
+
+    margin:
+        0 auto 36px;
 
     padding: 18px;
 
-    background: #ffffff;
+    background:
+        #ffffff;
 
-    border: 1px solid #e2e8f0;
+    border:
+        1px solid #e2e8f0;
 
-    border-radius: 24px;
+    border-radius:
+        26px;
 
     box-shadow:
-        0 4px 18px rgba(15, 23, 42, .04);
+        0 4px 20px
+        rgba(
+            15,
+            23,
+            42,
+            .04
+        );
+
+    box-sizing:
+        border-box;
 }
 
 /* ==========================================
@@ -405,192 +289,60 @@
 ========================================== */
 
 .marketplace-page .listing-grid {
-    max-width: 1440px;
     width: 100%;
 
+    max-width: 1440px;
+
+    min-width: 0;
+
     margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(
+                320px,
+                1fr
+            )
+        );
+
+    gap: 24px;
 }
 
 /* ==========================================
-   CARD POLISH
+   CARD
 ========================================== */
 
 .marketplace-page .listing-card {
-    background: #ffffff;
+    width: 100%;
 
-    border: 1px solid #e7edf3;
-
-    border-radius: 26px;
+    min-width: 0;
 
     overflow: hidden;
-
-    box-shadow:
-        0 6px 24px rgba(15, 23, 42, .05);
 
     transition:
         transform .25s ease,
         box-shadow .25s ease;
-}
 
-.marketplace-page .listing-card:hover {
-    transform: translateY(-6px);
-
-    box-shadow:
-        0 18px 40px rgba(15, 23, 42, .10);
-}
-
-/* ==========================================
-   VIEW ALL BUTTON
-========================================== */
-
-.marketplace-view-all {
-    display: flex;
-    justify-content: center;
-
-    margin-top: 8px;
-}
-
-.marketplace-view-all-btn {
-    border: none;
-    outline: none;
-    cursor: pointer;
-
-    min-width: 240px;
-
-    padding: 16px 28px;
-
-    border-radius: 18px;
+    border-radius:
+        26px;
 
     background:
-        linear-gradient(135deg,
-            #0f8b5f,
-            #0b6e4c);
+        #ffffff;
 
-    color: #ffffff;
-
-    font-size: 15px;
-    font-weight: 700;
+    border:
+        1px solid #e7edf3;
 
     box-shadow:
-        0 12px 30px rgba(15, 139, 95, .22);
-
-    transition: all .22s ease;
-}
-
-.marketplace-view-all-btn:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 18px 40px rgba(15, 139, 95, .30);
-}
-
-/* ==========================================
-   TABLET
-========================================== */
-
-@media (max-width: 1024px) {
-
-    .marketplace-page {
-        padding:
-            24px 18px 50px;
-    }
-
-    .marketplace-public-title {
-        font-size: 36px;
-    }
-}
-
-/* ==========================================
-   MOBILE
-========================================== */
-
-@media (max-width: 768px) {
-
-    .marketplace-page {
-        padding:
-            18px 14px 40px;
-    }
-
-    .marketplace-public-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .marketplace-auth-actions {
-        width: 100%;
-    }
-
-    .marketplace-login-btn,
-    .marketplace-signup-btn {
-        flex: 1;
-    }
-
-    .marketplace-public-title {
-        font-size: 30px;
-    }
-
-    .marketplace-public-subtitle {
-        font-size: 15px;
-    }
-
-    .marketplace-page .listing-filters {
-        padding: 14px;
-        border-radius: 18px;
-    }
-
-    .marketplace-view-all-btn {
-        width: 100%;
-    }
-}
-/* ==========================================
-   FILTER CONTAINER
-========================================== */
-
-.marketplace-page .listing-filters {
-    max-width: 1440px;
-
-    margin: 0 auto 36px;
-
-    padding: 18px;
-
-    background: #ffffff;
-
-    border: 1px solid #e2e8f0;
-
-    border-radius: 26px;
-
-    box-shadow:
-        0 4px 20px rgba(15, 23, 42, 0.04);
-}
-
-/* ==========================================
-   LISTING GRID WRAPPER
-========================================== */
-
-.marketplace-page .listing-grid {
-    max-width: 1440px;
-    margin: 0 auto;
-}
-
-/* ==========================================
-   CARD POLISH
-========================================== */
-
-.marketplace-page .listing-card {
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
-
-    border-radius: 26px;
-
-    overflow: hidden;
-
-    background: #ffffff;
-
-    border: 1px solid #e7edf3;
-
-    box-shadow:
-        0 6px 24px rgba(15, 23, 42, 0.05);
+        0 6px 24px
+        rgba(
+            15,
+            23,
+            42,
+            .05
+        );
 }
 
 .marketplace-page .listing-card:hover {
@@ -598,101 +350,85 @@
         translateY(-6px);
 
     box-shadow:
-        0 18px 40px rgba(15, 23, 42, 0.10);
+        0 18px 40px
+        rgba(
+            15,
+            23,
+            42,
+            .10
+        );
 }
 
 /* ==========================================
-   IMAGE LOOK
+   IMAGE
 ========================================== */
 
 .marketplace-page .listing-card-image,
 .marketplace-page .listing-image {
-    border-radius: 22px;
+    border-radius:
+        22px;
 }
 
 /* ==========================================
-   VIEW ALL BUTTON
+   VIEW ALL
 ========================================== */
 
 .marketplace-view-all {
     display: flex;
-    justify-content: center;
+
+    justify-content:
+        center;
 
     margin-top: 42px;
 }
 
 .marketplace-view-all-btn {
     border: none;
+
     outline: none;
+
     cursor: pointer;
 
     min-width: 240px;
 
-    padding: 16px 28px;
+    padding:
+        16px 28px;
 
-    border-radius: 18px;
+    border-radius:
+        18px;
 
     background:
-        linear-gradient(135deg,
+        linear-gradient(
+            135deg,
             #0f8b5f,
-            #0b6e4c);
+            #0b6e4c
+        );
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
-    font-size: 15px;
-    font-weight: 700;
+    font-size:
+        15px;
+
+    font-weight:
+        700;
 
     box-shadow:
-        0 12px 30px rgba(15, 139, 95, 0.22);
+        0 12px 30px
+        rgba(
+            15,
+            139,
+            95,
+            .22
+        );
 
-    transition: all 0.22s ease;
+    transition:
+        all .22s ease;
 }
 
 .marketplace-view-all-btn:hover {
     transform:
         translateY(-2px);
-
-    box-shadow:
-        0 18px 40px rgba(15, 139, 95, 0.30);
-}
-
-/* ==========================================
-   TABLET
-========================================== */
-
-@media (max-width: 1024px) {
-
-    .marketplace-page {
-        padding: 24px 18px 50px;
-    }
-
-    .marketplace-page .page-header-title {
-        font-size: 34px;
-    }
-}
-
-/* ==========================================
-   MOBILE
-========================================== */
-
-@media (max-width: 768px) {
-
-    .marketplace-page {
-        padding: 18px 14px 40px;
-    }
-
-    .marketplace-page .page-header-title {
-        font-size: 28px;
-    }
-
-    .marketplace-page .listing-filters {
-        border-radius: 20px;
-        padding: 14px;
-    }
-
-    .marketplace-view-all-btn {
-        width: 100%;
-    }
 }
 
 /* ==========================================
@@ -710,14 +446,35 @@
 }
 
 /* ==========================================
+   GLOBAL FIX
+========================================== */
+
+.marketplace-page,
+.marketplace-page *,
+.marketplace-public-header,
+.marketplace-page .listing-grid,
+.marketplace-page .listing-filters {
+    box-sizing:
+        border-box;
+
+    max-width:
+        100%;
+}
+
+/* ==========================================
    TABLET
 ========================================== */
 
-@media (max-width: 1100px) {
+@media (max-width: 1024px) {
 
-    .marketplace-details {
-        grid-template-columns:
-            1fr;
+    .marketplace-page {
+        padding:
+            24px 18px 50px;
+    }
+
+    .marketplace-public-title {
+        font-size:
+            36px;
     }
 }
 
@@ -728,38 +485,46 @@
 @media (max-width: 768px) {
 
     .marketplace-page {
-        gap: 16px;
+        padding:
+            18px 14px 40px;
     }
 
-    .marketplace-tabs {
+    .marketplace-public-header {
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+    }
+
+    .marketplace-auth-actions {
         width: 100%;
     }
 
-    .marketplace-tab {
+    .marketplace-login-btn,
+    .marketplace-signup-btn {
         flex: 1;
-
-        text-align:
-            center;
     }
 
-    .marketplace-details__header {
-        flex-direction:
-            column;
-    }
-
-    .marketplace-details__title {
+    .marketplace-public-title {
         font-size:
-            28px;
+            30px;
     }
 
-    .marketplace-details__price {
+    .marketplace-public-subtitle {
         font-size:
-            34px;
+            15px;
     }
 
-    .marketplace-details__grid {
-        grid-template-columns:
-            1fr;
+    .marketplace-page .listing-filters {
+        padding: 14px;
+
+        border-radius:
+            20px;
+    }
+
+    .marketplace-view-all-btn {
+        width: 100%;
     }
 
     .listing-actions {

@@ -11,6 +11,8 @@ import Fertilizers from "../pages/farmer/Fertilizers";
 import Pesticides from "../pages/farmer/Pesticides";
 import Incomes from "../pages/farmer/Incomes";
 import Expenses from "../pages/farmer/Expenses";
+
+
 // import Rentals from "../pages/farmer/Rentals";
 import Profile from "../pages/profile/Profile";
 import Marketplace from "../pages/marketplace/Marketplace";

@@ -1,0 +1,171 @@
+/* ==========================================
+   FOOTER
+========================================== */
+
+.app-footer {
+    width: 100%;
+
+    margin-top: auto;
+
+    padding:
+        14px var(--space-6);
+
+    border-top:
+        1px solid var(--color-border);
+
+    background:
+        var(--color-surface);
+
+    overflow: hidden;
+}
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+.app-footer__content {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    gap: 20px;
+
+    min-width: 0;
+}
+
+/* ==========================================
+   LEFT
+========================================== */
+
+.app-footer__copyright {
+    flex: 1;
+
+    font-size: 14px;
+
+    color:
+        var(--color-text-muted);
+
+    white-space: nowrap;
+}
+
+/* ==========================================
+   CENTER LINKS
+========================================== */
+
+.app-footer__links {
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        center;
+
+    gap: 22px;
+
+    flex-wrap: wrap;
+}
+
+.app-footer__links button {
+    border: none;
+
+    background:
+        transparent;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    font-size: 14px;
+
+    color:
+        var(--color-text-muted);
+
+    transition:
+        color .2s ease;
+}
+
+.app-footer__links button:hover {
+    color:
+        var(--color-primary);
+}
+
+/* ==========================================
+   RIGHT BRAND
+========================================== */
+
+.app-footer__brand {
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        flex-end;
+
+    gap: 6px;
+
+    border: none;
+
+    background:
+        transparent;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    font-size: 14px;
+
+    color:
+        var(--color-text-muted);
+
+    white-space: nowrap;
+
+    transition:
+        color .2s ease;
+}
+
+.app-footer__brand:hover {
+    color:
+        var(--color-primary);
+}
+
+.app-footer__brand strong {
+    font-weight: 700;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .app-footer__content {
+        flex-direction:
+            column;
+
+        align-items:
+            center;
+
+        text-align:
+            center;
+    }
+
+    .app-footer__copyright,
+    .app-footer__brand {
+        justify-content:
+            center;
+    }
+
+    .app-footer__links {
+        justify-content:
+            center;
+
+        gap: 16px;
+    }
+}

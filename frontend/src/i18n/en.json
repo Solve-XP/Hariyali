@@ -26,6 +26,7 @@
     "language": "Language",
     "english": "English",
     "marathi": "मराठी",
+    "hindi": "हिंदी",
     "user_role": "Farmer",
     "admin_role": "Administrator"
   },
@@ -744,7 +745,13 @@
   },
 
   "footer": {
-    "copyright": "Field Management — Empowering farmers with technology"
+    "copyright": "Field Management — Empowering farmers with technology",
+    "tagline": "Smart farming made simple",
+  "privacy": "Privacy Policy",
+  "terms": "Terms",
+  "support": "Support",
+  "contact": "Contact"
+
   },
 
 
