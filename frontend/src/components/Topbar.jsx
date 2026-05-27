@@ -20,9 +20,11 @@ const titleByPath = {
 
   "/farmer/expenses": "expenses.title",
 
-  "/farmer/rental": "rental.title",
+  "/farmer/rentals": "rental.title",
+  "/farmer/rentals/my-rentals": "rental.title",
 
   "/farmer/marketplace": "marketplace.title",
+  "/farmer/marketplace/my-listings": "marketplace.title",
     
   "/merchant/marketplace": "marketplace.title",
 

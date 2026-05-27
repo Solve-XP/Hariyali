@@ -2,6 +2,7 @@ import "./Farms.css";
 
 import { useEffect, useMemo, useState } from "react";
 
+import imageCompression from "browser-image-compression";
 import { useTranslation } from "react-i18next";
 
 import Card from "../../components/Card";
@@ -184,21 +185,110 @@ export default function Farms() {
     }));
   };
 
-  const handleImage = (e) => {
+  // const handleImage = (e) => {
 
-    const file = e.target.files[0];
+  //   const file = e.target.files[0];
 
-    if (!file) return;
+  //   if (!file) return;
 
-    setForm((prev) => ({
-      ...prev,
-      farm_photo: file,
-    }));
+  //   setForm((prev) => ({
+  //     ...prev,
+  //     farm_photo: file,
+  //   }));
 
-    setUploadPreview(
-      URL.createObjectURL(file)
-    );
+  //   setUploadPreview(
+  //     URL.createObjectURL(file)
+  //   );
+  // };
+  
+  const handleImage =
+  async (e) => {
+
+    try {
+
+      const file =
+        e.target
+          .files?.[0];
+
+      if (!file)
+        return;
+
+      pushToast(
+        "Optimizing image...",
+        "success"
+      );
+
+      /* ==========================
+         IMAGE COMPRESSION
+      ========================== */
+
+      const options = {
+
+        maxSizeMB:
+          0.8,
+
+        maxWidthOrHeight:
+          1920,
+
+        useWebWorker:
+          true,
+
+        fileType:
+          "image/jpeg",
+
+        initialQuality:
+          0.8,
+      };
+
+      const compressed =
+        await imageCompression(
+          file,
+          options
+        );
+
+      const optimizedFile =
+        new File(
+          [compressed],
+          file.name,
+          {
+            type:
+              "image/jpeg",
+          }
+        );
+
+      setForm(
+        (prev) => ({
+
+          ...prev,
+
+          farm_photo:
+            optimizedFile,
+        })
+      );
+
+      setUploadPreview(
+        URL.createObjectURL(
+          optimizedFile
+        )
+      );
+
+      pushToast(
+        "Image optimized successfully",
+        "success"
+      );
+
+      e.target.value =
+        "";
+
+    } catch {
+
+      pushToast(
+        "Failed to process image",
+        "error"
+      );
+    }
   };
+
 
   const handleSubmit = async (e) => {
 

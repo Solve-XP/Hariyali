@@ -399,7 +399,7 @@ export default function Rentals() {
   return (
 
     <div className="
-      marketplace-page
+      marketplace-page 
     ">
 
       {/* HEADER */}
@@ -605,9 +605,17 @@ export default function Rentals() {
 
         <>
 
-          <div className="
-            marketplace-grid
-          ">
+          <div  className={`
+
+    marketplace-grid
+
+    ${
+      !isAuthenticated
+        ? "public-grid"
+        : ""
+    }
+
+  `}>
 
             {visibleRentals.map(
               (

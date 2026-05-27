@@ -10,6 +10,7 @@ from "../Card";
 import Button
 from "../Button";
 
+
 import ImageCarousel
 from "../ImageCarousel";
 
@@ -271,9 +272,7 @@ export default function RentalCard({
 
           <Button
             size="sm"
-            variant="
-              secondary
-            "
+            variant="secondary"
             onClick={() =>
               onViewDetails?.(
                 rental
@@ -290,9 +289,7 @@ export default function RentalCard({
             <>
               <Button
                 size="sm"
-                variant="
-                  accent
-                "
+                variant="accent"
                 onClick={() =>
                   onEdit?.(
                     rental
@@ -306,9 +303,7 @@ export default function RentalCard({
 
               <Button
                 size="sm"
-                variant="
-                  danger
-                "
+                variant="danger"
                 onClick={() =>
                   onDelete?.(
                     rental
