@@ -812,6 +812,9 @@ import Card from "../Card";
 import Button from "../Button";
 import Input from "../Input";
 
+import imageCompression
+from "browser-image-compression";
+
 import {
   useApp
 } from "../../context/AppContext";
@@ -926,9 +929,100 @@ export default function RentalForm({
       IMAGE CHANGE
   ========================================== */
 
-  function handleImages(
-    event
-  ) {
+  // function handleImages(
+  //   event
+  // ) {
+
+  //   const files =
+  //     Array.from(
+  //       event.target
+  //         .files || []
+  //     );
+
+  //   if (!files.length)
+  //     return;
+
+  //   const totalImages =
+  //     previewImages.length +
+  //     files.length;
+
+  //   if (
+  //     totalImages > 5
+  //   ) {
+
+  //     pushToast({
+  //       message:
+  //         "Maximum 5 images allowed",
+  //       variant:
+  //         "error",
+  //     });
+
+  //     return;
+  //   }
+
+  //   const invalidFile =
+  //     files.find(
+  //       (
+  //         file
+  //       ) =>
+  //         file.size >
+  //         5 *
+  //         1024 *
+  //         1024
+  //     );
+
+  //   if (
+  //     invalidFile
+  //   ) {
+
+  //     pushToast({
+  //       message:
+  //         "Each image must be below 5MB",
+  //       variant:
+  //         "error",
+  //     });
+
+  //     return;
+  //   }
+
+  //   const previews =
+  //     files.map(
+  //       (
+  //         file
+  //       ) =>
+  //         URL.createObjectURL(
+  //           file
+  //         )
+  //     );
+
+  //   setPreviewImages(
+  //     (prev) => [
+  //       ...prev,
+  //       ...previews,
+  //     ]
+  //   );
+
+  //   setForm(
+  //     (prev) => ({
+
+  //       ...prev,
+
+  //       equipment_images:
+  //         [
+  //           ...prev
+  //             .equipment_images,
+
+  //           ...files,
+  //         ],
+  //     })
+  //   );
+  // }
+
+  async function handleImages(
+  event
+) {
+
+  try {
 
     const files =
       Array.from(
@@ -947,43 +1041,69 @@ export default function RentalForm({
       totalImages > 5
     ) {
 
-      pushToast({
-        message:
-          "Maximum 5 images allowed",
-        variant:
-          "error",
-      });
-
-      return;
-    }
-
-    const invalidFile =
-      files.find(
-        (
-          file
-        ) =>
-          file.size >
-          5 *
-          1024 *
-          1024
+      pushToast(
+        "Maximum 5 images allowed",
+        "error"
       );
 
-    if (
-      invalidFile
-    ) {
-
-      pushToast({
-        message:
-          "Each image must be below 5MB",
-        variant:
-          "error",
-      });
-
       return;
     }
 
+    pushToast(
+      "Optimizing images...",
+      "success"
+    );
+
+    /* ==========================
+       IMAGE COMPRESSION
+    ========================== */
+
+    const options = {
+
+      maxSizeMB:
+        0.8,
+
+      maxWidthOrHeight:
+        1920,
+
+      useWebWorker:
+        true,
+
+      fileType:
+        "image/jpeg",
+
+      initialQuality:
+        0.8,
+    };
+
+    const compressedFiles =
+      await Promise.all(
+
+        files.map(
+          async (
+            file
+          ) => {
+
+            const compressed =
+              await imageCompression(
+                file,
+                options
+              );
+
+            return new File(
+              [compressed],
+              file.name,
+              {
+                type:
+                  "image/jpeg",
+              }
+            );
+          }
+        )
+      );
+
     const previews =
-      files.map(
+      compressedFiles.map(
         (
           file
         ) =>
@@ -1009,12 +1129,27 @@ export default function RentalForm({
             ...prev
               .equipment_images,
 
-            ...files,
+            ...compressedFiles,
           ],
       })
     );
-  }
 
+    pushToast(
+      "Images optimized successfully",
+      "success"
+    );
+
+    event.target.value =
+      "";
+
+  } catch {
+
+    pushToast(
+      "Failed to process images",
+      "error"
+    );
+  }
+}
   /* ==========================================
       REMOVE IMAGE
   ========================================== */

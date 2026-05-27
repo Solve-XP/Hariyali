@@ -143,15 +143,7 @@ export const MarketplaceService = {
       await api.post(
 
         `${BASE_URL}/listings`,
-
-        formData,
-
-        {
-          headers: {
-            "Content-Type":
-              "multipart/form-data",
-          },
-        }
+        formData
       );
 
     return response;

@@ -96,7 +96,10 @@
   "crop": "Crop Management",
   "labor": "Labor Tracking",
   "irrigation": "Irrigation Control",
-  "analytics": "Reports & Analytics"
+  "analytics": "Reports & Analytics",
+  "marketplace": "Marketplace", 
+  "rentals": "Equipment Rental"
+  
 },
 
 

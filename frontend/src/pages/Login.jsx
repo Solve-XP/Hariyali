@@ -2,6 +2,7 @@ import "./Login.css";
 
 import { useState } from "react";
 
+
 import { useTranslation } from "react-i18next";
 
 import {
@@ -12,6 +13,12 @@ import {
 import AuthShell from "../components/AuthShell";
 import Input from "../components/Input";
 import Button from "../components/Button";
+
+import Marketplace
+from "./marketplace/Marketplace";
+
+import Rentals
+from "./rentals/Rentals";
 
 import { loginUser } from "../services/authService";
 
@@ -181,6 +188,7 @@ export default function Login() {
 
   return (
 
+    <>
     <AuthShell
       title={t("auth.login_title")}
       subtitle={t(
@@ -269,5 +277,10 @@ export default function Login() {
       </form>
 
     </AuthShell>
+
+    <Marketplace />
+
+      <Rentals />
+    </>
   );
 }

@@ -124,13 +124,7 @@ export const RentalsService = {
 
     return api.post(
       "/rentals",
-      formData,
-      {
-        headers: {
-          "Content-Type":
-            "multipart/form-data",
-        },
-      }
+      formData
     );
   },
 
@@ -199,13 +193,8 @@ export const RentalsService = {
 
     return api.patch(
       `/rentals/${rentalId}`,
-      formData,
-      {
-        headers: {
-          "Content-Type":
-            "multipart/form-data",
-        },
-      }
+      formData
+      
     );
   },
 

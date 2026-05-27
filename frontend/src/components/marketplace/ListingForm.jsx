@@ -1,6 +1,9 @@
 import "./ListingForm.css";
 import { useTranslation } from "react-i18next";
 
+import imageCompression
+from "browser-image-compression";
+
 import {
   useEffect,
   useRef,
@@ -375,9 +378,83 @@ export default function ListingForm({
   HANDLE IMAGES
 ========================================== */
 
-  function handleImages(
-    e
-  ) {
+  // function handleImages(
+  //   e
+  // ) {
+
+  //   const files =
+  //     Array.from(
+  //       e.target.files
+  //     );
+
+  //   const totalImages =
+  //     previewImages.length +
+  //     files.length;
+
+  //   if (
+  //     totalImages > 5
+  //   ) {
+
+  //     pushToast(
+  //       "Maximum 5 images allowed",
+  //       "error"
+  //     );
+
+  //     return;
+  //   }
+
+  //   const oversized =
+  //     files.find(
+  //       (file) =>
+  //         file.size >
+  //         5 * 1024 * 1024
+  //     );
+
+  //   if (
+  //     oversized
+  //   ) {
+
+  //     pushToast(
+  //       "Each image must be below 5MB",
+  //       "error"
+  //     );
+
+  //     return;
+  //   }
+
+  //   const updatedImages = [
+  //     ...images,
+  //     ...files,
+  //   ];
+
+  //   const updatedPreviews = [
+  //     ...previewImages,
+
+  //     ...files.map(
+  //       (file) =>
+  //         URL.createObjectURL(
+  //           file
+  //         )
+  //     ),
+  //   ];
+
+  //   setImages(
+  //     updatedImages
+  //   );
+
+  //   setPreviewImages(
+  //     updatedPreviews
+  //   );
+
+  //   e.target.value =
+  //     "";
+  // }
+
+  async function handleImages(
+  e
+) {
+
+  try {
 
     const files =
       Array.from(
@@ -400,34 +477,74 @@ export default function ListingForm({
       return;
     }
 
-    const oversized =
-      files.find(
-        (file) =>
-          file.size >
-          5 * 1024 * 1024
+    /* ==========================
+       COMPRESS OPTIONS
+    ========================== */
+
+    const options = {
+
+      maxSizeMB: 0.6,
+
+      maxWidthOrHeight:
+        1600,
+
+      useWebWorker:
+        true,
+
+      fileType:
+        "image/jpeg",
+
+      initialQuality:
+        0.7,
+    };
+
+    pushToast(
+      "Optimizing images...",
+      "success"
+    );
+
+    /* ==========================
+       COMPRESS IMAGES
+    ========================== */
+
+    const compressedFiles =
+      await Promise.all(
+
+        files.map(
+          async (
+            file
+          ) => {
+
+            const compressed =
+              await imageCompression(
+                file,
+                options
+              );
+
+            return new File(
+              [compressed],
+              file.name,
+              {
+                type:
+                  "image/jpeg",
+              }
+            );
+          }
+        )
       );
-
-    if (
-      oversized
-    ) {
-
-      pushToast(
-        "Each image must be below 5MB",
-        "error"
-      );
-
-      return;
-    }
 
     const updatedImages = [
+
       ...images,
-      ...files,
+
+      ...compressedFiles,
     ];
 
     const updatedPreviews = [
+
       ...previewImages,
 
-      ...files.map(
+      ...compressedFiles.map(
         (file) =>
           URL.createObjectURL(
             file
@@ -443,10 +560,24 @@ export default function ListingForm({
       updatedPreviews
     );
 
+    pushToast(
+      "Images optimized successfully",
+      "success"
+    );
+
     e.target.value =
       "";
-  }
 
+  } catch {
+
+    pushToast(
+      "Failed to process images",
+      "error"
+    );
+  }
+  }
+  
+  
   function removeImage(
     index
   ) {
@@ -835,571 +966,6 @@ export default function ListingForm({
       </Card>
     );
   }
-
-  /* ==========================================
-      RENDER
-  ========================================== */
-
-  //   return (
-
-  //     <Card>
-
-  //       <div className="
-  //         listing-form
-  //       ">
-
-  //         {/* ======================================
-  //             FARM
-  //         ====================================== */}
-
-  //         <Select
-  //           label="Farm"
-  //           value={
-  //             selectedFarm
-  //           }
-  //           onChange={(e) =>
-  //             setSelectedFarm(
-  //               e.target.value
-  //             )
-  //           }
-  //         >
-
-  //           <option value="">
-  //             Select Farm
-  //           </option>
-
-  //           {farms.map(
-  //             (farm) => (
-
-  //             <option
-  //               key={farm.id}
-  //               value={farm.id}
-  //             >
-  //               {farm.farm_name}
-  //             </option>
-
-  //           ))}
-
-  //         </Select>
-
-  //         {/* ======================================
-  //             CROP
-  //         ====================================== */}
-
-  //         <Select
-  //           label="Crop"
-  //           value={
-  //             selectedCrop
-  //           }
-  //           onChange={(e) =>
-  //             setSelectedCrop(
-  //               e.target.value
-  //             )
-  //           }
-  //         >
-
-  //           <option value="">
-  //             Select Crop
-  //           </option>
-
-  //           {crops.map(
-  //             (crop) => (
-
-  //             <option
-  //               key={crop.id}
-  //               value={crop.id}
-  //             >
-  //               {crop.crop_name}
-  //             </option>
-
-  //           ))}
-
-  //         </Select>
-
-  //         {/* ======================================
-  //             QUANTITY + UNIT
-  //         ====================================== */}
-
-  //         <div className="
-  //           listing-form__row
-  //         ">
-
-  //           <Input
-  //             label="Quantity"
-  //             placeholder="
-  //               Enter quantity
-  //             "
-  //             value={
-  //               form.quantity
-  //             }
-  //             onChange={(e) =>
-  //               handleChange(
-  //                 "quantity",
-  //                 e.target.value
-  //               )
-  //             }
-  //           />
-
-  //           <Select
-  //             label="Unit"
-  //             value={
-  //               selectedUnit
-  //             }
-  //             onChange={(e) =>
-  //               handleUnitChange(
-  //                 e.target.value
-  //               )
-  //             }
-  //           >
-
-  //             {UNIT_OPTIONS.map(
-  //               (unit) => (
-
-  //               <option
-  //                 key={unit}
-  //                 value={unit}
-  //               >
-  //                 {unit}
-  //               </option>
-
-  //             ))}
-
-  //           </Select>
-
-  //         </div>
-
-  //         {/* ======================================
-  //             CUSTOM UNIT
-  //         ====================================== */}
-
-  //         {selectedUnit ===
-  //           "other" && (
-
-  //           <Input
-  //             label="
-  //               Custom Unit
-  //             "
-  //             placeholder="
-  //               e.g. bundle
-  //             "
-  //             value={
-  //               customUnit
-  //             }
-  //             onChange={(e) =>
-  //               setCustomUnit(
-  //                 e.target.value
-  //               )
-  //             }
-  //           />
-  //         )}
-
-  //         {/* ======================================
-  //             PRICE
-  //         ====================================== */}
-
-  //         <Input
-  //           label="
-  //             Expected Price
-  //           "
-  //           placeholder="
-  //             e.g. 80000
-  //           "
-  //           value={
-  //             form.expected_price
-  //           }
-  //           onChange={(e) =>
-  //             handleChange(
-  //               "expected_price",
-  //               e.target.value
-  //             )
-  //           }
-  //         />
-
-  //         {/* ======================================
-  //             DATE
-  //         ====================================== */}
-
-  //         <Input
-  //           type="date"
-  //           label="
-  //             Harvest Date
-  //           "
-  //           value={
-  //             form.harvest_date
-  //           }
-  //           onChange={(e) =>
-  //             handleChange(
-  //               "harvest_date",
-  //               e.target.value
-  //             )
-  //           }
-  //         />
-
-  //         {/* ======================================
-  //             LOCATION
-  //         ====================================== */}
-
-  //         <Input
-  //           label="Village"
-  //           placeholder="
-  //             Enter village
-  //           "
-  //           value={
-  //             form.village
-  //           }
-  //           onChange={(e) =>
-  //             handleChange(
-  //               "village",
-  //               e.target.value
-  //             )
-  //           }
-  //         />
-
-  //         <Input
-  //           label="Taluka"
-  //           placeholder="
-  //             Enter taluka
-  //           "
-  //           value={
-  //             form.taluka
-  //           }
-  //           onChange={(e) =>
-  //             handleChange(
-  //               "taluka",
-  //               e.target.value
-  //             )
-  //           }
-  //         />
-
-  //         <Input
-  //           label="District"
-  //           placeholder="
-  //             Enter district
-  //           "
-  //           value={
-  //             form.district
-  //           }
-  //           onChange={(e) =>
-  //             handleChange(
-  //               "district",
-  //               e.target.value
-  //             )
-  //           }
-  //         />
-
-  //         <Input
-  //           label="
-  //             State + Pincode
-  //           "
-  //           placeholder="
-  //             Maharashtra 413107
-  //           "
-  //           value={
-  //             form.state
-  //           }
-  //           onChange={(e) =>
-  //             handleChange(
-  //               "state",
-  //               e.target.value
-  //             )
-  //           }
-  //         />
-
-  //         {/* ======================================
-  //             DESCRIPTION
-  //         ====================================== */}
-
-  //         <div className="
-  //           listing-form__textarea
-  //         ">
-
-  //           <label>
-  //             Description
-  //             (Optional)
-  //           </label>
-
-  //           <textarea
-  //             placeholder="
-  //               Add crop quality,
-  //               freshness,
-  //               special details...
-  //             "
-  //             value={
-  //               form.description
-  //             }
-  //             onChange={(e) =>
-  //               handleChange(
-  //                 "description",
-  //                 e.target.value
-  //               )
-  //             }
-  //           />
-
-  //         </div>
-
-  //         {/* ======================================
-  //             IMAGE UPLOAD
-  //         ====================================== */}
-
-  //         <div className="
-  //             listing-upload
-  //           ">
-
-  //             {isEdit ? (
-
-  //               <>
-  //                 {/* ==============================
-  //                     READ ONLY IMAGES
-  //                 ============================== */}
-
-  //                 <div
-  //                   style={{
-  //                     display: "flex",
-  //                     justifyContent:
-  //                       "space-between",
-  //                     alignItems:
-  //                       "center",
-  //                     marginBottom:
-  //                       "14px",
-  //                   }}
-  //                 >
-
-  //                   <div>
-
-  //                     <h4
-  //                       style={{
-  //                         margin:
-  //                           "0 0 4px",
-  //                       }}
-  //                     >
-  //                       Current Images
-  //                     </h4>
-
-  //                     <p
-  //                       style={{
-  //                         margin: 0,
-  //                         fontSize:
-  //                           "13px",
-  //                         color:
-  //                           "var(--color-text-muted)",
-  //                       }}
-  //                     >
-  //                       Images cannot
-  //                       be edited
-  //                     </p>
-
-  //                   </div>
-
-  //                 </div>
-
-  //                 {previewImages
-  //                   .length > 0 ? (
-
-  //                   <div className="
-  //                     listing-upload__preview-grid
-  //                   ">
-
-  //                     {previewImages.map(
-  //                       (
-  //                         image,
-  //                         index
-  //                       ) => (
-
-  //                         <div
-  //                           key={index}
-  //                           className="
-  //                             listing-upload__preview-card
-  //                           "
-  //                         >
-
-  //                           <img
-  //                             src={image}
-  //                             alt={`
-  //                               Crop ${index + 1}
-  //                             `}
-  //                             className="
-  //                               listing-upload__preview-image
-  //                             "
-  //                           />
-
-  //                         </div>
-  //                       )
-  //                     )}
-
-  //                   </div>
-
-  //                 ) : (
-
-  //                   <div
-  //                     style={{
-  //                       padding:
-  //                         "18px",
-  //                       border:
-  //                         "1px dashed var(--color-border)",
-  //                       borderRadius:
-  //                         "16px",
-  //                       textAlign:
-  //                         "center",
-  //                       color:
-  //                         "var(--color-text-muted)",
-  //                     }}
-  //                   >
-  //                     No images available
-  //                   </div>
-
-  //                 )}
-
-  //               </>
-
-  //             ) : (
-
-  //               <>
-  //                 {/* ==============================
-  //                     CREATE MODE
-  //                 ============================== */}
-
-  //                 <div
-  //                   className="
-  //                     listing-upload__box
-  //                   "
-  //                   onClick={() =>
-  //                     fileInputRef
-  //                       .current
-  //                       ?.click()
-  //                   }
-  //                 >
-
-  //                   <div className="
-  //                     listing-upload__icon
-  //                   ">
-  //                     +
-  //                   </div>
-
-  //                   <h4>
-  //                     Upload Crop Images
-  //                   </h4>
-
-  //                   <p>
-  //                     Add up to
-  //                     5 images
-  //                   </p>
-
-  //                   <Button
-  //                     type="
-  //                       button
-  //                     "
-  //                     variant="
-  //                       secondary
-  //                     "
-  //                   >
-  //                     Choose Images
-  //                   </Button>
-
-  //                 </div>
-
-  //                 <input
-  //                   ref={
-  //                     fileInputRef
-  //                   }
-  //                   type="file"
-  //                   multiple
-  //                   accept="
-  //                     image/*
-  //                   "
-  //                   className="
-  //                     listing-upload__input
-  //                   "
-  //                   onChange={
-  //                     handleImages
-  //                   }
-  //                 />
-
-  //                 {previewImages
-  //                   .length > 0 && (
-
-  //                   <div className="
-  //                     listing-upload__preview-grid
-  //                   ">
-
-  //                     {previewImages.map(
-  //                       (
-  //                         image,
-  //                         index
-  //                       ) => (
-
-  //                         <div
-  //                           key={index}
-  //                           className="
-  //                             listing-upload__preview-card
-  //                           "
-  //                         >
-
-  //                           <img
-  //                             src={image}
-  //                             alt=""
-  //                             className="
-  //                               listing-upload__preview-image
-  //                             "
-  //                           />
-
-  //                           <button
-  //                             type="button"
-  //                             className="
-  //                               listing-upload__remove
-  //                             "
-  //                             onClick={() =>
-  //                               removeImage(
-  //                                 index
-  //                               )
-  //                             }
-  //                           >
-  //                             ×
-  //                           </button>
-
-  //                         </div>
-  //                       )
-  //                     )}
-
-  //                   </div>
-  //                 )}
-
-  //               </>
-  //             )}
-
-  //         </div>
-
-  //         {/* ======================================
-  //             SUBMIT
-  //         ====================================== */}
-
-  //         <Button
-  //           onClick={
-  //             handleSubmit
-  //           }
-  //           disabled={
-  //             loading
-  //           }
-  //         >
-
-  //           {loading
-  //             ? (
-  //               isEdit
-  //                 ? "Updating..."
-  //                 : "Creating..."
-  //             )
-  //             : (
-  //               isEdit
-  //                 ? "Update Listing"
-  //                 : "Create Listing"
-  //             )}
-
-  //         </Button>
-
-  //       </div>
-
-  //     </Card>
-  //   );
-  // }
 
   return (
 
