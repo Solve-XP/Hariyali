@@ -6,21 +6,6 @@ export default function PrivacyPolicy() {
 
     <div className="page">
 
-      {/* PAGE HEADER */}
-
-      <div className="page__header">
-
-        <h1 className="page__title">
-          Privacy Policy
-        </h1>
-
-        <p className="page__subtitle">
-          Learn how Field Management
-          collects, stores, and
-          protects your data.
-        </p>
-
-      </div>
 
       {/* HERO */}
 
