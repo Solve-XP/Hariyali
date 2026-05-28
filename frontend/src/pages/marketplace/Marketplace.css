@@ -288,6 +288,7 @@
    GRID
 ========================================== */
 
+/* LOGGED IN USER = 3 CARDS */
 .marketplace-page .listing-grid {
     width: 100%;
 
@@ -300,15 +301,23 @@
     display: grid;
 
     grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(
-                320px,
-                1fr
-            )
-        );
+        repeat(3,
+            minmax(0,
+                1fr));
 
     gap: 24px;
+
+    align-items:
+        start;
+}
+
+/* PUBLIC PAGE = 4 CARDS */
+.marketplace-page .listing-grid.public-grid {
+
+    grid-template-columns:
+        repeat(4,
+            minmax(0,
+                1fr));
 }
 
 /* ==========================================
@@ -465,6 +474,18 @@
    TABLET
 ========================================== */
 
+@media (max-width: 1400px) {
+
+    .marketplace-page .listing-grid,
+
+    .marketplace-page .listing-grid.public-grid {
+
+        grid-template-columns:
+            repeat(2,
+                1fr);
+    }
+}
+
 @media (max-width: 1024px) {
 
     .marketplace-page {
@@ -476,6 +497,7 @@
         font-size:
             36px;
     }
+    
 }
 
 /* ==========================================
@@ -531,4 +553,12 @@
         flex-direction:
             column;
     }
+
+        .marketplace-page .listing-grid,
+    
+        .marketplace-page .listing-grid.public-grid {
+    
+            grid-template-columns:
+                1fr;
+        }
 }

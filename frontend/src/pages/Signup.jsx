@@ -188,7 +188,7 @@ export default function SignUp() {
           case "merchant":
 
             navigate(
-              "/merchant/dashboard",
+              "/merchant/marketplace",
               {
                 replace: true,
               }
