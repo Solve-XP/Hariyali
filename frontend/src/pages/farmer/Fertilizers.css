@@ -1,13 +1,8 @@
 .stats-fy-select {
-    border: none;
-    background: transparent;
-    font-size: 32px;
+    height: 42px;
+    font-size: var(--fs-sm);
     font-weight: 700;
-    color: var(--color-text);
-    padding: 0;
-    outline: none;
-    cursor: pointer;
-    width: 100%;
+    border-radius: var(--radius-md);
 }
 
 .filters-bar {

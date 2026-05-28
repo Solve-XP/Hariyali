@@ -666,11 +666,6 @@ export default function Crops() {
             </Select>
 
           }
-          subtitle={
-            filters.financial_year === "all"
-              ? t("crops.all_financial_years")
-              : filters.financial_year  
-          }
           colorClass="stat-card__icon--info"
         />
 

@@ -624,9 +624,6 @@ export default function Pesticides() {
 
             </Select>
           }
-          subtitle={
-            filters.financial_year
-          }
           colorClass="stat-card__icon--info"
         />
 

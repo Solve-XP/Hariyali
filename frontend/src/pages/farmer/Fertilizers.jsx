@@ -607,13 +607,6 @@ export default function Fertilizers() {
 
             </Select>
           }
-          subtitle={
-            filters.financial_year === "all"
-              ? t(
-                  "fertilizers.all_financial_years"
-                )
-              : filters.financial_year
-          }
           colorClass="stat-card__icon--info"
         />
 
