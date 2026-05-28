@@ -1275,6 +1275,7 @@ export default function RentalForm({
                 "rentalForm.hourlyPrice"
               )
             }
+            optional
             placeholder={
               t(
                 "rentalForm.hourlyPricePlaceholder"
@@ -1304,6 +1305,7 @@ export default function RentalForm({
                 "rentalForm.dailyPrice"
               )
             }
+            optional
             type="
               number
             "
@@ -1537,13 +1539,7 @@ export default function RentalForm({
 
       <Card>
 
-        <h3>
-          {t(
-            "listingDetails.description"
-          )}
-        </h3>
-
-        <textarea
+        {/* <textarea
           rows={5}
           className="
             input
@@ -1566,7 +1562,42 @@ export default function RentalForm({
                 .value
             )
           }
-        />
+        /> */}
+
+        <div className="field">
+          <h3>
+          {t(
+            "listingDetails.description"
+            )}
+            <label className="field__label">
+
+            <span className="field__optional">
+              {" "}
+              ({t("common.optional")})
+            </span>
+
+          </label>
+        </h3>
+          <textarea
+            rows={5}
+            className="input"
+            placeholder={
+              t(
+                "rentalForm.descriptionPlaceholder"
+              )
+            }
+            value={
+              form.description
+            }
+            onChange={(e) =>
+              handleChange(
+                "description",
+                e.target.value
+              )
+            }
+          />
+
+        </div>
 
       </Card>
 

@@ -1120,6 +1120,7 @@ export default function Incomes() {
 
             <Input
               label={t("incomes.notes")}
+              optional
               value={form.notes}
               onChange={handleChange(
                 "notes"

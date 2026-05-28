@@ -1,7 +1,7 @@
 {
   "app": {
-    "name": "Field Management",
-    "tagline": "Farmer Management System"
+    "name": "Hariyali",
+    "tagline": "Your Farm, Your Prosperity"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -135,7 +135,8 @@
     "latest": "Latest",
     "oldest": "Oldest",
     "priceLowHigh": "Price Low → High",
-    "priceHighLow": "Price High → Low"
+    "priceHighLow": "Price High → Low",
+    "optional": "Optional"
   },
   "listing": {
     "rentalPrice": "Rental Price",
@@ -543,6 +544,9 @@
   "edit": "Edit Expense",
   "delete": "Delete Expense",
 
+  "created": "Expense created successfully",
+  "updated": "Expense updated successfully",
+
   "delete_confirm": "Are you sure you want to delete this expense?",
 
   "table_farm": "Farm",
@@ -745,7 +749,7 @@
   },
 
   "footer": {
-    "copyright": "Field Management — Empowering farmers with technology",
+    "copyright": "Hariyali — Empowering farmers with technology",
     "tagline": "Smart farming made simple",
   "privacy": "Privacy Policy",
   "terms": "Terms",

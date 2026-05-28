@@ -393,11 +393,33 @@ export default function Crops() {
 
       setLoading(true);
 
+      // if (editingCrop) {
+
+      //   await CropsService.update(
+      //     editingCrop.id,
+      //     form
+      //   );
+
+      //   pushToast(
+      //     t("crops.crop_updated")
+      //   );
+
+      // } else {
+
+      //   await CropsService.create(
+      //     form
+      //   );
+      const payload = {
+        ...form,
+        expected_harvest_date:
+          form.expected_harvest_date || null,
+      };
+
       if (editingCrop) {
 
         await CropsService.update(
           editingCrop.id,
-          form
+          payload
         );
 
         pushToast(
@@ -407,7 +429,7 @@ export default function Crops() {
       } else {
 
         await CropsService.create(
-          form
+          payload
         );
 
         pushToast(
@@ -924,6 +946,7 @@ export default function Crops() {
             <Input
               type="date"
               label={t("crops.expected_harvest")}
+              optional
               value={form.expected_harvest_date}
               onChange={handleChange("expected_harvest_date")}
             />

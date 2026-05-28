@@ -501,6 +501,9 @@ export default function Expenses() {
     setCrops([]);
   };
 
+
+  
+
   const handleChange =
     (field) => (e) => {
 
@@ -536,31 +539,77 @@ export default function Expenses() {
 
     try {
 
+      // setLoading(true);
+
+      // if (editingExpense) {
+
+      //   await ExpensesService.update(
+      //     editingExpense.id,
+      //     form
+      //   );
+
+      //   pushToast(
+      //     t("expenses.updated")
+      //   );
+
+      // } else {
+
+      //   await ExpensesService.create(
+      //     form
+      //   );
+
+      //   pushToast(
+      //     t("expenses.created")
+      //   );
+      // }
+
+      // closeModal();
+
       setLoading(true);
 
-      if (editingExpense) {
+        const payload = {
+          ...form,
 
-        await ExpensesService.update(
-          editingExpense.id,
-          form
-        );
+          crop_id:
+            form.crop_id || null,
 
-        pushToast(
-          t("expenses.updated")
-        );
+          quantity:
+            form.quantity === ""
+              ? null
+              : Number(form.quantity),
 
-      } else {
+          unit:
+            form.unit || null,
 
-        await ExpensesService.create(
-          form
-        );
+          notes:
+            form.notes || null,
+        };
 
-        pushToast(
-          t("expenses.created")
-        );
-      }
+        if (editingExpense) {
 
-      closeModal();
+          await ExpensesService.update(
+            editingExpense.id,
+            payload
+          );
+
+          pushToast(
+            t("expenses.updated"),
+            "success"
+          );
+
+        } else {
+
+          await ExpensesService.create(
+            payload
+          );
+
+          pushToast(
+            t("expenses.created"),
+            "success"
+          );
+        }
+
+        closeModal();
 
       /* UPDATED */
 
@@ -1121,6 +1170,7 @@ const columns = [
 
             <Select
               label={t("expenses.crop")}
+              optional
               value={form.crop_id}
               onChange={handleChange(
                 "crop_id"
@@ -1181,6 +1231,7 @@ const columns = [
 
             <Input
               label={t("expenses.quantity")}
+              optional
               type="number"
               value={form.quantity}
               onChange={handleChange(
@@ -1190,6 +1241,7 @@ const columns = [
 
             <Select
               label={t("expenses.unit")}
+              optional  
               value={form.unit}
               onChange={handleChange("unit")}
               >
@@ -1258,6 +1310,7 @@ const columns = [
 
             <Input
               label={t("expenses.notes")}
+              optional
               value={form.notes}
               onChange={handleChange(
                 "notes"

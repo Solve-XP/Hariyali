@@ -949,6 +949,7 @@ export default function Pesticides() {
               label={t(
                 "pesticides.notes"
               )}
+              optional
               value={
                 form.notes
               }

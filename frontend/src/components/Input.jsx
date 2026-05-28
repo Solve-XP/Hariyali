@@ -1,29 +1,194 @@
-import { useState } from "react";
-import "./Input.css";
-import { IconEye, IconEyeOff } from "./Icons";
+// import { useState } from "react";
+// import "./Input.css";
+// import { IconEye, IconEyeOff } from "./Icons";
 
-export default function Input({ label, id, className = "", type = "text", ...rest }) {
-  const inputId = id || rest.name;
-  const [show, setShow] = useState(false);
-  const isPassword = type === "password";
-  const resolvedType = isPassword ? (show ? "text" : "password") : type;
+// export default function Input({ label, id, className = "", type = "text", ...rest }) {
+//   const inputId = id || rest.name;
+//   const [show, setShow] = useState(false);
+//   const isPassword = type === "password";
+//   const resolvedType = isPassword ? (show ? "text" : "password") : type;
+
+//   return (
+//     <div className="field">
+//       {label && <label className="field__label" htmlFor={inputId}>{label}</label>}
+//       <div className={isPassword ? "field__password-wrap" : undefined}>
+//         <input id={inputId} type={resolvedType} className={`input ${className}`} {...rest} />
+//         {isPassword && (
+//           <button
+//             type="button"
+//             className="field__eye-btn"
+//             tabIndex={-1}
+//             onClick={() => setShow((s) => !s)}
+//           >
+//             {show ? <IconEyeOff size={15} /> : <IconEye size={15} />}
+//           </button>
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+import { useState } from "react";
+
+import "./Input.css";
+
+import {
+  IconEye,
+  IconEyeOff,
+} from "./Icons";
+
+import {
+  useTranslation,
+} from "react-i18next";
+
+export default function Input({
+
+  label,
+
+  id,
+
+  className = "",
+
+  type = "text",
+
+  optional = false,
+
+  ...rest
+
+}) {
+
+  const { t } =
+    useTranslation();
+
+  const inputId =
+    id ||
+    rest.name;
+
+  const [show,
+    setShow] =
+    useState(false);
+
+  const isPassword =
+    type ===
+    "password";
+
+  const resolvedType =
+    isPassword
+      ? (
+          show
+            ? "text"
+            : "password"
+        )
+      : type;
 
   return (
+
     <div className="field">
-      {label && <label className="field__label" htmlFor={inputId}>{label}</label>}
-      <div className={isPassword ? "field__password-wrap" : undefined}>
-        <input id={inputId} type={resolvedType} className={`input ${className}`} {...rest} />
+
+      {label && (
+
+        <label
+          className="
+            field__label
+          "
+          htmlFor={
+            inputId
+          }
+        >
+
+          {label}
+
+          {optional ? (
+
+            <span
+              className="
+                field__optional
+              "
+            >
+
+              {" "}
+              (
+              {t(
+                "common.optional"
+              )}
+              )
+
+            </span>
+
+          ) : (
+
+            <span
+              className="
+                field__required
+              "
+            >
+              *
+            </span>
+
+          )}
+
+        </label>
+      )}
+
+      <div
+        className={
+          isPassword
+            ? "field__password-wrap"
+            : undefined
+        }
+      >
+
+        <input
+          id={inputId}
+
+          type={
+            resolvedType
+          }
+
+          className={`input ${className}`}
+
+          {...rest}
+        />
+
         {isPassword && (
+
           <button
             type="button"
-            className="field__eye-btn"
+
+            className="
+              field__eye-btn
+            "
+
             tabIndex={-1}
-            onClick={() => setShow((s) => !s)}
+
+            onClick={() =>
+              setShow(
+                (s) => !s
+              )
+            }
           >
-            {show ? <IconEyeOff size={15} /> : <IconEye size={15} />}
+
+            {show ? (
+
+              <IconEyeOff
+                size={15}
+              />
+
+            ) : (
+
+              <IconEye
+                size={15}
+              />
+
+            )}
+
           </button>
         )}
+
       </div>
+
     </div>
   );
 }

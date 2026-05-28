@@ -813,6 +813,7 @@ export default function Fertilizers() {
 
             <Input
               label={t("fertilizers.notes")}
+              optional
               value={form.notes}
               onChange={handleChange("notes")}
             />
