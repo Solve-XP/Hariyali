@@ -87,6 +87,16 @@ export default function Footer() {
             Contact
           </button>
 
+          <button
+            onClick={() =>
+              navigate(
+                "/useful-links"
+              )
+            }
+          >
+            Useful Links
+          </button>
+
         </div>
 
         {/* RIGHT */}

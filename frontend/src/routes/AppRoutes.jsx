@@ -16,6 +16,7 @@ import PrivacyPolicy from "../pages/static/PrivacyPolicy";
 import Terms from "../pages/static/Terms";
 import Support from "../pages/static/support";
 import Contact from "../pages/static/Contact";
+import UsefulLinks from "../pages/static/UsefulLinks";
 
 
 
@@ -91,6 +92,10 @@ function AppRoutes() {
         <Route
           path="/contact"
           element={<Contact />}
+        />
+        <Route
+          path="/useful-links"
+          element={<UsefulLinks />}
         />
       </Route>
 
