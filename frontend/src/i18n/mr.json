@@ -136,6 +136,7 @@
     "priceLowHigh": "किंमत कमी → जास्त",
     "priceHighLow": "किंमत जास्त → कमी",
      "optional": "ऐच्छिक"
+
   },
 
   "listing": {
@@ -365,6 +366,17 @@
      "delete_title": "शेत हटवा",
     "delete_message": "हे शेत हटवायचे आहे का?", 
     "empty": "अद्याप कोणतीही शेती जोडलेली नाही. सुरुवात करण्यासाठी पहिले शेत जोडा.",
+    "select_soil_type": "मातीचा प्रकार निवडा",
+
+    "soil_black": "काळी माती",
+    "soil_red": "लाल माती",
+    "soil_laterite": "लेटेराइट माती",
+    "soil_alluvial": "गाळयुक्त माती",
+    "soil_sandy": "वालुकामय माती",
+    "soil_clay": "चिकण माती",
+    "soil_loamy": "लोम माती",
+    "soil_mixed": "मिश्र माती",
+    "soil_other": "इतर",
 
     "stats": {
       "total_farms": "एकूण शेती",
@@ -424,7 +436,15 @@
     "crop_updated": "पीक यशस्वीरित्या अद्यतनित केले गेले",
     "crop_deleted": "पीक यशस्वीरित्या हटवले गेले",
     "enter_crop_name": "पिकाचे नाव प्रविष्ट करा",
-    "kharif_rabi": "खरीप / रब्बी"
+    "kharif_rabi": "खरीप / रब्बी",
+    "season_kharif": "खरीप",
+    "season_rabi": "रब्बी",
+    "season_zaid": "जायद",
+    "season_perennial": "बारमाही",
+    "season_whole_year": "पूर्ण वर्ष",
+    "season_other": "इतर",
+
+    "select_season": "हंगाम निवडा"
   },
 
 
@@ -477,7 +497,21 @@
     "all_financial_years": "सर्व आर्थिक वर्षे",
 
     "select_farm": "शेत निवडा",
-    "select_crop": "पीक निवडा"
+    "select_crop": "पीक निवडा",
+
+    "select_unit": "एकक निवडा",
+
+    "unit_kg": "किलो",
+    "unit_quintal": "क्विंटल",
+    "unit_ton": "टन",
+    "unit_gram": "ग्रॅम",
+    "unit_bag": "पिशवी",
+    "unit_crate": "क्रेट",
+    "unit_dozen": "डझन",
+    "unit_piece": "नग",
+    "unit_liter": "लिटर",
+    "unit_ml": "एमएल",
+    "unit_other": "इतर"
   },
 
 
@@ -772,7 +806,20 @@
     "latest_application": "अलीकडील वापर",
     "latest_record": "अलीकडील नोंद",
 
-    "all_financial_years": "सर्व आर्थिक वर्षे"
+    "all_financial_years": "सर्व आर्थिक वर्षे",
+
+    "select_unit": "एकक निवडा",
+
+    "unit_kg": "किलो",
+    "unit_gram": "ग्रॅम",
+    "unit_liter": "लिटर",
+    "unit_ml": "एमएल",
+    "unit_bag": "पिशवी",
+    "unit_packet": "पॅकेट",
+    "unit_quintal": "क्विंटल",
+    "unit_ton": "टन",
+    "unit_piece": "नग",
+    "unit_other": "इतर"
   },
 
    "pesticides": {
@@ -812,7 +859,19 @@
     "latest_application": "अलीकडील वापर",
     "latest_record": "अलीकडील नोंद",
 
-    "all_financial_years": "सर्व आर्थिक वर्षे"
+    "all_financial_years": "सर्व आर्थिक वर्षे",
+    "select_unit": "एकक निवडा",
+
+    "unit_kg": "किलो",
+    "unit_gram": "ग्रॅम",
+    "unit_liter": "लिटर",
+    "unit_ml": "एमएल",
+    "unit_bag": "पिशवी",
+    "unit_packet": "पॅकेट",
+    "unit_quintal": "क्विंटल",
+    "unit_ton": "टन",
+    "unit_piece": "नग",
+    "unit_other": "इतर"
   },
 
 

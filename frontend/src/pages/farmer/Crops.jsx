@@ -83,6 +83,16 @@ export default function Crops() {
 
   const [form, setForm] =
     useState(EMPTY_FORM);
+  
+  
+  const SEASON_OPTIONS = [
+  "kharif",
+  "rabi",
+  "zaid",
+  "perennial",
+  "whole_year",
+  "other",
+];
 
   const [filters, setFilters] =
     useState({
@@ -929,13 +939,45 @@ export default function Crops() {
               placeholder={t("crops.enter_crop_name")}
             />
 
-            <Input
+            {/* <Input
               label={t("crops.season")}
               value={form.season}
               onChange={handleChange("season")}
               placeholder={t("crops.kharif_rabi")}
-            />
+            /> */}
 
+            <Select
+              label={t("crops.season")}
+              optional
+              value={form.season}
+              onChange={handleChange(
+                "season"
+              )}
+            >
+
+              <option value="">
+                {t(
+                  "crops.select_season"
+                )}
+              </option>
+
+              {SEASON_OPTIONS.map(
+                (season) => (
+
+                  <option
+                    key={season}
+                    value={season}
+                  >
+                    {t(
+    `crops.season_${season}`
+  )}
+                  </option>
+
+                )
+              )}
+
+            </Select>
+            
             <Input
               type="date"
               label={t("crops.sowing_date")}

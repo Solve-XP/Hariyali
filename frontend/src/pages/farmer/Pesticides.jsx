@@ -83,6 +83,19 @@ export default function Pesticides() {
       search: "",
       financial_year: "all",
     });
+  
+  const UNIT_OPTIONS = [
+    "kg",
+    "gram",
+    "liter",
+    "ml",
+    "bag",
+    "packet",
+    "quintal",
+    "ton",
+    "piece",
+    "other",
+  ];
 
   const [
     debouncedFilters,
@@ -297,20 +310,20 @@ export default function Pesticides() {
       return;
     }
 
-    const unitRegex =
-      /^[A-Za-z\s]+$/;
+    // const unitRegex =
+    //   /^[A-Za-z\s]+$/;
 
-    if (
-      !unitRegex.test(form.unit)
-    ) {
+    // if (
+    //   !unitRegex.test(form.unit)
+    // ) {
 
-      pushToast(
-        "Unit must contain only letters",
-        "error"
-      );
+    //   pushToast(
+    //     "Unit must contain only letters",
+    //     "error"
+    //   );
 
-      return;
-    }
+    //   return;
+    // }
 
     try {
 
@@ -920,7 +933,7 @@ export default function Pesticides() {
               )}
             />
 
-            <Input
+            {/* <Input
               label={t(
                 "pesticides.unit"
               )}
@@ -930,7 +943,42 @@ export default function Pesticides() {
               onChange={handleChange(
                 "unit"
               )}
-            />
+            /> */}
+
+            <Select
+              label={t(
+                "pesticides.unit"
+              )}
+              value={
+                form.unit
+              }
+              onChange={handleChange(
+                "unit"
+              )}
+            >
+
+              <option value="">
+                {t(
+                  "pesticides.select_unit"
+                )}
+              </option>
+
+              {UNIT_OPTIONS.map(
+                (unit) => (
+
+                  <option
+                    key={unit}
+                    value={unit}
+                  >
+                    {t(
+                      `pesticides.unit_${unit}`
+                    )}
+                  </option>
+
+                )
+              )}
+
+            </Select>
 
             <Input
               type="date"

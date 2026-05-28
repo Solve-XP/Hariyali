@@ -9,6 +9,7 @@ import Card from "../../components/Card";
 import Button from "../../components/Button";
 import EmptyState from "../../components/EmptyState";
 import Input from "../../components/Input";
+import Select from "../../components/Select";
 
 import Modal from "../../components/Modal";
 import SearchInput from "../../components/SearchInput";
@@ -41,6 +42,18 @@ const EMPTY_FORM = {
   soil_type: "",
   farm_photo: null,
 };
+
+const SOIL_TYPES = [
+  "black",
+  "red",
+  "laterite",
+  "alluvial",
+  "sandy",
+  "clay",
+  "loamy",
+  "mixed",
+  "other",
+];
 
 export default function Farms() {
 
@@ -696,13 +709,42 @@ export default function Farms() {
               )}
             />
 
-            <Input
+            {/* <Input
               label={t("farms.soil_type")}
               value={form.soil_type}
               onChange={updateField(
                 "soil_type"
               )}
-            />
+            /> */
+            }
+
+            <Select
+              label={t("farms.soil_type")}
+              optional
+              value={form.soil_type}
+              onChange={updateField(
+                "soil_type"
+              )}
+            >
+
+              <option value="">
+                {t("farms.select_soil_type")}
+              </option>
+
+              {SOIL_TYPES.map((soil) => (
+
+                <option
+                  key={soil}
+                  value={soil}
+                >
+                  {t(
+                    `farms.soil_${soil}`
+                  )}
+                </option>
+
+              ))}
+
+            </Select>
 
           </div>
 

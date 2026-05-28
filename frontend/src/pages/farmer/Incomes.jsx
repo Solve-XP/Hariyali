@@ -92,6 +92,20 @@ export default function Incomes() {
 
   const [form, setForm] =
     useState(EMPTY_FORM);
+  
+  const UNIT_OPTIONS = [
+    "kg",
+    "quintal",
+    "ton",
+    "gram",
+    "bag",
+    "crate",
+    "dozen",
+    "piece",
+    "liter",
+    "ml",
+    "other",
+  ];
 
   const [filters, setFilters] =
     useState({
@@ -1092,13 +1106,44 @@ export default function Incomes() {
               )}
             />
 
-            <Input
+            {/* <Input
               label={t("incomes.unit")}
               value={form.unit}
               onChange={handleChange(
                 "unit"
               )}
-            />
+            /> */}
+
+            <Select
+              label={t("incomes.unit")}
+              value={form.unit}
+              onChange={handleChange(
+                "unit"
+              )}
+            >
+
+              <option value="">
+                {t(
+                  "incomes.select_unit"
+                )}
+              </option>
+
+              {UNIT_OPTIONS.map(
+                (unit) => (
+
+                  <option
+                    key={unit}
+                    value={unit}
+                  >
+                    {t(
+                      `incomes.unit_${unit}`
+                    )}
+                  </option>
+
+                )
+              )}
+
+            </Select>
 
             <Input
               label={t("incomes.amount")}

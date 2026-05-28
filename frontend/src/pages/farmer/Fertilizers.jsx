@@ -68,6 +68,19 @@ export default function Fertilizers() {
 
   const [modalOpen, setModalOpen] =
     useState(false);
+  
+  const UNIT_OPTIONS = [
+  "kg",
+  "gram",
+  "liter",
+  "ml",
+  "bag",
+  "packet",
+  "quintal",
+  "ton",
+  "piece",
+  "other",
+];
 
   const [
     editingFertilizer,
@@ -300,20 +313,20 @@ export default function Fertilizers() {
       return;
     }
 
-    const unitRegex =
-      /^[A-Za-z\s]+$/;
+    // const unitRegex =
+    //   /^[A-Za-z\s]+$/;
 
-    if (
-      !unitRegex.test(form.unit)
-    ) {
+    // if (
+    //   !unitRegex.test(form.unit)
+    // ) {
 
-      pushToast(
-        "Unit must contain only letters",
-        "error"
-      );
+    //   pushToast(
+    //     "Unit must contain only letters",
+    //     "error"
+    //   );
 
-      return;
-    }
+    //   return;
+    // }
 
     try {
 
@@ -798,11 +811,40 @@ export default function Fertilizers() {
               onChange={handleChange("quantity")}
             />
 
-            <Input
+            {/* <Input
               label={t("fertilizers.unit")}
               value={form.unit}
               onChange={handleChange("unit")}
-            />
+            /> */}
+
+            <Select
+              label={t("fertilizers.unit")}
+              value={form.unit}
+              onChange={handleChange("unit")}
+            >
+
+              <option value="">
+                {t(
+                  "fertilizers.select_unit"
+                )}
+              </option>
+
+              {UNIT_OPTIONS.map(
+                (unit) => (
+
+                  <option
+                    key={unit}
+                    value={unit}
+                  >
+                    {t(
+                      `fertilizers.unit_${unit}`
+                    )}
+                  </option>
+
+                )
+              )}
+
+            </Select>
 
             <Input
               type="date"
