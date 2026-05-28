@@ -4,24 +4,42 @@ import {
   useState,
   useCallback,
   useMemo,
+  useEffect,
+  useRef,
 } from "react";
 
-const AuthContext = createContext(null);
+const AuthContext =
+  createContext(null);
 
-const TOKEN_KEY = "fm_token";
-const USER_KEY = "fm_user";
+const TOKEN_KEY =
+  "fm_token";
+
+const USER_KEY =
+  "fm_user";
+
+/* =========================================================
+   AUTO LOGOUT TIME
+========================================================= */
+
+const IDLE_TIMEOUT =
+  15 * 60 * 1000; // 15 minutes
 
 /* =========================================================
    LOAD FROM LOCAL STORAGE
 ========================================================= */
 
-function load(key, fallback = null) {
+function load(
+  key,
+  fallback = null
+) {
 
   try {
 
     return (
       JSON.parse(
-        localStorage.getItem(key)
+        localStorage.getItem(
+          key
+        )
       ) ?? fallback
     );
 
@@ -35,102 +53,229 @@ function load(key, fallback = null) {
    PROVIDER
 ========================================================= */
 
-export function AuthProvider({ children }) {
+export function AuthProvider({
+  children,
+}) {
 
   /* =====================================================
      TOKEN
   ====================================================== */
 
-  const [token, setToken] = useState(
+  const [token,
+    setToken] =
+    useState(
 
-    () =>
-      localStorage.getItem(
-        TOKEN_KEY
-      ) || null
+      () =>
+        localStorage.getItem(
+          TOKEN_KEY
+        ) || null
 
-  );
+    );
 
   /* =====================================================
      USER
   ====================================================== */
 
-  const [user, setUser] = useState(
+  const [user,
+    setUser] =
+    useState(
 
-    () => load(USER_KEY)
+      () =>
+        load(
+          USER_KEY
+        )
 
-  );
+    );
+
+  /* =====================================================
+     IDLE TIMER
+  ====================================================== */
+
+  const timeoutRef =
+    useRef(null);
 
   /* =====================================================
      SAVE AUTH
   ====================================================== */
 
-  const saveAuth = useCallback(
+  const saveAuth =
+    useCallback(
 
-    (token, user) => {
+      (
+        token,
+        user
+      ) => {
 
-      localStorage.setItem(
-        TOKEN_KEY,
-        token
-      );
+        localStorage.setItem(
+          TOKEN_KEY,
+          token
+        );
 
-      localStorage.setItem(
-        USER_KEY,
-        JSON.stringify(user)
-      );
+        localStorage.setItem(
+          USER_KEY,
+          JSON.stringify(
+            user
+          )
+        );
 
-      setToken(token);
+        setToken(
+          token
+        );
 
-      setUser(user);
-    },
+        setUser(
+          user
+        );
+      },
 
-    []
+      []
 
-  );
+    );
 
   /* =====================================================
      UPDATE USER
   ====================================================== */
 
-  const updateUser = useCallback(
+  const updateUser =
+    useCallback(
 
-    (updatedData) => {
+      (
+        updatedData
+      ) => {
 
-      const updatedUser = {
-        ...user,
-        ...updatedData,
-      };
+        const updatedUser =
+          {
+            ...user,
+            ...updatedData,
+          };
 
-      setUser(updatedUser);
+        setUser(
+          updatedUser
+        );
 
-      localStorage.setItem(
-        USER_KEY,
-        JSON.stringify(updatedUser)
-      );
-    },
+        localStorage.setItem(
+          USER_KEY,
+          JSON.stringify(
+            updatedUser
+          )
+        );
+      },
 
-    [user]
+      [user]
 
-  );
+    );
 
   /* =====================================================
      LOGOUT
   ====================================================== */
 
-  const logout = useCallback(() => {
+  const logout =
+    useCallback(
+      () => {
 
-    localStorage.removeItem(
-      TOKEN_KEY
+        localStorage.removeItem(
+          TOKEN_KEY
+        );
+
+        localStorage.removeItem(
+          USER_KEY
+        );
+
+        setToken(
+          null
+        );
+
+        setUser(
+          null
+        );
+
+        window.location.href =
+          "/login";
+      },
+
+      []
+
     );
 
-    localStorage.removeItem(
-      USER_KEY
+  /* =====================================================
+     AUTO LOGOUT ON IDLE
+  ====================================================== */
+
+  useEffect(() => {
+
+    if (!token) {
+      return;
+    }
+
+    const resetTimer =
+      () => {
+
+        clearTimeout(
+          timeoutRef.current
+        );
+
+        timeoutRef.current =
+          setTimeout(
+            () => {
+
+              logout();
+
+              alert(
+                "Session expired due to inactivity."
+              );
+
+            },
+            IDLE_TIMEOUT
+          );
+      };
+
+    const events = [
+
+      "mousemove",
+
+      "mousedown",
+
+      "keydown",
+
+      "scroll",
+
+      "touchstart",
+
+      "click",
+    ];
+
+    events.forEach(
+      (event) => {
+
+        window.addEventListener(
+          event,
+          resetTimer
+        );
+      }
     );
 
-    setToken(null);
+    resetTimer();
 
-    setUser(null);
+    return () => {
 
-  }, []);
+      clearTimeout(
+        timeoutRef.current
+      );
+
+      events.forEach(
+        (event) => {
+
+          window.removeEventListener(
+            event,
+            resetTimer
+          );
+        }
+      );
+    };
+
+  }, [
+    token,
+    logout,
+  ]);
 
   /* =====================================================
      ROLE CHECKS
@@ -140,69 +285,72 @@ export function AuthProvider({ children }) {
     Boolean(token);
 
   const isAdmin =
-    user?.role === "admin";
+    user?.role ===
+    "admin";
 
   const isFarmer =
-    user?.role === "farmer";
+    user?.role ===
+    "farmer";
 
   const isMerchant =
-    user?.role === "merchant";
+    user?.role ===
+    "merchant";
 
   /* =====================================================
      CONTEXT VALUE
   ====================================================== */
 
-  const value = useMemo(
+  const value =
+    useMemo(
 
-    () => ({
+      () => ({
 
-      token,
+        token,
 
-      user,
+        user,
 
-      setUser,
+        setUser,
 
-      updateUser,
+        updateUser,
 
-      isAuthenticated,
+        isAuthenticated,
 
-      isAdmin,
+        isAdmin,
 
-      isFarmer,
+        isFarmer,
 
-      isMerchant,
+        isMerchant,
 
-      saveAuth,
+        saveAuth,
 
-      logout,
+        logout,
 
-    }),
+      }),
 
-    [
+      [
 
-      token,
+        token,
 
-      user,
+        user,
 
-      setUser,
+        setUser,
 
-      updateUser,
+        updateUser,
 
-      isAuthenticated,
+        isAuthenticated,
 
-      isAdmin,
+        isAdmin,
 
-      isFarmer,
+        isFarmer,
 
-      isMerchant,
+        isMerchant,
 
-      saveAuth,
+        saveAuth,
 
-      logout,
+        logout,
+      ]
 
-    ]
-
-  );
+    );
 
   /* =====================================================
      PROVIDER
@@ -228,7 +376,9 @@ export function AuthProvider({ children }) {
 export function useAuth() {
 
   const ctx =
-    useContext(AuthContext);
+    useContext(
+      AuthContext
+    );
 
   if (!ctx) {
 
