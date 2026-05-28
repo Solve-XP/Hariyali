@@ -320,7 +320,7 @@ export default function AuthShell({
           <div className="
             auth-shell__logo
           ">
-            FM
+            HY
           </div>
 
           <div className="
@@ -334,8 +334,7 @@ export default function AuthShell({
             </h2>
 
             <p>
-              Farmer Management
-              System
+              {t("app.tagline")}
             </p>
 
           </div>

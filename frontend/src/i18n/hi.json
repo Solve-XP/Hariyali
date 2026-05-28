@@ -11,7 +11,7 @@
     "fertilizers": "उर्वरक",
     "pesticides": "कीटनाशक",
     "expenses": "खर्च",
-    "rental": "उपकरण किराया",
+    "rental": "रेंटल",
     "admin_section": "प्रशासन",
     "admin_dashboard": "प्रशासन डैशबोर्ड",
     "users": "उपयोगकर्ता",
@@ -648,7 +648,7 @@
   },
 
   "rentals": {
-    "marketplace": "किराया मार्केटप्लेस",
+    "marketplace": "रेंटल",
     "marketplaceSubtitle": "अपने पास खेती के उपकरण किराए पर लें",
     "searchPlaceholder": "उपकरण, गांव, तालुका, जिला खोजें...",
     "allDistricts": "सभी जिले",

@@ -10,7 +10,7 @@
     "fertilizers": "खते",
     "pesticides": "कीटकनाशके",
     "expenses": "खर्च",
-    "rental": "उपकरण भाडे",
+    "rental": "रेंटल",
     "admin_section": "प्रशासन",
     "admin_dashboard": "प्रशासन डॅशबोर्ड",
     "users": "वापरकर्ते",
@@ -644,7 +644,7 @@
 
 
   "rentals": {
-    "marketplace": "भाडे मार्केटप्लेस",
+    "marketplace": "रेंटल",
     "marketplaceSubtitle": "तुमच्या जवळ शेती उपकरण भाड्याने घ्या",
     "searchPlaceholder": "उपकरण, गाव, तालुका, जिल्हा शोधा...",
     "allDistricts": "सर्व जिल्हे",

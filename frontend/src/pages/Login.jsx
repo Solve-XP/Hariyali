@@ -189,98 +189,102 @@ export default function Login() {
   return (
 
     <>
-    <AuthShell
-      title={t("auth.login_title")}
-      subtitle={t(
-        "auth.login_subtitle"
-      )}
-      footer={footer}
-    >
-
-      <form
-        onSubmit={handleSubmit}
-        className="auth-form"
-      >
-
-        {error && (
-
-          <div className="auth-error">
-
-            {error}
-
-          </div>
-        )}
-
-        {/* Phone */}
-
-        <Input
-          label={t("auth.phone")}
-          type="tel"
-          inputMode="tel"
-          placeholder={t(
-            "auth.phone_placeholder"
+      <div id="login">
+        <AuthShell
+          title={t("auth.login_title")}
+          subtitle={t(
+            "auth.login_subtitle"
           )}
-          value={phone}
-          onChange={(e) =>
-            setPhone(e.target.value)
-          }
-          required
-        />
-
-        {/* Password */}
-
-        <Input
-          label={t("auth.password")}
-          type="password"
-          placeholder={t(
-            "auth.password_placeholder"
-          )}
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-          required
-        />
-
-        {/* Login Button */}
-
-        <Button
-          type="submit"
-          variant="primary"
-          block
-          disabled={loading}
+          footer={footer}
         >
 
-          {loading
-            ? t("common.loading")
-            : t(
-                "auth.login_button"
+          <form
+            onSubmit={handleSubmit}
+            className="auth-form"
+          >
+
+            {error && (
+
+              <div className="auth-error">
+
+                {error}
+
+              </div>
+            )}
+
+            {/* Phone */}
+
+            <Input
+              label={t("auth.phone")}
+              type="tel"
+              inputMode="tel"
+              placeholder={t(
+                "auth.phone_placeholder"
               )}
+              value={phone}
+              onChange={(e) =>
+                setPhone(e.target.value)
+              }
+              required
+            />
 
-        </Button>
+            {/* Password */}
 
-        {/* Language Switch */}
+            <Input
+              label={t("auth.password")}
+              type="password"
+              placeholder={t(
+                "auth.password_placeholder"
+              )}
+              value={password}
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
+              required
+            />
 
-       { /*<Button
-          type="button"
-          variant="secondary"
-          block
-          onClick={switchLanguage}
-        >
+            {/* Login Button */}
 
-          {i18n.language === "en"
-            ? "मराठी"
-            : "English"}
+            <Button
+              type="submit"
+              variant="primary"
+              block
+              disabled={loading}
+            >
 
-        </Button>*/}
+              {loading
+                ? t("common.loading")
+                : t(
+                    "auth.login_button"
+                  )}
 
-      </form>
+            </Button>
 
-    </AuthShell>
+            {/* Language Switch */}
 
-    <Marketplace />
+          { /*<Button
+              type="button"
+              variant="secondary"
+              block
+              onClick={switchLanguage}
+            >
 
-      <Rentals />
+              {i18n.language === "en"
+                ? "मराठी"
+                : "English"}
+
+            </Button>*/}
+
+          </form>
+
+        </AuthShell>
+
+      </div>
+    
+
+    {/* <Marketplace />
+
+      <Rentals /> */}
     </>
   );
 }
