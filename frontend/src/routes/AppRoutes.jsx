@@ -14,7 +14,7 @@ import Rentals from "../pages/rentals/Rentals";
 
 import PrivacyPolicy from "../pages/static/PrivacyPolicy";
 import Terms from "../pages/static/Terms";
-import Support from "../pages/static/support";
+import Support from "../pages/static/Support";
 import Contact from "../pages/static/Contact";
 import UsefulLinks from "../pages/static/UsefulLinks";
 
