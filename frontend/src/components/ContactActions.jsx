@@ -1,3 +1,5 @@
+
+
 import "./ContactActions.css";
 
 import {
@@ -22,6 +24,10 @@ import {
 export default function ContactActions({
 
   phone,
+
+  latitude,
+
+  longitude,
 
   className = "",
 
@@ -59,7 +65,9 @@ export default function ContactActions({
       ) {
 
         let actionMessage =
-          t("authMessages.loginToCall")
+          t(
+            "authMessages.loginToCall"
+          );
 
         switch (
           actionType
@@ -68,21 +76,36 @@ export default function ContactActions({
           case "call":
 
             actionMessage =
-              t("authMessages.loginToCall");
+              t(
+                "authMessages.loginToCall"
+              );
 
             break;
 
           case "whatsapp":
 
             actionMessage =
-              t("authMessages.loginToWhatsapp");
+              t(
+                "authMessages.loginToWhatsapp"
+              );
+
+            break;
+
+          case "directions":
+
+            actionMessage =
+              t(
+                "authMessages.loginToDirections"
+              );
 
             break;
 
           case "details":
 
             actionMessage =
-              t("authMessages.loginToViewDetails");
+              t(
+                "authMessages.loginToViewDetails"
+              );
 
             break;
 
@@ -97,10 +120,9 @@ export default function ContactActions({
           "error"
         );
 
-          navigate(
-            "/login"
-          );
-
+        navigate(
+          "/login"
+        );
 
         return false;
       }
@@ -127,9 +149,7 @@ export default function ContactActions({
       ) return;
 
       window.open(
-
         `tel:${phone}`,
-
         "_self"
       );
     };
@@ -160,8 +180,52 @@ export default function ContactActions({
           );
 
       window.open(
-
         `https://wa.me/91${cleanPhone}`,
+        "_blank"
+      );
+    };
+
+  /* =====================================
+     DIRECTIONS
+  ===================================== */
+
+  const handleDirections =
+    (e) => {
+
+      e.stopPropagation();
+
+      const allowed =
+        handleProtectedAction(
+          "directions"
+        );
+
+      if (
+        !allowed
+      ) return;
+
+      if (
+
+        !latitude ||
+
+        !longitude
+
+      ) {
+
+        pushToast(
+
+          t(
+            "contact.locationUnavailable"
+          ),
+
+          "error"
+        );
+
+        return;
+      }
+
+      window.open(
+
+        `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
 
         "_blank"
       );
@@ -191,6 +255,22 @@ export default function ContactActions({
         )}
       </Button>
 
+      
+      <Button
+        variant="accent"
+        className="
+          contact-btn
+          contact-btn--directions
+        "
+        onClick={
+          handleDirections
+        }
+      >
+        {t(
+          "contact.directions"
+        )}
+      </Button>
+
       <Button
         variant="success"
         className="
@@ -205,6 +285,7 @@ export default function ContactActions({
           "contact.whatsapp"
         )}
       </Button>
+
 
     </div>
   );

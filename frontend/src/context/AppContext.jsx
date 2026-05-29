@@ -1,9 +1,28 @@
-import { createContext, useContext, useState, useCallback, useMemo } from "react";
+import { createContext, useContext, useState, useCallback, useMemo, useEffect } from "react";
+
+
+import {
+  getCurrentLocation
+} from "../utils/location";
 
 const AppContext = createContext(null);
 
 export function AppProvider({ children }) {
   const [toasts, setToasts] = useState([]);
+  const [
+    userLocation,
+    setUserLocation
+  ] = useState(() => {
+
+    const saved =
+      localStorage.getItem(
+        "user_location"
+      );
+
+    return saved
+      ? JSON.parse(saved)
+      : null;
+  });
 
   const pushToast = useCallback((message, variant = "success") => {
     const id = Date.now() + Math.random();
@@ -16,11 +35,72 @@ export function AppProvider({ children }) {
     [],
   );
 
-  const value = useMemo(
-    () => ({ toasts, pushToast, dismissToast }),
-    [toasts, pushToast, dismissToast],
-  );
+  useEffect(() => {
 
+    async function loadLocation() {
+
+      try {
+
+        const location =
+          await getCurrentLocation();
+
+        setUserLocation(
+          location
+        );
+
+        localStorage.setItem(
+
+          "user_location",
+
+          JSON.stringify(
+            location
+          )
+        );
+
+      } catch {
+
+        console.log(
+          "Location unavailable"
+        );
+      }
+    }
+
+    loadLocation();
+
+  }, []);
+
+  // const value = useMemo(
+  //   () => ({ toasts, pushToast, dismissToast }),
+  //   [toasts, pushToast, dismissToast],
+  // );
+
+  const value = useMemo(
+    () => ({
+
+      toasts,
+
+      pushToast,
+
+      dismissToast,
+
+      userLocation,
+
+      setUserLocation,
+
+    }),
+
+    [
+
+      toasts,
+
+      pushToast,
+
+      dismissToast,
+
+      userLocation,
+
+    ]
+  );
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

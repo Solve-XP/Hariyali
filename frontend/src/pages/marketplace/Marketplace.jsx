@@ -36,6 +36,10 @@ import {
 } from "../../services/marketplaceService";
 
 import {
+  calculateDistance,
+} from "../../utils/location";
+
+import {
   getErrorMessage,
 } from "../../utils/errorHandler";
 
@@ -57,6 +61,7 @@ export default function Marketplace() {
 
   const {
     pushToast,
+    userLocation,
   } = useApp();
 
   const {
@@ -83,6 +88,13 @@ export default function Marketplace() {
     sortBy,
     setSortBy,
   ] = useState("latest");
+
+  const [
+    radius,
+    setRadius,
+  ] = useState(20);
+
+ 
 
   const [
     selectedImage,
@@ -252,17 +264,91 @@ export default function Marketplace() {
       PUBLIC LIMIT
   ========================================== */
 
+  // const visibleListings =
+
+  //   !isAuthenticated &&
+  //   !showAll
+
+  //     ? listings.slice(
+  //         0,
+  //         8
+  //       )
+
+  //     : listings;
+  
+  
+  
+  const distanceFilteredListings =
+      listings  
+
+      .map((listing) => {
+
+        let distance = null;
+
+        if (
+
+          userLocation?.latitude &&
+
+          userLocation?.longitude &&
+
+          listing?.latitude &&
+
+          listing?.longitude
+
+        ) {
+
+          distance =
+            calculateDistance(
+
+              userLocation.latitude,
+
+              userLocation.longitude,
+
+              listing.latitude,
+
+              listing.longitude
+            );
+        }
+
+        return {
+          ...listing,
+          distance,
+        };
+      })
+
+
+
+      .filter((listing) => {
+
+        if (
+          listing.distance === null
+        ) {
+
+          return false;
+        }
+
+        return (
+          listing.distance <= radius
+        );
+      })
+
+      .sort(
+        (a, b) =>
+          (a.distance ?? 99999) -
+          (b.distance ?? 99999)
+    );
+  
   const visibleListings =
 
-    !isAuthenticated &&
-    !showAll
+  !isAuthenticated &&
+  !showAll
 
-      ? listings.slice(
-          0,
-          8
-        )
+    ? distanceFilteredListings.slice(
+        0,
+        8
+      )
 
-      : listings;
+    : distanceFilteredListings;
 
   return (
 
@@ -382,6 +468,9 @@ export default function Marketplace() {
           setSortBy
         }
 
+        radius={radius}
+        onRadiusChange={setRadius}
+
         showLocationFilters={
           false
         }
@@ -419,8 +508,15 @@ export default function Marketplace() {
         <>
 
           <ListingGrid
+            showDistance={true}
             listings={
               visibleListings
+
+            }
+            className={
+              !isAuthenticated
+                ? "public-grid"
+                : ""
             }
 
             type="
@@ -474,13 +570,14 @@ export default function Marketplace() {
               image
             ) =>
               setSelectedImage(
+                
                 image
               )
             }
           />
 
           {!isAuthenticated &&
-            listings.length > 8 && (
+            distanceFilteredListings.length > 8 && (
 
             <div className="
               marketplace-view-all

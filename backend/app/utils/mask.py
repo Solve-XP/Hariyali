@@ -34,6 +34,6 @@ def mask_phone(phone: str):
 
     return (
         phone[:2]
-        + "xxxxxx"
+        + "******"
         + phone[-2:]
     )

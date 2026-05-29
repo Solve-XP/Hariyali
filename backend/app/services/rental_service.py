@@ -69,12 +69,17 @@ class RentalService:
         state: str,
 
         owner_name: str,
+        
 
         phone: str,
 
         description: str,
 
-        equipment_images
+        equipment_images,
+         
+        latitude: float = None,
+
+        longitude: float = None,
     ):
 
         if (
@@ -227,6 +232,12 @@ class RentalService:
             "state":
                 state,
 
+            "latitude":
+                latitude,
+
+            "longitude":
+                longitude,
+
             "normalized_state":
                 normalize_text(
                     state
@@ -368,6 +379,12 @@ class RentalService:
 
                 "state":
                     item["state"],
+
+                "latitude":
+                    item.get("latitude"),
+
+                "longitude":
+                    item.get("longitude"),
 
                 "equipment_images":
                     item["equipment_images"],

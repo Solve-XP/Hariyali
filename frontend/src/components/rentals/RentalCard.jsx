@@ -19,7 +19,9 @@ from "../ContactActions";
 
 export default function RentalCard({
   rental,
+   distance,
   isOwner = false,
+  showDistance = false,
   onViewDetails,
   onEdit,
   onDelete,
@@ -106,6 +108,20 @@ export default function RentalCard({
             onImageClick
           }
         />
+
+        {showDistance &&
+          
+          distance !== null && (
+
+          <div
+            className="
+              rental-card__distance-badge
+            "
+          >
+            📍 {distance} km {t("common.distance")}
+          </div>
+
+        )}
 
       </div>
 
@@ -319,9 +335,21 @@ export default function RentalCard({
           ) : (
 
             <ContactActions
-              phone={
-                phone
-              }
+               phone={
+                  phone
+                }
+
+                latitude={
+                  rental?.latitude
+                }
+
+                longitude={
+                  rental?.longitude
+                }
+
+                isLocked={
+                  rental?.is_locked
+                }
             />
           )}
 

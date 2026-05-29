@@ -152,6 +152,12 @@ class MarketplaceService:
                     payload.state
                 ),
 
+                "latitude":
+                    payload.latitude,
+
+                "longitude":
+                    payload.longitude,
+
             "description":
                 payload.description or "",
 
@@ -249,6 +255,11 @@ class MarketplaceService:
 
                 "state":
                     item["state"],
+                "latitude":
+                    item.get("latitude"),
+
+                "longitude":
+                    item.get("longitude"),
 
                 "description":
                     item.get(
@@ -315,6 +326,12 @@ class MarketplaceService:
 
                 "state":
                     item["state"],
+
+                "latitude":
+                    item.get("latitude"),
+
+                "longitude":
+                    item.get("longitude"),
 
                 "description":
                     item["description"],
@@ -397,6 +414,12 @@ class MarketplaceService:
 
                 "state":
                     item["state"],
+
+                "latitude":
+                    item.get("latitude"),
+
+                "longitude":
+                    item.get("longitude"),
 
                 "description":
                     item.get(
@@ -481,6 +504,12 @@ class MarketplaceService:
 
             "state":
                 listing["state"],
+
+            "latitude":
+                listing.get("latitude"),
+
+            "longitude":
+                listing.get("longitude"),
 
             "description":
                 listing.get(

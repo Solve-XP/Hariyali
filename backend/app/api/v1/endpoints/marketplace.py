@@ -77,6 +77,9 @@ async def create_listing(
 
     state: str = Form(...),
 
+    latitude: Optional[float] = Form(None),
+    longitude: Optional[float] = Form(None),
+
     description: str = Form(None),
 
     crop_images: List[UploadFile] = File(...),
@@ -99,6 +102,8 @@ async def create_listing(
         taluka=taluka,
         district=district,
         state=state,
+        latitude=latitude,
+        longitude=longitude,
         description=description
     )
 

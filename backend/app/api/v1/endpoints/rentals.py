@@ -54,6 +54,10 @@ async def create_rental(
 
     state: str = Form(...),
 
+    latitude: Optional[float] = Form(None),
+
+    longitude: Optional[float] = Form(None),
+
     owner_name: str = Form(...),
 
     phone: str = Form(...),
@@ -91,7 +95,11 @@ async def create_rental(
 
         description,
 
-        equipment_images
+        equipment_images,
+        
+        latitude,
+
+        longitude
     )
 
 
@@ -176,6 +184,10 @@ async def update_rental(
 
     state: Optional[str] = Form(None),
 
+    latitude: Optional[float] = Form(None),
+
+    longitude: Optional[float] = Form(None),
+
     owner_name: Optional[str] = Form(None),
 
     phone: Optional[str] = Form(None),
@@ -206,6 +218,10 @@ async def update_rental(
         district=district,
 
         state=state,
+
+        latitude=latitude,
+
+        longitude=longitude,
 
         owner_name=owner_name,
 

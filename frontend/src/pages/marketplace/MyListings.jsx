@@ -342,6 +342,7 @@ export default function MyListings() {
       ) : (
 
         <ListingGrid
+          showDistance={false}
           listings={
             listings
           }

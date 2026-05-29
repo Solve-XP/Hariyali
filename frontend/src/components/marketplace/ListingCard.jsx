@@ -11,6 +11,7 @@ import ContactActions from "../ContactActions";
 
 export default function ListingCard({
   listing,
+  distance,
   type = "marketplace",
   isOwner = false,
   onViewDetails,
@@ -89,6 +90,18 @@ export default function ListingCard({
             onImageClick
           }
         />
+
+        {distance !== null && (
+
+          <div
+            className="
+              listing-card__distance-badge
+            "
+          >
+            📍 {distance} km {t("common.distance")}
+          </div>
+
+        )}
 
         {listing?.is_verified && (
           <div
@@ -248,6 +261,7 @@ export default function ListingCard({
             listing-card__location
           "
         >
+        
           <strong>
             {listing?.village}
 
@@ -312,6 +326,13 @@ export default function ListingCard({
               phone={
                 listing.seller_phone
               }
+               latitude={
+                  listing.latitude
+                }
+
+                longitude={
+                  listing.longitude
+                }
               isLocked={
                 listing.is_locked
               }

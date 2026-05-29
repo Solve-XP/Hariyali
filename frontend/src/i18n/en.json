@@ -136,7 +136,8 @@
     "oldest": "Oldest",
     "priceLowHigh": "Price Low → High",
     "priceHighLow": "Price High → Low",
-    "optional": "Optional"
+    "optional": "Optional",
+    "distance": "away"
   },
   "listing": {
     "rentalPrice": "Rental Price",
@@ -157,13 +158,22 @@
     "latestListings": "Latest Listings",
     "oldestListings": "Oldest Listings",
     "priceLowHigh": "Price Low → High",
-    "priceHighLow": "Price High → Low"
+    "priceHighLow": "Price High → Low",
+     "radius20": "Within 20 km",
+    "radius40": "Within 40 km",
+    "radius60": "Within 60 km",
+    "radius100": "Within 100 km",
+    "radiusAll": "All Distances",
+    "showListingsWithin": "km radius"
+
   },
 
   "location": {
     "state": "State",
     "district": "District",
-    "taluka": "Taluka"
+    "taluka": "Taluka",
+    "notAtThisLocation": "📍 Not at this location? Select the exact location on the map.",
+    "selectLocationOnMap": "Select Location on Map"
   },
   
   "listingForm": {
@@ -300,7 +310,9 @@
 
   "contact": {
     "call": "Call",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+     "directions": "Directions",
+    "locationUnavailable": "Location unavailable"
   },
 
 
@@ -948,6 +960,7 @@
   "loginToCall": "Login to call seller",
   "loginToWhatsapp": "Login to chat on WhatsApp",
   "loginToViewDetails": "Login to view full details",
-  "loginToViewListing": "Login to view listing details"
+  "loginToViewListing": "Login to view listing details",
+  "loginToDirections": "Login to get directions"
 }
 }

@@ -1,6 +1,20 @@
 import "./ListingForm.css";
 import { useTranslation } from "react-i18next";
 
+
+import {
+  getCurrentLocation,
+} from "../../utils/location";
+
+import {
+  reverseGeocode,
+} from "../../utils/geocoding";
+
+import MapPickerModal
+  from "../MapPickerModal";
+
+
+
 import imageCompression
 from "browser-image-compression";
 
@@ -106,6 +120,21 @@ export default function ListingForm({
     setPreviewImages,
   ] = useState([]);
 
+  const [
+    latitude,
+    setLatitude,
+  ] = useState(null);
+
+  const [
+    longitude,
+    setLongitude,
+  ] = useState(null);
+
+  const [
+    showMapModal,
+    setShowMapModal,
+  ] = useState(false);
+
   const [form, setForm] =
     useState({
       quantity: "",
@@ -150,6 +179,83 @@ export default function ListingForm({
     }
   }
 
+  useEffect(() => {
+
+    // async function loadLocation() {
+
+    //   try {
+
+    //     const location =
+    //       await getCurrentLocation();
+
+    //     setLatitude(
+    //       location.latitude
+    //     );
+
+    //     setLongitude(
+    //       location.longitude
+    //     );
+
+    //   } catch {
+
+    //     console.log(
+    //       "Location permission denied"
+    //     );
+    //   }
+    // }
+    async function loadLocation() {
+
+      try {
+
+        const location =
+          await getCurrentLocation();
+
+        setLatitude(
+          location.latitude
+        );
+
+        setLongitude(
+          location.longitude
+        );
+
+        const address =
+          await reverseGeocode(
+            location.latitude,
+            location.longitude
+          );
+
+        setForm(
+          prev => ({
+
+            ...prev,
+
+            village:
+              address.village || "",
+
+            taluka:
+              address.taluka || "",
+
+            district:
+              address.district || "",
+
+            state:
+              `${address.state || ""} ${address.pincode || ""}`.trim(),
+          })
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Location load failed",
+          error
+        );
+      }
+    }
+
+    loadLocation();
+
+    }, []);
+    
   /* ==========================================
       LOAD CROPS
   ========================================== */
@@ -299,6 +405,13 @@ export default function ListingForm({
         description:
           listing.description || "",
       });
+      setLatitude(
+        listing.latitude
+      );
+
+      setLongitude(
+        listing.longitude
+      );
 
       setPreviewImages(
         listing.crop_images || []
@@ -795,6 +908,16 @@ export default function ListingForm({
         );
 
         formData.append(
+          "latitude",
+          latitude ?? ""
+        );
+
+        formData.append(
+          "longitude",
+          longitude ?? ""
+        );
+
+        formData.append(
           "description",
           form.description ||
           ""
@@ -876,6 +999,10 @@ export default function ListingForm({
 
         state:
           form.state,
+        
+        latitude,
+
+        longitude,
 
         description:
           form.description ||
@@ -1222,6 +1349,33 @@ export default function ListingForm({
           }
         />
 
+        <Card>
+
+          <p
+            style={{
+              marginBottom: "12px",
+            }}
+          >
+            {t(
+              "location.notAtThisLocation"
+            )}
+          </p>
+
+          <Button
+            type="button"
+            variant="primary"
+            onClick={() =>
+              setShowMapModal(
+                true
+              )
+            }
+          >
+            {t("location.selectLocationOnMap")}
+
+          </Button>
+
+        </Card>
+
         <div className="
           listing-form__textarea
         ">
@@ -1470,6 +1624,72 @@ export default function ListingForm({
           )}
 
         </div>
+
+        <MapPickerModal
+
+          open={
+            showMapModal
+          }
+
+          onClose={() =>
+            setShowMapModal(
+              false
+            )
+          }
+
+          latitude={
+            latitude
+          }
+
+          longitude={
+            longitude
+          }
+
+          // onConfirm={(
+          //   location
+          // ) => {
+
+          //   setLatitude(
+          //     location.latitude
+          //   );
+
+          //   setLongitude(
+          //     location.longitude
+          //   );
+          // }}
+
+          onConfirm={(
+              location
+            ) => {
+
+              setLatitude(
+                location.latitude
+              );
+
+              setLongitude(
+                location.longitude
+              );
+
+              setForm(
+                prev => ({
+
+                  ...prev,
+
+                  village:
+                    location.village || "",
+
+                  taluka:
+                    location.taluka || "",
+
+                  district:
+                    location.district || "",
+
+                  state:
+                    `${location.state || ""} ${location.pincode || ""}`.trim(),
+                })
+              );
+            }}
+        />
 
         <Button
           onClick={

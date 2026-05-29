@@ -197,6 +197,11 @@ export default function CreateRental() {
           formData
             .state
             ?.trim(),
+        latitude:
+          formData.latitude,
+
+        longitude:
+          formData.longitude,
 
         owner_name:
           formData

@@ -226,6 +226,11 @@ export default function EditRental() {
           formData
             .state
             ?.trim(),
+        latitude:
+          formData.latitude,
+
+        longitude:
+          formData.longitude,
 
         owner_name:
           formData

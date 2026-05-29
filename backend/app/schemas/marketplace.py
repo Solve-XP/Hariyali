@@ -38,6 +38,9 @@ class MarketplaceCreateSchema(BaseModel):
     district: str
 
     state: str
+    
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
 
     description: Optional[str] = None
 
@@ -67,5 +70,8 @@ class MarketplaceUpdateSchema(BaseModel):
     district: Optional[str] = None
 
     state: Optional[str] = None
+
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
 
     description: Optional[str] = None

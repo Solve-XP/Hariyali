@@ -18,6 +18,11 @@ import {
   useApp,
 } from "../../context/AppContext";
 
+
+import {
+  calculateDistance,
+} from "../../utils/location";
+
 import {
   useAuth,
 } from "../../context/AuthContext";
@@ -58,6 +63,7 @@ export default function Rentals() {
 
   const {
     pushToast,
+    userLocation,
   } = useApp();
 
   const {
@@ -88,6 +94,12 @@ export default function Rentals() {
     setSortBy,
   ] =
     useState("latest");
+  
+  const [
+    radius,
+    setRadius,
+  ] =
+    useState(20);
 
   const [
     district,
@@ -198,6 +210,64 @@ export default function Rentals() {
 
       let data =
         [...rentals];
+        
+        data =
+          data
+
+            .map((item) => {
+
+              let distance = null;
+
+              if (
+
+                userLocation?.latitude &&
+
+                userLocation?.longitude &&
+
+                item?.latitude &&
+
+                item?.longitude
+
+              ) {
+
+                distance =
+                  calculateDistance(
+
+                    userLocation.latitude,
+
+                    userLocation.longitude,
+
+                    item.latitude,
+
+                    item.longitude
+                  );
+              }
+
+              return {
+                ...item,
+                distance,
+              };
+            })
+
+            .filter((item) => {
+
+              if (
+                item.distance === null
+              ) {
+
+                return false;
+              }
+
+              return (
+                item.distance <= radius
+              );
+            })
+
+            .sort(
+              (a, b) =>
+                a.distance -
+                b.distance
+            );
 
       if (
         district
@@ -354,6 +424,8 @@ export default function Rentals() {
       stateFilter,
       availability,
       sortBy,
+      radius,
+      userLocation,
     ]);
 
   const visibleRentals =
@@ -541,6 +613,44 @@ export default function Rentals() {
             }
           />
 
+          <div className="
+            listing-filters__radius
+          ">
+
+            <input
+              type="number"
+
+              min="1"
+
+              value={
+                radius
+              }
+
+              onChange={(e) =>
+                setRadius(
+                  Number(
+                    e.target.value
+                  )
+                )
+              }
+
+              className="
+                listing-filters__radius-input
+              "
+            />
+
+            <span
+              className="
+                listing-filters__radius-label
+              "
+            >
+              {t(
+                "listing.showListingsWithin"
+              )}
+            </span>
+
+          </div>
+
           <Select
             value={
               district
@@ -620,47 +730,88 @@ export default function Rentals() {
             {visibleRentals.map(
               (
                 rental
-              ) => (
+              ) => {
 
-                <RentalCard
-                  key={
-                    rental.id
-                  }
+                let distance = null;
 
-                  rental={
-                    rental
-                  }
+                if (
 
-                  isOwner={
-                    false
-                  }
+                  userLocation?.latitude &&
 
-                  onViewDetails={() => {
+                  userLocation?.longitude &&
 
-                    if (
-                      rental?.is_locked
-                    ) {
+                  rental?.latitude &&
 
-                      pushToast(
-                        t(
-                          "authMessages.loginToViewRental"
-                        ),
-                        "error"
-                      );
+                  rental?.longitude
 
-                      navigate(
-                        "/login"
-                      );
+                ) {
 
-                      return;
+                  distance =
+                    calculateDistance(
+
+                      userLocation.latitude,
+
+                      userLocation.longitude,
+
+                      rental.latitude,
+
+                      rental.longitude
+                    );
+                }
+
+                return (
+
+                  <RentalCard
+                    
+                    showDistance={true}
+                    key={
+                      rental.id
                     }
 
-                    navigate(
-                      `/farmer/rentals/${rental.id}`
-                    );
-                  }}
-                />
-              )
+                    distance={
+                      distance
+                    }
+
+                    rental={
+                      rental
+                    }
+
+                    distance={
+                      distance
+                    }
+
+                    isOwner={
+                      false
+                    }
+
+                    onViewDetails={() => {
+
+                      if (
+                        rental?.is_locked
+                      ) {
+
+                        pushToast(
+                          t(
+                            "authMessages.loginToViewRental"
+                          ),
+                          "error"
+                        );
+
+                        navigate(
+                          "/login"
+                        );
+
+                        return;
+                      }
+
+                      navigate(
+                        `/farmer/rentals/${rental.id}`
+                      );
+                    }}
+                  />
+
+                );
+              }
             )}
 
           </div>

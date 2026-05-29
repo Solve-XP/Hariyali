@@ -1,5 +1,8 @@
 import React
-from "react";
+  from "react";
+  
+import "leaflet-geosearch/dist/geosearch.css";
+import "leaflet/dist/leaflet.css";
 
 import {
   createRoot,

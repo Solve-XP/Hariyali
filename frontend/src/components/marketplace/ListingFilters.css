@@ -1,10 +1,12 @@
 /* ==========================================
-   FILTERS WRAPPER
+   FILTER BAR
 ========================================== */
 
 .listing-filters {
+
     display: flex;
-    flex-direction: row;
+
+    align-items: center;
 
     gap: 16px;
 
@@ -29,35 +31,53 @@
 ========================================== */
 
 .listing-filters__search {
-    width: 100%;
+
+    flex: 1;
 }
 
 /* ==========================================
-   CONTROLS
+   RADIUS
 ========================================== */
 
-.listing-filters__controls {
+.listing-filters__radius {
+
     display: flex;
 
-    gap: 14px;
+    align-items: center;
 
-    align-items:
-        flex-end;
+    gap: 8px;
 
-    flex-wrap:
-        wrap;
+    white-space: nowrap;
 }
 
-/* ==========================================
-   FIELD
-========================================== */
+.listing-filters__radius-input {
 
-.listing-filters__field {
-    min-width:
-        180px;
+    width: 80px;
 
-    flex:
-        1;
+    height: 44px;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius:
+        10px;
+
+    padding:
+        0 12px;
+
+    text-align: center;
+
+    font-weight: 600;
+}
+
+.listing-filters__radius-label {
+
+    font-size: 14px;
+
+    color:
+        var(--color-text-secondary);
+
+    white-space: nowrap;
 }
 
 /* ==========================================
@@ -65,28 +85,10 @@
 ========================================== */
 
 .listing-filters__sort {
-    min-width:
-        220px;
-}
 
-/* ==========================================
-   TABLET
-========================================== */
+    width: 220px;
 
-@media (max-width: 992px) {
-
-    .listing-filters__controls {
-        display: grid;
-
-        grid-template-columns:
-            repeat(2,
-                1fr);
-    }
-
-    .listing-filters__sort {
-        min-width:
-            auto;
-    }
+    flex-shrink: 0;
 }
 
 /* ==========================================
@@ -96,24 +98,20 @@
 @media (max-width: 768px) {
 
     .listing-filters {
-        padding:
-            14px;
-        flex-direction:
-            column;
+
+        flex-direction: column;
+
+        align-items: stretch;
     }
 
-    .listing-filters__controls {
-
-        grid-template-columns:
-            1fr;
-
-        gap:
-            10px;
-    }
-
-    .listing-filters__field,
+    .listing-filters__search,
     .listing-filters__sort {
-        min-width:
-            100%;
+
+        width: 100%;
+    }
+
+    .listing-filters__radius {
+
+        justify-content: flex-start;
     }
 }

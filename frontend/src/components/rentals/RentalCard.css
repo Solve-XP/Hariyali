@@ -45,6 +45,38 @@
         1px solid var(--color-divider);
 }
 
+.rental-card__distance-badge {
+
+    position: absolute;
+
+    bottom: 12px;
+
+    left: 12px;
+
+    z-index: 10;
+
+    background: rgba(22,
+            163,
+            74,
+            0.95);
+
+    color: white;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 2px 8px rgba(0,
+            0,
+            0,
+            0.15);
+}
+
 /* ==========================================
    BODY
 ========================================== */

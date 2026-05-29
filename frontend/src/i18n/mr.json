@@ -135,7 +135,8 @@
     "oldest": "जुने",
     "priceLowHigh": "किंमत कमी → जास्त",
     "priceHighLow": "किंमत जास्त → कमी",
-     "optional": "ऐच्छिक"
+     "optional": "ऐच्छिक",
+     "distance": "अंतरावर"
 
   },
 
@@ -158,12 +159,22 @@
     "latestListings": "नवीन लिस्टिंग",
     "oldestListings": "जुन्या लिस्टिंग",
     "priceLowHigh": "किंमत कमी → जास्त",
-    "priceHighLow": "किंमत जास्त → कमी"
+    "priceHighLow": "किंमत जास्त → कमी",
+     "radius20": "20 किमीच्या आत",
+    "radius40": "40 किमीच्या आत",
+    "radius60": "60 किमीच्या आत",
+    "radius100": "100 किमीच्या आत",
+    "radiusAll": "सर्व अंतर",
+    "showListingsWithin": "किमीच्या आत"
   },
   "location": {
     "state": "राज्य",
     "district": "जिल्हा",
-    "taluka": "तालुका"
+    "taluka": "तालुका",
+
+    "notAtThisLocation": "📍 ही अचूक जागा नाही का? नकाशावर अचूक स्थान निवडा.",
+    "selectLocationOnMap": "नकाशावर स्थान निवडा"
+
   },
 
   "listingForm": {
@@ -877,7 +888,9 @@
 
   "contact": {
     "call": "कॉल",
-    "whatsapp": "व्हॉट्सअॅप"
+    "whatsapp": "व्हॉट्सअॅप",
+    "directions": "दिशा",
+    "locationUnavailable": "स्थान उपलब्ध नाही"
   },
   "myListings": {
     "failedToLoad": "लिस्टिंग लोड करण्यात अयशस्वी",
@@ -939,6 +952,7 @@
   "loginToCall": "विक्रेत्याला कॉल करण्यासाठी लॉगिन करा",
   "loginToWhatsapp": "व्हॉट्सअ‍ॅपवर चॅट करण्यासाठी लॉगिन करा",
   "loginToViewDetails": "संपूर्ण माहिती पाहण्यासाठी लॉगिन करा",
-  "loginToViewListing": "लिस्टिंग तपशील पाहण्यासाठी लॉगिन करा"
+  "loginToViewListing": "लिस्टिंग तपशील पाहण्यासाठी लॉगिन करा",
+  "loginToDirections": "दिशा मिळवण्यासाठी लॉगिन करा"
 }
 }

@@ -21,6 +21,9 @@ class RentalCreate(BaseModel):
 
     state: str
 
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+
     owner_name: str
 
     phone: str
@@ -43,6 +46,9 @@ class RentalUpdate(BaseModel):
     district: Optional[str] = None
 
     state: Optional[str] = None
+
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
 
     owner_name: Optional[str] = None
 

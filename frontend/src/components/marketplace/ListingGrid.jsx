@@ -1,5 +1,13 @@
 import "./ListingGrid.css";
 
+import {
+  useApp,
+} from "../../context/AppContext";
+
+import {
+  calculateDistance,
+} from "../../utils/location";
+
 import ListingCard
 from "./ListingCard";
 
@@ -7,11 +15,17 @@ export default function ListingGrid({
   listings = [],
   isOwner = false,
   type = "marketplace",
+  className = "",
+  showDistance = false,
   onViewDetails,
   onEdit,
   onDelete,
   onImageClick,
 }) {
+
+  const {
+    userLocation,
+  } = useApp();
 
   if (
     !listings?.length
@@ -22,46 +36,88 @@ export default function ListingGrid({
 
   return (
 
-    <div className="
-      listing-grid
-    ">
+    <div
+      className={`
+        listing-grid
+        ${className}
+      `}
+    >
 
       {listings.map(
-        (listing) => (
+        (listing) => {
 
-        <ListingCard
-          key={listing.id}
+          let distance = null;
 
-          listing={
-            listing
+          if (
+
+            showDistance &&
+            
+            userLocation?.latitude &&
+
+            userLocation?.longitude &&
+
+            listing?.latitude &&
+
+            listing?.longitude
+
+          ) {
+
+            distance =
+              calculateDistance(
+
+                userLocation.latitude,
+
+                userLocation.longitude,
+
+                listing.latitude,
+
+                listing.longitude
+              );
           }
 
-          type={
-            type
-          }
+          return (
 
-          isOwner={
-            isOwner
-          }
+            <ListingCard
+              key={
+                listing.id
+              }
 
-          onViewDetails={
-            onViewDetails
-          }
+              listing={
+                listing
+              }
 
-          onEdit={
-            onEdit
-          }
+              distance={
+                distance
+              }
 
-          onDelete={
-            onDelete
-          }
+              type={
+                type
+              }
 
-          onImageClick={
-            onImageClick
-          }
-        />
+              isOwner={
+                isOwner
+              }
 
-      ))}
+              onViewDetails={
+                onViewDetails
+              }
+
+              onEdit={
+                onEdit
+              }
+
+              onDelete={
+                onDelete
+              }
+
+              onImageClick={
+                onImageClick
+              }
+            />
+
+          );
+        }
+      )}
 
     </div>
   );
