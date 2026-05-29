@@ -1,4 +1,4 @@
-import "./SignUp.css";
+import "./Signup.css";
 
 import { useState } from "react";
 
