@@ -71,3 +71,39 @@ class TokenResponse(BaseModel):
     token_type: str = "bearer"
 
     user: UserResponse
+
+class ForgotPasswordRequest(BaseModel):
+
+    phone: str
+
+    new_password: str
+
+    confirm_password: str
+
+    @field_validator("phone")
+    @classmethod
+    def validate_phone(cls, value):
+
+        value = value.strip()
+
+        pattern = r"^[6-9]\d{9}$"
+
+        if not re.match(pattern, value):
+
+            raise ValueError(
+                "Invalid phone number"
+            )
+
+        return value
+
+    @field_validator("new_password")
+    @classmethod
+    def validate_password(cls, value):
+
+        if len(value) < 8:
+
+            raise ValueError(
+                "Password must be at least 8 characters"
+            )
+
+        return value

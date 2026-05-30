@@ -109,3 +109,51 @@ class AuthService:
                 "role": existing_user["role"]
             }
         }
+
+    @staticmethod
+    async def forgot_password(
+        phone: str,
+        new_password: str,
+        confirm_password: str
+    ):
+
+        user = await UserRepository.get_user_by_phone(
+            phone
+        )
+
+        if not user:
+
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found"
+            )
+
+        if new_password != confirm_password:
+
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Passwords do not match"
+            )
+
+        if verify_password(
+            new_password,
+            user["password"]
+        ):
+
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="New password cannot be the same as the old password"
+            )
+
+        hashed_password = hash_password(
+            new_password
+        )
+
+        await UserRepository.update_password(
+            str(user["_id"]),
+            hashed_password
+        )
+
+        return {
+            "message": "Password updated successfully"
+        }
