@@ -86,6 +86,36 @@
     z-index: 2;
 }
 
+.listing-card__image {
+    position: relative;
+}
+
+.listing-card__posted-badge {
+    position: absolute;
+
+    top: 10px;
+
+    right: 10px;
+
+    z-index: 10;
+
+    background: rgba(255, 255, 255, 0.581);
+
+    color: #000000;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    backdrop-filter: blur(4px);
+}
+
 /* ==========================================
    BODY
 ========================================== */

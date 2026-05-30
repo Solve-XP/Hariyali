@@ -173,7 +173,9 @@
     "radius60": "60 किमी के भीतर",
     "radius100": "100 किमी के भीतर",
     "radiusAll": "सभी दूरी",
-    "showListingsWithin": "किमी के भीतर"
+    "showListingsWithin": "किमी के भीतर",
+    "postedToday": "नया",
+    "postedAgo": "{{days}} दिन पहले"
   },
 
   "location": {

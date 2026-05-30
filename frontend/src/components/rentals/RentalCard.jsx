@@ -82,6 +82,34 @@ export default function RentalCard({
   const dailyPrice =
     rental
       ?.price_per_day;
+  
+  const getPostedDate = (date) => {
+
+  if (!date) return "";
+
+  const posted = new Date(date);
+
+  const now = new Date();
+
+  const diffDays = Math.floor(
+    (now - posted) /
+    (1000 * 60 * 60 * 24)
+  );
+
+  if (diffDays === 0) {
+
+    return t(
+      "listing.postedToday"
+    );
+  }
+
+  return t(
+    "listing.postedAgo",
+    {
+      days: diffDays
+    }
+  );
+};
 
   return (
 
@@ -108,6 +136,20 @@ export default function RentalCard({
             onImageClick
           }
         />
+
+        {rental?.created_at && (
+
+          <div
+            className="
+              rental-card__posted-badge
+            "
+          >
+            {getPostedDate(
+              rental.created_at
+            )}
+          </div>
+
+        )}
 
         {showDistance &&
           

@@ -392,6 +392,9 @@ class RentalService:
                 "description":
                     item["description"],
 
+                "created_at": 
+                    item["created_at"],
+
                 "owner_name":
                     mask_name(
                         item["owner_name"]

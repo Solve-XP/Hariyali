@@ -171,7 +171,9 @@
     "radius60": "Within 60 km",
     "radius100": "Within 100 km",
     "radiusAll": "All Distances",
-    "showListingsWithin": "km radius"
+    "showListingsWithin": "km radius",
+    "postedToday": "New",
+    "postedAgo": "{{days}}d ago"
 
   },
 

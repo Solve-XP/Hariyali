@@ -266,6 +266,7 @@ class MarketplaceService:
                         "description",
                         ""
                     ),
+                
 
                 "crop_images":
                     item.get(
@@ -274,7 +275,10 @@ class MarketplaceService:
                     ),
 
                 "status":
-                    item["status"]
+                    item["status"],
+
+                "created_at": 
+                    item["created_at"]
             })
 
         return formatted_list
@@ -348,6 +352,9 @@ class MarketplaceService:
                     mask_phone(
                         item["seller_phone"]
                     ),
+
+                "created_at":
+                  item["created_at"],
 
                 "is_locked":
                     True
@@ -434,7 +441,9 @@ class MarketplaceService:
                     ),
 
                 "status":
-                    item["status"]
+                    item["status"],
+
+                "created_at": item["created_at"]
             })
 
         return formatted_list
@@ -524,7 +533,10 @@ class MarketplaceService:
                 ),
 
             "status":
-                listing["status"]
+                listing["status"],
+                
+            "created_at":
+                listing["created_at"]
         }
 
     async def update_listing(

@@ -69,7 +69,34 @@ export default function ListingCard({
     listing?.crop_images ||
     listing?.images ||
     [];
+  
+ const getPostedDate = (date) => {
 
+  if (!date) return "";
+
+  const posted = new Date(date);
+
+  const now = new Date();
+
+  const diffDays = Math.floor(
+    (now - posted) /
+    (1000 * 60 * 60 * 24)
+  );
+
+  if (diffDays === 0) {
+
+    return t(
+      "listing.postedToday"
+    );
+  }
+
+  return t(
+    "listing.postedAgo",
+    {
+      days: diffDays
+    }
+  );
+};
   return (
     <Card
       className="
@@ -90,6 +117,20 @@ export default function ListingCard({
             onImageClick
           }
         />
+
+        {listing?.created_at && (
+
+          <div
+            className="
+              listing-card__posted-badge
+            "
+          >
+            {getPostedDate(
+              listing.created_at
+            )}
+          </div>
+
+        )}
 
         {distance !== null && (
 

@@ -172,7 +172,9 @@
     "radius60": "60 किमीच्या आत",
     "radius100": "100 किमीच्या आत",
     "radiusAll": "सर्व अंतर",
-    "showListingsWithin": "किमीच्या आत"
+    "showListingsWithin": "किमीच्या आत",
+    "postedToday": "नवीन",
+    "postedAgo": "{{days}} दिवसांपूर्वी"
   },
   "location": {
     "state": "राज्य",
