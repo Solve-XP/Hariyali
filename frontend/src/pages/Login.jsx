@@ -102,12 +102,12 @@ function ForgotPasswordModal({ onClose, pushToast, t }) {
     >
       <div className="fp-modal">
         <h2 className="fp-title">
-          {t("auth.forgot_password_title", { defaultValue: "Reset Password" })}
+          {t("auth.forgot_password_title")}
         </h2>
         <p className="fp-subtitle">
-          {t("auth.forgot_password_subtitle", {
-            defaultValue: "Enter your phone number and set a new password.",
-          })}
+          {t("auth.forgot_password_subtitle", 
+           
+          )}
         </p>
 
         <form onSubmit={handleForgotSubmit} className="auth-form">
@@ -122,22 +122,18 @@ function ForgotPasswordModal({ onClose, pushToast, t }) {
           />
 
           <Input
-            label={t("auth.new_password", { defaultValue: "New Password" })}
+            label={t("auth.new_password")}
             type="password"
-            placeholder={t("auth.new_password_placeholder", {
-              defaultValue: "Enter new password",
-            })}
+            placeholder={t("auth.new_password_placeholder")}
             value={fpNewPassword}
             onChange={(e) => setFpNewPassword(e.target.value)}
             required
           />
 
           <Input
-            label={t("auth.confirm_password", { defaultValue: "Confirm Password" })}
+            label={t("auth.confirm_password")}
             type="password"
-            placeholder={t("auth.confirm_password_placeholder", {
-              defaultValue: "Confirm new password",
-            })}
+            placeholder={t("auth.confirm_password_placeholder")}
             value={fpConfirmPassword}
             onChange={(e) => setFpConfirmPassword(e.target.value)}
             required
@@ -157,7 +153,7 @@ function ForgotPasswordModal({ onClose, pushToast, t }) {
             <Button type="submit" variant="primary" block disabled={fpLoading}>
               {fpLoading
                 ? t("common.loading")
-                : t("auth.reset_password_button", { defaultValue: "Reset Password" })}
+                : t("auth.reset_password_button")}
             </Button>
           </div>
         </form>
@@ -273,7 +269,7 @@ export default function Login() {
                 className="fp-link"
                 onClick={() => setShowForgotPassword(true)}
               >
-                {t("auth.forgot_password", { defaultValue: "Forgot Password?" })}
+                {t("auth.forgot_password")}
               </button>
             </div>
 

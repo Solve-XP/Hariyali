@@ -59,7 +59,14 @@
     "farmer_demo": "डेमो शेतकरी",
     "role":"भूमिका",
     "login": "लॉगिन",
-    "signup": "साइन अप"
+    "signup": "साइन अप",
+    "forgot_password": "पासवर्ड विसरलात?",
+    "forgot_password_subtitle": "तुमचा फोन नंबर प्रविष्ट करा आणि नवीन पासवर्ड सेट करा.",
+    "forgot_password_title": "पासवर्ड रीसेट करा",
+    "new_password": "नवीन पासवर्ड",
+    "new_password_placeholder": "नवीन पासवर्ड प्रविष्ट करा",
+    "confirm_password_placeholder": "नवीन पासवर्डची पुष्टी करा",
+    "reset_password_button": "पासवर्ड रीसेट करा"
   },
    
   "signup": {
