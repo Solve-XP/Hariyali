@@ -105,8 +105,8 @@ function ForgotPasswordModal({ onClose, pushToast, t }) {
           {t("auth.forgot_password_title")}
         </h2>
         <p className="fp-subtitle">
-          {t("auth.forgot_password_subtitle", 
-           
+          {t("auth.forgot_password_subtitle",
+
           )}
         </p>
 

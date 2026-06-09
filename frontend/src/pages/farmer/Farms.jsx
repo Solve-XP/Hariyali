@@ -720,7 +720,6 @@ export default function Farms() {
 
             <Select
               label={t("farms.soil_type")}
-              optional
               value={form.soil_type}
               onChange={updateField(
                 "soil_type"

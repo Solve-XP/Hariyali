@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 
+automation
 # Virtual Environment
 venv/
 env/
