@@ -9,7 +9,6 @@ from datetime import (
 
 from fastapi import (
     HTTPException,
-    UploadFile,
     status
 )
 
@@ -21,9 +20,6 @@ from app.repositories.rental_repo import (
     RentalRepository
 )
 
-from app.integrations.s3 import (
-    upload_file_to_s3
-)
 
 from app.utils.financial_year import (
     get_current_financial_year
@@ -54,38 +50,13 @@ class RentalService:
 
         user_id: str,
 
-        equipment_name: str,
-
-        price_per_hour: float,
-
-        price_per_day: float,
-
-        village: str,
-
-        taluka: str,
-
-        district: str,
-
-        state: str,
-
-        owner_name: str,
-        
-
-        phone: str,
-
-        description: str,
-
-        equipment_images,
-         
-        latitude: float = None,
-
-        longitude: float = None,
+        payload
     ):
 
         if (
-            price_per_hour is None
+            payload.price_per_hour is None
             and
-            price_per_day is None
+            payload.price_per_day is None
         ):
 
             raise HTTPException(
@@ -97,9 +68,9 @@ class RentalService:
             )
 
         if (
-            price_per_hour is not None
+            payload.price_per_hour is not None
             and
-            price_per_hour <= 0
+            payload.price_per_hour <= 0
         ):
 
             raise HTTPException(
@@ -111,9 +82,9 @@ class RentalService:
             )
 
         if (
-            price_per_day is not None
+            payload.price_per_day is not None
             and
-            price_per_day <= 0
+            payload.price_per_day <= 0
         ):
 
             raise HTTPException(
@@ -140,15 +111,20 @@ class RentalService:
 
             "user_id": user_id,
 
-            "equipment_name": equipment_name,
+            "equipment_name":
+                payload.equipment_name,
 
-            "village": village,
+            "village":
+                payload.village,
 
-            "taluka": taluka,
+            "taluka":
+                payload.taluka,
 
-            "district": district,
+            "district":
+                payload.district,
 
-            "state": state,
+            "state":
+                payload.state,
 
             "created_at": {
 
@@ -170,90 +146,76 @@ class RentalService:
                 )
             )
 
-        uploaded_images = []
-
-        for image in equipment_images:
-
-            image_url = await upload_file_to_s3(
-                image,
-                "rentals"
-            )
-
-            uploaded_images.append(
-                image_url
-            )
-
         rental_data = {
 
             "user_id": user_id,
 
-            "financial_year": (
-                get_current_financial_year()
-            ),
+            "financial_year":
+                get_current_financial_year(),
 
             "equipment_name":
-                equipment_name,
+                payload.equipment_name,
 
             "normalized_equipment_name":
                 normalize_text(
-                    equipment_name
+                    payload.equipment_name
                 ),
 
             "price_per_hour":
-                price_per_hour,
+                payload.price_per_hour,
 
             "price_per_day":
-                price_per_day,
+                payload.price_per_day,
 
             "village":
-                village,
+                payload.village,
 
             "normalized_village":
                 normalize_text(
-                    village
+                    payload.village
                 ),
 
             "taluka":
-                taluka,
+                payload.taluka,
 
             "normalized_taluka":
                 normalize_text(
-                    taluka
+                    payload.taluka
                 ),
 
             "district":
-                district,
+                payload.district,
 
             "normalized_district":
                 normalize_text(
-                    district
+                    payload.district
                 ),
 
             "state":
-                state,
-
-            "latitude":
-                latitude,
-
-            "longitude":
-                longitude,
+                payload.state,
 
             "normalized_state":
                 normalize_text(
-                    state
+                    payload.state
                 ),
 
+            "latitude":
+                payload.latitude,
+
+            "longitude":
+                payload.longitude,
+
             "owner_name":
-                owner_name,
+                payload.owner_name,
 
             "phone":
-                phone,
+                payload.phone,
 
             "equipment_images":
-                uploaded_images,
+                payload.equipment_images,
 
             "description":
-                description or "",
+                payload.description or "",
 
             "is_available":
                 True,
@@ -424,7 +386,6 @@ class RentalService:
 
         data,
 
-        equipment_images=None
     ):
 
         rental = await self.rental_repo.get_rental_by_id(
@@ -603,25 +564,6 @@ class RentalService:
             ] = normalize_text(
                 update_data["state"]
             )
-
-        if equipment_images:
-
-            uploaded_images = []
-
-            for image in equipment_images:
-
-                image_url = await upload_file_to_s3(
-                    image,
-                    "rentals"
-                )
-
-                uploaded_images.append(
-                    image_url
-                )
-
-            update_data[
-                "equipment_images"
-            ] = uploaded_images
 
         modified_count = await self.rental_repo.update_rental(
 

@@ -1,55 +1,59 @@
-// src/services/farmsService.js
-
 import api from "../api/axios";
 
 export const FarmsService = {
 
-  getAll: async (search = "") => {
-    const response = await api.get(
-      `/farms${search ? `?search=${encodeURIComponent(search)}` : ""}`
-    );
+  getAll: async (
+    search = ""
+  ) => {
+
+    const response =
+      await api.get(
+        `/farms${
+          search
+            ? `?search=${encodeURIComponent(search)}`
+            : ""
+        }`
+      );
 
     return response.data;
   },
 
-  create: async (payload) => {
-    const formData = new FormData();
+  create: async (
+    payload
+  ) => {
 
-    formData.append("farm_name", payload.farm_name);
-    formData.append("acres", payload.acres);
-    formData.append("location", payload.location);
-    formData.append("soil_type", payload.soil_type);
-
-    if (payload.farm_photo) {
-      formData.append("farm_photo", payload.farm_photo);
-    }
-
-    const response = await api.post("/farms", formData);
+    const response =
+      await api.post(
+        "/farms",
+        payload
+      );
 
     return response.data;
   },
 
-  update: async (farmId, payload) => {
-    const formData = new FormData();
+  update: async (
+    farmId,
+    payload
+  ) => {
 
-    formData.append("farm_name", payload.farm_name);
-    formData.append("acres", payload.acres);
-    formData.append("location", payload.location);
-    formData.append("soil_type", payload.soil_type);
-
-    if (payload.farm_photo instanceof File) {
-      formData.append("farm_photo", payload.farm_photo);
-    }
-
-    const response = await api.put(`/farms/${farmId}`, formData);
+    const response =
+      await api.put(
+        `/farms/${farmId}`,
+        payload
+      );
 
     return response.data;
   },
 
-  delete: async (farmId) => {
-    const response = await api.delete(`/farms/${farmId}`);
+  delete: async (
+    farmId
+  ) => {
+
+    const response =
+      await api.delete(
+        `/farms/${farmId}`
+      );
 
     return response.data;
   },
-
 };

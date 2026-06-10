@@ -9,9 +9,6 @@ from fastapi import (
     HTTPException
 )
 
-from app.integrations.s3 import (
-    upload_file_to_s3
-)
 
 from app.utils.normalize import (
     normalize_text
@@ -32,8 +29,7 @@ class MarketplaceService:
     async def create_listing(
         self,
         current_user,
-        payload,
-        crop_images
+        payload
     ):
 
         harvest_datetime = datetime.combine(
@@ -62,17 +58,6 @@ class MarketplaceService:
                 status_code=400,
                 detail="Similar marketplace listing already exists"
             )
-
-        image_urls = []
-
-        for image in crop_images:
-
-            image_url = await upload_file_to_s3(
-                image,
-                "marketplace"
-            )
-
-            image_urls.append(image_url)
 
         listing_data = {
 
@@ -162,7 +147,7 @@ class MarketplaceService:
                 payload.description or "",
 
             "crop_images":
-                image_urls,
+                 payload.crop_images,
 
             "status":
                 "active",

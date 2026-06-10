@@ -1,16 +1,10 @@
 # app/api/v1/endpoints/marketplace.py
 
-from typing import (
-    List,
-    Optional
-)
+from typing import Optional
 
 from fastapi import (
     APIRouter,
-    Depends,
-    File,
-    Form,
-    UploadFile
+    Depends
 )
 
 from app.schemas.marketplace import (
@@ -52,67 +46,16 @@ marketplace_service = MarketplaceService(
 
 @router.post("/listings")
 async def create_listing(
-
-    farm_id: str = Form(...),
-
-    farm_name: str = Form(...),
-
-    crop_id: str = Form(...),
-
-    crop_name: str = Form(...),
-
-    quantity: float = Form(...),
-
-    unit: str = Form(...),
-
-    expected_price: float = Form(...),
-
-    harvest_date: str = Form(...),
-
-    village: str = Form(...),
-
-    taluka: str = Form(...),
-
-    district: str = Form(...),
-
-    state: str = Form(...),
-
-    latitude: Optional[float] = Form(None),
-    longitude: Optional[float] = Form(None),
-
-    description: str = Form(None),
-
-    crop_images: List[UploadFile] = File(...),
-
+    payload: MarketplaceCreateSchema,
     current_user: dict = Depends(
         require_roles(["farmer"])
     )
 ):
 
-    payload = MarketplaceCreateSchema(
-        farm_id=farm_id,
-        farm_name=farm_name,
-        crop_id=crop_id,
-        crop_name=crop_name,
-        quantity=quantity,
-        unit=unit,
-        expected_price=expected_price,
-        harvest_date=harvest_date,
-        village=village,
-        taluka=taluka,
-        district=district,
-        state=state,
-        latitude=latitude,
-        longitude=longitude,
-        description=description
-    )
-
     return await marketplace_service.create_listing(
         current_user,
-        payload,
-        crop_images
+        payload
     )
-
 
 @router.get("/listings")
 async def get_all_listings(

@@ -2,7 +2,7 @@
 
 from datetime import date
 
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import (
     BaseModel,
@@ -43,6 +43,7 @@ class MarketplaceCreateSchema(BaseModel):
     longitude: Optional[float] = None
 
     description: Optional[str] = None
+    crop_images: List[str]
 
 
 class MarketplaceUpdateSchema(BaseModel):

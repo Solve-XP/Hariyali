@@ -3,9 +3,6 @@ from typing import Optional
 from fastapi import (
     APIRouter,
     Depends,
-    File,
-    Form,
-    UploadFile
 )
 
 from app.schemas.farm import (
@@ -41,27 +38,15 @@ farm_service = FarmService(
 
 @router.post("/")
 async def create_farm(
-    farm_name: str = Form(...),
-    acres: float = Form(...),
-    location: str = Form(...),
-    soil_type: str = Form(...),
-    farm_photo: UploadFile = File(...),
+    payload: FarmCreate,
     current_user: dict = Depends(
         require_roles(["farmer"])
     )
 ):
 
-    payload = FarmCreate(
-        farm_name=farm_name,
-        acres=acres,
-        location=location,
-        soil_type=soil_type
-    )
-
     return await farm_service.create_farm(
         user_id=str(current_user["_id"]),
-        payload=payload,
-        farm_photo=farm_photo
+        payload=payload
     )
 
 
@@ -96,30 +81,17 @@ async def get_farm_by_id(
 @router.put("/{farm_id}")
 async def update_farm(
     farm_id: str,
-    farm_name: str = Form(None),
-    acres: float = Form(None),
-    location: str = Form(None),
-    soil_type: str = Form(None),
-    farm_photo: UploadFile = File(None),
+    payload: FarmUpdate,
     current_user: dict = Depends(
         require_roles(["farmer"])
     )
 ):
 
-    payload = FarmUpdate(
-        farm_name=farm_name,
-        acres=acres,
-        location=location,
-        soil_type=soil_type
-    )
-
     return await farm_service.update_farm(
         farm_id=farm_id,
         user_id=str(current_user["_id"]),
-        payload=payload,
-        farm_photo=farm_photo
+        payload=payload
     )
-
 
 @router.delete("/{farm_id}")
 async def delete_farm(

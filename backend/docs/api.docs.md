@@ -69,53 +69,186 @@ Authorization: Bearer <access_token>
 
 The Farm Service manages farmer-owned farm records and farm image storage.
 
-Only users with the `farmer` role can access farm APIs.
+Only users with the `farmer` role can access Farm APIs.
 
-Farm images are uploaded to AWS S3.
+Farm images are stored in AWS S3 using Presigned URL uploads.
 
-The farm module supports:
-- Create Farm
-- Get All Farms
-- Search Farms
-- Get Farm By ID
-- Update Farm
-- Delete Farm
+The Farm module supports:
+
+* Create Farm
+* Get All Farms
+* Search Farms
+* Get Farm By ID
+* Update Farm
+* Delete Farm
 
 Search currently uses MongoDB regex search with:
-- case-insensitive matching
-- partial keyword matching
+
+* Case-insensitive matching
+* Partial keyword matching
 
 Protected APIs require a valid JWT token in the Authorization header.
 
-Authorization Header Example
+## Authorization Header Example
 
 Authorization: Bearer <access_token>
 
+---
 
-Example Create Farm Request
+# Image Upload Flow
+
+Farm images are uploaded directly from the frontend to AWS S3 using Presigned URLs.
+
+The backend does not receive image files.
+
+Upload flow:
+
+1. Frontend requests Presigned URL from Upload Service
+2. Backend generates AWS S3 Presigned URL
+3. Frontend uploads image directly to S3
+4. Frontend receives image URL
+5. Frontend sends farm data with image URL to Farm API
+6. Backend stores image URL in MongoDB
+
+Benefits:
+
+* Reduced backend load
+* Faster uploads
+* Better scalability
+* Lower server bandwidth usage
+* Production-ready architecture
+
+---
+
+# Create Farm Flow
+
+## Step 1: Generate Presigned URL
+
+POST /api/v1/uploads/presigned-urls
+
+Request:
+
+```json
+{
+  "folder": "farms",
+  "content_types": [
+    "image/jpeg"
+  ]
+}
+```
+
+Response:
+
+```json
+{
+  "uploads": [
+    {
+      "upload_url": "https://...",
+      "file_url": "https://...",
+      "file_key": "farms/uuid.jpeg"
+    }
+  ]
+}
+```
+
+---
+
+## Step 2: Upload Image To S3
+
+PUT <upload_url>
+
+Content-Type: image/jpeg
+
+Body: Binary image file
+
+Response:
+
+HTTP 200 OK
+
+---
+
+## Step 3: Create Farm
 
 POST /api/v1/farms
 
-Content-Type: multipart/form-data
+Content-Type: application/json
 
-farm_name = Balraje Farm
-acres = 2
-location = Goradwadi
-soil_type = Black
-farm_photo = image.jpg
+```json
+{
+  "farm_name": "Balraje Farm",
+  "acres": 2,
+  "location": "Goradwadi",
+  "soil_type": "Black",
+  "farm_photo": "https://farm-management-images.s3.ap-south-1.amazonaws.com/farms/uuid.jpeg"
+}
+```
 
+---
 
-Example Search Farms Request
+# Get All Farms
 
-GET /api/v1/farms?search=bal
+GET /api/v1/farms/
 
+Returns all farms belonging to the authenticated farmer.
 
-Example Success Response
+---
 
+# Search Farms
+
+GET /api/v1/farms/?search=bal
+
+Example:
+
+```http
+GET /api/v1/farms/?search=bal
+```
+
+Returns farms matching the search keyword.
+
+---
+
+# Get Farm By ID
+
+GET /api/v1/farms/{farm_id}
+
+Returns farm details for the specified farm.
+
+---
+
+# Update Farm
+
+PUT /api/v1/farms/{farm_id}
+
+Content-Type: application/json
+
+```json
+{
+  "farm_name": "Updated Farm",
+  "acres": 3,
+  "location": "Updated Village",
+  "soil_type": "Red Soil",
+  "farm_photo": "https://farm-management-images.s3.ap-south-1.amazonaws.com/farms/updated-image.jpeg"
+}
+```
+
+---
+
+# Delete Farm
+
+DELETE /api/v1/farms/{farm_id}
+
+Performs a soft delete of the farm record.
+
+---
+
+# Example Success Response
+
+```json
 {
   "message": "Farm created successfully",
   "farm_id": "6819e7c2c8f24f6c0c4f1234"
 }
+```
 
 ----------------------------------------------------------------------------------
 
@@ -686,114 +819,241 @@ The Rental Marketplace Service manages farm equipment rental listings shared by 
 
 Only authenticated users can create, update, and delete rental listings.
 
-The rental marketplace module is designed for:
+The Rental Marketplace module is designed for:
 
-equipment rental listing
-farmer-to-farmer equipment sharing
-equipment discovery
-local rental marketplace browsing
+* Equipment rental listing
+* Farmer-to-farmer equipment sharing
+* Equipment discovery
+* Local rental marketplace browsing
 
 The rental marketplace is a listing-based system.
 
 The backend currently supports:
 
-equipment listing creation
-equipment browsing
-search functionality
-equipment availability management
+* Equipment listing creation
+* Equipment browsing
+* Search functionality
+* Equipment availability management
 
 The module does NOT currently support:
 
-online booking
-payment gateway
-live availability calendar
-chat system
-rental contracts
+* Online booking
+* Payment gateway
+* Live availability calendar
+* Chat system
+* Rental contracts
 
-The rental marketplace module supports:
+The Rental Marketplace module supports:
 
-Create Equipment Listing
-Get All Listings
-Search Listings
-Filter Listings
-Get Listing By ID
-Update Listing
-Delete Listing
+* Create Equipment Listing
+* Get All Listings
+* Search Listings
+* Filter Listings
+* Get Listing By ID
+* Update Listing
+* Delete Listing
 
 Financial year is automatically generated while creating the listing.
 
-Equipment photos are uploaded and stored in AWS S3.
+Equipment images are stored in AWS S3 using Presigned URL uploads.
 
 Rental listing supports filtering by:
 
-financial year
-search keyword
+* Financial year
+* Search keyword
 
 Search currently uses MongoDB regex search with:
 
-case-insensitive matching
-partial keyword matching
+* Case-insensitive matching
+* Partial keyword matching
 
 Duplicate listings with the same:
 
-equipment name
-location
-same user
-same day
+* Equipment name
+* Location
+* Same user
+* Same day
 
 are restricted.
 
 Protected APIs require a valid JWT token in the Authorization header.
 
-Authorization Header Example
+## Authorization Header Example
 
 Authorization: Bearer <access_token>
 
-Rental Pricing Logic
+---
+
+# Rental Pricing Logic
 
 At least one pricing field is required:
 
-price_per_hour
-price_per_day
+* price_per_hour
+* price_per_day
 
 Both can also be provided.
 
-Example Create Rental Listing Request
+---
+
+# Equipment Image Upload Flow
+
+Equipment images are uploaded directly from the frontend to AWS S3 using Presigned URLs.
+
+The backend does not receive image files.
+
+Upload flow:
+
+1. Frontend requests Presigned URLs from Upload Service
+2. Backend generates AWS S3 Presigned URLs
+3. Frontend uploads images directly to S3
+4. Frontend receives image URLs
+5. Frontend sends rental listing data with image URLs
+6. Backend stores image URLs in MongoDB
+
+Benefits:
+
+* Reduced backend load
+* Faster uploads
+* Better scalability
+* Lower server bandwidth usage
+* Production-ready architecture
+
+---
+
+# Step 1: Generate Presigned URLs
+
+POST /api/v1/uploads/presigned-urls
+
+Request:
+
+```json
+{
+  "folder": "rentals",
+  "content_types": [
+    "image/jpeg",
+    "image/jpeg"
+  ]
+}
+```
+
+Response:
+
+```json
+{
+  "uploads": [
+    {
+      "upload_url": "https://...",
+      "file_url": "https://...",
+      "file_key": "rentals/file1.jpeg"
+    },
+    {
+      "upload_url": "https://...",
+      "file_url": "https://...",
+      "file_key": "rentals/file2.jpeg"
+    }
+  ]
+}
+```
+
+---
+
+# Step 2: Upload Images To S3
+
+PUT <upload_url>
+
+Content-Type: image/jpeg
+
+Body: Binary image file
+
+Response:
+
+HTTP 200 OK
+
+---
+
+# Step 3: Create Rental Listing
 
 POST /api/v1/rentals
 
-Content-Type: multipart/form-data
+Content-Type: application/json
 
-equipment_name = Tractor
+```json
+{
+  "equipment_name": "Tractor",
+  "price_per_hour": 500,
+  "price_per_day": 3500,
+  "village": "Kolhapur",
+  "taluka": "Karveer",
+  "district": "Kolhapur",
+  "state": "Maharashtra",
+  "latitude": 16.705,
+  "longitude": 74.243,
+  "owner_name": "Balraje",
+  "phone": "9766863091",
+  "description": "Heavy duty tractor available for farming work",
+  "equipment_images": [
+    "https://farm-management-images.s3.ap-south-1.amazonaws.com/rentals/image1.jpeg",
+    "https://farm-management-images.s3.ap-south-1.amazonaws.com/rentals/image2.jpeg"
+  ]
+}
+```
 
-price_per_hour = 500
+---
 
-price_per_day = 3500
-
-location = Kolhapur
-
-owner_name = Balraje
-
-phone = 9766863091
-
-description = Heavy duty tractor available for farming work
-
-equipment_photo = tractor.jpg
-
-Example Get All Rental Listings Request
+# Get All Rental Listings
 
 GET /api/v1/rentals
 
-Example Search Rental Listings Request
+---
+
+# Search Rental Listings
 
 GET /api/v1/rentals?search=tractor
 
-Example Filter Rental Listings Request
+---
+
+# Filter Rental Listings
 
 GET /api/v1/rentals?financial_year=2026-2027
 
-Example Success Response
+---
 
+# Get Rental Listing By ID
+
+GET /api/v1/rentals/{rental_id}
+
+---
+
+# Update Rental Listing
+
+PATCH /api/v1/rentals/{rental_id}
+
+Content-Type: application/json
+
+```json
+{
+  "equipment_name": "Updated Tractor",
+  "price_per_day": 4000,
+  "description": "Updated description",
+  "is_available": true
+}
+```
+
+Image updates are currently not supported.
+
+---
+
+# Delete Rental Listing
+
+DELETE /api/v1/rentals/{rental_id}
+
+Performs a soft delete of the rental listing.
+
+---
+
+# Example Success Response
+
+```json
 [
   {
     "id": "6a05a2cb3186e144bf1d5867",
@@ -801,29 +1061,39 @@ Example Success Response
     "equipment_name": "Tractor",
     "price_per_hour": 500,
     "price_per_day": 3500,
-    "location": "Kolhapur",
+    "village": "Kolhapur",
+    "taluka": "Karveer",
+    "district": "Kolhapur",
+    "state": "Maharashtra",
     "owner_name": "Balraje",
     "phone": "9766863091",
-    "equipment_photo": "https://bucket-name.s3.region.amazonaws.com/rentals/image.jpg",
+    "equipment_images": [
+      "https://farm-management-images.s3.ap-south-1.amazonaws.com/rentals/image1.jpeg"
+    ],
     "description": "Heavy duty tractor available",
     "is_available": true
   }
 ]
+```
 
-Frontend Notes
+---
 
-Equipment photo upload is mandatory while creating listing.
-Equipment photo upload is optional while updating listing.
-Frontend should use multipart/form-data for create and update APIs.
-Frontend should allow user to provide either:
-hourly pricing
-daily pricing
-or both
-Frontend should show equipment image preview before upload.
-Frontend should prevent duplicate submissions by disabling submit button during API request.
-Update Listing API supports partial updates using PATCH request.
-Backend ignores fields not provided during update requests.
-Search currently uses MongoDB regex search with:
-case-insensitive matching
-partial keyword matching
+# Frontend Notes
 
+* Equipment image upload is mandatory while creating a listing.
+* Multiple equipment images are supported.
+* Images must be uploaded using Presigned URLs before creating the listing.
+* Frontend must send JSON payloads to Rental APIs.
+* Frontend should allow user to provide:
+
+  * Hourly pricing
+  * Daily pricing
+  * Or both
+* Frontend should show image previews before upload.
+* Frontend should prevent duplicate submissions by disabling the submit button during API requests.
+* Update Listing API supports partial updates using PATCH request.
+* Backend ignores fields not provided during update requests.
+* Search uses MongoDB regex search with:
+
+  * Case-insensitive matching
+  * Partial keyword matching

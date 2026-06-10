@@ -11,6 +11,7 @@ from app.api.v1.endpoints import rentals
 from app.api.v1.endpoints import dashboard
 from app.api.v1.endpoints import users
 from app.api.v1.endpoints import marketplace
+from app.api.v1.endpoints import uploads
 
 
 
@@ -28,3 +29,4 @@ api_router.include_router(rentals.router)
 api_router.include_router(dashboard.router)
 api_router.include_router(users.router)
 api_router.include_router(marketplace.router)
+api_router.include_router(uploads.router)

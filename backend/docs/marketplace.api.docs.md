@@ -1,580 +1,358 @@
-# Marketplace Module Frontend Notes
+# Marketplace Service | Marketplace API
 
-## Overview
+The Marketplace Service manages crop listings created by farmers for selling agricultural produce.
 
-Marketplace module allows:
+Only authenticated farmers can create, update, and delete marketplace listings.
 
-### Farmer
+The marketplace module is designed for:
 
-* create marketplace listing
-* upload multiple crop images
-* view own listings
-* browse other farmers listings
-* edit/delete own listings
+* Crop listing management
+* Farmer-to-merchant crop discovery
+* Agricultural marketplace browsing
+* Crop sales lead generation
 
-### Merchant
+The marketplace is a listing-based system.
 
-* browse all farmer listings
-* contact farmers
+The backend currently supports:
+
+* Crop listing creation
+* Crop browsing
+* Search functionality
+* Listing management
+* Farmer-owned listing management
+
+The module does NOT currently support:
+
+* Online ordering
+* Payment gateway
+* Shopping cart
+* Real-time bidding
+* Chat system
+* Delivery tracking
+
+The Marketplace module supports:
+
+* Create Listing
+* Get All Listings
+* Search Listings
+* Get Listing By ID
+* Get My Listings
+* Update Listing
+* Delete Listing
+
+Crop images are stored in AWS S3 using Presigned URL uploads.
+
+Search currently uses MongoDB regex search with:
+
+* Case-insensitive matching
+* Partial keyword matching
+
+Protected APIs require a valid JWT token in the Authorization header.
+
+## Authorization Header Example
+
+Authorization: Bearer <access_token>
 
 ---
 
-# Pages Required
+# Crop Image Upload Flow
 
-## 1. Marketplace Feed Page
+Crop images are uploaded directly from the frontend to AWS S3 using Presigned URLs.
 
-Route example:
+The backend does not receive image files.
 
-```text id="m7q2v5"
-/marketplace
+Upload flow:
+
+1. User selects crop images
+2. Frontend requests Presigned URLs
+3. Backend generates AWS S3 Presigned URLs
+4. Frontend uploads images directly to S3
+5. Frontend receives image URLs
+6. Frontend sends marketplace data with image URLs
+7. Backend stores image URLs in MongoDB
+
+Benefits:
+
+* Reduced backend load
+* Faster uploads
+* Better scalability
+* Lower server bandwidth usage
+* Production-ready architecture
+
+---
+
+# Step 1: Generate Presigned URLs
+
+POST /api/v1/uploads/presigned-urls
+
+Request:
+
+```json
+{
+  "folder": "marketplace",
+  "content_types": [
+    "image/webp",
+    "image/webp"
+  ]
+}
 ```
 
-Purpose:
+Response:
 
-* show marketplace listings
-* browsing page for farmers and merchants
-
----
-
-## 2. My Listings Page
-
-Route example:
-
-```text id="x4v8m1"
-/marketplace/my-listings
+```json
+{
+  "uploads": [
+    {
+      "upload_url": "https://...",
+      "file_url": "https://...",
+      "file_key": "marketplace/image1.webp"
+    },
+    {
+      "upload_url": "https://...",
+      "file_url": "https://...",
+      "file_key": "marketplace/image2.webp"
+    }
+  ]
+}
 ```
 
-Purpose:
-
-* current farmer listings only
-
 ---
 
-## 3. Create Listing Page
+# Step 2: Upload Images To S3
 
-Route example:
+PUT <upload_url>
 
-```text id="p2m8q4"
-/marketplace/create
+Content-Type: image/webp
+
+Body: Binary image file
+
+Response:
+
+```text
+200 OK
 ```
 
-Purpose:
-
-* farmer creates listing
-
 ---
 
-## 4. Listing Details Page
+# Step 3: Create Marketplace Listing
 
-Route example:
-
-```text id="r5v1m8"
-/marketplace/:listingId
-```
-
-Purpose:
-
-* detailed crop view
-* image gallery
-* seller details
-
----
-
-# APIs
-
----
-
-# Create Listing
-
-## Endpoint
-
-```http id="v9q2m5"
 POST /api/v1/marketplace/listings
-```
 
-## Content Type
+Content-Type: application/json
 
-```text id="k8m3q1"
-multipart/form-data
-```
-
-because:
-
-* multiple image upload
-
----
-
-# Required Fields
-
-| Field          | Type           |
-| -------------- | -------------- |
-| farm_id        | string         |
-| farm_name      | string         |
-| crop_id        | string         |
-| crop_name      | string         |
-| quantity       | number         |
-| unit           | string         |
-| expected_price | number         |
-| harvest_date   | YYYY-MM-DD     |
-| village        | string         |
-| taluka         | string         |
-| district       | string         |
-| state          | string         |
-| description    | string         |
-| crop_images    | multiple files |
-
----
-
-# Important Frontend Logic
-
-User should NOT manually type:
-
-* farm name
-* crop name
-
-Use dropdowns.
-
----
-
-# Farm Dropdown
-
-Frontend should fetch farmer farms.
-
-User selects farm.
-
-Store internally:
-
-```js id="n4v8m2"
-selectedFarm.id
-selectedFarm.farm_name
+```json
+{
+  "farm_id": "6a22ba3d29d4ba9e118e8bcf",
+  "farm_name": "Balraje Farm",
+  "crop_id": "6a22ba3d29d4ba9e118e8bd0",
+  "crop_name": "Sugarcane",
+  "quantity": 500,
+  "unit": "kg",
+  "expected_price": 25000,
+  "harvest_date": "2026-07-15",
+  "village": "Goradwadi",
+  "taluka": "Karveer",
+  "district": "Kolhapur",
+  "state": "Maharashtra",
+  "latitude": 16.705,
+  "longitude": 74.243,
+  "description": "Fresh sugarcane crop available",
+  "crop_images": [
+    "https://farm-management-images.s3.ap-south-1.amazonaws.com/marketplace/image1.webp",
+    "https://farm-management-images.s3.ap-south-1.amazonaws.com/marketplace/image2.webp"
+  ]
+}
 ```
 
 ---
 
-# Crop Dropdown
+# Get All Listings
 
-Frontend should fetch crops.
+## Farmer Marketplace Feed
 
-User selects crop.
+Exclude current user's listings:
 
-Store internally:
-
-```js id="f6m2q8"
-selectedCrop.id
-selectedCrop.crop_name
-```
-
----
-
-# Then Send Automatically
-
-```js id="c7v1m5"
-formData.append("farm_id", selectedFarm.id)
-formData.append("farm_name", selectedFarm.farm_name)
-
-formData.append("crop_id", selectedCrop.id)
-formData.append("crop_name", selectedCrop.crop_name)
-```
-
-User never sees IDs.
-
----
-
-# Multiple Image Upload
-
-Use:
-
-```html id="u8q3m2"
-<input type="file" multiple />
-```
-
----
-
-# Append Images
-
-```js id="y3m7q4"
-files.forEach((file) => {
-  formData.append("crop_images", file)
-})
-```
-
----
-
-# Harvest Date
-
-Use:
-
-```html id="e8v2m5"
-<input type="date" />
-```
-
-Backend expects:
-
-```text id="p3q7m1"
-YYYY-MM-DD
-```
-
----
-
-# Marketplace Feed API
-
-## Farmer Feed
-
-Exclude own listings:
-
-```http id="t6m2q9"
+```http
 GET /api/v1/marketplace/listings?exclude_my_listings=true
 ```
 
-Use this for:
-
-* farmer marketplace page
-
 ---
 
-## Merchant Feed
+## Merchant Marketplace Feed
 
 Show all listings:
 
-```http id="v1q8m3"
+```http
 GET /api/v1/marketplace/listings
 ```
 
-Use this for:
+---
 
-* merchant marketplace page
+# Search Listings
+
+Example:
+
+```http
+GET /api/v1/marketplace/listings?search=sugarcane
+```
+
+Search supports:
+
+* Crop name
+* Farm name
+* Village
+* Taluka
+* District
+* State
+
+Search uses:
+
+* Case-insensitive matching
+* Partial keyword matching
 
 ---
 
-# My Listings API
+# Public Listings
 
-```http id="k4m8q2"
+```http
+GET /api/v1/marketplace/public/listings
+```
+
+Example:
+
+```http
+GET /api/v1/marketplace/public/listings?search=sugarcane
+```
+
+---
+
+# My Listings
+
+```http
 GET /api/v1/marketplace/my-listings
 ```
 
-Shows:
-
-* only current farmer listings
+Returns listings created by the authenticated farmer.
 
 ---
 
-# Listing Details API
+# Get Listing By ID
 
-```http id="j7v3m1"
+```http
 GET /api/v1/marketplace/listings/{listing_id}
 ```
 
----
-
-# Delete Listing
-
-```http id="h2q9m4"
-DELETE /api/v1/marketplace/listings/{listing_id}
-```
+Returns complete listing details.
 
 ---
 
 # Update Listing
 
-```http id="n5m1q8"
+```http
 PATCH /api/v1/marketplace/listings/{listing_id}
 ```
 
-Send only updated fields.
-
----
-
-# Listing Card UI
-
-Each card should show:
-
-* crop image
-* crop name
-* farm name
-* quantity + unit
-* expected price
-* harvest date
-* village
-* taluka
-* district
-* state
-* seller name
-
----
-
-# Merchant Card Actions
-
-Show:
-
-```text id="r1v8m3"
-Call Farmer
-View Details
-```
-
----
-
-# Farmer Card Actions
-
-In My Listings:
-
-```text id="f9q2m7"
-Edit
-Delete
-View Details
-```
-
----
-
-# Recommended UI Sections
-
-# Marketplace Feed
-
-Top section:
-
-* search input
-* filter bar
-* sort dropdown
-
----
-
-# Search
-
-Search API supports:
-
-* crop name
-* farm name
-* village
-* taluka
-* district
-* state
+Content-Type: application/json
 
 Example:
 
-```http id="z1v8m5"
-GET /api/v1/marketplace/listings?search=corn
-```
-
----
-
-# Filters
-
-Recommended frontend filters:
-
-* state
-* district
-* taluka
-
-Client-side initially acceptable.
-
----
-
-# Sort Options
-
-Frontend-only initially acceptable:
-
-* latest listings
-* oldest listings
-* price low-high
-* price high-low
-
----
-
-# Create Listing Form Structure
-
-## Section 1
-
-Farm & Crop
-
-* farm dropdown
-* crop dropdown
-
----
-
-## Section 2
-
-Crop Details
-
-* quantity
-* unit
-* expected price
-* harvest date
-
----
-
-## Section 3
-
-Location
-
-* village
-* taluka
-* district
-* state
-
----
-
-## Section 4
-
-Description
-
-* multiline textarea
-
----
-
-## Section 5
-
-Images
-
-* multiple image upload
-* image previews
-
----
-
-# Important UX Rules
-
-## Disable submit button while loading
-
-Prevent duplicate submissions.
-
-Example:
-
-```js id="u5m2q8"
-if (loading) return
-```
-
----
-
-## Show Upload Preview
-
-Before submit:
-
-* preview selected images
-
----
-
-## Limit Image Count
-
-Recommended:
-
-* max 5 images
-
----
-
-## Limit Image Size
-
-Recommended:
-
-* max 5MB per image
-
----
-
-# Error Handling
-
-Backend duplicate response:
-
-```json id="d8q4m1"
+```json
 {
-  "detail": "Similar marketplace listing already exists"
+  "quantity": 700,
+  "expected_price": 30000,
+  "description": "Updated crop details"
 }
 ```
 
-Show as:
+Update API supports partial updates.
 
-* toast
-* snackbar
-* alert
+Only supplied fields are updated.
 
----
-
-# Responsive Design
-
-Must support:
-
-* mobile
-* tablet
-* desktop
+Image updates are currently not supported.
 
 ---
 
-# Mobile Layout Recommendation
+# Delete Listing
 
-Cards stacked vertically.
+```http
+DELETE /api/v1/marketplace/listings/{listing_id}
+```
+
+Performs a soft delete of the listing.
 
 ---
 
-# Desktop Layout Recommendation
+# Example Success Response
 
-Use responsive grid:
-
-```css id="r3m9q1"
-grid-template-columns:
-repeat(auto-fit, minmax(320px, 1fr));
+```json
+{
+  "message": "Listing created successfully",
+  "listing_id": "6a295f168bac062a7b6b7ff6"
+}
 ```
 
 ---
 
-# UI Style
+# Example Listing Response
 
-Keep same:
-
-* navbar
-* sidebar
-* theme
-* typography
-* spacing
-* card style
-
-as existing dashboard system.
-
----
-
-# Recommended Card Design
-
-Card sections:
-
-* image slider
-* crop details
-* location
-* seller info
-* action buttons
-
----
-
-# Important Backend Notes
-
-Do NOT manually type:
-
-* farm_name
-* crop_name
-
-Always auto-fill from selected dropdown option.
-
----
-
-# Recommended Frontend State
-
-```js id="y7v4m2"
-selectedFarm
-selectedCrop
-images
-loading
-listings
-filters
-search
+```json
+{
+  "id": "6a295f168bac062a7b6b7ff6",
+  "farm_name": "Balraje Farm",
+  "crop_name": "Sugarcane",
+  "quantity": 500,
+  "unit": "kg",
+  "expected_price": 25000,
+  "harvest_date": "2026-07-15",
+  "village": "Goradwadi",
+  "taluka": "Karveer",
+  "district": "Kolhapur",
+  "state": "Maharashtra",
+  "owner_name": "Balraje",
+  "crop_images": [
+    "https://farm-management-images.s3.ap-south-1.amazonaws.com/marketplace/image1.webp",
+    "https://farm-management-images.s3.ap-south-1.amazonaws.com/marketplace/image2.webp"
+  ],
+  "description": "Fresh sugarcane crop available"
+}
 ```
 
 ---
 
-# Final Important Note
+# Frontend Notes
 
-Farmer marketplace feed and My Listings are DIFFERENT pages.
+* Crop image upload is mandatory while creating a listing.
+* Multiple crop images are supported.
+* Images must be uploaded using Presigned URLs before creating the listing.
+* Frontend should submit JSON payloads to Marketplace APIs.
+* Backend never receives image files.
+* Backend only stores image URLs.
+* Farm name and crop name should be selected from dropdowns.
+* Users should never manually enter IDs.
+* Frontend should display image previews before upload.
+* Submit button should be disabled during API requests.
+* Recommended maximum image count is 5.
+* Recommended maximum image size is 5 MB per image.
+* Marketplace Feed and My Listings should remain separate pages.
 
-Do not merge them into one screen.
+---
 
-Use:
+# Final Architecture
 
-```text id="j5m1q8"
-Marketplace
-My Listings
-```
+Frontend
 
-as separate sidebar menu items.
+↓
+
+Upload Service (Presigned URLs)
+
+↓
+
+AWS S3 Direct Upload
+
+↓
+
+Marketplace API
+
+↓
+
+MongoDB (Stores Image URLs Only)

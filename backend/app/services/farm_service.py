@@ -1,15 +1,9 @@
 from datetime import datetime
 
 from fastapi import (
-    HTTPException,
-    UploadFile
+    HTTPException
 )
 
-from app.integrations.s3 import upload_file_to_s3
-
-from app.utils.validators import (
-    validate_image_type
-)
 
 from app.utils.normalize import (
     normalize_text
@@ -24,8 +18,7 @@ class FarmService:
     async def create_farm(
         self,
         user_id: str,
-        payload,
-        farm_photo: UploadFile
+        payload
     ):
 
         normalized_farm_name = normalize_text(
@@ -49,20 +42,7 @@ class FarmService:
                 detail="Farm already exists"
             )
 
-        if not validate_image_type(
-            farm_photo.content_type
-        ):
-
-            raise HTTPException(
-                status_code=400,
-                detail="Invalid image type"
-            )
-
-        image_url = await upload_file_to_s3(
-            farm_photo,
-            folder="farms"
-        )
-
+       
         farm_data = {
             "user_id": user_id,
 
@@ -76,7 +56,7 @@ class FarmService:
 
             "acres": payload.acres,
             "soil_type": payload.soil_type,
-            "farm_photo": image_url,
+            "farm_photo": payload.farm_photo,
             "created_at": datetime.utcnow(),
             "updated_at": datetime.utcnow(),
             "is_deleted": False
@@ -151,8 +131,7 @@ class FarmService:
         self,
         farm_id: str,
         user_id: str,
-        payload,
-        farm_photo: UploadFile = None
+        payload
     ):
 
         existing_farm = await self.repo.get_farm_by_id(
@@ -212,24 +191,7 @@ class FarmService:
         update_data["normalized_farm_name"] = normalized_farm_name
         update_data["normalized_location"] = normalized_location
 
-        if farm_photo:
-
-            if not validate_image_type(
-                farm_photo.content_type
-            ):
-
-                raise HTTPException(
-                    status_code=400,
-                    detail="Invalid image type"
-                )
-
-            image_url = await upload_file_to_s3(
-                farm_photo,
-                folder="farms"
-            )
-
-            update_data["farm_photo"] = image_url
-
+        
         update_data["updated_at"] = datetime.utcnow()
 
         updated = await self.repo.update_farm(

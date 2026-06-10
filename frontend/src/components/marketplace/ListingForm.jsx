@@ -39,6 +39,10 @@ import {
 } from "../../services/farmsService";
 
 import {
+  UploadService,
+} from "../../services/uploadService";
+
+import {
   CropsService,
 } from "../../services/cropsService";
 
@@ -764,102 +768,81 @@ export default function ListingForm({
         !isEdit
       ) {
 
-        const formData =
-          new FormData();
-
-        formData.append(
-          "farm_id",
-          selectedFarm
-        );
-
-        formData.append(
-          "farm_name",
-          selectedFarmData
-            ?.farm_name ||
-          ""
-        );
-
-        formData.append(
-          "crop_id",
-          selectedCrop
-        );
-
-        formData.append(
-          "crop_name",
-          selectedCropData
-            ?.crop_name ||
-          ""
-        );
-
-        formData.append(
-          "quantity",
-          form.quantity
-        );
-
-        formData.append(
-          "unit",
-          form.unit
-        );
-
-        formData.append(
-          "expected_price",
-          form.expected_price
-        );
-
-        formData.append(
-          "harvest_date",
-          form.harvest_date
-        );
-
-        formData.append(
-          "village",
-          form.village
-        );
-
-        formData.append(
-          "taluka",
-          form.taluka
-        );
-
-        formData.append(
-          "district",
-          form.district
-        );
-
-        formData.append(
-          "state",
-          form.state
-        );
-
-        formData.append(
-          "latitude",
-          latitude ?? ""
-        );
-
-        formData.append(
-          "longitude",
-          longitude ?? ""
-        );
-
-        formData.append(
-          "description",
-          form.description ||
-          ""
-        );
-
-        images.forEach(
-          (file) => {
-
-            formData.append(
-              "crop_images",
-              file
+        const uploadResponse =
+          await UploadService
+            .getUploadUrls(
+              "marketplace",
+              images
             );
-          }
-        );
+
+        const imageUrls =
+          await UploadService
+            .uploadFilesToS3(
+              images,
+              uploadResponse.uploads
+            );
+
+        const payload = {
+
+          farm_id:
+            selectedFarm,
+
+          farm_name:
+            selectedFarmData
+              ?.farm_name ||
+            "",
+
+          crop_id:
+            selectedCrop,
+
+          crop_name:
+            selectedCropData
+              ?.crop_name ||
+            "",
+
+          quantity:
+            Number(
+              form.quantity
+            ),
+
+          unit:
+            form.unit,
+
+          expected_price:
+            Number(
+              form.expected_price
+            ),
+
+          harvest_date:
+            form.harvest_date,
+
+          village:
+            form.village,
+
+          taluka:
+            form.taluka,
+
+          district:
+            form.district,
+
+          state:
+            form.state,
+
+          latitude,
+
+          longitude,
+
+          description:
+            form.description ||
+            "",
+
+          crop_images:
+            imageUrls
+        };
 
         await MarketplaceService
           .createListing(
-            formData
+            payload
           );
 
         pushToast(

@@ -2,6 +2,8 @@
 
 from typing import Optional
 
+from typing import Optional, List
+
 from pydantic import BaseModel
 
 
@@ -22,6 +24,7 @@ class RentalCreate(BaseModel):
     state: str
 
     latitude: Optional[float] = None
+
     longitude: Optional[float] = None
 
     owner_name: str
@@ -30,6 +33,7 @@ class RentalCreate(BaseModel):
 
     description: Optional[str] = None
 
+    equipment_images: List[str]
 
 class RentalUpdate(BaseModel):
 

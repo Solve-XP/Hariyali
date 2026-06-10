@@ -1,6 +1,7 @@
 // src/services/rentalsService.js
 
 import api from "../api/axios";
+import { UploadService } from "./uploadService";
 
 export const RentalsService = {
 
@@ -64,139 +65,48 @@ export const RentalsService = {
      CREATE RENTAL
   ========================================== */
 
-  createRental(
-    data
-  ) {
+  async createRental(data) {
 
-    const formData =
-      new FormData();
-
-    Object.entries(
-      data
-    ).forEach(
-      ([
-        key,
-        value,
-      ]) => {
-
-        if (
-          key ===
-          "equipment_images"
-        ) {
-          return;
-        }
-
-        if (
-          value !==
-            undefined &&
-          value !== null &&
-          value !== ""
-        ) {
-
-          formData.append(
-            key,
-            value
-          );
-        }
-      }
+  const uploadsResponse =
+    await UploadService.getUploadUrls(
+      "rentals",
+      data.equipment_images
     );
 
-    if (
-      data
-        ?.equipment_images
-        ?.length
-    ) {
-
-      data
-        .equipment_images
-        .forEach(
-          (
-            image
-          ) => {
-
-            formData.append(
-              "equipment_images",
-              image
-            );
-          }
-        );
-    }
-
-    return api.post(
-      "/rentals",
-      formData
+  const imageUrls =
+    await UploadService.uploadFilesToS3(
+      data.equipment_images,
+      uploadsResponse.uploads
     );
-  },
+
+  const payload = {
+
+    ...data,
+
+    equipment_images:
+      imageUrls
+  };
+
+  return api.post(
+    "/rentals",
+    payload
+  );
+},
 
   /* ==========================================
      UPDATE RENTAL
   ========================================== */
 
   updateRental(
-    rentalId,
+  rentalId,
+  data
+) {
+
+  return api.patch(
+    `/rentals/${rentalId}`,
     data
-  ) {
-
-    const formData =
-      new FormData();
-
-    Object.entries(
-      data
-    ).forEach(
-      ([
-        key,
-        value,
-      ]) => {
-
-        if (
-          key ===
-          "equipment_images"
-        ) {
-          return;
-        }
-
-        if (
-          value !==
-            undefined &&
-          value !== null &&
-          value !== ""
-        ) {
-
-          formData.append(
-            key,
-            value
-          );
-        }
-      }
-    );
-
-    if (
-      data
-        ?.equipment_images
-        ?.length
-    ) {
-
-      data
-        .equipment_images
-        .forEach(
-          (
-            image
-          ) => {
-
-            formData.append(
-              "equipment_images",
-              image
-            );
-          }
-        );
-    }
-
-    return api.patch(
-      `/rentals/${rentalId}`,
-      formData
-      
-    );
-  },
+  );
+},
 
   /* ==========================================
      DELETE RENTAL

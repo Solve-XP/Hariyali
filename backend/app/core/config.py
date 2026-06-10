@@ -18,6 +18,10 @@ class Settings(BaseSettings):
     AWS_REGION: str
     AWS_BUCKET_NAME: str
 
+
+    # CDN
+    CLOUDFRONT_URL: str = ""
+
     class Config:
         env_file = ".env"
 

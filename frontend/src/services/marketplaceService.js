@@ -136,19 +136,18 @@ export const MarketplaceService = {
   ========================================= */
 
   async createListing(
-    formData
-  ) {
+  payload
+) {
 
-    const response =
-      await api.post(
+  const response =
+    await api.post(
 
-        `${BASE_URL}/listings`,
-        formData
-      );
+      `${BASE_URL}/listings`,
+      payload
+    );
 
-    return response;
-  },
-
+  return response;
+},
   /* ========================================
       UPDATE
   ========================================= */

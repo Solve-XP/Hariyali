@@ -11,6 +11,7 @@ import EmptyState from "../../components/EmptyState";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 
+
 import Modal from "../../components/Modal";
 import SearchInput from "../../components/SearchInput";
 import ImageViewer from "../../components/ImageViewer";
@@ -28,6 +29,7 @@ import {
 } from "../../components/Icons";
 
 import { FarmsService } from "../../services/farmsService";
+import { UploadService } from "../../services/uploadService";
 
 import { useApp } from "../../context/AppContext";
 
@@ -330,9 +332,49 @@ export default function Farms() {
 
       if (editingFarm) {
 
+        let farmPhoto =
+          uploadPreview;
+
+        if (
+          form.farm_photo
+        ) {
+
+          const uploadResponse =
+            await UploadService.getUploadUrls(
+              "farms",
+              [form.farm_photo]
+            );
+
+          const imageUrls =
+            await UploadService.uploadFilesToS3(
+              [form.farm_photo],
+              uploadResponse.uploads
+            );
+
+          farmPhoto =
+            imageUrls[0];
+        }
+
         await FarmsService.update(
           editingFarm.id,
-          form
+          {
+            farm_name:
+              form.farm_name,
+
+            acres:
+              Number(
+                form.acres
+              ),
+
+            location:
+              form.location,
+
+            soil_type:
+              form.soil_type,
+
+            farm_photo:
+              farmPhoto,
+          }
         );
 
         pushToast(
@@ -351,7 +393,36 @@ export default function Farms() {
           return;
         }
 
-        await FarmsService.create(form);
+        const uploadResponse =
+          await UploadService.getUploadUrls(
+            "farms",
+            [form.farm_photo]
+          );
+
+        const imageUrls =
+          await UploadService.uploadFilesToS3(
+            [form.farm_photo],
+            uploadResponse.uploads
+          );
+
+        await FarmsService.create({
+          farm_name:
+            form.farm_name,
+
+          acres:
+            Number(
+              form.acres
+            ),
+
+          location:
+            form.location,
+
+          soil_type:
+            form.soil_type,
+
+          farm_photo:
+            imageUrls[0],
+        });
 
         pushToast(
           t("messages.FARM_ADDED_SUCCESS")
