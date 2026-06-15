@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 
 import { useAuth } from "../context/AuthContext";
 import { useApp } from "../context/AppContext";
+import logo from "../assets/logo.png";
 
 import {
   IconDashboard,
@@ -235,21 +236,15 @@ export default function Sidebar({ onNavigate }) {
 
       <div className="sidebar__brand">
 
-        <div className="sidebar__logo">
-          SX
-        </div>
+        <img
+          src={logo}
+          alt="Hariyali Logo"
+          className="sidebar__logo-image"
+        />
 
-        <div className="sidebar__brand-text">
-
-          <span className="sidebar__title">
-            {t("app.name")}
-          </span>
-
-          <span className="sidebar__tagline">
-            {t("app.tagline")}
-          </span>
-
-        </div>
+        <span className="sidebar__tagline">
+          {t("app.tagline")}
+        </span>
 
       </div>
 

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { SUPPORTED_LANGUAGES } from "../i18n/i18n";
 import farmBg from "../assets/farm-bg.jpg";
 import { ShieldCheck, Sprout, Users, Droplets, BarChart3, Tractor, Store } from "lucide-react";
+import logo from "../assets/logo.png";
 
 export default function AuthShell({ title, subtitle, children, footer }) {
   const { t, i18n } = useTranslation();
@@ -44,11 +45,12 @@ export default function AuthShell({ title, subtitle, children, footer }) {
         {/* Brand row: logo + name | lang toggle (mobile only via CSS) */}
         <div className="auth-shell__brand">
           <div className="auth-shell__brand-identity">
-            <div className="auth-shell__logo">HY</div>
-            <div className="auth-shell__brand-text">
-              <h2>{t("app.name")}</h2>
-              <p>{t("app.tagline")}</p>
-            </div>
+            <img
+              src={logo}
+              alt="Hariyali"
+              className="auth-shell__main-logo"
+            />
+            <p>{t("app.tagline")}</p>
           </div>
           {/* Shown on mobile via CSS, hidden on desktop via CSS */}
           {langToggle}
