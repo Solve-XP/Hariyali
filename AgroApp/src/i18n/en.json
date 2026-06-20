@@ -1,0 +1,976 @@
+{
+  "app": {
+    "name": "Hariyali",
+    "tagline": "Your Farm, Your Prosperity"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "farms": "Farms",
+    "crops": "Crops",
+     "fertilizers": "Fertilizers",
+     "pesticides": "Pesticides",
+    "expenses": "Expenses",
+    "rental": "Equipment Rental",
+    "admin_section": "Admin",
+    "admin_dashboard": "Admin Dashboard",
+    "users": "Users",
+    "admin_farms": "Farms",
+    "admin_crops": "Crops",
+    "admin_expenses": "Expenses",
+    "admin_equipment": "Equipment",
+    "incomes": "Incomes",
+    "marketplace": "Marketplace"
+  },
+  "topbar": {
+    "welcome": "Welcome",
+    "language": "Language",
+    "english": "English",
+    "marathi": "मराठी",
+    "hindi": "हिंदी",
+    "user_role": "Farmer",
+    "admin_role": "Administrator"
+  },
+  "auth": {
+    "login_title": "Welcome back",
+    "login_subtitle": "Sign in to manage your farm",
+    "login_button": "Sign In",
+    "login_link": "Sign In",
+    "signup_title": "Create your account",
+    "signup_subtitle": "Join SolveXP to manage your farm",
+    "signup_button": "Sign Up",
+    "signup_link": "Sign Up",
+    "no_account": "Don't have an account?",
+    "have_account": "Already have an account?",
+    "name": "Full Name",
+    "name_placeholder": "Enter your full name",
+    "phone": "Phone Number",
+    "phone_placeholder": "Enter 10-digit phone number",
+    "password": "Password",
+    "password_placeholder": "Enter password",
+    "confirm_password": "Confirm Password",
+    "password_too_short": "Password must be at least 6 characters",
+    "password_mismatch": "Passwords do not match",
+    "logout": "Sign Out",
+    "admin_login_title": "Administrator Login",
+    "admin_login_subtitle": "Authorized personnel only",
+    "admin_id": "Admin ID",
+    "admin_id_placeholder": "Enter admin ID",
+    "admin_demo": "Demo admin",
+    "farmer_demo": "Demo farmer",
+    "role":"Role",
+    "login": "Login",
+    "signup": "Sign Up",
+    "forgot_password":"Forgot Password?",
+    "forgot_password_subtitle": "Enter your phone number and set a new password.",
+    "forgot_password_title": "Reset Password",
+    "new_password": "New Password",
+    "new_password_placeholder": "Enter new password",
+    "confirm_password_placeholder": "Confirm new password",
+    "reset_password_button":"Reset Password"
+  },
+  
+   "signup": {
+    "title": "Create your account",
+    "subtitle": "Join SolveXP to manage your farm",
+
+    "full_name": "Full Name",
+    "full_name_placeholder": "Enter your full name",
+
+    "phone": "Phone Number",
+    "phone_placeholder": "Enter 10-digit phone number",
+
+    "role": "Role",
+
+    "farmer": "Farmer",
+    
+    "merchant": "Merchant",
+
+    "password": "Password",
+    "password_placeholder": "Enter password",
+
+    "confirm_password": "Confirm Password",
+    "confirm_password_placeholder": "Enter password",
+
+    "signup_button": "Sign Up",
+
+    "already_account": "Already have an account?",
+    "signin": "Sign In"
+  },
+
+  "hero": {
+  "title": "Smart Farming, Better Tomorrow",
+  "subtitle": "Manage your farm, crops, labor, irrigation and expenses in one simple platform.",
+
+  "crop": "Crop Management",
+  "labor": "Labor Tracking",
+  "irrigation": "Irrigation Control",
+  "analytics": "Reports & Analytics",
+  "marketplace": "Marketplace", 
+  "rentals": "Equipment Rental"
+  
+},
+
+
+  "common": {
+    "add": "Add",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "actions": "Actions",
+    "select": "Select",
+    "no_data": "No data available",
+    "loading": "Loading...",
+    "back": "Back",
+    "submit": "Submit",
+    "name": "Name",
+    "phone": "Phone",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "amount": "Amount",
+    "date": "Date",
+    "details": "Details",
+    "type": "Type",
+    "all": "All",
+    "total": "Total",
+    "currency": "₹",
+    "view": "View",
+    "filter": "Filter",
+    "select_option": "Select an option",
+    "latest": "Latest",
+    "oldest": "Oldest",
+    "priceLowHigh": "Price Low → High",
+    "priceHighLow": "Price High → Low",
+    "optional": "Optional",
+    "distance": "away"
+  },
+  "listing": {
+    "rentalPrice": "Rental Price",
+    "expectedPrice": "Expected Price",
+    "available": "Available",
+    "expectedQuantity": "Exp. Quantity",
+    "availableDate": "Available Date",
+    "harvestDate": "Harvest Date",
+    "untitled": "Untitled",
+    "unknownSeller": "Unknown Seller",
+    "verified": "Verified",
+    "noListingsFound": "No listings found",
+    "tryChangingFilters": "Try changing filters or create a listing.",
+    "searchPlaceholder": "Search crop, farm, village...",
+    "allStates": "All States",
+    "allDistricts": "All Districts",
+    "allTaluka": "All Taluka",
+    "latestListings": "Latest Listings",
+    "oldestListings": "Oldest Listings",
+    "priceLowHigh": "Price Low → High",
+    "priceHighLow": "Price High → Low",
+     "radius20": "Within 20 km",
+    "radius40": "Within 40 km",
+    "radius60": "Within 60 km",
+    "radius100": "Within 100 km",
+    "radiusAll": "All Distances",
+    "showListingsWithin": "km radius",
+    "postedToday": "New",
+    "postedAgo": "{{days}}d ago"
+
+  },
+
+  "location": {
+    "state": "State",
+    "district": "District",
+    "taluka": "Taluka",
+    "notAtThisLocation": "📍 Not at this location? Select the exact location on the map.",
+    "selectLocationOnMap": "Select Location on Map"
+  },
+  
+  "listingForm": {
+    "failedToLoadFarms": "Failed to load farms",
+    "failedToLoadCrops": "Failed to load crops",
+    "failedToLoadListing": "Failed to load listing",
+
+    "maximum5Images": "Maximum 5 images allowed",
+    "imageBelow5mb": "Each image must be below 5MB",
+
+    "pleaseSelectFarm": "Please select farm",
+    "pleaseSelectCrop": "Please select crop",
+    "pleaseEnterQuantity": "Please enter quantity",
+    "pleaseEnterExpectedPrice": "Please enter expected price",
+    "pleaseSelectHarvestDate": "Please select harvest date",
+    "pleaseEnterCustomUnit": "Please enter custom unit",
+
+    "listingCreated": "Listing created successfully",
+    "listingUpdated": "Listing updated successfully",
+    "failedToUpdate": "Failed to update listing",
+    "failedToCreate": "Failed to create listing",
+
+    "loadingListing": "Loading listing...",
+
+    "farm": "Farm",
+    "selectFarm": "Select Farm",
+    "selectCrop": "Select Crop",
+
+    "quantity": "Quantity",
+    "enterQuantity": "Enter quantity",
+
+    "unit": "Unit",
+    "customUnit": "Custom Unit",
+    "customUnitPlaceholder": "e.g. bundle",
+
+    "expectedPrice": "Expected Price",
+    "expectedPricePlaceholder": "e.g. 80000",
+
+    "harvestDate": "Harvest Date",
+
+    "village": "Village",
+    "enterVillage": "Enter village",
+
+    "taluka": "Taluka",
+    "enterTaluka": "Enter taluka",
+
+    "district": "District",
+    "enterDistrict": "Enter district",
+
+    "statePincode": "State + Pincode",
+    "statePincodePlaceholder": "Maharashtra 413107",
+
+    "descriptionOptional": "Description (Optional)",
+    "descriptionPlaceholder": "Add crop quality, freshness, special details...",
+
+    "currentImages": "Current Images",
+    "imagesCannotEdit": "Images cannot be edited",
+    "crop": "Crop",
+    "noImagesAvailable": "No images available",
+
+    "uploadCropImages": "Upload Crop Images",
+    "addUpTo5Images": "Add up to 5 images",
+    "chooseImages": "Choose Images",
+
+    "updating": "Updating...",
+    "creating": "Creating...",
+    "updateListing": "Update Listing",
+    "createListing": "Create Listing"
+  },
+  
+  "listingImage": {
+    "noImagesAvailable": "No Images Available",
+    "sellerNoImages": "Seller has not uploaded any images yet.",
+    "listing": "Listing",
+    "thumbnail": "Thumbnail"
+  }, 
+  "listingSeller": {
+    "unknownSeller": "Unknown Seller",
+    "verified": "Verified",
+    "farmer": "Farmer"
+  },
+
+
+  "marketplace": {
+    "title": "Marketplace",
+    "expectedPrice": "Expected Price",
+    "expectedQuantity": "Exp. Quantity",
+    "expectedHarvestDate": "Exp. Harvest Date",
+    "marketplace": "Marketplace",
+    "myListings": "My Listings",
+     "createListing": "Create Listing",
+    "sellYourCrops": "Sell your crops in marketplace",
+    "editListing": "Edit Listing",
+    "updateMarketplaceListing": "Update your marketplace listing",
+     "failedToLoad": "Failed to load marketplace",
+    "browseListings": "Browse marketplace listings",
+    "noListingsFound": "No marketplace listings found",
+    "trySearchFilters": "Try changing search filters.",
+    "viewAll": "View All",
+    "showLess": "Show Less"
+  },
+  "myListings": {
+    "failedToLoad": "Failed to load listings",
+    "deletedSuccess": "Listing deleted successfully",
+    "failedToDelete": "Failed to delete listing",
+    "manageListings": "Manage your marketplace listings",
+    "addListing": "+ Add Listing",
+    "noListingsFound": "No listings found",
+    "noListingSubtitle": "You have not created any listing yet."
+  },
+
+  "listingDetails": {
+    "failedToLoadListing": "Failed to load listing",
+    "listingDeleted": "Listing deleted successfully",
+    "failedToDelete": "Failed to delete listing",
+
+    "quantity": "Quantity",
+    "harvestDate": "Harvest Date",
+    "village": "Village",
+    "taluka": "Taluka",
+    "district": "District",
+    "status": "Status",
+
+    "location": "Location",
+    "description": "Description",
+
+    "noDescription": "No description provided by seller.",
+
+    "editListing": "Edit Listing",
+
+    "deleteListing": "Delete Listing",
+    "deleteConfirm": "Are you sure you want to delete this listing?"
+  },
+
+  "contact": {
+    "call": "Call",
+    "whatsapp": "WhatsApp",
+     "directions": "Directions",
+    "locationUnavailable": "Location unavailable"
+  },
+
+
+  "dashboard": {
+    
+  "title": "Dashboard",
+  "subtitle": "Manage your farming business efficiently.",
+
+  "loading": "Loading dashboard...",
+
+  "all_financial_years": "All Financial Years",
+
+  "total_farms": "Total Farms",
+  "connected_farms": "Connected farms",
+
+  "total_income": "Total Income",
+
+  "total_expenses": "Total Expenses",
+  "no_data": "No data available for the selected filters",
+
+  "total_crops": "Total Crops",
+  "active_crops": "Active crops",
+
+  "rental_listings": "Rental Listings",
+  "equipment_marketplace": "Equipment marketplace",
+
+  "financial_overview": "Financial Overview",
+
+  "net_profit": "Net Profit",
+  "income_minus_expenses": "Income - Expenses",
+
+  "income": "Income",
+  "expenses": "Expenses",
+  "profit": "Profit",
+
+  "quick_actions": "Quick Actions",
+  "quick_actions_subtitle": "Manage your farming activities quickly",
+
+  "add_farm": "Add Farm",
+  "add_income": "Add Income",
+  "add_expense": "Add Expense",
+  "add_fertilizer": "Add Fertilizer",
+  "add_pesticide": "Add Pesticide",
+  "rent_equipment": "Rent Equipment",
+
+  "recent_incomes": "Recent Incomes",
+  "recent_expenses": "Recent Expenses",
+
+  "view_all": "View All",
+
+  "amount": "Amount",
+  "date": "Date",
+  "name": "Name",
+
+  "expense_breakdown": "Expense Breakdown",
+  "crop_income_breakdown": "Crop Income Breakdown",
+
+  "fertilizers": "Fertilizers",
+  "pesticides": "Pesticides",
+
+  "total_records": "Total records"
+},
+  "farms": {
+    "title": "Farms",
+    "subtitle": "Manage your farm properties",
+    "list_title": "My Farms",
+    "name": "Farm Name",
+    "acres": "Acres",
+    "location": "Location",
+    "soil_type": "Soil Type",
+    "farm_photo": "Farm Photo",
+    "cancel": "Cancel",
+    "create_farm": "Create Farm",
+    "update_farm": "Update Farm",
+    "add_title": "Add New Farm",
+    "name_placeholder": "Enter farm name",
+    "acres_placeholder": "Enter acres",
+    "search_placeholder": "Search farms...",
+    "location_placeholder": "Enter location",
+    "soil_placeholder": "Enter soil type",
+    "delete_title": "Delete Farm",
+    "delete_message": "Are you sure you want to delete this farm?",
+    "empty": "No farms added yet. Add your first farm to get started.",
+    "select_soil_type": "Select soil type",
+
+    "soil_black": "Black Soil",
+    "soil_red": "Red Soil",
+    "soil_laterite": "Laterite Soil",
+    "soil_alluvial": "Alluvial Soil",
+    "soil_sandy": "Sandy Soil",
+    "soil_clay": "Clay Soil",
+    "soil_loamy": "Loamy Soil",
+    "soil_mixed": "Mixed Soil",
+    "soil_other": "Other",
+    
+
+     "stats": {
+      "total_farms": "Total Farms",
+      "farms_added": "Farms added",
+
+      "total_acres": "Total Acres",
+      "acres_land": "Acres of land",
+
+      "soil_types": "Soil Types",
+      "different_soil_types": "Different soil types",
+
+      "locations": "Locations",
+      "unique_locations": "Unique locations"
+    }
+  },
+
+  "crops": {
+    "title": "Crops",
+    "subtitle": "Track crops across your farms",
+    "list_title": "My Crops",
+    "select_farm": "Select Farm",
+    "all_farms": "All Farms",
+    "name": "Crop Name",
+    "farm": "Farm",
+    "season": "Season",
+    "sowing_date": "Sowing Date",
+    "expected_harvest": "Expected Harvest",
+    "add_title": "Add New Crop",
+    "name_placeholder": "e.g. Wheat, Rice, Cotton",
+    "season_placeholder": "e.g. Kharif, Rabi",
+    "empty": "No crops registered. Add a crop to begin tracking.",
+    "no_farm_selected": "Please select a farm to view crops.",
+
+    "add_crop": "Add Crop",
+    "edit_crop": "Edit Crop",
+    "update_crop": "Update Crop",
+    "create_crop": "Create Crop",
+    "crop": "Crop",
+    "financial_year": "Financial Year",
+    "all_seasons": "All Seasons",
+    "all_financial_years": "All Financial Years",
+    "search_placeholder": "Search crop, season, financial year...",
+    "harvest_date": "Expected Harvest Date",
+    "connected_farms": "Connected Farms",
+    "farm_coverage": "Farm coverage",
+    "seasons_count": "Seasons",
+    "season_categories": "Season categories",
+    "latest_fy": "Latest FY",
+    "registered_crops": "Registered crops",
+    "total_crops": "Total Crops",
+    "loading": "Loading crops...",
+    "no_crops_found": "No crops found",
+    "cancel": "Cancel",
+    "actions": "Actions",
+    "delete_crop": "Delete Crop",
+    "delete_confirm": "Are you sure you want to delete this crop?",
+    "crop_added": "Crop added successfully",
+    "crop_updated": "Crop updated successfully",
+    "crop_deleted": "Crop deleted successfully",
+    "enter_crop_name": "Enter crop name",
+    "kharif_rabi": "Kharif / Rabi",
+
+    "season_kharif": "Kharif",
+    "season_rabi": "Rabi",
+    "season_zaid": "Zaid",
+    "season_perennial": "Perennial",
+    "season_whole_year": "Whole Year",
+    "season_other": "Other",
+
+    "select_season": "Select season"
+  },
+
+
+  "incomes": {
+    "title": "Incomes",
+    "subtitle": "Manage farm income records",
+
+    "add": "Add Income",
+
+    "farm": "Farm",
+    "crop": "Crop",
+    "financial_year": "Financial Year",
+
+    "harvest": "Harvest",
+    "harvest_quantity": "Harvest Quantity",
+
+    "unit": "Unit",
+    "amount": "Amount",
+
+    "income_date": "Income Date",
+
+    "notes": "Notes",
+    "actions": "Actions",
+
+    "search": "Search income...",
+
+    "loading": "Loading incomes...",
+    "empty": "No incomes found",
+
+    "create": "Create Income",
+    "edit": "Edit Income",
+    "update": "Update Income",
+    "delete": "Delete Income",
+
+    "created": "Income created successfully",
+    "updated": "Income updated successfully",
+    "deleted": "Income deleted successfully",
+
+    "delete_confirm": "Are you sure you want to delete this income?",
+
+    "total_income": "Total Income",
+    "revenue_generated": "Revenue generated",
+
+    "farms": "Farms",
+    "connected_farms": "Connected farms",
+
+    "crops": "Crops",
+    "income_crops": "Income crops",
+
+    "all_financial_years": "All Financial Years",
+
+    "select_farm": "Select Farm",
+    "select_crop": "Select Crop",
+    "select_unit": "Select unit",
+
+    "unit_kg": "Kg",
+    "unit_quintal": "Quintal",
+    "unit_ton": "Ton",
+    "unit_gram": "Gram",
+    "unit_bag": "Bag",
+    "unit_crate": "Crate",
+    "unit_dozen": "Dozen",
+    "unit_piece": "Piece",
+    "unit_liter": "Liter",
+    "unit_ml": "ML",
+    "unit_other": "Other"
+  },
+
+  "expenses": {
+  "title": "Expense",
+  "subtitle": "Track farming expenses and spending.",
+  "add": "Add Expense",
+
+  "financial_year": "Financial Year",
+  "all_financial_years": "All Financial Years",
+
+  "total_expenses": "Total Expenses",
+  "expense_amount": "Expense amount",
+
+  "farms": "Farms",
+  "connected_farms": "Connected farms",
+
+  "crops": "Crops",
+  "expense_crops": "Expense crops",
+
+  "search": "Search expenses...",
+  "loading": "Loading expenses...",
+  "empty": "No expenses found",
+
+  "farm": "Farm",
+  "crop": "Crop",
+  "category": "Category",
+  "item_name": "Expense Name",
+  "quantity": "Quantity",
+  "unit": "Unit",
+  "amount": "Amount",
+  "payment_method": "Payment Method",
+  "expense_date": "Expense Date",
+  "notes": "Notes",
+
+  "select_farm": "Select Farm",
+  "select_crop": "Select Crop",
+  "select_category": "Select Category",
+  "select_payment": "Select Payment",
+  "select_unit": "Select Unit",
+
+  "create": "Create Expense",
+  "update": "Update Expense",
+  "edit": "Edit Expense",
+  "delete": "Delete Expense",
+
+  "created": "Expense created successfully",
+  "updated": "Expense updated successfully",
+
+  "delete_confirm": "Are you sure you want to delete this expense?",
+
+  "table_farm": "Farm",
+  "table_crop": "Crop",
+  "table_financial_year": "Financial Year",
+  "table_category": "Category",
+  "table_item": "Expense Name",
+  "table_quantity": "Quantity",
+  "table_payment": "Payment",
+  "table_amount": "Amount",
+  "table_expense_date": "Expense Date",
+  "table_actions": "Actions",
+
+  "payment_cash": "Cash",
+  "payment_upi": "UPI",
+  "payment_bank_transfer": "Bank Transfer",
+  "payment_credit": "Credit",
+  "payment_other": "Other",
+
+  "category_fertilizer": "Fertilizer",
+  "category_pesticide": "Pesticide",
+  "category_seeds": "Seeds",
+  "category_labor": "Labor",
+  "category_diesel": "Diesel",
+  "category_transport": "Transport",
+  "category_equipment": "Equipment",
+  "category_electricity": "Electricity",
+  "category_water": "Water",
+  "category_maintenance": "Maintenance",
+  "category_other": "Other",
+
+  "units_kg": "Kg",
+  "units_gram": "Gram",
+  "units_quintal": "Quintal",
+  "units_ton": "Ton",
+
+  "units_liter": "Liter",
+  "units_ml": "ML",
+
+  "units_piece": "Piece",
+  "units_packet": "Packet",
+  "units_bag": "Bag",
+  "units_box": "Box",
+  "units_bottle": "Bottle",
+  "units_bundle": "Bundle",
+
+  "units_acre": "Acre",
+  "units_hectare": "Hectare",
+
+  "units_hour": "Hour",
+  "units_day": "Day",
+  "units_person": "Person",
+
+  "units_trip": "Trip",
+
+  "units_unit": "Unit",
+  "units_other": "Other"
+},
+  "rental": {
+    "equipmentName": "Equipment Name",
+    "perDay": "/day",
+    "perHour": "/hour",
+    "title": "Equipment Rental",
+    "subtitle": "Rent equipment from nearby owners",
+    "list_title": "Available Equipment",
+    "name": "Equipment",
+    "price": "Price",
+    "location": "Location",
+    "owner": "Owner",
+    "contact": "Contact",
+    "call": "Call",
+    "message": "Message",
+    "price_per_day": "/ day",
+    "add_title": "List Your Equipment",
+    "name_placeholder": "e.g. Tractor, Harvester",
+    "price_placeholder": "Price per day",
+    "location_placeholder": "Your village / city",
+    "owner_placeholder": "Owner name",
+    "phone_placeholder": "Contact number",
+    "empty": "No equipment listed yet."
+  },
+
+  
+  "rentals": {
+    "marketplace": "Rentals",
+    "marketplaceSubtitle": "Rent farming equipment near you",
+    "searchPlaceholder": "Search equipment, village, taluka, district...",
+    "allDistricts": "All Districts",
+    "allStates": "All States",
+    "noRentalsFound": "No Rentals Found",
+    "tryChangingFilters": "Try changing filters"
+  },
+
+  "rentalForm": {
+    "equipmentInfo": "Equipment Info",
+    "equipmentName": "Equipment Name",
+    "equipmentPlaceholder": "e.g. John Deere 5055E",
+    "hourlyPrice": "Hourly Price",
+    "hourlyPricePlaceholder": "e.g. 500",
+    "dailyPrice": "Daily Price",
+    "dailyPricePlaceholder": "e.g. 2000",
+    "villagePlaceholder": "e.g. Goradwadi",
+    "talukaPlaceholder": "e.g. Malshiras",
+    "districtPlaceholder": "e.g. Pune",
+    "statePincode": "State, Pincode",
+    "statePincodePlaceholder": "e.g. Maharashtra, 413107",
+    "ownerDetails": "Owner Details",
+    "ownerName": "Owner Name",
+    "ownerPlaceholder": "e.g. Ramesh Patil",
+    "phoneNumber": "Phone Number",
+    "phonePlaceholder": "e.g. 9766860000",
+    "descriptionPlaceholder": "Add equipment details",
+    "equipmentImages": "Equipment Images",
+    "imageEditNotSupported": "Image editing is currently not supported.",
+    "uploadEquipmentImages": "Upload Equipment Images",
+    "addUpTo5Images": "Add up to 5 images",
+    "chooseImages": "Choose Images",
+    "saving": "Saving...",
+    "updateRental": "Update Rental",
+    "createRental": "Create Rental"
+  },
+
+  "rentalCreate": {
+    "fillRequiredFields": "Please fill all required fields",
+    "addPrice": "Please add hourly or daily price",
+    "uploadImage": "Please upload at least one image",
+    "createdSuccess": "Rental created successfully",
+    "createRental": "Create Rental",
+    "addEquipment": "Add farming equipment for rent"
+  },
+
+  "editRental": {
+    "updatedSuccess": "Rental updated successfully",
+    "editRental": "Edit Rental",
+    "updateRentalDetails": "Update equipment rental details"
+  },
+
+  "myRentals": {
+    "failedToLoad": "Failed to load rentals",
+    "deletedSuccess": "Rental deleted successfully",
+    "failedToDelete": "Failed to delete rental",
+    "myRentals": "My Rentals",
+    "manageEquipment": "Manage your equipment listings",
+    "addRental": "+ Add Rental",
+    "rentalMarketplace": "Rentals",
+    "noRentals": "No Rentals Yet",
+    "createFirstRental": "Create your first rental listing",
+    "deleteRental": "Delete Rental",
+    "deleteConfirm": "Are you sure you want to delete"
+  },
+
+
+  "rentalDetails": {
+    "state": "State",
+    "availability": "Availability",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "noDescription": "No description provided.",
+    "deleteConfirm": "Are you sure you want to delete this rental?"
+  },
+
+
+  "admin": {
+    "dashboard_title": "Admin Dashboard",
+    "dashboard_subtitle": "System-wide overview",
+    "total_users": "Total Users",
+    "total_farms": "Total Farms",
+    "total_crops": "Total Crops",
+    "total_equipment": "Total Equipment",
+    "users_title": "Registered Users",
+    "users_subtitle": "All farmers in the system",
+    "farms_title": "All Farms",
+    "farms_subtitle": "Read-only view of registered farms",
+    "crops_title": "All Crops",
+    "crops_subtitle": "Read-only view of registered crops",
+    "expenses_title": "All Expenses",
+    "expenses_subtitle": "Read-only system-wide expense records",
+    "equipment_title": "Equipment Listings",
+    "equipment_subtitle": "Manage all rental equipment",
+    "owner": "Owner",
+    "joined": "Joined",
+    "delete_confirm": "Are you sure you want to delete this listing?"
+  },
+
+  "messages": {
+    "FARM_ADDED_SUCCESS": "Farm added successfully",
+    "FARM_UPDATED_SUCCESS": "Farm updated successfully",
+    "FARM_DELETED_SUCCESS": "Farm deleted successfully",
+    "CROP_ADDED_SUCCESS": "Crop added successfully",
+    "EXPENSE_ADDED_SUCCESS": "Expense recorded successfully",
+    "EQUIPMENT_ADDED_SUCCESS": "Equipment listed successfully",
+    "EQUIPMENT_DELETED_SUCCESS": "Equipment removed successfully",
+    "AUTH_LOGIN_SUCCESS": "Signed in successfully",
+    "AUTH_SIGNUP_SUCCESS": "Account created successfully",
+    "AUTH_LOGOUT_SUCCESS": "Signed out successfully",
+    "AUTH_INVALID_CREDENTIALS": "Invalid phone number or password",
+    "AUTH_PHONE_EXISTS": "An account with this phone number already exists",
+    "VALIDATION_ERROR": "Please fill all required fields",
+    "GENERIC_ERROR": "Something went wrong. Please try again."
+  },
+
+  "footer": {
+    "copyright": "Hariyali — Empowering farmers with technology",
+    "tagline": "Smart farming made simple",
+  "privacy": "Privacy Policy",
+  "terms": "Terms",
+  "support": "Support",
+  "contact": "Contact"
+
+  },
+
+
+  "fertilizers": {
+    "title": "Fertilizers",
+    "subtitle": "Manage fertilizer usage records",
+    "add": "Add Fertilizer",
+    "edit": "Edit Fertilizer",
+    "create": "Create Fertilizer",
+    "update": "Update Fertilizer",
+    "delete": "Delete Fertilizer",
+
+    "name": "Fertilizer Name",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "application_date": "Application Date",
+    "financial_year": "Financial Year",
+    "notes": "Notes",
+    "actions": "Actions",
+
+    "search": "Search fertilizers...",
+    "loading": "Loading fertilizers...",
+    "empty": "No fertilizer records found",
+
+    "created": "Fertilizer created successfully",
+    "updated": "Fertilizer updated successfully",
+    "deleted": "Fertilizer deleted successfully",
+
+    "delete_confirm": "Are you sure you want to delete",
+
+    "total_records": "Total Records",
+    "records": "Records",
+
+    "total_quantity": "Total Quantity",
+    "total_used": "Total Used",
+
+    "latest_application": "Latest Application",
+    "latest_record": "Latest Record",
+
+    "all_financial_years": "All Financial Years",
+    "select_unit": "Select unit",
+
+    "unit_kg": "Kg",
+    "unit_gram": "Gram",
+    "unit_liter": "Liter",
+    "unit_ml": "ML",
+    "unit_bag": "Bag",
+    "unit_packet": "Packet",
+    "unit_quintal": "Quintal",
+    "unit_ton": "Ton",
+    "unit_piece": "Piece",
+    "unit_other": "Other"
+  },
+
+  
+
+ 
+
+  "pesticides": {
+  "title": "Pesticides",
+  "subtitle": "Manage pesticide usage records",
+  "add": "Add Pesticide",
+  "edit": "Edit Pesticide",
+  "create": "Create Pesticide",
+  "update": "Update Pesticide",
+  "delete": "Delete Pesticide",
+
+  "name": "Pesticide Name",
+  "quantity": "Quantity",
+  "unit": "Unit",
+  "application_date": "Application Date",
+  "financial_year": "Financial Year",
+  "notes": "Notes",
+  "actions": "Actions",
+
+  "search": "Search pesticides...",
+  "loading": "Loading pesticides...",
+  "empty": "No pesticide records found",
+
+  "created": "Pesticide created successfully",
+  "updated": "Pesticide updated successfully",
+  "deleted": "Pesticide deleted successfully",
+
+  "delete_confirm": "Are you sure you want to delete",
+
+  "total_records": "Total Records",
+  "records": "Records",
+
+  "total_quantity": "Total Quantity",
+  "total_used": "Total Used",
+
+  "latest_application": "Latest Application",
+  "latest_record": "Latest Record",
+
+  "all_financial_years": "All Financial Years",
+
+  "select_unit": "Select unit",
+
+  "unit_kg": "Kg",
+  "unit_gram": "Gram",
+  "unit_liter": "Liter",
+  "unit_ml": "ML",
+  "unit_bag": "Bag",
+  "unit_packet": "Packet",
+  "unit_quintal": "Quintal",
+  "unit_ton": "Ton",
+  "unit_piece": "Piece",
+  "unit_other": "Other"
+},
+
+"profile": {
+  "title": "Profile",
+  "subtitle": "Manage your account settings",
+
+  "edit_profile": "Edit Profile",
+  "edit_profile_subtitle": "Update your personal details",
+
+  "change_password": "Change Password",
+  "change_password_subtitle": "Keep your account secure",
+
+  "name": "Name",
+  "phone": "Phone",
+
+  "enter_name": "Enter name",
+  "enter_phone": "Enter phone number",
+
+  "current_password": "Current Password",
+  "new_password": "New Password",
+  "confirm_password": "Confirm Password",
+
+  "enter_current_password": "Enter current password",
+  "enter_new_password": "Enter new password",
+  "enter_confirm_password": "Confirm new password",
+
+  "save_changes": "Save Changes",
+  "update_password": "Update Password",
+
+  "loading": "Loading profile...",
+
+  "failed_load": "Failed to load profile",
+  "failed_update": "Failed to update profile",
+  "failed_password_update": "Failed to update password",
+
+  "updated_success": "Profile updated successfully",
+  "password_updated_success": "Password updated successfully",
+
+  "no_changes": "No changes made",
+
+  "name_validation": "Name must be at least 2 characters",
+  "phone_validation": "Invalid phone number",
+
+  "current_password_required": "Current password is required",
+  "password_validation": "Password must be at least 8 characters",
+  "password_mismatch": "Passwords do not match"
+},
+"authMessages": {
+  "loginRequired": "Login required",
+  "loginToCall": "Login to call seller",
+  "loginToWhatsapp": "Login to chat on WhatsApp",
+  "loginToViewDetails": "Login to view full details",
+  "loginToViewListing": "Login to view listing details",
+  "loginToDirections": "Login to get directions"
+}
+}

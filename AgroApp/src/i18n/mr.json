@@ -1,0 +1,968 @@
+{
+  "app": {
+    "name": "हरियाली",
+    "tagline": "आपली शेती, आपली समृद्धी"
+  },
+  "nav": {
+    "dashboard": "डॅशबोर्ड",
+    "farms": "शेती",
+    "crops": "पिके",
+    "fertilizers": "खते",
+    "pesticides": "कीटकनाशके",
+    "expenses": "खर्च",
+    "rental": "रेंटल",
+    "admin_section": "प्रशासन",
+    "admin_dashboard": "प्रशासन डॅशबोर्ड",
+    "users": "वापरकर्ते",
+    "admin_farms": "शेती",
+    "admin_crops": "पिके",
+    "admin_expenses": "खर्च",
+    "admin_equipment": "उपकरणे",
+    "incomes": "उत्पन्न",
+    "marketplace": "मार्केटप्लेस"
+  },
+  "topbar": {
+    "welcome": "स्वागत आहे",
+    "language": "भाषा",
+    "english": "English",
+    "marathi": "मराठी",
+    "hindi": "हिंदी",
+    "user_role": "शेतकरी",
+    "admin_role": "प्रशासक"
+  },
+  "auth": {
+    "login_title": "पुन्हा स्वागत आहे",
+    "login_subtitle": "तुमची शेती व्यवस्थापित करण्यासाठी साइन इन करा",
+    "login_button": "साइन इन करा",
+    "login_link": "साइन इन",
+    "signup_title": "खाते तयार करा",
+    "signup_subtitle": "तुमची शेती व्यवस्थापित करण्यासाठी सॉल्व्हएक्सपीमध्ये सामील व्हा",
+    "signup_button": "साइन अप करा",
+    "signup_link": "साइन अप",
+    "no_account": "खाते नाही?",
+    "have_account": "आधीच खाते आहे?",
+    "name": "पूर्ण नाव",
+    "name_placeholder": "तुमचे पूर्ण नाव टाका",
+    "phone": "फोन नंबर",
+    "phone_placeholder": "१० अंकी फोन नंबर टाका",
+    "password": "पासवर्ड",
+    "password_placeholder": "पासवर्ड टाका",
+    "confirm_password": "पासवर्डची पुष्टी करा",
+    "password_too_short": "पासवर्ड किमान ६ वर्णांचा असावा",
+    "password_mismatch": "पासवर्ड जुळत नाहीत",
+    "logout": "साइन आउट",
+    "admin_login_title": "प्रशासक लॉगिन",
+    "admin_login_subtitle": "केवळ अधिकृत कर्मचारी",
+    "admin_id": "प्रशासक आयडी",
+    "admin_id_placeholder": "प्रशासक आयडी टाका",
+    "admin_demo": "डेमो प्रशासक",
+    "farmer_demo": "डेमो शेतकरी",
+    "role":"भूमिका",
+    "login": "लॉगिन",
+    "signup": "साइन अप",
+    "forgot_password": "पासवर्ड विसरलात?",
+    "forgot_password_subtitle": "तुमचा फोन नंबर प्रविष्ट करा आणि नवीन पासवर्ड सेट करा.",
+    "forgot_password_title": "पासवर्ड रीसेट करा",
+    "new_password": "नवीन पासवर्ड",
+    "new_password_placeholder": "नवीन पासवर्ड प्रविष्ट करा",
+    "confirm_password_placeholder": "नवीन पासवर्डची पुष्टी करा",
+    "reset_password_button": "पासवर्ड रीसेट करा"
+  },
+   
+  "signup": {
+    "title": "तुमचे खाते तयार करा",
+    "subtitle": "तुमच्या शेत व्यवस्थापनासाठी SolveXP मध्ये सामील व्हा",
+
+    "full_name": "पूर्ण नाव",
+    "full_name_placeholder": "तुमचे पूर्ण नाव टाका",
+
+    "phone": "फोन नंबर",
+    "phone_placeholder": "१० अंकी फोन नंबर टाका",
+
+    "role": "भूमिका",
+    
+    "farmer": "शेतकरी",
+    
+    "merchant": "व्यापारी",
+
+    "password": "पासवर्ड",
+    "password_placeholder": "पासवर्ड टाका",
+
+    "confirm_password": "पासवर्ड पुष्टी करा",
+    "confirm_password_placeholder": "पासवर्ड पुन्हा टाका",
+
+    "signup_button": "साइन अप करा",
+
+    "already_account": "आधीपासून खाते आहे?",
+    "signin": "साइन इन"
+  },
+
+  "hero": {
+  "title": "स्मार्ट शेती, उत्तम उद्याचा मार्ग",
+  "subtitle": "तुमची शेती, पिके, मजूर, सिंचन आणि खर्च एका सोप्या प्लॅटफॉर्मवर व्यवस्थापित करा.",
+  "crop": "पीक व्यवस्थापन",
+  "labor": "मजूर ट्रॅकिंग",
+  "irrigation": "सिंचन नियंत्रण",
+  "analytics": "अहवाल आणि विश्लेषण",
+  "marketplace": "मार्केटप्लेस",
+  "rentals": "उपकरण भाडे"
+
+
+},
+
+  "common": {
+    "add": "जोडा",
+    "save": "जतन करा",
+    "cancel": "रद्द करा",
+    "delete": "हटवा",
+    "edit": "संपादित करा",
+    "search": "शोधा",
+    "actions": "क्रिया",
+    "select": "निवडा",
+    "no_data": "कोणताही डेटा उपलब्ध नाही",
+    "loading": "लोड होत आहे...",
+    "back": "मागे",
+    "submit": "सबमिट करा",
+    "details": "तपशील",
+    "name": "नाव",
+    "phone": "फोन",
+    "status": "स्थिती",
+    "active": "सक्रिय",
+    "inactive": "निष्क्रिय",
+    "amount": "रक्कम",
+    "date": "तारीख",
+    "type": "प्रकार",
+    "all": "सर्व",
+    "total": "एकूण",
+    "currency": "₹",
+    "view": "पहा",
+    "filter": "फिल्टर",
+    "select_option": "एक पर्याय निवडा",
+     "latest": "नवीनतम",
+    "oldest": "जुने",
+    "priceLowHigh": "किंमत कमी → जास्त",
+    "priceHighLow": "किंमत जास्त → कमी",
+     "optional": "ऐच्छिक",
+     "distance": "अंतरावर"
+
+  },
+
+  "listing": {
+    "rentalPrice": "भाडे किंमत",
+    "expectedPrice": "अपेक्षित किंमत",
+    "available": "उपलब्ध",
+    "expectedQuantity": "अपेक्षित प्रमाण",
+    "availableDate": "उपलब्ध तारीख",
+    "harvestDate": "कापणी तारीख",
+    "untitled": "शीर्षक नाही",
+    "unknownSeller": "अज्ञात विक्रेता",
+    "verified": "पडताळलेले",
+     "noListingsFound": "कोणतीही लिस्टिंग आढळली नाही",
+    "tryChangingFilters": "फिल्टर बदला किंवा नवीन लिस्टिंग तयार करा.",
+    "searchPlaceholder": "पीक, शेत, गाव शोधा...",
+    "allStates": "सर्व राज्ये",
+    "allDistricts": "सर्व जिल्हे",
+    "allTaluka": "सर्व तालुके",
+    "latestListings": "नवीन लिस्टिंग",
+    "oldestListings": "जुन्या लिस्टिंग",
+    "priceLowHigh": "किंमत कमी → जास्त",
+    "priceHighLow": "किंमत जास्त → कमी",
+     "radius20": "20 किमीच्या आत",
+    "radius40": "40 किमीच्या आत",
+    "radius60": "60 किमीच्या आत",
+    "radius100": "100 किमीच्या आत",
+    "radiusAll": "सर्व अंतर",
+    "showListingsWithin": "किमीच्या आत",
+    "postedToday": "नवीन",
+    "postedAgo": "{{days}} दिवसांपूर्वी"
+  },
+  "location": {
+    "state": "राज्य",
+    "district": "जिल्हा",
+    "taluka": "तालुका",
+
+    "notAtThisLocation": "📍 ही अचूक जागा नाही का? नकाशावर अचूक स्थान निवडा.",
+    "selectLocationOnMap": "नकाशावर स्थान निवडा"
+
+  },
+
+  "listingForm": {
+    "failedToLoadFarms": "शेती माहिती लोड करण्यात अयशस्वी",
+    "failedToLoadCrops": "पिकांची माहिती लोड करण्यात अयशस्वी",
+    "failedToLoadListing": "लिस्टिंग लोड करण्यात अयशस्वी",
+
+    "maximum5Images": "जास्तीत जास्त 5 प्रतिमा अपलोड करू शकता",
+    "imageBelow5mb": "प्रत्येक प्रतिमा 5MB पेक्षा कमी असावी",
+
+    "pleaseSelectFarm": "कृपया शेत निवडा",
+    "pleaseSelectCrop": "कृपया पीक निवडा",
+    "pleaseEnterQuantity": "कृपया प्रमाण टाका",
+    "pleaseEnterExpectedPrice": "कृपया अपेक्षित किंमत टाका",
+    "pleaseSelectHarvestDate": "कृपया कापणी तारीख निवडा",
+    "pleaseEnterCustomUnit": "कृपया सानुकूल एकक टाका",
+
+    "listingCreated": "लिस्टिंग यशस्वीरित्या तयार झाली",
+    "listingUpdated": "लिस्टिंग यशस्वीरित्या अद्यतनित झाली",
+    "failedToUpdate": "लिस्टिंग अद्यतनित करण्यात अयशस्वी",
+    "failedToCreate": "लिस्टिंग तयार करण्यात अयशस्वी",
+
+    "loadingListing": "लिस्टिंग लोड होत आहे...",
+
+    "farm": "शेत",
+    "selectFarm": "शेत निवडा",
+
+    "selectCrop": "पीक निवडा",
+
+    "quantity": "प्रमाण",
+    "enterQuantity": "प्रमाण टाका",
+
+    "unit": "एकक",
+    "customUnit": "सानुकूल एकक",
+    "customUnitPlaceholder": "उदा. गठ्ठा",
+
+    "expectedPrice": "अपेक्षित किंमत",
+    "expectedPricePlaceholder": "उदा. 80000",
+
+    "harvestDate": "कापणी तारीख",
+
+    "village": "गाव",
+    "enterVillage": "गाव टाका",
+
+    "taluka": "तालुका",
+    "enterTaluka": "तालुका टाका",
+
+    "district": "जिल्हा",
+    "enterDistrict": "जिल्हा टाका",
+
+    "statePincode": "राज्य + पिनकोड",
+    "statePincodePlaceholder": "महाराष्ट्र 413107",
+
+    "descriptionOptional": "वर्णन (ऐच्छिक)",
+    "descriptionPlaceholder": "पिकाची गुणवत्ता, ताजेपणा, विशेष माहिती जोडा...",
+
+    "currentImages": "सध्याच्या प्रतिमा",
+    "imagesCannotEdit": "प्रतिमा संपादित करता येणार नाहीत",
+    "crop": "पीक",
+    "noImagesAvailable": "कोणतीही प्रतिमा उपलब्ध नाही",
+
+    "uploadCropImages": "पिकांच्या प्रतिमा अपलोड करा",
+    "addUpTo5Images": "जास्तीत जास्त 5 प्रतिमा जोडा",
+    "chooseImages": "प्रतिमा निवडा",
+
+    "updating": "अद्यतनित होत आहे...",
+    "creating": "तयार होत आहे...",
+    "updateListing": "लिस्टिंग अद्यतनित करा",
+    "createListing": "लिस्टिंग तयार करा"
+  },
+  "listingImage": {
+    "noImagesAvailable": "कोणत्याही प्रतिमा उपलब्ध नाहीत",
+    "sellerNoImages": "विक्रेत्याने अद्याप कोणत्याही प्रतिमा अपलोड केलेल्या नाहीत.",
+    "listing": "लिस्टिंग",
+    "thumbnail": "थंबनेल"
+  },
+  "listingSeller": {
+    "unknownSeller": "अज्ञात विक्रेता",
+    "verified": "पडताळलेले",
+    "farmer": "शेतकरी"
+  },
+
+   "marketplace": {
+    "title": "मार्केटप्लेस",
+    "expectedPrice": "अपेक्षित किंमत",
+    "expectedQuantity": "अपेक्षित प्रमाण",
+    "expectedHarvestDate": "अपेक्षित कापणी तारीख",
+    "marketplace": "मार्केटप्लेस",
+    "myListings": "माझ्या लिस्टिंग",
+    "createListing": "लिस्टिंग तयार करा",
+    "sellYourCrops": "मार्केटप्लेसमध्ये आपली पिके विक्री करा",
+     "editListing": "लिस्टिंग संपादित करा",
+    "updateMarketplaceListing": "आपली मार्केटप्लेस लिस्टिंग अद्यतनित करा",
+    "failedToLoad": "मार्केटप्लेस लोड करण्यात अयशस्वी",
+    "browseListings": "मार्केटप्लेस लिस्टिंग ब्राउज करा",
+    "noListingsFound": "कोणतीही मार्केटप्लेस लिस्टिंग आढळली नाही",
+    "trySearchFilters": "शोध फिल्टर बदलून पहा.",
+    "viewAll": "सर्व पहा",
+    "showLess": "कमी दाखवा"
+  },
+
+   "listingDetails": {
+    "failedToLoadListing": "लिस्टिंग लोड करण्यात अयशस्वी",
+    "listingDeleted": "लिस्टिंग यशस्वीरित्या हटवली",
+    "failedToDelete": "लिस्टिंग हटवण्यात अयशस्वी",
+
+    "quantity": "प्रमाण",
+    "harvestDate": "कापणी तारीख",
+    "village": "गाव",
+    "taluka": "तालुका",
+    "district": "जिल्हा",
+    "status": "स्थिती",
+
+    "location": "स्थान",
+    "description": "वर्णन",
+
+    "noDescription": "विक्रेत्याने कोणतेही वर्णन दिलेले नाही.",
+
+    "editListing": "लिस्टिंग संपादित करा",
+
+    "deleteListing": "लिस्टिंग हटवा",
+    "deleteConfirm": "तुम्हाला ही लिस्टिंग हटवायची आहे का?"
+  },
+
+  "dashboard": {
+  "title": "डॅशबोर्ड",
+  "subtitle": "तुमचा शेती व्यवसाय कार्यक्षमतेने व्यवस्थापित करा.",
+
+  "no_data": "निवडलेल्या फिल्टरसाठी कोणताही डेटा उपलब्ध नाही",
+  "loading": "डॅशबोर्ड लोड होत आहे...",
+
+  "all_financial_years": "सर्व आर्थिक वर्षे",
+
+  "total_farms": "एकूण शेत",
+  "connected_farms": "जोडलेली शेत",
+
+  "total_income": "एकूण उत्पन्न",
+
+  "total_expenses": "एकूण खर्च",
+
+  "total_crops": "एकूण पिके",
+  "active_crops": "सक्रिय पिके",
+
+  "rental_listings": "भाडे यादी",
+  "equipment_marketplace": "उपकरण मार्केटप्लेस",
+
+  "financial_overview": "आर्थिक आढावा",
+
+  "net_profit": "निव्वळ नफा",
+  "income_minus_expenses": "उत्पन्न - खर्च",
+
+  "income": "उत्पन्न",
+  "expenses": "खर्च",
+  "profit": "नफा",
+
+  "quick_actions": "जलद कृती",
+  "quick_actions_subtitle": "तुमच्या शेतीच्या कामांचे जलद व्यवस्थापन करा",
+
+  "add_farm": "शेत जोडा",
+  "add_income": "उत्पन्न जोडा",
+  "add_expense": "खर्च जोडा",
+  "add_fertilizer": "खत जोडा",
+  "add_pesticide": "कीटकनाशक जोडा",
+  "rent_equipment": "उपकरण भाड्याने द्या",
+
+  "recent_incomes": "अलीकडील उत्पन्न",
+  "recent_expenses": "अलीकडील खर्च",
+
+  "view_all": "सर्व पहा",
+
+  "amount": "रक्कम",
+  "date": "तारीख",
+  "name": "नाव",
+
+  "expense_breakdown": "खर्च विभागणी",
+  "crop_income_breakdown": "पीक उत्पन्न विभागणी",
+
+  "fertilizers": "खते",
+  "pesticides": "कीटकनाशके",
+
+  "total_records": "एकूण नोंदी"
+}, 
+  "farms": {
+    "title": "शेती",
+    "subtitle": "तुमच्या शेतीचे व्यवस्थापन करा",
+    "list_title": "माझ्या शेती",
+    "name": "शेताचे नाव",
+    "acres": "एकर",
+    "location": "स्थान",
+    "soil_type": "मातीचा प्रकार",
+    "farm_photo": "शेतीचा फोटो",
+    "cancel": "रद्द करा",
+    "create_farm": "शेती तयार करा",
+    "update_farm": "शेती अद्ययावत करा",
+    "add_title": "नवीन शेत जोडा",
+    "name_placeholder": "शेताचे नाव टाका",
+    "acres_placeholder": "एकर टाका",
+    "location_placeholder": "स्थान टाका",
+    "soil_placeholder": "मातीचा प्रकार टाका",
+    "search_placeholder": "शेती शोधा...",
+     "delete_title": "शेत हटवा",
+    "delete_message": "हे शेत हटवायचे आहे का?", 
+    "empty": "अद्याप कोणतीही शेती जोडलेली नाही. सुरुवात करण्यासाठी पहिले शेत जोडा.",
+    "select_soil_type": "मातीचा प्रकार निवडा",
+
+    "soil_black": "काळी माती",
+    "soil_red": "लाल माती",
+    "soil_laterite": "लेटेराइट माती",
+    "soil_alluvial": "गाळयुक्त माती",
+    "soil_sandy": "वालुकामय माती",
+    "soil_clay": "चिकण माती",
+    "soil_loamy": "लोम माती",
+    "soil_mixed": "मिश्र माती",
+    "soil_other": "इतर",
+
+    "stats": {
+      "total_farms": "एकूण शेती",
+     "farms_added": "जोडलेल्या शेती",
+
+      "total_acres": "एकूण एकर",
+      "acres_land": "जमिनीचे एकर",
+
+      "soil_types": "मातीचे प्रकार",
+      "different_soil_types": "वेगवेगळे मातीचे प्रकार",
+
+      "locations": "स्थाने",
+      "unique_locations": "वेगवेगळी स्थाने"
+    }
+  },
+ "crops": {
+    "title": "पिके",
+    "subtitle": "तुमच्या शेतांमधील पिकांचे व्यवस्थापन करा",
+    "list_title": "माझी पिके",
+    "select_farm": "शेत निवडा",
+    "all_farms": "सर्व शेतं",
+    "name": "पिकाचे नाव",
+    "farm": "शेत",
+    "season": "हंगाम",
+    "sowing_date": "पेरणीची तारीख",
+    "expected_harvest": "अपेक्षित कापणी",
+    "add_title": "नवीन पीक जोडा",
+    "name_placeholder": "उदा. गहू, तांदूळ, कापूस",
+    "season_placeholder": "उदा. खरीप, रब्बी",
+    "empty": "कोणतीही पिके नोंदलेली नाहीत. ट्रॅकिंग सुरू करण्यासाठी पीक जोडा.",
+    "no_farm_selected": "पिके पाहण्यासाठी कृपया शेत निवडा.",
+
+    "add_crop": "पीक जोडा",
+    "edit_crop": "पीक संपादित करा",
+    "update_crop": "पीक अद्यतनित करा",
+    "create_crop": "पीक तयार करा",
+    "crop": "पीक",
+    "financial_year": "आर्थिक वर्ष",
+    "all_seasons": "सर्व हंगाम",
+    "all_financial_years": "सर्व आर्थिक वर्षे",
+    "search_placeholder": "पीक, हंगाम, आर्थिक वर्ष शोधा...",
+    "harvest_date": "अपेक्षित कापणी तारीख",
+    "connected_farms": "जोडलेली शेतं",
+    "farm_coverage": "शेती कव्हरेज",
+    "seasons_count": "हंगाम",
+    "season_categories": "हंगाम प्रकार",
+    "latest_fy": "नवीनतम आर्थिक वर्ष",
+    "registered_crops": "नोंदणीकृत पिके",
+    "total_crops": "एकूण पिके",
+    "loading": "पिके लोड होत आहेत...",
+    "no_crops_found": "कोणतीही पिके आढळली नाहीत",
+    "cancel": "रद्द करा",
+    "actions": "कृती",
+    "delete_crop": "पीक हटवा",
+    "delete_confirm": "तुम्हाला हे पीक हटवायचे आहे का?",
+    "crop_added": "पीक यशस्वीरित्या जोडले गेले",
+    "crop_updated": "पीक यशस्वीरित्या अद्यतनित केले गेले",
+    "crop_deleted": "पीक यशस्वीरित्या हटवले गेले",
+    "enter_crop_name": "पिकाचे नाव प्रविष्ट करा",
+    "kharif_rabi": "खरीप / रब्बी",
+    "season_kharif": "खरीप",
+    "season_rabi": "रब्बी",
+    "season_zaid": "जायद",
+    "season_perennial": "बारमाही",
+    "season_whole_year": "पूर्ण वर्ष",
+    "season_other": "इतर",
+
+    "select_season": "हंगाम निवडा"
+  },
+
+
+  "incomes": {
+    "title": "उत्पन्न",
+    "subtitle": "शेती उत्पन्न नोंदी व्यवस्थापित करा",
+
+    "add": "उत्पन्न जोडा",
+
+    "farm": "शेत",
+    "crop": "पीक",
+    "financial_year": "आर्थिक वर्ष",
+
+    "harvest": "कापणी",
+    "harvest_quantity": "कापणी प्रमाण",
+
+    "unit": "एकक",
+    "amount": "रक्कम",
+
+    "income_date": "उत्पन्न दिनांक",
+
+    "notes": "नोंदी",
+    "actions": "क्रिया",
+
+    "search": "उत्पन्न शोधा...",
+
+    "loading": "उत्पन्न लोड होत आहे...",
+    "empty": "उत्पन्न नोंदी उपलब्ध नाहीत",
+
+    "create": "उत्पन्न तयार करा",
+    "edit": "उत्पन्न संपादित करा",
+    "update": "उत्पन्न अद्यतनित करा",
+    "delete": "उत्पन्न हटवा",
+
+    "created": "उत्पन्न यशस्वीरित्या तयार झाले",
+    "updated": "उत्पन्न यशस्वीरित्या अद्यतनित झाले",
+    "deleted": "उत्पन्न यशस्वीरित्या हटवले",
+
+    "delete_confirm": "तुम्हाला हे उत्पन्न हटवायचे आहे का?",
+
+    "total_income": "एकूण उत्पन्न",
+    "revenue_generated": "निर्मित महसूल",
+
+    "farms": "शेते",
+    "connected_farms": "जोडलेली शेते",
+
+    "crops": "पिके",
+    "income_crops": "उत्पन्न पिके",
+
+    "all_financial_years": "सर्व आर्थिक वर्षे",
+
+    "select_farm": "शेत निवडा",
+    "select_crop": "पीक निवडा",
+
+    "select_unit": "एकक निवडा",
+
+    "unit_kg": "किलो",
+    "unit_quintal": "क्विंटल",
+    "unit_ton": "टन",
+    "unit_gram": "ग्रॅम",
+    "unit_bag": "पिशवी",
+    "unit_crate": "क्रेट",
+    "unit_dozen": "डझन",
+    "unit_piece": "नग",
+    "unit_liter": "लिटर",
+    "unit_ml": "एमएल",
+    "unit_other": "इतर"
+  },
+
+
+   "expenses": {
+  "title": "खर्च",
+  "subtitle": "शेती खर्च आणि खर्चाचे व्यवस्थापन करा.",
+  "add": "खर्च जोडा",
+
+  "financial_year": "आर्थिक वर्ष",
+  "all_financial_years": "सर्व आर्थिक वर्षे",
+
+  "total_expenses": "एकूण खर्च",
+  "expense_amount": "खर्च रक्कम",
+
+  "farms": "शेती",
+  "connected_farms": "जोडलेल्या शेती",
+
+  "crops": "पिके",
+  "expense_crops": "खर्च पिके",
+
+  "search": "खर्च शोधा...",
+  "loading": "खर्च लोड होत आहेत...",
+  "empty": "कोणताही खर्च आढळला नाही",
+
+  "farm": "शेती",
+  "crop": "पीक",
+  "category": "श्रेणी",
+  "item_name": "खर्चाचे नाव",
+  "quantity": "प्रमाण",
+  "unit": "एकक",
+  "amount": "रक्कम",
+  "payment_method": "पेमेंट पद्धत",
+  "expense_date": "खर्च तारीख",
+  "notes": "नोंदी",
+
+  "select_farm": "शेती निवडा",
+  "select_crop": "पीक निवडा",
+  "select_category": "श्रेणी निवडा",
+  "select_payment": "पेमेंट निवडा",
+  "select_unit": "एकक निवडा",
+
+  "create": "खर्च तयार करा",
+  "update": "खर्च अद्यतनित करा",
+  "edit": "खर्च संपादित करा",
+  "delete": "खर्च हटवा",
+
+  "delete_confirm": "तुम्हाला हा खर्च हटवायचा आहे का?",
+
+  "table_farm": "शेती",
+  "table_crop": "पीक",
+  "table_financial_year": "आर्थिक वर्ष",
+  "table_category": "श्रेणी",
+  "table_item": "खर्चाचे नाव",
+  "table_quantity": "प्रमाण",
+  "table_payment": "पेमेंट",
+  "table_amount": "रक्कम",
+  "table_expense_date": "खर्च तारीख",
+  "table_actions": "कृती",
+
+  "payment_cash": "रोख",
+  "payment_upi": "UPI",
+  "payment_bank_transfer": "बँक हस्तांतरण",
+  "payment_credit": "उधार",
+  "payment_other": "इतर",
+
+  "category_fertilizer": "खत",
+  "category_pesticide": "कीटकनाशक",
+  "category_seeds": "बियाणे",
+  "category_labor": "मजुरी",
+  "category_diesel": "डिझेल",
+  "category_transport": "वाहतूक",
+  "category_equipment": "साधने",
+  "category_electricity": "वीज",
+  "category_water": "पाणी",
+  "category_maintenance": "देखभाल",
+  "category_other": "इतर",
+
+  "units_kg": "किलो",
+  "units_gram": "ग्रॅम",
+  "units_quintal": "क्विंटल",
+  "units_ton": "टन",
+
+  "units_liter": "लिटर",
+  "units_ml": "मिली",
+
+  "units_piece": "नग",
+  "units_packet": "पॅकेट",
+  "units_bag": "पोते",
+  "units_box": "बॉक्स",
+  "units_bottle": "बाटली",
+  "units_bundle": "गठ्ठा",
+
+  "units_acre": "एकर",
+  "units_hectare": "हेक्टर",
+
+  "units_hour": "तास",
+  "units_day": "दिवस",
+  "units_person": "व्यक्ती",
+
+  "units_trip": "फेरी",
+
+  "units_unit": "युनिट",
+  "units_other": "इतर"
+},
+
+
+  "rental": {
+    "equipmentName": "उपकरणाचे नाव",
+    "perDay": "/दिवस",
+    "perHour": "/तास",
+    "title": "उपकरण भाडे",
+    "subtitle": "जवळच्या मालकांकडून उपकरणे भाड्याने घ्या",
+    "list_title": "उपलब्ध उपकरणे",
+    "name": "उपकरण",
+    "price": "किंमत",
+    "location": "स्थान",
+    "owner": "मालक",
+    "contact": "संपर्क",
+    "call": "कॉल",
+    "message": "संदेश",
+    "price_per_day": "/ दिवस",
+    "add_title": "तुमची उपकरणे सूचीबद्ध करा",
+    "name_placeholder": "उदा. ट्रॅक्टर, कापणी यंत्र",
+    "price_placeholder": "प्रति दिवस किंमत",
+    "location_placeholder": "तुमचे गाव / शहर",
+    "owner_placeholder": "मालकाचे नाव",
+    "phone_placeholder": "संपर्क क्रमांक",
+    "empty": "अद्याप कोणतीही उपकरणे सूचीबद्ध नाहीत."
+  },
+
+
+  "rentals": {
+    "marketplace": "रेंटल",
+    "marketplaceSubtitle": "तुमच्या जवळ शेती उपकरण भाड्याने घ्या",
+    "searchPlaceholder": "उपकरण, गाव, तालुका, जिल्हा शोधा...",
+    "allDistricts": "सर्व जिल्हे",
+    "allStates": "सर्व राज्ये",
+    "noRentalsFound": "कोणतेही भाडे आढळले नाही",
+    "tryChangingFilters": "फिल्टर बदलून पहा"
+  },
+
+  "rentalForm": {
+    "equipmentInfo": "उपकरण माहिती",
+    "equipmentName": "उपकरणाचे नाव",
+    "equipmentPlaceholder": "उदा. John Deere 5055E",
+    "hourlyPrice": "तासिक किंमत",
+    "hourlyPricePlaceholder": "उदा. 500",
+    "dailyPrice": "दैनिक किंमत",
+    "dailyPricePlaceholder": "उदा. 2000",
+    "villagePlaceholder": "उदा. गोराडवाडी",
+    "talukaPlaceholder": "उदा. माळशिरस",
+    "districtPlaceholder": "उदा. पुणे",
+    "statePincode": "राज्य, पिनकोड",
+    "statePincodePlaceholder": "उदा. महाराष्ट्र, 413107",
+    "ownerDetails": "मालक माहिती",
+    "ownerName": "मालकाचे नाव",
+    "ownerPlaceholder": "उदा. रमेश पाटील",
+    "phoneNumber": "फोन नंबर",
+    "phonePlaceholder": "उदा. 9766860000",
+    "descriptionPlaceholder": "उपकरणाची माहिती जोडा",
+    "equipmentImages": "उपकरण प्रतिमा",
+    "imageEditNotSupported": "प्रतिमा संपादन सध्या समर्थित नाही.",
+    "uploadEquipmentImages": "उपकरण प्रतिमा अपलोड करा",
+    "addUpTo5Images": "जास्तीत जास्त 5 प्रतिमा जोडा",
+    "chooseImages": "प्रतिमा निवडा",
+    "saving": "सेव्ह होत आहे...",
+    "updateRental": "भाडे अद्यतनित करा",
+    "createRental": "भाडे तयार करा"
+  },
+
+
+  "rentalCreate": {
+    "fillRequiredFields": "कृपया सर्व आवश्यक माहिती भरा",
+    "addPrice": "कृपया तासिक किंवा दैनिक किंमत जोडा",
+    "uploadImage": "कृपया किमान एक प्रतिमा अपलोड करा",
+    "createdSuccess": "भाडे यशस्वीरित्या तयार झाले",
+    "createRental": "भाडे तयार करा",
+    "addEquipment": "भाड्यासाठी शेती उपकरण जोडा"
+  },
+
+  "editRental": {
+    "updatedSuccess": "भाडे यशस्वीरित्या अद्यतनित झाले",
+    "editRental": "भाडे संपादित करा",
+    "updateRentalDetails": "उपकरण भाडे तपशील अद्यतनित करा"
+  },
+
+  "myRentals": {
+    "failedToLoad": "भाडे लोड करण्यात अयशस्वी",
+    "deletedSuccess": "भाडे यशस्वीरित्या हटवले",
+    "failedToDelete": "भाडे हटवण्यात अयशस्वी",
+    "myRentals": "माझी भाडे यादी",
+    "manageEquipment": "आपल्या उपकरण लिस्टिंग व्यवस्थापित करा",
+    "addRental": "+ भाडे जोडा",
+    "rentalMarketplace": "रेंटल",
+    "noRentals": "अद्याप कोणतेही भाडे नाही",
+    "createFirstRental": "आपली पहिली भाडे लिस्टिंग तयार करा",
+    "deleteRental": "भाडे हटवा",
+    "deleteConfirm": "तुम्हाला हटवायचे आहे का"
+  },
+
+  "rentalDetails": {
+    "state": "राज्य",
+    "availability": "उपलब्धता",
+    "available": "उपलब्ध",
+    "unavailable": "अनुपलब्ध",
+    "noDescription": "कोणतेही वर्णन दिलेले नाही.",
+    "deleteConfirm": "तुम्हाला हे भाडे हटवायचे आहे का?"
+  },
+
+  
+  "admin": {
+    "dashboard_title": "प्रशासन डॅशबोर्ड",
+    "dashboard_subtitle": "संपूर्ण प्रणालीचे विहंगावलोकन",
+    "total_users": "एकूण वापरकर्ते",
+    "total_farms": "एकूण शेती",
+    "total_crops": "एकूण पिके",
+    "total_equipment": "एकूण उपकरणे",
+    "users_title": "नोंदणीकृत वापरकर्ते",
+    "users_subtitle": "प्रणालीतील सर्व शेतकरी",
+    "farms_title": "सर्व शेती",
+    "farms_subtitle": "नोंदणीकृत शेतीचे केवळ-वाचनीय दृश्य",
+    "crops_title": "सर्व पिके",
+    "crops_subtitle": "नोंदणीकृत पिकांचे केवळ-वाचनीय दृश्य",
+    "expenses_title": "सर्व खर्च",
+    "expenses_subtitle": "केवळ-वाचनीय प्रणालीव्यापी खर्च नोंदी",
+    "equipment_title": "उपकरणे सूची",
+    "equipment_subtitle": "सर्व भाडे उपकरणांचे व्यवस्थापन करा",
+    "owner": "मालक",
+    "joined": "सामील झाले",
+    "delete_confirm": "तुम्हाला ही नोंद हटवायची आहे का?"
+  },
+  "messages": {
+    "FARM_ADDED_SUCCESS": "शेत यशस्वीरित्या जोडले",
+    "FARM_UPDATED_SUCCESS": "शेत यशस्वीरित्या अपडेट केले",
+    "FARM_DELETED_SUCCESS": "शेत यशस्वीरित्या हटवले",
+    "CROP_ADDED_SUCCESS": "पीक यशस्वीरित्या जोडले",
+    "EXPENSE_ADDED_SUCCESS": "खर्च यशस्वीरित्या नोंदवला",
+    "EQUIPMENT_ADDED_SUCCESS": "उपकरण यशस्वीरित्या सूचीबद्ध केले",
+    "EQUIPMENT_DELETED_SUCCESS": "उपकरण यशस्वीरित्या काढले",
+    "AUTH_LOGIN_SUCCESS": "यशस्वीरित्या साइन इन केले",
+    "AUTH_SIGNUP_SUCCESS": "खाते यशस्वीरित्या तयार केले",
+    "AUTH_LOGOUT_SUCCESS": "यशस्वीरित्या साइन आउट केले",
+    "AUTH_INVALID_CREDENTIALS": "अवैध फोन नंबर किंवा पासवर्ड",
+    "AUTH_PHONE_EXISTS": "या फोन नंबरसह आधीच खाते अस्तित्वात आहे",
+    "VALIDATION_ERROR": "कृपया सर्व आवश्यक फील्ड भरा",
+    "GENERIC_ERROR": "काहीतरी चूक झाली. कृपया पुन्हा प्रयत्न करा."
+  },
+  "footer": {
+    "copyright": "हरियाली — तंत्रज्ञानाद्वारे शेतकऱ्यांना सक्षम करत आहे",
+    "tagline": "स्मार्ट शेती व्यवस्थापन सुलभ करा",
+  "privacy": "गोपनीयता धोरण",
+  "terms": "अटी व शर्ती",
+  "support": "सपोर्ट",
+  "contact": "संपर्क"
+  },
+
+  
+
+  "fertilizers": {
+    "title": "खते",
+    "subtitle": "खत वापर नोंदी व्यवस्थापित करा",
+    "add": "खत जोडा",
+    "edit": "खत संपादित करा",
+    "create": "खत तयार करा",
+    "update": "खत अपडेट करा",
+    "delete": "खत हटवा",
+
+    "name": "खताचे नाव",
+    "quantity": "प्रमाण",
+    "unit": "एकक",
+    "application_date": "वापर तारीख",
+    "financial_year": "आर्थिक वर्ष",
+    "notes": "टीप",
+    "actions": "क्रिया",
+
+    "search": "खते शोधा...",
+    "loading": "खते लोड होत आहेत...",
+    "empty": "खत नोंदी उपलब्ध नाहीत",
+
+    "created": "खत यशस्वीरित्या तयार झाले",
+    "updated": "खत यशस्वीरित्या अपडेट झाले",
+    "deleted": "खत यशस्वीरित्या हटवले",
+
+    "delete_confirm": "तुम्हाला हटवायचे आहे का",
+
+    "total_records": "एकूण नोंदी",
+    "records": "नोंदी",
+
+    "total_quantity": "एकूण प्रमाण",
+    "total_used": "एकूण वापर",
+
+    "latest_application": "अलीकडील वापर",
+    "latest_record": "अलीकडील नोंद",
+
+    "all_financial_years": "सर्व आर्थिक वर्षे",
+
+    "select_unit": "एकक निवडा",
+
+    "unit_kg": "किलो",
+    "unit_gram": "ग्रॅम",
+    "unit_liter": "लिटर",
+    "unit_ml": "एमएल",
+    "unit_bag": "पिशवी",
+    "unit_packet": "पॅकेट",
+    "unit_quintal": "क्विंटल",
+    "unit_ton": "टन",
+    "unit_piece": "नग",
+    "unit_other": "इतर"
+  },
+
+   "pesticides": {
+    "title": "कीटकनाशके",
+    "subtitle": "कीटकनाशक वापर नोंदी व्यवस्थापित करा",
+
+    "add": "कीटकनाशक जोडा",
+    "edit": "कीटकनाशक संपादित करा",
+    "create": "कीटकनाशक तयार करा",
+    "update": "कीटकनाशक अपडेट करा",
+    "delete": "कीटकनाशक हटवा",
+
+    "name": "कीटकनाशक नाव",
+    "quantity": "प्रमाण",
+    "unit": "एकक",
+    "application_date": "वापर तारीख",
+    "financial_year": "आर्थिक वर्ष",
+    "notes": "टीप",
+    "actions": "क्रिया",
+
+    "search": "कीटकनाशके शोधा...",
+    "loading": "कीटकनाशके लोड होत आहेत...",
+    "empty": "कीटकनाशक नोंदी उपलब्ध नाहीत",
+
+    "created": "कीटकनाशक यशस्वीरित्या तयार झाले",
+    "updated": "कीटकनाशक यशस्वीरित्या अपडेट झाले",
+    "deleted": "कीटकनाशक यशस्वीरित्या हटवले",
+
+    "delete_confirm": "तुम्हाला हटवायचे आहे का",
+
+    "total_records": "एकूण नोंदी",
+    "records": "नोंदी",
+
+    "total_quantity": "एकूण प्रमाण",
+    "total_used": "एकूण वापर",
+
+    "latest_application": "अलीकडील वापर",
+    "latest_record": "अलीकडील नोंद",
+
+    "all_financial_years": "सर्व आर्थिक वर्षे",
+    "select_unit": "एकक निवडा",
+
+    "unit_kg": "किलो",
+    "unit_gram": "ग्रॅम",
+    "unit_liter": "लिटर",
+    "unit_ml": "एमएल",
+    "unit_bag": "पिशवी",
+    "unit_packet": "पॅकेट",
+    "unit_quintal": "क्विंटल",
+    "unit_ton": "टन",
+    "unit_piece": "नग",
+    "unit_other": "इतर"
+  },
+
+
+  "contact": {
+    "call": "कॉल",
+    "whatsapp": "व्हॉट्सअॅप",
+    "directions": "दिशा",
+    "locationUnavailable": "स्थान उपलब्ध नाही"
+  },
+  "myListings": {
+    "failedToLoad": "लिस्टिंग लोड करण्यात अयशस्वी",
+    "deletedSuccess": "लिस्टिंग यशस्वीरित्या हटवली",
+    "failedToDelete": "लिस्टिंग हटवण्यात अयशस्वी",
+    "manageListings": "आपल्या मार्केटप्लेस लिस्टिंग व्यवस्थापित करा",
+    "addListing": "+ लिस्टिंग जोडा",
+    "noListingsFound": "कोणतीही लिस्टिंग आढळली नाही",
+    "noListingSubtitle": "आपण अजून कोणतीही लिस्टिंग तयार केलेली नाही."
+  },
+
+  "profile": {
+  "title": "प्रोफाइल",
+  "subtitle": "तुमच्या खात्याच्या सेटिंग्ज व्यवस्थापित करा",
+
+  "edit_profile": "प्रोफाइल संपादित करा",
+  "edit_profile_subtitle": "तुमची वैयक्तिक माहिती अपडेट करा",
+
+  "change_password": "पासवर्ड बदला",
+  "change_password_subtitle": "तुमचे खाते सुरक्षित ठेवा",
+
+  "name": "नाव",
+  "phone": "फोन",
+
+  "enter_name": "नाव प्रविष्ट करा",
+  "enter_phone": "फोन नंबर प्रविष्ट करा",
+
+  "current_password": "सध्याचा पासवर्ड",
+  "new_password": "नवीन पासवर्ड",
+  "confirm_password": "पासवर्डची पुष्टी करा",
+
+  "enter_current_password": "सध्याचा पासवर्ड प्रविष्ट करा",
+  "enter_new_password": "नवीन पासवर्ड प्रविष्ट करा",
+  "enter_confirm_password": "नवीन पासवर्डची पुष्टी करा",
+
+  "save_changes": "बदल जतन करा",
+  "update_password": "पासवर्ड अपडेट करा",
+
+  "loading": "प्रोफाइल लोड होत आहे...",
+
+  "failed_load": "प्रोफाइल लोड करण्यात अयशस्वी",
+  "failed_update": "प्रोफाइल अपडेट करण्यात अयशस्वी",
+  "failed_password_update": "पासवर्ड अपडेट करण्यात अयशस्वी",
+
+  "updated_success": "प्रोफाइल यशस्वीरित्या अपडेट झाले",
+  "password_updated_success": "पासवर्ड यशस्वीरित्या अपडेट झाला",
+
+  "no_changes": "कोणतेही बदल केले नाहीत",
+
+  "name_validation": "नाव किमान 2 अक्षरांचे असणे आवश्यक आहे",
+  "phone_validation": "अवैध फोन नंबर",
+
+  "current_password_required": "सध्याचा पासवर्ड आवश्यक आहे",
+  "password_validation": "पासवर्ड किमान 8 अक्षरांचा असावा",
+  "password_mismatch": "पासवर्ड जुळत नाहीत"
+},
+"authMessages": {
+  "loginRequired": "लॉगिन आवश्यक आहे",
+  "loginToCall": "विक्रेत्याला कॉल करण्यासाठी लॉगिन करा",
+  "loginToWhatsapp": "व्हॉट्सअ‍ॅपवर चॅट करण्यासाठी लॉगिन करा",
+  "loginToViewDetails": "संपूर्ण माहिती पाहण्यासाठी लॉगिन करा",
+  "loginToViewListing": "लिस्टिंग तपशील पाहण्यासाठी लॉगिन करा",
+  "loginToDirections": "दिशा मिळवण्यासाठी लॉगिन करा"
+}
+}

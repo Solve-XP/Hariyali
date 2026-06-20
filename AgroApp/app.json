@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "AgroApp",
+    "slug": "agroapp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/icon.png",
+    "userInterfaceStyle": "light",
+    "extra": {
+      "geoapifyKey": "0df8936667914600a12427e05332b309",
+      "eas": {
+        "projectId": "17e8a25d-09ea-4c3f-b8ba-def3b80aa66e"
+      }
+    },
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#2E7D32"
+    },
+    "android": {
+      "jsEngine": "hermes",
+      "enableProguardInReleaseBuilds": true,
+      "enableShrinkResourcesInReleaseBuilds": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/adaptive-icon.png",
+        "backgroundColor": "#2E7D32"
+      },
+      "package": "com.agroapp",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow AgroApp to access your photos for farm and listing images.",
+          "cameraPermission": "Allow AgroApp to use the camera for farm and listing images."
+        }
+      ],
+      "expo-secure-store"
+    ]
+  }
+}
