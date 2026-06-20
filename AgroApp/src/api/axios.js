@@ -3,7 +3,7 @@ import * as SecureStore from "expo-secure-store";
 
 // const BASE_URL = "http://10.60.200.104:8000/api/v1";
 const BASE_URL =
-  "http://10.126.179.104:8000/api/v1";
+  "http://10.145.236.104:8000/api/v1";
 
 const TOKEN_KEY = "fm_token";
 

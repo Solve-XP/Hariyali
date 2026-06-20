@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "AgroApp",
+    "name": "Hariyali",
     "slug": "agroapp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/icon.png",
+    "icon": "./src/assets/adaptive-icon.png",
     "userInterfaceStyle": "light",
     "extra": {
       "geoapifyKey": "0df8936667914600a12427e05332b309",
