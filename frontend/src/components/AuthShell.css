@@ -571,4 +571,7 @@
     flex-direction: row !important;
     gap: var(--space-5);
   }
+  .auth-shell__main-logo {
+    width: 150px;
+  }
 }

@@ -1,4 +1,5 @@
 import boto3
+from botocore.config import Config
 import uuid
 
 from fastapi import HTTPException
@@ -6,11 +7,21 @@ from fastapi import HTTPException
 from app.core.config import settings
 
 
+# s3_client = boto3.client(
+#     "s3",
+#     aws_access_key_id=settings.AWS_ACCESS_KEY,
+#     aws_secret_access_key=settings.AWS_SECRET_KEY,
+#     region_name=settings.AWS_REGION
+# )
 s3_client = boto3.client(
     "s3",
     aws_access_key_id=settings.AWS_ACCESS_KEY,
     aws_secret_access_key=settings.AWS_SECRET_KEY,
-    region_name=settings.AWS_REGION
+    region_name=settings.AWS_REGION,
+    endpoint_url=f"https://s3.{settings.AWS_REGION}.amazonaws.com",
+    config=Config(
+        signature_version="s3v4"
+    )
 )
 
 
@@ -53,6 +64,7 @@ def generate_presigned_upload_url(
     content_type: str
 ):
 
+    
     extension = (
         content_type.split("/")[-1]
     )
@@ -77,6 +89,7 @@ def generate_presigned_upload_url(
             ExpiresIn=600
         )
     )
+    print("UPLOAD URL:", upload_url)
 
     if settings.CLOUDFRONT_URL:
 
